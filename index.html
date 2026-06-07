@@ -31,6 +31,9 @@
         .modal-content { background: white; border-radius: 32px; padding: 28px; max-width: 400px; width: 90%; text-align: center; }
         .text-center { text-align: center; }
         .mt-2 { margin-top: 8px; }
+        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 3000; }
+        .spinner { width: 50px; height: 50px; border: 5px solid white; border-top-color: #1e6f5c; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -71,7 +74,7 @@
                 <div id="cardMorning" class="horario-card">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div><span style="font-weight: bold;">🌅 Tour Mañana</span><br><span style="font-size: 12px;">09:00 - 12:00 hrs</span></div>
-                        <div><span id="morningCupo" class="cupo">160 lugares</span></div>
+                        <div><span id="morningCupo" class="cupo">Cargando...</span></div>
                     </div>
                     <input type="radio" name="horario" value="morning" style="display: none;">
                 </div>
@@ -79,7 +82,7 @@
                 <div id="cardAfternoon" class="horario-card">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div><span style="font-weight: bold;">🌇 Tour Tarde</span><br><span style="font-size: 12px;">14:00 - 17:00 hrs</span></div>
-                        <div><span id="afternoonCupo" class="cupo">160 lugares</span></div>
+                        <div><span id="afternoonCupo" class="cupo">Cargando...</span></div>
                     </div>
                     <input type="radio" name="horario" value="afternoon" style="display: none;">
                 </div>
@@ -87,7 +90,7 @@
                 <div id="tourExtra" style="display: none;" class="horario-card">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div><span style="font-weight: bold;">⭐ Tour Extra</span><br><span style="font-size: 12px;">18:00 - 21:00 hrs</span></div>
-                        <div><span id="extraCupo" class="cupo">160 lugares</span></div>
+                        <div><span id="extraCupo" class="cupo">Cargando...</span></div>
                     </div>
                     <input type="radio" name="horario" value="extra" style="display: none;">
                 </div>
@@ -111,8 +114,7 @@
     </div>
 </div>
 
-<!-- MODAL DE CONFIRMACIÓN - INICIALMENTE OCULTO -->
-<div id="modalConfirmacion" class="modal" style="display: none !important;">
+<div id="modalConfirmacion" class="modal" style="display: none;">
     <div class="modal-content">
         <span style="font-size: 50px;">⛵✨</span>
         <h3 style="font-size: 24px; margin: 10px 0;">¡Reserva Confirmada!</h3>
@@ -122,13 +124,15 @@
 </div>
 
 <div id="toast" class="toast hidden"></div>
+<div id="loadingOverlay" class="loading-overlay hidden">
+    <div class="spinner"></div>
+</div>
 
 <script>
-    // ✅ URL DE GOOGLE SHEETS
-    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbyGOsxKU6fehJ2rD3bXJST02O2N75sadDTGDFzEAbQEPkAVP5zZqr7S02AiE2wLvbXZ9w/exec";
-    
+    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbyO3Z6DGTznI3Rl2cdfHRTypmt-adE22_y_9Fuzc5cnVAXAILHYFpc6GlJpeKK3rKTM_g/exec";
     const CAPACIDAD_MAXIMA = 160;
-    let reservasPorFecha = {};
+    
+    let cuposGlobales = {}; // { "fecha_morning": ocupados, "fecha_afternoon": ocupados }
     let tarifas = { adulto: 180, menor: 90 };
     
     function mostrarToast(msg, error = false) {
@@ -139,15 +143,79 @@
         setTimeout(() => toast.classList.add("hidden"), 4000);
     }
     
+    function mostrarLoading(mostrar) {
+        const overlay = document.getElementById("loadingOverlay");
+        if (mostrar) {
+            overlay.classList.remove("hidden");
+        } else {
+            overlay.classList.add("hidden");
+        }
+    }
+    
     function getOcupados(fecha, horario) {
-        return reservasPorFecha[fecha]?.[horario] || 0;
+        const key = `${fecha}_${horario}`;
+        return cuposGlobales[key] || 0;
     }
     
     function getDisponibles(fecha, horario) {
         return CAPACIDAD_MAXIMA - getOcupados(fecha, horario);
     }
     
-    function actualizarCupos() {
+    async function cargarCuposDesdeSheet() {
+        mostrarLoading(true);
+        try {
+            const response = await fetch(GOOGLE_SHEETS_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ accion: "obtenerCupos" })
+            });
+            const result = await response.json();
+            if (result.success && result.cupos) {
+                cuposGlobales = {};
+                result.cupos.forEach(cupo => {
+                    const key = `${cupo.fecha}_${cupo.horario}`;
+                    cuposGlobales[key] = cupo.ocupados;
+                });
+            }
+        } catch(e) {
+            console.error("Error cargando cupos:", e);
+        }
+        mostrarLoading(false);
+        actualizarCuposUI();
+    }
+    
+    async function actualizarCupoEnSheet(fecha, horario, cantidad) {
+        try {
+            await fetch(GOOGLE_SHEETS_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    accion: "actualizarCupo", 
+                    fecha: fecha, 
+                    horario: horario, 
+                    cantidad: cantidad 
+                })
+            });
+        } catch(e) {
+            console.error("Error actualizando cupo:", e);
+        }
+    }
+    
+    async function guardarReservaEnSheet(reservaArray) {
+        try {
+            await fetch(GOOGLE_SHEETS_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ accion: "guardarReserva", reserva: reservaArray })
+            });
+            return true;
+        } catch(e) {
+            console.error("Error guardando reserva:", e);
+            return false;
+        }
+    }
+    
+    function actualizarCuposUI() {
         const fecha = document.getElementById("fechaPaseo").value;
         if (!fecha) return;
         
@@ -159,36 +227,19 @@
         
         if (morningDisp <= 0 && afternoonDisp <= 0) {
             document.getElementById("tourExtra").style.display = "block";
+            document.getElementById("extraCupo").innerHTML = getDisponibles(fecha, "extra") + " lugares";
         } else {
             document.getElementById("tourExtra").style.display = "none";
         }
-    }
-    
-    function guardarLocal() {
-        localStorage.setItem("angel_reservas", JSON.stringify(reservasPorFecha));
-    }
-    
-    function cargarLocal() {
-        const saved = localStorage.getItem("angel_reservas");
-        if (saved) reservasPorFecha = JSON.parse(saved);
-        document.getElementById("valorAdulto").innerHTML = `R$ ${tarifas.adulto}`;
-        document.getElementById("valorMenor").innerHTML = `R$ ${tarifas.menor}`;
-    }
-    
-    async function enviarGoogleSheets(reservaArray) {
-        try {
-            await fetch(GOOGLE_SHEETS_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ reserva: reservaArray })
-            });
-            console.log("Datos enviados a Google Sheets:", reservaArray);
-            return true;
-        } catch(e) {
-            console.error("Error al enviar:", e);
-            return false;
-        }
+        
+        const morningCard = document.getElementById("cardMorning");
+        const afternoonCard = document.getElementById("cardAfternoon");
+        
+        if (morningDisp <= 0) morningCard.style.opacity = "0.5";
+        else morningCard.style.opacity = "1";
+        
+        if (afternoonDisp <= 0) afternoonCard.style.opacity = "0.5";
+        else afternoonCard.style.opacity = "1";
     }
     
     function enviarWhatsApp(reserva) {
@@ -213,8 +264,7 @@
     }
     
     function cerrarModal() {
-        const modal = document.getElementById("modalConfirmacion");
-        modal.style.display = "none";
+        document.getElementById("modalConfirmacion").style.display = "none";
     }
     
     function actualizarPreview() {
@@ -224,17 +274,16 @@
         document.getElementById("totalPreview").innerHTML = `R$ ${total.toFixed(2)}`;
     }
     
-    document.addEventListener("DOMContentLoaded", function() {
-        // Asegurar que el modal esté oculto al cargar
-        const modal = document.getElementById("modalConfirmacion");
-        if(modal) {
-            modal.style.display = "none";
-        }
+    document.addEventListener("DOMContentLoaded", async function() {
+        // Ocultar modal inicialmente
+        document.getElementById("modalConfirmacion").style.display = "none";
         
-        cargarLocal();
+        // Cargar cupos desde Google Sheets
+        await cargarCuposDesdeSheet();
+        
         actualizarPreview();
         
-        document.getElementById("fechaPaseo").addEventListener("change", actualizarCupos);
+        document.getElementById("fechaPaseo").addEventListener("change", actualizarCuposUI);
         document.getElementById("adultos").addEventListener("input", actualizarPreview);
         document.getElementById("menores").addEventListener("input", actualizarPreview);
         
@@ -251,8 +300,8 @@
             radio.checked = true;
         }
         
-        if(morningCard) morningCard.onclick = () => seleccionarHorario(morningCard, radioMorning);
-        if(afternoonCard) afternoonCard.onclick = () => seleccionarHorario(afternoonCard, radioAfternoon);
+        morningCard.onclick = () => seleccionarHorario(morningCard, radioMorning);
+        afternoonCard.onclick = () => seleccionarHorario(afternoonCard, radioAfternoon);
         if(extraCard) extraCard.onclick = () => seleccionarHorario(extraCard, radioExtra);
         
         document.getElementById("reservaForm").addEventListener("submit", async (e) => {
@@ -294,48 +343,44 @@
             ];
             
             mostrarToast("Guardando reserva...");
+            mostrarLoading(true);
             
-            await enviarGoogleSheets(datosSheet);
+            const success = await guardarReservaEnSheet(datosSheet);
             
-            const ocupados = getOcupados(fechaPaseo, horario);
-            reservasPorFecha[fechaPaseo] = reservasPorFecha[fechaPaseo] || {};
-            reservasPorFecha[fechaPaseo][horario] = ocupados + adultos + menores;
-            guardarLocal();
-            actualizarCupos();
+            if (success) {
+                // Actualizar cupos localmente
+                const key = `${fechaPaseo}_${horario}`;
+                cuposGlobales[key] = (cuposGlobales[key] || 0) + adultos + menores;
+                await actualizarCupoEnSheet(fechaPaseo, horario, adultos + menores);
+                
+                actualizarCuposUI();
+                
+                const reservaObj = { id, nombre, empresa, hotelDireccion, email, whatsapp, fechaPaseo, fechaOut, horario, adultos, menores, montoTotal };
+                enviarWhatsApp(reservaObj);
+                mostrarPopup(reservaObj);
+                
+                document.getElementById("reservaForm").reset();
+                document.getElementById("adultos").value = "1";
+                document.querySelectorAll('input[name="horario"]').forEach(r => r.checked = false);
+                document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("selected"));
+                actualizarPreview();
+                
+                mostrarToast("✅ Reserva confirmada y guardada");
+            } else {
+                mostrarToast("Error al guardar. Intente nuevamente.", true);
+            }
             
-            const reservaObj = { id, nombre, empresa, hotelDireccion, email, whatsapp, fechaPaseo, fechaOut, horario, adultos, menores, montoTotal };
-            enviarWhatsApp(reservaObj);
-            mostrarPopup(reservaObj);
-            
-            document.getElementById("reservaForm").reset();
-            document.getElementById("adultos").value = "1";
-            document.querySelectorAll('input[name="horario"]').forEach(r => r.checked = false);
-            document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("selected"));
-            actualizarPreview();
-            
-            mostrarToast("✅ Reserva confirmada y guardada");
+            mostrarLoading(false);
         });
         
-        // ✅ Botón para cerrar el modal
-        const btnCerrar = document.getElementById("btnCerrarModal");
-        if(btnCerrar) {
-            btnCerrar.addEventListener("click", cerrarModal);
-        }
-        
-        // Cerrar modal haciendo clic fuera del contenido
-        if(modal) {
-            modal.addEventListener("click", function(e) {
-                if(e.target === modal) {
-                    cerrarModal();
-                }
-            });
-        }
+        document.getElementById("btnCerrarModal").addEventListener("click", cerrarModal);
+        document.getElementById("modalConfirmacion").addEventListener("click", function(e) {
+            if(e.target === this) cerrarModal();
+        });
         
         const hoy = new Date().toISOString().split('T')[0];
         document.getElementById("fechaPaseo").min = hoy;
         document.getElementById("fechaOut").min = hoy;
-        
-        actualizarCupos();
     });
 </script>
 </body>
