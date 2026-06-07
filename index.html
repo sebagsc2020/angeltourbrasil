@@ -8,13 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        
-        body {
-            background: linear-gradient(135deg, #0a2b3e 0%, #0d3b4f 50%, #115e6b 100%);
-            min-height: 100vh;
-            padding: 1rem;
-        }
-        
+        body { background: linear-gradient(135deg, #0a2b3e 0%, #0d3b4f 50%, #115e6b 100%); min-height: 100vh; padding: 1rem; }
         .container { max-width: 56rem; margin: 0 auto; }
         .card-naval { background: white; border-radius: 2rem; box-shadow: 0 25px 45px -12px rgba(0,0,0,0.35); overflow: hidden; }
         .gradient-naval { background: linear-gradient(105deg, #0e4b5e 0%, #1b7a7a 100%); padding: 1.25rem 1.5rem; color: white; }
@@ -93,47 +87,16 @@
         .justify-center { justify-content: center; }
         .justify-between { justify-content: space-between; }
         .shadow-xl { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
-        
-        .weather-container {
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-            border-radius: 1rem;
-            padding: 0.75rem;
-            margin: 0.75rem 0 1.25rem 0;
-        }
-        .weather-title {
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #0369a1;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-        .weather-buttons {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .weather-btn {
-            background: white;
-            border: 1px solid #cbd5e1;
-            border-radius: 0.75rem;
-            padding: 0.5rem;
-            min-width: 70px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
+        .weather-container { background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); border-radius: 1rem; padding: 0.75rem; margin: 0.75rem 0 1.25rem 0; }
+        .weather-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #0369a1; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .weather-buttons { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
+        .weather-btn { background: white; border: 1px solid #cbd5e1; border-radius: 0.75rem; padding: 0.5rem; min-width: 70px; text-align: center; cursor: pointer; transition: all 0.2s ease; }
         .weather-btn:hover { transform: translateY(-2px); border-color: #10b981; }
         .weather-btn.active { background: #10b981; border-color: #10b981; color: white; }
         .weather-day { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; }
         .weather-icon { font-size: 0.9rem; margin: 0.15rem 0; }
         .weather-temp { font-size: 0.7rem; font-weight: 800; }
         .weather-info-detalle { text-align: center; font-size: 0.7rem; color: #0c4a6e; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed #93c5fd; }
-        
         .cupo-alert { background: #fef2f2; border: 1px solid #fecaca; border-radius: 0.75rem; padding: 0.75rem; margin-top: 0.5rem; text-align: center; }
         .cupo-alert span { color: #991b1b; font-weight: 600; }
     </style>
@@ -369,9 +332,10 @@
     
     // ==================== RESERVAS ====================
     const CAPACIDAD_MAXIMA = 160;
-    let googleSheetUrl = "https://script.google.com/macros/s/AKfycbzuJ3Lfw1HEP-k0zksTBoflxaYoNXQAgN3uJ7TvK2LweRYmBxUlX_7OU7v-Y3r1Ohxv9w/exec";
+    // ⚠️ CAMBIA ESTA URL POR LA QUE OBTENGAS DE APPS SCRIPT ⚠️
+    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbyFG6RmmTxuZr8lz9MX6_re6tUMigMGP8RcmbV-qqlMTjZBJeluPXibZtTlDT0TqWErjw/exec";
+    
     let reservasPorFecha = {};
-    let reservasAngel = [];
     let tarifasAngel = { adulto: 180, menor: 90 };
     
     function getOcupados(fecha, horario) {
@@ -423,19 +387,17 @@
     }
     
     async function enviarGoogleSheets(reservaArray) {
-        if (!googleSheetUrl) {
-            console.warn("URL de Google Sheets no configurada");
-            return false;
-        }
         try {
-            const response = await fetch(googleSheetUrl, { 
+            console.log("Enviando a Google Sheets:", reservaArray);
+            const response = await fetch(GOOGLE_SHEETS_URL, { 
                 method: "POST", 
+                mode: "cors",
                 headers: { "Content-Type": "application/json" }, 
                 body: JSON.stringify({ reserva: reservaArray }) 
             });
             const result = await response.json();
             console.log("Respuesta de Google Sheets:", result);
-            return result.success;
+            return result.success === true;
         } catch(e) { 
             console.error("Error al enviar a Sheets:", e);
             return false;
@@ -444,157 +406,4 @@
     
     function enviarWhatsApp(reserva) {
         let horarioLabel = reserva.horario === "morning" ? "🌅 Tour Mañana (09:00-12:00)" : (reserva.horario === "afternoon" ? "🌇 Tour Tarde (14:00-17:00)" : "⭐ Tour Extra (18:00-21:00)");
-        const mensaje = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0A✨ *Datos:*%0A┣ 📌 Nombre: ${reserva.nombre}%0A┣ 🏨 Hotel: ${reserva.hotelDireccion}%0A┣ 📧 Email: ${reserva.email}%0A┣ 📱 WhatsApp: ${reserva.whatsapp}%0A┣ 🏢 Empresa: ${reserva.empresa}%0A%0A⛵ *Paseo:*%0A┣ 📅 Fecha Paseo: ${reserva.fechaPaseo}%0A┣ 📅 Fecha OUT: ${reserva.fechaOut}%0A┣ ⏰ Horario: ${horarioLabel}%0A┣ 👥 ${reserva.adultos} adultos, ${reserva.menores} menores%0A┣ 🎫 Código: ${reserva.id}%0A┗ 💰 Total: R$ ${reserva.montoTotal}%0A%0A🌊 *¡Gracias por elegirnos!* 🌊`;
-        window.open(`https://wa.me/${reserva.whatsapp.replace(/\D/g, '')}?text=${mensaje}`, '_blank');
-    }
-    
-    async function crearReserva(datos) {
-        const { nombre, hotelDireccion, email, whatsapp, empresa, fechaPaseo, fechaOut, horario, adultos, menores } = datos;
-        
-        const disponibles = getDisponibles(fechaPaseo, horario);
-        if (adultos + menores > disponibles) {
-            return { success: false, error: `Cupos insuficientes para ${fechaPaseo}. Quedan ${disponibles} lugares.` };
-        }
-        
-        const id = `ATB-${Math.floor(Math.random()*9000+1000)}-${Date.now().toString().slice(-5)}`;
-        const montoTotal = (adultos * tarifasAngel.adulto) + (menores * tarifasAngel.menor);
-        
-        // Array en el orden correcto para Google Sheets
-        const datosSheet = [
-            id, fechaPaseo, nombre, empresa, adultos, menores,
-            horario === "morning" ? "🌅 Tour Mañana" : (horario === "afternoon" ? "🌇 Tour Tarde" : "⭐ Tour Extra"),
-            montoTotal, hotelDireccion, email, whatsapp, fechaOut, "Confirmado"
-        ];
-        
-        // Enviar a Google Sheets
-        const sheetResult = await enviarGoogleSheets(datosSheet);
-        
-        if (!sheetResult) {
-            console.warn("No se pudo guardar en Google Sheets, pero se continúa con la reserva local");
-        }
-        
-        // Actualizar cupos locales
-        const ocupadosActual = getOcupados(fechaPaseo, horario);
-        reservasPorFecha[fechaPaseo] = reservasPorFecha[fechaPaseo] || {};
-        reservasPorFecha[fechaPaseo][horario] = ocupadosActual + adultos + menores;
-        guardarLocal();
-        actualizarCuposUI();
-        
-        const reservaObj = { id, nombre, hotelDireccion, email, whatsapp, empresa, fechaPaseo, fechaOut, horario, adultos, menores, montoTotal };
-        return { success: true, reserva: reservaObj };
-    }
-    
-    function mostrarPopup(reserva) {
-        const modal = document.getElementById("modalConfirmacion");
-        const resumenDiv = document.getElementById("modalResumenInfo");
-        let horarioNombre = reserva.horario === "morning" ? "🌅 Mañana (09:00-12:00)" : (reserva.horario === "afternoon" ? "🌇 Tarde (14:00-17:00)" : "⭐ Tour Extra (18:00-21:00)");
-        resumenDiv.innerHTML = `
-            <p><i class="fas fa-user-check"></i> <strong>${reserva.nombre}</strong></p>
-            <p><i class="fas fa-building"></i> ${reserva.empresa}</p>
-            <p><i class="fas fa-calendar-day"></i> Fecha Paseo: ${reserva.fechaPaseo}</p>
-            <p><i class="fas fa-clock"></i> ${horarioNombre}</p>
-            <p><i class="fas fa-users"></i> ${reserva.adultos} adultos, ${reserva.menores} menores</p>
-            <p class="text-xs text-gray-500 mt-2">Código: ${reserva.id}</p>
-        `;
-        modal.classList.add("active");
-    }
-    
-    function cerrarModal() { document.getElementById("modalConfirmacion").classList.remove("active"); }
-    
-    function actualizarPreview() {
-        const adultos = parseInt(document.getElementById("adultos").value) || 0;
-        const menores = parseInt(document.getElementById("menores").value) || 0;
-        const total = (adultos * tarifasAngel.adulto) + (menores * tarifasAngel.menor);
-        document.getElementById("totalPreviewAngel").innerHTML = `R$ ${total.toFixed(2)}`;
-    }
-    
-    function mostrarToast(msg, error = false) {
-        const toast = document.getElementById("toastAngel");
-        toast.textContent = msg;
-        toast.style.background = error ? "#dc2626" : "#1f2937";
-        toast.classList.remove("hidden");
-        setTimeout(() => toast.classList.add("hidden"), 4000);
-    }
-    
-    // Inicialización
-    document.addEventListener("DOMContentLoaded", function() {
-        renderWeatherButtons();
-        cargarDatos();
-        actualizarPreview();
-        
-        document.getElementById("fechaPaseo").addEventListener("change", function() {
-            actualizarCuposUI();
-            document.querySelectorAll('input[name="horario"]').forEach(r => r.checked = false);
-            document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("horario-selected"));
-        });
-        
-        // Selector de horarios
-        const cardM = document.getElementById("cardMorning");
-        const cardA = document.getElementById("cardAfternoon");
-        const cardE = document.getElementById("cardExtra");
-        const radioM = document.querySelector('input[value="morning"]');
-        const radioA = document.querySelector('input[value="afternoon"]');
-        const radioE = document.querySelector('input[value="extra"]');
-        
-        function limpiar() { document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("horario-selected")); }
-        function seleccionar(card, radio) { limpiar(); card.classList.add("horario-selected"); if(radio) radio.checked = true; document.getElementById("errorHorarioAngel").classList.add("hidden"); }
-        
-        if(cardM) cardM.onclick = () => { const disp = getDisponibles(document.getElementById("fechaPaseo").value, "morning"); if(disp > 0) seleccionar(cardM, radioM); else mostrarToast("Tour Mañana sin cupos", true); };
-        if(cardA) cardA.onclick = () => { const disp = getDisponibles(document.getElementById("fechaPaseo").value, "afternoon"); if(disp > 0) seleccionar(cardA, radioA); else mostrarToast("Tour Tarde sin cupos", true); };
-        if(cardE) cardE.onclick = () => { seleccionar(cardE, radioE); };
-        
-        document.getElementById("formReservaAngel").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const nombre = document.getElementById("nombre").value.trim();
-            const hotelDireccion = document.getElementById("hotelDireccion").value.trim();
-            const email = document.getElementById("email").value.trim();
-            const whatsapp = document.getElementById("whatsapp").value.trim();
-            const empresa = document.getElementById("empresa").value.trim();
-            const fechaPaseo = document.getElementById("fechaPaseo").value;
-            const fechaOut = document.getElementById("fechaOut").value;
-            const adultos = parseInt(document.getElementById("adultos").value) || 0;
-            const menores = parseInt(document.getElementById("menores").value) || 0;
-            const horario = document.querySelector('input[name="horario"]:checked')?.value;
-            
-            if (!nombre || !hotelDireccion || !email || !whatsapp || !fechaPaseo || !fechaOut || !empresa) { 
-                mostrarToast("Complete todos los campos", true); 
-                return; 
-            }
-            if (!horario) { 
-                document.getElementById("errorHorarioAngel").classList.remove("hidden"); 
-                return; 
-            }
-            
-            mostrarToast("Procesando reserva...");
-            
-            const result = await crearReserva({ nombre, hotelDireccion, email, whatsapp, empresa, fechaPaseo, fechaOut, horario, adultos, menores });
-            if (!result.success) { 
-                mostrarToast(result.error, true); 
-                return; 
-            }
-            
-            enviarWhatsApp(result.reserva);
-            mostrarPopup(result.reserva);
-            
-            document.getElementById("formReservaAngel").reset();
-            document.getElementById("adultos").value = "1";
-            document.getElementById("menores").value = "0";
-            document.querySelectorAll('input[name="horario"]').forEach(r => r.checked = false);
-            document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("horario-selected"));
-            actualizarPreview();
-            mostrarToast("✅ Reserva confirmada");
-        });
-        
-        document.getElementById("adultos").addEventListener("input", actualizarPreview);
-        document.getElementById("menores").addEventListener("input", actualizarPreview);
-        
-        const hoy = new Date().toISOString().split('T')[0];
-        document.getElementById("fechaPaseo").min = hoy;
-        document.getElementById("fechaOut").min = hoy;
-        
-        document.getElementById("cerrarModalBtn").addEventListener("click", cerrarModal);
-        document.getElementById("btnCerrarModal").addEventListener("click", cerrarModal);
-    });
-</script>
-</body>
-</html>
+        const mensaje = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0A✨ *Datos:*%0A┣ 📌 Nombre: ${reserva.nombre}%
