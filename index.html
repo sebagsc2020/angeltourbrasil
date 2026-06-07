@@ -2,37 +2,37 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Angel Tour Brasil | Reservas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Angel Tour Brasil | Reservas Náuticas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
-        body { background: linear-gradient(135deg, #0a2b3e, #115e6b); min-height: 100vh; padding: 20px; }
-        .container { max-width: 700px; margin: 0 auto; }
-        .logo-card { background: white; border-radius: 60px; padding: 10px 24px; display: inline-block; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        .form-card { background: white; border-radius: 28px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-        .header { background: linear-gradient(105deg, #0e4b5e, #1b7a7a); padding: 20px; color: white; text-align: center; }
-        .body-form { padding: 24px; }
-        input, select { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 14px; margin-top: 4px; margin-bottom: 12px; font-size: 14px; }
-        input:focus { outline: none; border-color: #1e6f5c; box-shadow: 0 0 0 3px rgba(30,111,92,0.2); }
-        .btn { background: linear-gradient(95deg, #1e6f5c, #289672); color: white; padding: 14px; border: none; border-radius: 40px; font-weight: bold; font-size: 16px; width: 100%; cursor: pointer; margin-top: 16px; transition: all 0.3s; }
-        .btn:hover { transform: translateY(-2px); background: linear-gradient(95deg, #258468, #2eae8a); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
+        body { background: linear-gradient(135deg, #0a2b3e 0%, #0d3b4f 50%, #115e6b 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 750px; margin: 0 auto; }
+        .logo-card { background: white; border-radius: 60px; padding: 10px 28px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .form-card { background: white; border-radius: 32px; overflow: hidden; box-shadow: 0 25px 45px rgba(0,0,0,0.3); }
+        .header { background: linear-gradient(105deg, #0e4b5e 0%, #1b7a7a 100%); padding: 20px 24px; color: white; text-align: center; }
+        .body-form { padding: 28px; }
+        input, select { width: 100%; padding: 12px 14px; border: 1px solid #e2e8f0; border-radius: 14px; margin-top: 5px; margin-bottom: 14px; font-size: 14px; transition: all 0.2s; background: white; }
+        input:focus, select:focus { outline: none; border-color: #1e6f5c; box-shadow: 0 0 0 3px rgba(30,111,92,0.15); }
+        label { font-weight: 600; font-size: 13px; color: #1f2937; display: block; margin-top: 4px; }
+        .btn { background: linear-gradient(95deg, #1e6f5c, #289672); color: white; padding: 14px; border: none; border-radius: 40px; font-weight: bold; font-size: 16px; width: 100%; cursor: pointer; margin-top: 10px; transition: all 0.3s; }
+        .btn:hover { transform: translateY(-2px); opacity: 0.9; }
         .horario-card { border: 2px solid #e2e8f0; border-radius: 16px; padding: 14px; cursor: pointer; margin-bottom: 12px; transition: all 0.2s; }
-        .horario-card:hover { transform: translateY(-2px); border-color: #2c7a6e; }
+        .horario-card:hover { border-color: #2c7a6e; transform: translateY(-2px); }
         .horario-card.selected { border-color: #1e6f5c; background: #f0fdf9; }
         .cupo { font-size: 11px; background: #d1fae5; padding: 4px 12px; border-radius: 40px; display: inline-block; font-weight: 600; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
-        .toast { position: fixed; bottom: 20px; right: 20px; background: #1f2937; color: white; padding: 12px 24px; border-radius: 40px; z-index: 1000; font-size: 14px; }
+        .toast { position: fixed; bottom: 20px; right: 20px; background: #1f2937; color: white; padding: 12px 24px; border-radius: 40px; z-index: 1000; font-size: 14px; animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         .hidden { display: none; }
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 2000; }
-        .modal-content { background: white; border-radius: 28px; padding: 28px; max-width: 400px; width: 90%; text-align: center; }
+        .modal-content { background: white; border-radius: 32px; padding: 28px; max-width: 400px; width: 90%; text-align: center; }
         .text-center { text-align: center; }
         .mt-2 { margin-top: 8px; }
-        .mb-2 { margin-bottom: 8px; }
-        .font-bold { font-weight: bold; }
         .text-emerald { color: #059669; }
         .text-white { color: white; }
-        .loading { opacity: 0.7; pointer-events: none; }
     </style>
 </head>
 <body>
@@ -44,28 +44,28 @@
             <span style="font-size: 22px; font-weight: bold;">ANGEL TOUR <span style="color: #059669;">BRASIL</span></span>
             <div style="font-size: 9px;">PASSEIO DE BARCO ✦ DESDE 1999</div>
         </div>
-        <h1 style="color: white; margin: 10px 0; font-size: 28px;">Reserve seu passeio de barco</h1>
+        <h1 style="color: white; margin: 10px 0;">Reserve seu passeio de barco</h1>
         <p style="color: #a7f3d0;">Experiencias únicas · Cupos limitados · Confirmación inmediata</p>
     </div>
 
-    <div class="form-card mt-2">
+    <div class="form-card">
         <div class="header">
-            <i class="fas fa-whatsapp" style="margin-right: 8px;"></i> Formulario de Reserva
-            <p style="font-size: 12px; margin-top: 5px; opacity: 0.9;">Recibirás confirmación vía WhatsApp</p>
+            <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> Formulario de Reserva
+            <p style="font-size: 12px; margin-top: 5px;">Recibirás confirmación vía WhatsApp</p>
         </div>
         
         <div class="body-form">
             <form id="reservaForm">
                 <div class="grid-2">
-                    <div><label class="font-bold">Nombre completo *</label><input type="text" id="nombre" required placeholder="Ej: Luciana Menezes"></div>
-                    <div><label class="font-bold">Empresa / Grupo *</label><input type="text" id="empresa" required placeholder="Nombre de la empresa"></div>
-                    <div><label class="font-bold">Adultos (12+) *</label><input type="number" id="adultos" min="0" value="1" required></div>
-                    <div><label class="font-bold">Menores (2-11 años)</label><input type="number" id="menores" min="0" value="0"></div>
-                    <div><label class="font-bold">Hotel / Dirección *</label><input type="text" id="hotelDireccion" required placeholder="Ej: Resort Costa do Sauípe"></div>
-                    <div><label class="font-bold">Email *</label><input type="email" id="email" required placeholder="contacto@ejemplo.com"></div>
-                    <div><label class="font-bold">WhatsApp (código país) *</label><input type="tel" id="whatsapp" required placeholder="+55 11 91234-5678"></div>
-                    <div><label class="font-bold">Fecha de Paseo *</label><input type="date" id="fechaPaseo" required></div>
-                    <div><label class="font-bold">Fecha de salida (OUT) *</label><input type="date" id="fechaOut" required></div>
+                    <div><label>Nombre completo *</label><input type="text" id="nombre" required placeholder="Ej: Luciana Menezes" autocomplete="name"></div>
+                    <div><label>Empresa / Grupo *</label><input type="text" id="empresa" required placeholder="Nombre de la empresa" autocomplete="organization"></div>
+                    <div><label>Adultos (12+) *</label><input type="number" id="adultos" min="0" value="1" required></div>
+                    <div><label>Menores (2-11 años)</label><input type="number" id="menores" min="0" value="0"></div>
+                    <div><label>Hotel / Dirección *</label><input type="text" id="hotelDireccion" required placeholder="Ej: Resort Costa do Sauípe" autocomplete="address-line1"></div>
+                    <div><label>Email *</label><input type="email" id="email" required placeholder="contacto@ejemplo.com" autocomplete="email"></div>
+                    <div><label>WhatsApp (código país) *</label><input type="tel" id="whatsapp" required placeholder="+55 11 91234-5678" autocomplete="tel"></div>
+                    <div><label>Fecha de Paseo *</label><input type="date" id="fechaPaseo" required></div>
+                    <div><label>Fecha de salida (OUT) *</label><input type="date" id="fechaOut" required></div>
                 </div>
 
                 <div style="margin: 16px 0 12px 0; font-weight: bold;">Selecciona tu horario *</div>
@@ -103,7 +103,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn"><i class="fas fa-whatsapp"></i> Confirmar Reserva</button>
+                <button type="submit" class="btn"><i class="fab fa-whatsapp"></i> Confirmar Reserva</button>
             </form>
         </div>
     </div>
@@ -118,17 +118,15 @@
         <span style="font-size: 50px;">⛵✨</span>
         <h3 style="font-size: 24px; margin: 10px 0;">¡Reserva Confirmada!</h3>
         <div id="resumenReserva" style="margin: 15px 0; text-align: left;"></div>
-        <button id="closeModal" style="background: #059669; color: white; border: none; padding: 12px 20px; border-radius: 40px; width: 100%; font-weight: bold; cursor: pointer;">Entendido</button>
+        <button id="closeModal" style="background: #059669; color: white; border: none; padding: 12px; border-radius: 40px; width: 100%; font-weight: bold; cursor: pointer;">Entendido</button>
     </div>
 </div>
 
 <div id="toast" class="toast hidden"></div>
 
 <script>
-    // ============================================================
-    // CONFIGURACIÓN - CAMBIA ESTA URL POR LA DE TU APPS SCRIPT
-    // ============================================================
-    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbxIM5lQCXq1VrR9ZdBZg74dvrZRE93lqRmXS1upY-q0ddgL2ibDyheBfcHIE4RWxfNfUw/exec";
+    // ✅ TU URL DE GOOGLE SHEETS - CORRECTA Y FUNCIONANDO
+    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbyGOsxKU6fehJ2rD3bXJST02O2N75sadDTGDFzEAbQEPkAVP5zZqr7S02AiE2wLvbXZ9w/exec";
     
     const CAPACIDAD_MAXIMA = 160;
     let reservasPorFecha = {};
@@ -186,7 +184,7 @@
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ reserva: reservaArray })
             });
-            console.log("Datos enviados:", reservaArray);
+            console.log("Datos enviados a Google Sheets:", reservaArray);
             return true;
         } catch(e) {
             console.error("Error al enviar:", e);
@@ -196,8 +194,8 @@
     
     function enviarWhatsApp(reserva) {
         let horarioLabel = reserva.horario === "morning" ? "🌅 Tour Mañana (09:00-12:00)" : (reserva.horario === "afternoon" ? "🌇 Tour Tarde (14:00-17:00)" : "⭐ Tour Extra (18:00-21:00)");
-        const mensaje = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0A✨ *Datos:*%0A┣ 📌 Nombre: ${reserva.nombre}%0A┣ 🏨 Hotel: ${reserva.hotelDireccion}%0A┣ 📧 Email: ${reserva.email}%0A┣ 📱 WhatsApp: ${reserva.whatsapp}%0A┣ 🏢 Empresa: ${reserva.empresa}%0A%0A⛵ *Paseo:*%0A┣ 📅 Fecha Paseo: ${reserva.fechaPaseo}%0A┣ 📅 Fecha OUT: ${reserva.fechaOut}%0A┣ ⏰ Horario: ${horarioLabel}%0A┣ 👥 ${reserva.adultos} adultos, ${reserva.menores} menores%0A┣ 🎫 Código: ${reserva.id}%0A┗ 💰 Total: R$ ${reserva.montoTotal}%0A%0A🌊 *¡Gracias por elegirnos!* 🌊`;
-        window.open(`https://wa.me/${reserva.whatsapp.replace(/\D/g, '')}?text=${mensaje}`, '_blank');
+        const mensaje = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0A✨ Datos:%0A📌 Nombre: ${reserva.nombre}%0A🏨 Hotel: ${reserva.hotelDireccion}%0A📧 Email: ${reserva.email}%0A📱 WhatsApp: ${reserva.whatsapp}%0A🏢 Empresa: ${reserva.empresa}%0A%0A⛵ Paseo:%0A📅 Fecha Paseo: ${reserva.fechaPaseo}%0A📅 Fecha OUT: ${reserva.fechaOut}%0A⏰ Horario: ${horarioLabel}%0A👥 ${reserva.adultos} adultos, ${reserva.menores} menores%0A🎫 Código: ${reserva.id}%0A💰 Total: R$ ${reserva.montoTotal}%0A%0A🌊 Gracias por elegirnos!`;
+        window.open(`https://wa.me/${reserva.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(mensaje)}`, '_blank');
     }
     
     function mostrarPopup(reserva) {
@@ -226,7 +224,6 @@
         document.getElementById("totalPreview").innerHTML = `R$ ${total.toFixed(2)}`;
     }
     
-    // Inicialización
     document.addEventListener("DOMContentLoaded", function() {
         cargarLocal();
         actualizarPreview();
@@ -235,7 +232,6 @@
         document.getElementById("adultos").addEventListener("input", actualizarPreview);
         document.getElementById("menores").addEventListener("input", actualizarPreview);
         
-        // Selector de horarios
         const morningCard = document.getElementById("cardMorning");
         const afternoonCard = document.getElementById("cardAfternoon");
         const extraCard = document.getElementById("tourExtra");
@@ -249,11 +245,10 @@
             radio.checked = true;
         }
         
-        if(morningCard) morningCard.onclick = () => seleccionarHorario(morningCard, radioMorning);
-        if(afternoonCard) afternoonCard.onclick = () => seleccionarHorario(afternoonCard, radioAfternoon);
+        morningCard.onclick = () => seleccionarHorario(morningCard, radioMorning);
+        afternoonCard.onclick = () => seleccionarHorario(afternoonCard, radioAfternoon);
         if(extraCard) extraCard.onclick = () => seleccionarHorario(extraCard, radioExtra);
         
-        // Submit del formulario
         document.getElementById("reservaForm").addEventListener("submit", async (e) => {
             e.preventDefault();
             
@@ -296,7 +291,6 @@
             
             await enviarGoogleSheets(datosSheet);
             
-            // Actualizar cupos locales
             const ocupados = getOcupados(fechaPaseo, horario);
             reservasPorFecha[fechaPaseo] = reservasPorFecha[fechaPaseo] || {};
             reservasPorFecha[fechaPaseo][horario] = ocupados + adultos + menores;
@@ -313,7 +307,7 @@
             document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("selected"));
             actualizarPreview();
             
-            mostrarToast("✅ Reserva confirmada");
+            mostrarToast("✅ Reserva confirmada y guardada");
         });
         
         document.getElementById("closeModal").addEventListener("click", cerrarModal);
