@@ -415,14 +415,12 @@
 
 <script>
     // ==================== PREVISIÓN METEOROLÓGICA ====================
-    const diasSemana = ['DOM', 'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB'];
-    const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-    
-    function getWeatherData() {
-        const hoy = new Date();
-        const datos = [];
+    // Función que se ejecuta inmediatamente cuando el DOM está listo
+    (function() {
+        const diasSemana = ['DOM', 'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB'];
+        const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
         
-        // Condiciones climáticas realistas para Porto Belo (costa de Santa Catarina)
+        // Datos climáticos para Porto Belo
         const climas = [
             { icono: 'fas fa-sun', temp: '29°C', sensacion: '31°C', desc: 'Soleado', viento: '12 km/h', humedad: '65%', lluvia: '0%' },
             { icono: 'fas fa-cloud-sun', temp: '27°C', sensacion: '29°C', desc: 'Parcialmente nublado', viento: '14 km/h', humedad: '68%', lluvia: '5%' },
@@ -433,69 +431,83 @@
             { icono: 'fas fa-cloud-rain', temp: '23°C', sensacion: '24°C', desc: 'Lluvias aisladas', viento: '20 km/h', humedad: '88%', lluvia: '70%' }
         ];
         
-        for (let i = 0; i < 4; i++) {
-            const fecha = new Date(hoy);
-            fecha.setDate(hoy.getDate() + i);
-            const diaSemana = diasSemana[fecha.getDay()];
-            const dia = fecha.getDate();
-            const mes = meses[fecha.getMonth()];
-            const fechaStr = `${dia} ${mes}`;
+        function getWeatherData() {
+            const hoy = new Date();
+            const datos = [];
             
-            // Alternar climas para variedad
-            const climaIndex = i % climas.length;
-            datos.push({
-                id: i,
-                diaSemana: diaSemana,
-                fecha: fechaStr,
-                fechaCompleta: `${diaSemana} ${fechaStr}`,
-                ...climas[climaIndex]
+            for (let i = 0; i < 4; i++) {
+                const fecha = new Date(hoy);
+                fecha.setDate(hoy.getDate() + i);
+                const diaSemana = diasSemana[fecha.getDay()];
+                const dia = fecha.getDate();
+                const mes = meses[fecha.getMonth()];
+                const fechaStr = `${dia} ${mes}`;
+                
+                const climaIndex = i % climas.length;
+                datos.push({
+                    id: i,
+                    diaSemana: diaSemana,
+                    fecha: fechaStr,
+                    fechaCompleta: `${diaSemana} ${fechaStr}`,
+                    ...climas[climaIndex]
+                });
+            }
+            return datos;
+        }
+        
+        let weatherData = getWeatherData();
+        let selectedWeatherIndex = 0;
+        
+        function renderWeatherButtons() {
+            const container = document.getElementById('weatherButtons');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            weatherData.forEach((item, idx) => {
+                const btn = document.createElement('div');
+                btn.className = `weather-btn ${idx === selectedWeatherIndex ? 'active' : ''}`;
+                btn.innerHTML = `
+                    <div class="weather-day">${item.diaSemana}</div>
+                    <div class="weather-icon"><i class="${item.icono}"></i></div>
+                    <div class="weather-temp">${item.temp}</div>
+                    <div class="weather-desc">${item.desc}</div>
+                `;
+                btn.onclick = (function(index, weatherItem) {
+                    return function() {
+                        selectedWeatherIndex = index;
+                        renderWeatherButtons();
+                        updateWeatherDetail(weatherItem);
+                    };
+                })(idx, item);
+                container.appendChild(btn);
             });
+            
+            updateWeatherDetail(weatherData[selectedWeatherIndex]);
         }
-        return datos;
-    }
-    
-    let weatherData = getWeatherData();
-    let selectedWeatherIndex = 0;
-    
-    function renderWeatherButtons() {
-        const container = document.getElementById('weatherButtons');
-        if (!container) return;
         
-        container.innerHTML = '';
-        weatherData.forEach((item, idx) => {
-            const btn = document.createElement('div');
-            btn.className = `weather-btn ${idx === selectedWeatherIndex ? 'active' : ''}`;
-            btn.innerHTML = `
-                <div class="weather-day">${item.diaSemana}</div>
-                <div class="weather-icon"><i class="${item.icono}"></i></div>
-                <div class="weather-temp">${item.temp}</div>
-                <div class="weather-desc">${item.desc}</div>
-            `;
-            btn.onclick = () => {
-                selectedWeatherIndex = idx;
+        function updateWeatherDetail(data) {
+            const detailDiv = document.getElementById('weatherDetail');
+            if (detailDiv && data) {
+                detailDiv.innerHTML = `
+                    <i class="fas fa-map-marker-alt"></i> Porto Belo · ${data.fechaCompleta} &nbsp;|&nbsp;
+                    <i class="${data.icono}"></i> ${data.desc} &nbsp;|&nbsp;
+                    🌡️ ${data.temp} (sensación ${data.sensacion}) &nbsp;|&nbsp;
+                    💨 ${data.viento} &nbsp;|&nbsp;
+                    💧 ${data.humedad} &nbsp;|&nbsp;
+                    ☔ Lluvia: ${data.lluvia}
+                `;
+            }
+        }
+        
+        // Esperar a que el DOM esté completamente cargado
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
                 renderWeatherButtons();
-                updateWeatherDetail(item);
-            };
-            container.appendChild(btn);
-        });
-        
-        // Mostrar detalle del día seleccionado
-        updateWeatherDetail(weatherData[selectedWeatherIndex]);
-    }
-    
-    function updateWeatherDetail(data) {
-        const detailDiv = document.getElementById('weatherDetail');
-        if (detailDiv) {
-            detailDiv.innerHTML = `
-                <i class="fas fa-map-marker-alt"></i> Porto Belo · ${data.fechaCompleta} &nbsp;|&nbsp;
-                <i class="${data.icono}"></i> ${data.desc} &nbsp;|&nbsp;
-                🌡️ ${data.temp} (sensación ${data.sensacion}) &nbsp;|&nbsp;
-                💨 ${data.viento} &nbsp;|&nbsp;
-                💧 ${data.humedad} &nbsp;|&nbsp;
-                ☔ Lluvia: ${data.lluvia}
-            `;
+            });
+        } else {
+            renderWeatherButtons();
         }
-    }
+    })();
     
     // ==================== CONFIGURACIÓN RESERVAS ====================
     const CAPACIDAD_MAXIMA = 160;
@@ -788,70 +800,70 @@
         document.getElementById("totalPreviewAngel").innerHTML = `R$ ${total.toFixed(2)}`;
     }
 
-    document.getElementById("formReservaAngel").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const nombre = document.getElementById("nombre").value.trim();
-        const hotelDireccion = document.getElementById("hotelDireccion").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const whatsapp = document.getElementById("whatsapp").value.trim();
-        const empresa = document.getElementById("empresa").value.trim();
-        const fechaOut = document.getElementById("fechaOut").value;
-        const adultos = parseInt(document.getElementById("adultos").value) || 0;
-        const menores = parseInt(document.getElementById("menores").value) || 0;
-        const horario = document.querySelector('input[name="horario"]:checked')?.value;
-        
-        if (!nombre || !hotelDireccion || !email || !whatsapp || !fechaOut || !empresa) { 
-            mostrarToast("Complete todos los campos obligatorios (*) - Empresa es obligatorio", true); 
-            return; 
-        }
-        if (!horario) { 
-            document.getElementById("errorHorarioAngel").classList.remove("hidden"); 
-            return; 
-        }
-        if (adultos === 0 && menores === 0) { 
-            mostrarToast("Agregue al menos un pasajero", true); 
-            return; 
-        }
-        if (whatsapp.replace(/\D/g, '').length < 11) { 
-            mostrarToast("WhatsApp inválido (código país requerido, ej: +55...)", true); 
-            return; 
-        }
-        
-        const result = crearReserva({ nombre, hotelDireccion, email, whatsapp, empresa, fechaOut, horario, adultos, menores });
-        if (!result.success) { 
-            mostrarToast(result.error, true); 
-            return; 
-        }
-        
-        enviarWhatsApp(result.reserva);
-        mostrarPopup(result.reserva);
-        
-        document.getElementById("formReservaAngel").reset();
-        document.getElementById("adultos").value = "1";
-        document.getElementById("menores").value = "0";
-        document.querySelectorAll('input[name="horario"]').forEach(r => r.checked = false);
-        document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("horario-selected"));
+    // Inicializar eventos después de que el DOM esté listo
+    document.addEventListener("DOMContentLoaded", function() {
+        cargarDatos();
+        initHorarioSelector();
         actualizarPreview();
-        mostrarToast("✅ Reserva confirmada. ¡Revise el popup con los horarios de zarpe!");
-    });
+        
+        document.getElementById("formReservaAngel").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const nombre = document.getElementById("nombre").value.trim();
+            const hotelDireccion = document.getElementById("hotelDireccion").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const whatsapp = document.getElementById("whatsapp").value.trim();
+            const empresa = document.getElementById("empresa").value.trim();
+            const fechaOut = document.getElementById("fechaOut").value;
+            const adultos = parseInt(document.getElementById("adultos").value) || 0;
+            const menores = parseInt(document.getElementById("menores").value) || 0;
+            const horario = document.querySelector('input[name="horario"]:checked')?.value;
+            
+            if (!nombre || !hotelDireccion || !email || !whatsapp || !fechaOut || !empresa) { 
+                mostrarToast("Complete todos los campos obligatorios (*) - Empresa es obligatorio", true); 
+                return; 
+            }
+            if (!horario) { 
+                document.getElementById("errorHorarioAngel").classList.remove("hidden"); 
+                return; 
+            }
+            if (adultos === 0 && menores === 0) { 
+                mostrarToast("Agregue al menos un pasajero", true); 
+                return; 
+            }
+            if (whatsapp.replace(/\D/g, '').length < 11) { 
+                mostrarToast("WhatsApp inválido (código país requerido, ej: +55...)", true); 
+                return; 
+            }
+            
+            const result = crearReserva({ nombre, hotelDireccion, email, whatsapp, empresa, fechaOut, horario, adultos, menores });
+            if (!result.success) { 
+                mostrarToast(result.error, true); 
+                return; 
+            }
+            
+            enviarWhatsApp(result.reserva);
+            mostrarPopup(result.reserva);
+            
+            document.getElementById("formReservaAngel").reset();
+            document.getElementById("adultos").value = "1";
+            document.getElementById("menores").value = "0";
+            document.querySelectorAll('input[name="horario"]').forEach(r => r.checked = false);
+            document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("horario-selected"));
+            actualizarPreview();
+            mostrarToast("✅ Reserva confirmada. ¡Revise el popup con los horarios de zarpe!");
+        });
 
-    document.getElementById("adultos").addEventListener("input", actualizarPreview);
-    document.getElementById("menores").addEventListener("input", actualizarPreview);
-    document.getElementById("fechaOut").min = new Date().toISOString().split('T')[0];
-    document.getElementById("cerrarModalBtn").addEventListener("click", cerrarModal);
-    document.getElementById("btnCerrarModal").addEventListener("click", cerrarModal);
-    document.getElementById("modalConfirmacion").addEventListener("click", (e) => { 
-        if(e.target === document.getElementById("modalConfirmacion")) cerrarModal(); 
+        document.getElementById("adultos").addEventListener("input", actualizarPreview);
+        document.getElementById("menores").addEventListener("input", actualizarPreview);
+        document.getElementById("fechaOut").min = new Date().toISOString().split('T')[0];
+        document.getElementById("cerrarModalBtn").addEventListener("click", cerrarModal);
+        document.getElementById("btnCerrarModal").addEventListener("click", cerrarModal);
+        document.getElementById("modalConfirmacion").addEventListener("click", (e) => { 
+            if(e.target === document.getElementById("modalConfirmacion")) cerrarModal(); 
+        });
     });
-
-    cargarDatos();
-    initHorarioSelector();
-    actualizarPreview();
     
-    // Inicializar el pronóstico del tiempo
-    renderWeatherButtons();
-    
-    console.log("⚓ Angel Tour Brasil - Sistema inicializado correctamente. Clima cargado.");
+    console.log("⚓ Angel Tour Brasil - Sistema inicializado correctamente.");
 </script>
 </body>
 </html>
