@@ -58,13 +58,13 @@
         <div class="body-form">
             <form id="reservaForm">
                 <div class="grid-2">
-                    <div><label>Nombre completo *</label><input type="text" id="nombre" required placeholder="Ej: Luciana Menezes" autocomplete="name"></div>
-                    <div><label>Empresa / Grupo *</label><input type="text" id="empresa" required placeholder="Nombre de la empresa" autocomplete="organization"></div>
+                    <div><label>Nombre completo *</label><input type="text" id="nombre" required placeholder="Ej: Luciana Menezes"></div>
+                    <div><label>Empresa / Grupo *</label><input type="text" id="empresa" required placeholder="Nombre de la empresa"></div>
                     <div><label>Adultos (12+) *</label><input type="number" id="adultos" min="0" value="1" required></div>
                     <div><label>Menores (2-11 años)</label><input type="number" id="menores" min="0" value="0"></div>
-                    <div><label>Hotel / Dirección *</label><input type="text" id="hotelDireccion" required placeholder="Ej: Resort Costa do Sauípe" autocomplete="address-line1"></div>
-                    <div><label>Email *</label><input type="email" id="email" required placeholder="contacto@ejemplo.com" autocomplete="email"></div>
-                    <div><label>WhatsApp (código país) *</label><input type="tel" id="whatsapp" required placeholder="+55 11 91234-5678" autocomplete="tel"></div>
+                    <div><label>Hotel / Dirección *</label><input type="text" id="hotelDireccion" required placeholder="Ej: Resort Costa do Sauípe"></div>
+                    <div><label>Email *</label><input type="email" id="email" required placeholder="contacto@ejemplo.com"></div>
+                    <div><label>WhatsApp (código país) *</label><input type="tel" id="whatsapp" required placeholder="+55 11 91234-5678"></div>
                     <div><label>Fecha de Paseo *</label><input type="date" id="fechaPaseo" required></div>
                     <div><label>Fecha de salida (OUT) *</label><input type="date" id="fechaOut" required></div>
                 </div>
@@ -129,10 +129,11 @@
 </div>
 
 <script>
-    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbyO3Z6DGTznI3Rl2cdfHRTypmt-adE22_y_9Fuzc5cnVAXAILHYFpc6GlJpeKK3rKTM_g/exec";
-    const CAPACIDAD_MAXIMA = 160;
+    // ✅ TU NUEVA URL DE GOOGLE SHEETS
+    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbwqubJIKwMWPPtWGpdres0fhDb7TD8gZMJrome6TG0r7vcVRj4QI_018Imn854BkoyDvw/exec";
     
-    let cuposGlobales = {}; // { "fecha_morning": ocupados, "fecha_afternoon": ocupados }
+    const CAPACIDAD_MAXIMA = 160;
+    let cuposGlobales = {};
     let tarifas = { adulto: 180, menor: 90 };
     
     function mostrarToast(msg, error = false) {
@@ -184,6 +185,21 @@
         actualizarCuposUI();
     }
     
+    async function guardarReservaEnSheet(reservaArray) {
+        try {
+            const response = await fetch(GOOGLE_SHEETS_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ accion: "guardarReserva", reserva: reservaArray })
+            });
+            const result = await response.json();
+            return result.success === true;
+        } catch(e) {
+            console.error("Error guardando reserva:", e);
+            return false;
+        }
+    }
+    
     async function actualizarCupoEnSheet(fecha, horario, cantidad) {
         try {
             await fetch(GOOGLE_SHEETS_URL, {
@@ -198,20 +214,6 @@
             });
         } catch(e) {
             console.error("Error actualizando cupo:", e);
-        }
-    }
-    
-    async function guardarReservaEnSheet(reservaArray) {
-        try {
-            await fetch(GOOGLE_SHEETS_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ accion: "guardarReserva", reserva: reservaArray })
-            });
-            return true;
-        } catch(e) {
-            console.error("Error guardando reserva:", e);
-            return false;
         }
     }
     
@@ -231,15 +233,6 @@
         } else {
             document.getElementById("tourExtra").style.display = "none";
         }
-        
-        const morningCard = document.getElementById("cardMorning");
-        const afternoonCard = document.getElementById("cardAfternoon");
-        
-        if (morningDisp <= 0) morningCard.style.opacity = "0.5";
-        else morningCard.style.opacity = "1";
-        
-        if (afternoonDisp <= 0) afternoonCard.style.opacity = "0.5";
-        else afternoonCard.style.opacity = "1";
     }
     
     function enviarWhatsApp(reserva) {
@@ -275,12 +268,9 @@
     }
     
     document.addEventListener("DOMContentLoaded", async function() {
-        // Ocultar modal inicialmente
         document.getElementById("modalConfirmacion").style.display = "none";
         
-        // Cargar cupos desde Google Sheets
         await cargarCuposDesdeSheet();
-        
         actualizarPreview();
         
         document.getElementById("fechaPaseo").addEventListener("change", actualizarCuposUI);
@@ -289,10 +279,8 @@
         
         const morningCard = document.getElementById("cardMorning");
         const afternoonCard = document.getElementById("cardAfternoon");
-        const extraCard = document.getElementById("tourExtra");
         const radioMorning = document.querySelector('input[value="morning"]');
         const radioAfternoon = document.querySelector('input[value="afternoon"]');
-        const radioExtra = document.querySelector('input[value="extra"]');
         
         function seleccionarHorario(card, radio) {
             document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("selected"));
@@ -302,7 +290,6 @@
         
         morningCard.onclick = () => seleccionarHorario(morningCard, radioMorning);
         afternoonCard.onclick = () => seleccionarHorario(afternoonCard, radioAfternoon);
-        if(extraCard) extraCard.onclick = () => seleccionarHorario(extraCard, radioExtra);
         
         document.getElementById("reservaForm").addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -348,11 +335,9 @@
             const success = await guardarReservaEnSheet(datosSheet);
             
             if (success) {
-                // Actualizar cupos localmente
                 const key = `${fechaPaseo}_${horario}`;
                 cuposGlobales[key] = (cuposGlobales[key] || 0) + adultos + menores;
                 await actualizarCupoEnSheet(fechaPaseo, horario, adultos + menores);
-                
                 actualizarCuposUI();
                 
                 const reservaObj = { id, nombre, empresa, hotelDireccion, email, whatsapp, fechaPaseo, fechaOut, horario, adultos, menores, montoTotal };
