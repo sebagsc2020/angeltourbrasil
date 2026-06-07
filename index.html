@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* ESTILOS COMPLETOS - SIN DEPENDENCIA EXTERNA DE TAILWIND */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
         body {
@@ -52,6 +51,8 @@
         .horario-destacado { background: linear-gradient(95deg, #1e6f5c10, #28967210); border-left: 4px solid #1e6f5c; border-radius: 0.75rem; padding: 1rem; margin: 0.75rem 0; }
         .grid-2 { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
         @media (min-width: 768px) { .grid-2 { grid-template-columns: repeat(2, 1fr); } }
+        .grid-3 { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+        @media (min-width: 1024px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
         .flex-between { display: flex; justify-content: space-between; align-items: center; }
         .text-center { text-align: center; }
         .mt-1 { margin-top: 0.25rem; }
@@ -81,6 +82,7 @@
         .bg-emerald-100 { background: #d1fae5; }
         .bg-rose-100 { background: #ffe4e6; }
         .bg-gray-50 { background: #f9fafb; }
+        .bg-purple-100 { background: #f3e8ff; }
         .text-white { color: white; }
         .text-gray-800 { color: #1f2937; }
         .text-gray-700 { color: #374151; }
@@ -91,7 +93,7 @@
         .text-emerald-800 { color: #065f46; }
         .text-emerald-600 { color: #059669; }
         .text-emerald-500 { color: #10b981; }
-        .text-emerald-100 { color: #d1fae5; }
+        .text-purple-700 { color: #6b21a5; }
         .text-rose-700 { color: #be123c; }
         .text-xs { font-size: 0.75rem; }
         .text-sm { font-size: 0.875rem; }
@@ -130,6 +132,7 @@
         .transition { transition: all 0.2s ease; }
         .hover\:bg-gray-300:hover { background: #d1d5db; }
         .hover\:bg-emerald-700:hover { background: #047857; }
+        .badge-extra { background: linear-gradient(95deg, #7c3aed20, #8b5cf620); border: 1px solid #8b5cf6; }
     </style>
 </head>
 <body>
@@ -186,8 +189,9 @@
                         <input type="tel" id="whatsapp" required class="input-angel" placeholder="+55 11 91234-5678">
                         <p class="text-xs text-gray-400 mt-1">Incluir código: +55 para Brasil</p></div>
                         
-                        <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-building text-emerald-600 mr-1"></i> Empresa (opcional)</label>
-                        <input type="text" id="empresa" class="input-angel" placeholder="Agencia o grupo"></div>
+                        <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-building text-emerald-600 mr-1"></i> Empresa / Grupo *</label>
+                        <input type="text" id="empresa" required class="input-angel" placeholder="Nombre de la empresa (obligatorio)">
+                        <p class="text-xs text-gray-400 mt-1">Campo obligatorio</p></div>
                         
                         <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-calendar-alt text-emerald-600 mr-1"></i> Fecha de salida (OUT) *</label>
                         <input type="date" id="fechaOut" required class="input-angel"></div>
@@ -200,10 +204,11 @@
                         <p class="text-xs text-gray-400">Menores de 2 años sin cargo</p></div>
                     </div>
 
-                    <!-- HORARIOS con capacidad 160 y mensaje "XX Lugares libres de 160" -->
+                    <!-- HORARIOS: Mañana, Tarde y Extra (solo aparece si los dos primeros están llenos) -->
                     <div class="mt-7">
                         <label class="block text-gray-800 font-bold mb-3"><i class="fas fa-ship text-emerald-600 mr-2"></i> Selecciona tu horario de navegación *</label>
-                        <div class="grid-2">
+                        <div id="horariosContainer" class="grid-2">
+                            <!-- Tour Mañana -->
                             <div id="cardMorning" class="horario-card">
                                 <div class="flex-between">
                                     <div>
@@ -211,14 +216,15 @@
                                         <div class="text-sm text-gray-500">09:00 - 12:00 hrs</div>
                                         <div class="mt-3">
                                             <div id="cupoMorningDisplay" class="cupo-badge bg-emerald-100 text-emerald-700">
-                                                <i class="fas fa-chair"></i> <span id="morningLibres">--</span> Lugares libres de 160
+                                                <i class="fas fa-chair"></i> <span id="morningLibres">--</span> / 160 lugares
                                             </div>
                                         </div>
                                     </div>
                                     <div class="w-6 h-6 rounded-full border-2 border-gray-300"></div>
                                 </div>
-                                <input type="radio" name="horario" value="morning" class="hidden">
+                                <input type="radio" name="horario" value="morning" class="hidden horario-radio-main">
                             </div>
+                            <!-- Tour Tarde -->
                             <div id="cardAfternoon" class="horario-card">
                                 <div class="flex-between">
                                     <div>
@@ -226,13 +232,31 @@
                                         <div class="text-sm text-gray-500">14:00 - 17:00 hrs</div>
                                         <div class="mt-3">
                                             <div id="cupoAfternoonDisplay" class="cupo-badge bg-emerald-100 text-emerald-700">
-                                                <i class="fas fa-chair"></i> <span id="afternoonLibres">--</span> Lugares libres de 160
+                                                <i class="fas fa-chair"></i> <span id="afternoonLibres">--</span> / 160 lugares
                                             </div>
                                         </div>
                                     </div>
                                     <div class="w-6 h-6 rounded-full border-2 border-gray-300"></div>
                                 </div>
-                                <input type="radio" name="horario" value="afternoon" class="hidden">
+                                <input type="radio" name="horario" value="afternoon" class="hidden horario-radio-main">
+                            </div>
+                        </div>
+                        <div id="tourExtraContainer" class="mt-4 hidden">
+                            <div id="cardExtra" class="horario-card" style="border-color: #8b5cf6; background: linear-gradient(95deg, #f3e8ff, #faf5ff);">
+                                <div class="flex-between">
+                                    <div>
+                                        <div class="font-extrabold text-lg">⭐ Tour Extra (Horario Especial)</div>
+                                        <div class="text-sm text-gray-600">18:00 - 21:00 hrs · Salida extraordinaria</div>
+                                        <div class="mt-3">
+                                            <div class="cupo-badge bg-purple-100 text-purple-700">
+                                                <i class="fas fa-star"></i> <span id="extraLibres">160</span> / 160 lugares disponibles
+                                            </div>
+                                        </div>
+                                        <p class="text-xs text-purple-600 mt-2"><i class="fas fa-info-circle"></i> Horario activado por alta demanda</p>
+                                    </div>
+                                    <div class="w-6 h-6 rounded-full border-2 border-purple-400"></div>
+                                </div>
+                                <input type="radio" name="horario" value="extra" class="hidden horario-radio-extra">
                             </div>
                         </div>
                         <p id="errorHorarioAngel" class="text-amber-700 text-sm mt-2 hidden">⚠️ Por favor, elige un horario con cupos disponibles</p>
@@ -254,6 +278,7 @@
                         </button>
                     </div>
                     <div class="text-center text-xs text-gray-400 mt-5 flex justify-center gap-4">
+                        <span><i class="fas fa-database text-emerald-500"></i> Datos guardados en Google Sheets</span>
                         <span><i class="fas fa-clock text-emerald-500"></i> Cupos actualizados en tiempo real</span>
                     </div>
                 </form>
@@ -283,6 +308,7 @@
                     <p class="font-bold text-gray-800">📅 Horarios de salida de los barcos</p>
                     <p class="text-sm text-gray-700 mt-1">🌅 <strong>Turno Mañana:</strong> Zarpamos a las <strong class="text-emerald-700">09:00 AM</strong>. Abordaje 30 minutos antes.</p>
                     <p class="text-sm text-gray-700 mt-1">🌇 <strong>Turno Tarde:</strong> Zarpamos a las <strong class="text-emerald-700">14:00 PM</strong>. Abordaje desde 13:30.</p>
+                    <p class="text-sm text-gray-700 mt-1">⭐ <strong>Tour Extra:</strong> Horario especial por alta demanda - <strong class="text-purple-700">18:00 PM</strong></p>
                     <p class="text-xs text-gray-500 mt-2"><i class="fas fa-ship"></i> Capacidad: 160 pasajeros por turno</p>
                 </div>
             </div>
@@ -299,7 +325,8 @@
     
     let horariosAngel = {
         morning: { id: "morning", nombre: "Tour Mañana", cupoMaximo: CAPACIDAD_MAXIMA, ocupados: 0 },
-        afternoon: { id: "afternoon", nombre: "Tour Tarde", cupoMaximo: CAPACIDAD_MAXIMA, ocupados: 0 }
+        afternoon: { id: "afternoon", nombre: "Tour Tarde", cupoMaximo: CAPACIDAD_MAXIMA, ocupados: 0 },
+        extra: { id: "extra", nombre: "Tour Extra", cupoMaximo: CAPACIDAD_MAXIMA, ocupados: 0, activo: false }
     };
     let tarifasAngel = { adulto: 180, menor: 90 };
     let googleSheetUrl = "https://script.google.com/macros/s/AKfycbz8-h9CPfXDHZgwBP4K_g6tWTXOT-W757xrCWNrzEr1pX9iKIGpLeUdV9i3jO4UMOZ7DA/exec";
@@ -317,6 +344,13 @@
     function recalcularOcupados() {
         horariosAngel.morning.ocupados = reservasAngel.filter(r => r.horario === "morning" && r.estado === "Confirmado").reduce((s, r) => s + r.adultos + r.menores, 0);
         horariosAngel.afternoon.ocupados = reservasAngel.filter(r => r.horario === "afternoon" && r.estado === "Confirmado").reduce((s, r) => s + r.adultos + r.menores, 0);
+        horariosAngel.extra.ocupados = reservasAngel.filter(r => r.horario === "extra" && r.estado === "Confirmado").reduce((s, r) => s + r.adultos + r.menores, 0);
+        
+        // Verificar si ambos horarios principales están completos para activar Tour Extra
+        const morningFull = horariosAngel.morning.ocupados >= CAPACIDAD_MAXIMA;
+        const afternoonFull = horariosAngel.afternoon.ocupados >= CAPACIDAD_MAXIMA;
+        horariosAngel.extra.activo = morningFull && afternoonFull;
+        
         guardarLocal();
         actualizarCuposUI();
     }
@@ -324,36 +358,44 @@
     function actualizarCuposUI() {
         const mDisp = CAPACIDAD_MAXIMA - horariosAngel.morning.ocupados;
         const aDisp = CAPACIDAD_MAXIMA - horariosAngel.afternoon.ocupados;
+        const eDisp = CAPACIDAD_MAXIMA - horariosAngel.extra.ocupados;
         
-        const morningLibresSpan = document.getElementById("morningLibres");
-        const afternoonLibresSpan = document.getElementById("afternoonLibres");
+        document.getElementById("morningLibres").textContent = mDisp;
+        document.getElementById("afternoonLibres").textContent = aDisp;
+        
         const morningDiv = document.getElementById("cupoMorningDisplay");
         const afternoonDiv = document.getElementById("cupoAfternoonDisplay");
+        morningDiv.className = `cupo-badge ${mDisp <= 20 ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}`;
+        afternoonDiv.className = `cupo-badge ${aDisp <= 20 ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}`;
         
-        if (morningLibresSpan) {
-            morningLibresSpan.textContent = mDisp;
-            morningDiv.className = `cupo-badge ${mDisp <= 20 ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}`;
-        }
-        if (afternoonLibresSpan) {
-            afternoonLibresSpan.textContent = aDisp;
-            afternoonDiv.className = `cupo-badge ${aDisp <= 20 ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}`;
+        // Mostrar/ocultar Tour Extra
+        const extraContainer = document.getElementById("tourExtraContainer");
+        const horariosContainer = document.getElementById("horariosContainer");
+        
+        if (horariosAngel.extra.activo) {
+            extraContainer.classList.remove("hidden");
+            horariosContainer.classList.add("grid-3");
+            horariosContainer.classList.remove("grid-2");
+            document.getElementById("extraLibres").textContent = eDisp;
+        } else {
+            extraContainer.classList.add("hidden");
+            horariosContainer.classList.remove("grid-3");
+            horariosContainer.classList.add("grid-2");
         }
         
+        // Deshabilitar horarios llenos
         const cardM = document.getElementById("cardMorning");
         const cardA = document.getElementById("cardAfternoon");
-        if (mDisp <= 0) { 
-            cardM.classList.add("opacity-50", "cursor-not-allowed"); 
-            cardM.style.pointerEvents = "none"; 
-        } else { 
-            cardM.classList.remove("opacity-50", "cursor-not-allowed"); 
-            cardM.style.pointerEvents = "auto"; 
-        }
-        if (aDisp <= 0) { 
-            cardA.classList.add("opacity-50", "cursor-not-allowed"); 
-            cardA.style.pointerEvents = "none"; 
-        } else { 
-            cardA.classList.remove("opacity-50", "cursor-not-allowed"); 
-            cardA.style.pointerEvents = "auto"; 
+        const cardE = document.getElementById("cardExtra");
+        
+        cardM.classList.toggle("opacity-50", mDisp <= 0);
+        cardM.style.pointerEvents = mDisp <= 0 ? "none" : "auto";
+        cardA.classList.toggle("opacity-50", aDisp <= 0);
+        cardA.style.pointerEvents = aDisp <= 0 ? "none" : "auto";
+        
+        if (cardE) {
+            cardE.classList.toggle("opacity-50", eDisp <= 0);
+            cardE.style.pointerEvents = eDisp <= 0 ? "none" : "auto";
         }
     }
 
@@ -378,15 +420,20 @@
     async function enviarGoogleSheets(reserva) {
         if (!googleSheetUrl) return;
         
-        // Calcular totales por horario para enviar a Sheets
-        const totalMorning = horariosAngel.morning.ocupados;
-        const totalAfternoon = horariosAngel.afternoon.ocupados;
-        
-        const datosCompletos = {
-            ...reserva,
-            totalMorning: totalMorning,
-            totalAfternoon: totalAfternoon,
-            capacidadMaxima: CAPACIDAD_MAXIMA
+        // Datos simplificados - sin Total Mañana ni Total Tarde
+        const datosEnvio = {
+            id: reserva.id,
+            nombre: reserva.nombre,
+            hotelDireccion: reserva.hotelDireccion,
+            email: reserva.email,
+            whatsapp: reserva.whatsapp,
+            empresa: reserva.empresa,
+            fechaOut: reserva.fechaOut,
+            horario: reserva.horario === "morning" ? "🌅 Tour Mañana (09:00)" : (reserva.horario === "afternoon" ? "🌇 Tour Tarde (14:00)" : "⭐ Tour Extra (18:00)"),
+            adultos: reserva.adultos,
+            menores: reserva.menores,
+            montoTotal: reserva.montoTotal,
+            estado: reserva.estado
         };
         
         try {
@@ -394,7 +441,7 @@
                 method: "POST", 
                 mode: "no-cors", 
                 headers: { "Content-Type": "application/json" }, 
-                body: JSON.stringify({ reserva: datosCompletos }) 
+                body: JSON.stringify({ reserva: datosEnvio }) 
             });
             console.log("✅ Datos enviados a Google Sheets:", reserva.id);
         } catch(e) { 
@@ -403,24 +450,46 @@
     }
 
     function enviarWhatsApp(reserva) {
-        const horarioLabel = reserva.horario === "morning" ? "🌅 Tour Mañana (09:00-12:00)" : "🌇 Tour Tarde (14:00-17:00)";
-        const cuposRestantes = CAPACIDAD_MAXIMA - (reserva.horario === "morning" ? horariosAngel.morning.ocupados : horariosAngel.afternoon.ocupados);
-        const mensaje = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0A✨ *Datos del pasajero:*%0A┣ 📌 Nombre: ${reserva.nombre}%0A┣ 🏨 Hotel/Dirección: ${reserva.hotelDireccion}%0A┣ 📧 Email: ${reserva.email}%0A┣ 📱 WhatsApp: ${reserva.whatsapp}%0A%0A⛵ *Detalles del paseo:*%0A┣ 📅 Fecha OUT: ${reserva.fechaOut}%0A┣ ⏰ Horario: ${horarioLabel}%0A┣ 👥 Adultos: ${reserva.adultos} | Menores: ${reserva.menores}%0A┣ 🎫 Código reserva: ${reserva.id}%0A┣ 📊 Cupos restantes en este horario: ${cuposRestantes} / ${CAPACIDAD_MAXIMA}%0A┗ 💰 Monto total: R$ ${reserva.montoTotal}%0A%0A🌊 *¡Gracias por elegir Angel Tour Brasil!* 🌊%0AResponda este mensaje para cualquier consulta. ¡Buen viaje!`;
+        let horarioLabel = "";
+        if (reserva.horario === "morning") horarioLabel = "🌅 Tour Mañana (09:00-12:00)";
+        else if (reserva.horario === "afternoon") horarioLabel = "🌇 Tour Tarde (14:00-17:00)";
+        else horarioLabel = "⭐ Tour Extra (18:00-21:00)";
+        
+        let cuposRestantes = 0;
+        if (reserva.horario === "morning") cuposRestantes = CAPACIDAD_MAXIMA - horariosAngel.morning.ocupados;
+        else if (reserva.horario === "afternoon") cuposRestantes = CAPACIDAD_MAXIMA - horariosAngel.afternoon.ocupados;
+        else cuposRestantes = CAPACIDAD_MAXIMA - horariosAngel.extra.ocupados;
+        
+        const mensaje = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0A✨ *Datos del pasajero:*%0A┣ 📌 Nombre: ${reserva.nombre}%0A┣ 🏨 Hotel/Dirección: ${reserva.hotelDireccion}%0A┣ 📧 Email: ${reserva.email}%0A┣ 📱 WhatsApp: ${reserva.whatsapp}%0A┣ 🏢 Empresa: ${reserva.empresa}%0A%0A⛵ *Detalles del paseo:*%0A┣ 📅 Fecha OUT: ${reserva.fechaOut}%0A┣ ⏰ Horario: ${horarioLabel}%0A┣ 👥 Adultos: ${reserva.adultos} | Menores: ${reserva.menores}%0A┣ 🎫 Código reserva: ${reserva.id}%0A┣ 📊 Cupos restantes en este horario: ${cuposRestantes} / ${CAPACIDAD_MAXIMA}%0A┗ 💰 Monto total: R$ ${reserva.montoTotal}%0A%0A🌊 *¡Gracias por elegir Angel Tour Brasil!* 🌊`;
         const numeroLimpio = reserva.whatsapp.replace(/\D/g, '');
         window.open(`https://wa.me/${numeroLimpio}?text=${mensaje}`, '_blank');
     }
 
     function crearReserva(datos) {
         const { nombre, hotelDireccion, email, whatsapp, empresa, fechaOut, horario, adultos, menores } = datos;
-        const horarioData = horario === "morning" ? horariosAngel.morning : horariosAngel.afternoon;
-        const disponibles = CAPACIDAD_MAXIMA - horarioData.ocupados;
-        if (adultos + menores > disponibles) {
-            return { success: false, error: `Cupos insuficientes para ${horario === "morning" ? "Tour Mañana" : "Tour Tarde"}. Lugares libres: ${disponibles}.` };
+        
+        let horarioData;
+        let disponibles;
+        
+        if (horario === "morning") {
+            horarioData = horariosAngel.morning;
+            disponibles = CAPACIDAD_MAXIMA - horarioData.ocupados;
+        } else if (horario === "afternoon") {
+            horarioData = horariosAngel.afternoon;
+            disponibles = CAPACIDAD_MAXIMA - horarioData.ocupados;
+        } else {
+            horarioData = horariosAngel.extra;
+            disponibles = CAPACIDAD_MAXIMA - horarioData.ocupados;
         }
+        
+        if (adultos + menores > disponibles) {
+            return { success: false, error: `Cupos insuficientes. Lugares libres: ${disponibles}.` };
+        }
+        
         const id = `ATB-${Math.floor(Math.random()*9000+1000)}-${Date.now().toString().slice(-5)}`;
         const montoTotal = (adultos * tarifasAngel.adulto) + (menores * tarifasAngel.menor);
         const nuevaReserva = { 
-            id, nombre, hotelDireccion, email, whatsapp, empresa: empresa || "", fechaOut,
+            id, nombre, hotelDireccion, email, whatsapp, empresa, fechaOut,
             horario, adultos, menores, montoTotal, 
             estado: "Confirmado", fechaRegistro: new Date().toISOString() 
         };
@@ -434,15 +503,18 @@
     function mostrarPopup(reserva) {
         const modal = document.getElementById("modalConfirmacion");
         const resumenDiv = document.getElementById("modalResumenInfo");
-        const horarioNombre = reserva.horario === "morning" ? "🌅 Mañana (09:00 - 12:00 hrs)" : "🌇 Tarde (14:00 - 17:00 hrs)";
-        const cuposRestantes = CAPACIDAD_MAXIMA - (reserva.horario === "morning" ? horariosAngel.morning.ocupados : horariosAngel.afternoon.ocupados);
+        let horarioNombre = "";
+        if (reserva.horario === "morning") horarioNombre = "🌅 Mañana (09:00 - 12:00 hrs)";
+        else if (reserva.horario === "afternoon") horarioNombre = "🌇 Tarde (14:00 - 17:00 hrs)";
+        else horarioNombre = "⭐ Tour Extra (18:00 - 21:00 hrs)";
+        
         resumenDiv.innerHTML = `
             <p class="text-sm text-gray-500 mb-2"><i class="fas fa-check-circle text-emerald-500"></i> <strong>Reserva confirmada</strong></p>
             <p><i class="fas fa-user-check text-emerald-500"></i> <strong>${reserva.nombre}</strong></p>
+            <p><i class="fas fa-building"></i> <strong>Empresa:</strong> ${reserva.empresa}</p>
             <p><i class="fas fa-calendar-day"></i> <strong>Fecha:</strong> ${reserva.fechaOut}</p>
             <p><i class="fas fa-clock"></i> <strong>Horario:</strong> ${horarioNombre}</p>
             <p><i class="fas fa-users"></i> Pasajeros: ${reserva.adultos} adultos, ${reserva.menores} menores</p>
-            <p><i class="fas fa-chair"></i> Lugares libres restantes: <strong class="text-emerald-700">${cuposRestantes}</strong> / ${CAPACIDAD_MAXIMA}</p>
             <p class="text-xs text-gray-500 mt-2 border-t pt-2"><i class="fas fa-ticket-alt"></i> Código: ${reserva.id}</p>
         `;
         modal.classList.add("active");
@@ -455,8 +527,11 @@
     function initHorarioSelector() {
         const cardM = document.getElementById("cardMorning");
         const cardA = document.getElementById("cardAfternoon");
+        const cardE = document.getElementById("cardExtra");
         const radioM = document.querySelector('input[value="morning"]');
         const radioA = document.querySelector('input[value="afternoon"]');
+        const radioE = document.querySelector('input[value="extra"]');
+        
         function limpiar() { document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("horario-selected")); }
         function seleccionar(card, radio) { 
             limpiar(); 
@@ -464,6 +539,7 @@
             radio.checked = true; 
             document.getElementById("errorHorarioAngel").classList.add("hidden"); 
         }
+        
         cardM.onclick = () => { 
             const disponibles = CAPACIDAD_MAXIMA - horariosAngel.morning.ocupados;
             if (disponibles > 0) seleccionar(cardM, radioM); 
@@ -474,6 +550,13 @@
             if (disponibles > 0) seleccionar(cardA, radioA); 
             else mostrarToast("Tour Tarde sin cupos disponibles", true); 
         };
+        if (cardE) {
+            cardE.onclick = () => { 
+                const disponibles = CAPACIDAD_MAXIMA - horariosAngel.extra.ocupados;
+                if (disponibles > 0 && horariosAngel.extra.activo) seleccionar(cardE, radioE); 
+                else mostrarToast("Tour Extra sin cupos disponibles", true); 
+            };
+        }
     }
 
     function actualizarPreview() {
@@ -495,8 +578,8 @@
         const menores = parseInt(document.getElementById("menores").value) || 0;
         const horario = document.querySelector('input[name="horario"]:checked')?.value;
         
-        if (!nombre || !hotelDireccion || !email || !whatsapp || !fechaOut) { 
-            mostrarToast("Complete todos los campos obligatorios (*)", true); 
+        if (!nombre || !hotelDireccion || !email || !whatsapp || !fechaOut || !empresa) { 
+            mostrarToast("Complete todos los campos obligatorios (*) - Empresa es obligatorio", true); 
             return; 
         }
         if (!horario) { 
@@ -543,15 +626,7 @@
     initHorarioSelector();
     actualizarPreview();
     
-    window.editarCupos = (m, a) => { 
-        if(m !== undefined && m >= 0) horariosAngel.morning.cupoMaximo = m; 
-        if(a !== undefined && a >= 0) horariosAngel.afternoon.cupoMaximo = a; 
-        guardarLocal(); 
-        recalcularOcupados(); 
-        mostrarToast("Cupos máximos actualizados");
-    };
-    
-    console.log("⚓ Angel Tour Brasil - Capacidad: 160 lugares por horario");
+    console.log("⚓ Angel Tour Brasil - Capacidad: 160 lugares por horario | Tour Extra disponible cuando se completen Mañana y Tarde");
 </script>
 </body>
 </html>
