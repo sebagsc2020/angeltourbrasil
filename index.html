@@ -95,7 +95,6 @@
         .text-emerald-500 { color: #10b981; }
         .text-purple-700 { color: #6b21a5; }
         .text-rose-700 { color: #be123c; }
-        .text-blue-700 { color: #1d4ed8; }
         .text-xs { font-size: 0.75rem; }
         .text-sm { font-size: 0.875rem; }
         .text-xl { font-size: 1.25rem; }
@@ -137,7 +136,7 @@
         .pointer-events-auto { pointer-events: auto; }
         .pointer-events-none { pointer-events: none; }
         
-        /* Estilos para la previsión meteorológica - 5 días */
+        /* Estilos para la previsión meteorológica - 6 días */
         .weather-container {
             background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
             border-radius: 1rem;
@@ -168,13 +167,13 @@
             border: 1px solid #cbd5e1;
             border-radius: 0.75rem;
             padding: 0.5rem 0.5rem;
-            min-width: 75px;
+            min-width: 70px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s ease;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
             flex: 1 0 auto;
-            max-width: 85px;
+            max-width: 80px;
         }
         .weather-btn:hover {
             transform: translateY(-2px);
@@ -190,16 +189,16 @@
             color: white;
         }
         .weather-day {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 700;
             text-transform: uppercase;
         }
         .weather-icon {
-            font-size: 1rem;
+            font-size: 0.9rem;
             margin: 0.15rem 0;
         }
         .weather-temp {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 800;
             color: #1e293b;
         }
@@ -217,10 +216,10 @@
             line-height: 1.4;
         }
         @media (max-width: 550px) {
-            .weather-btn { min-width: 60px; padding: 0.35rem 0.3rem; }
-            .weather-day { font-size: 0.6rem; }
-            .weather-icon { font-size: 0.9rem; }
-            .weather-temp { font-size: 0.7rem; }
+            .weather-btn { min-width: 55px; padding: 0.35rem 0.3rem; }
+            .weather-day { font-size: 0.55rem; }
+            .weather-icon { font-size: 0.8rem; }
+            .weather-temp { font-size: 0.65rem; }
             .weather-info-detalle { font-size: 0.6rem; }
         }
     </style>
@@ -264,18 +263,18 @@
             </div>
 
             <div class="p-6 bg-white/95">
-                <!-- PREVISIÓN METEOROLÓGICA DE PORTO BELO - 5 DÍAS CON MAREA -->
+                <!-- PREVISIÓN METEOROLÓGICA DE PORTO BELO - 6 DÍAS -->
                 <div class="weather-container">
                     <div class="weather-title">
                         <i class="fas fa-cloud-sun"></i>
-                        PREVISIÓN PARA PORTO BELO - SC (5 DÍAS)
+                        PREVISIÓN PARA PORTO BELO - SC (6 DÍAS)
                         <i class="fas fa-water"></i>
                     </div>
                     <div id="weatherButtons" class="weather-buttons">
                         <div class="weather-btn">Cargando...</div>
                     </div>
                     <div id="weatherDetail" class="weather-info-detalle">
-                        Seleccione un día para ver detalles (clima + marea)
+                        Seleccione un día para ver detalles
                     </div>
                 </div>
 
@@ -283,6 +282,17 @@
                     <div class="grid-2">
                         <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-user text-emerald-600 mr-1"></i> Nombre completo *</label>
                         <input type="text" id="nombre" required class="input-angel" placeholder="Ej: Luciana Menezes"></div>
+                        
+                        <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-building text-emerald-600 mr-1"></i> Empresa / Grupo *</label>
+                        <input type="text" id="empresa" required class="input-angel" placeholder="Nombre de la empresa (obligatorio)">
+                        <p class="text-xs text-gray-400 mt-1">Campo obligatorio</p></div>
+                        
+                        <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-user-friends text-emerald-600 mr-1"></i> Adultos (12+ años) *</label>
+                        <input type="number" id="adultos" min="0" value="1" required class="input-angel"></div>
+                        
+                        <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-child text-emerald-600 mr-1"></i> Menores (2-11 años)</label>
+                        <input type="number" id="menores" min="0" value="0" class="input-angel">
+                        <p class="text-xs text-gray-400">Menores de 2 años sin cargo</p></div>
                         
                         <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-hotel text-emerald-600 mr-1"></i> Hotel / Dirección *</label>
                         <input type="text" id="hotelDireccion" required class="input-angel" placeholder="Ej: Resort Costa do Sauípe"></div>
@@ -294,19 +304,13 @@
                         <input type="tel" id="whatsapp" required class="input-angel" placeholder="+55 11 91234-5678">
                         <p class="text-xs text-gray-400 mt-1">Incluir código: +55 para Brasil</p></div>
                         
-                        <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-building text-emerald-600 mr-1"></i> Empresa / Grupo *</label>
-                        <input type="text" id="empresa" required class="input-angel" placeholder="Nombre de la empresa (obligatorio)">
-                        <p class="text-xs text-gray-400 mt-1">Campo obligatorio</p></div>
+                        <!-- NUEVO CAMPO: Fecha de Paseo -->
+                        <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-ship text-emerald-600 mr-1"></i> Fecha de Paseo *</label>
+                        <input type="date" id="fechaPaseo" required class="input-angel"></div>
                         
+                        <!-- Fecha OUT -->
                         <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-calendar-alt text-emerald-600 mr-1"></i> Fecha de salida (OUT) *</label>
                         <input type="date" id="fechaOut" required class="input-angel"></div>
-                        
-                        <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-user-friends text-emerald-600 mr-1"></i> Adultos (12+ años) *</label>
-                        <input type="number" id="adultos" min="0" value="1" required class="input-angel"></div>
-                        
-                        <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-child text-emerald-600 mr-1"></i> Menores (2-11 años)</label>
-                        <input type="number" id="menores" min="0" value="0" class="input-angel">
-                        <p class="text-xs text-gray-400">Menores de 2 años sin cargo</p></div>
                     </div>
 
                     <!-- HORARIOS -->
@@ -419,12 +423,11 @@
 <div id="toastAngel" class="toast-angel hidden"></div>
 
 <script>
-    // ==================== PREVISIÓN METEOROLÓGICA (5 DÍAS) CON MAREA ====================
+    // ==================== PREVISIÓN METEOROLÓGICA (6 DÍAS) ====================
     (function() {
         const diasSemana = ['DOM', 'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB'];
         const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
         
-        // Datos climáticos para Porto Belo
         const climas = [
             { icono: 'fas fa-sun', temp: '29°C', sensacion: '31°C', desc: 'Soleado', viento: '12 km/h', humedad: '65%', lluvia: '0%' },
             { icono: 'fas fa-cloud-sun', temp: '27°C', sensacion: '29°C', desc: 'Parcialmente nublado', viento: '14 km/h', humedad: '68%', lluvia: '5%' },
@@ -435,41 +438,25 @@
             { icono: 'fas fa-cloud-rain', temp: '23°C', sensacion: '24°C', desc: 'Lluvias aisladas', viento: '20 km/h', humedad: '88%', lluvia: '70%' }
         ];
         
-        // Datos de mareas para Porto Belo (simulados pero realistas)
-        // Altura en metros y estado de la marea
-        const mareas = [
-            { altura: '0.8m', estado: '🌊 Baja', icono: 'fas fa-arrow-down', color: 'text-blue-700', tendencia: 'Bajando' },
-            { altura: '1.2m', estado: '🌊 Subiendo', icono: 'fas fa-arrow-up', color: 'text-blue-600', tendencia: 'Subiendo' },
-            { altura: '1.8m', estado: '🌊 Alta', icono: 'fas fa-arrow-up', color: 'text-blue-800', tendencia: 'Alta' },
-            { altura: '1.5m', estado: '🌊 Bajando', icono: 'fas fa-arrow-down', color: 'text-blue-700', tendencia: 'Bajando' },
-            { altura: '0.9m', estado: '🌊 Baja', icono: 'fas fa-arrow-down', color: 'text-blue-700', tendencia: 'Bajando' },
-            { altura: '1.4m', estado: '🌊 Subiendo', icono: 'fas fa-arrow-up', color: 'text-blue-600', tendencia: 'Subiendo' },
-            { altura: '1.9m', estado: '🌊 Alta', icono: 'fas fa-arrow-up', color: 'text-blue-800', tendencia: 'Alta' },
-            { altura: '1.1m', estado: '🌊 Subiendo', icono: 'fas fa-arrow-up', color: 'text-blue-600', tendencia: 'Subiendo' }
-        ];
-        
         function getWeatherData() {
             const hoy = new Date();
             const datos = [];
             
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 6; i++) {
                 const fecha = new Date(hoy);
                 fecha.setDate(hoy.getDate() + i);
                 const diaSemana = diasSemana[fecha.getDay()];
                 const dia = fecha.getDate();
                 const mes = meses[fecha.getMonth()];
                 const fechaStr = `${dia} ${mes}`;
-                
                 const climaIndex = i % climas.length;
-                const mareaIndex = (i + Math.floor(Math.random() * 3)) % mareas.length;
                 
                 datos.push({
                     id: i,
                     diaSemana: diaSemana,
                     fecha: fechaStr,
                     fechaCompleta: `${diaSemana} ${fechaStr}`,
-                    ...climas[climaIndex],
-                    marea: mareas[mareaIndex]
+                    ...climas[climaIndex]
                 });
             }
             return datos;
@@ -501,26 +488,19 @@
                 })(idx, item);
                 container.appendChild(btn);
             });
-            
             updateWeatherDetail(weatherData[selectedWeatherIndex]);
         }
         
         function updateWeatherDetail(data) {
             const detailDiv = document.getElementById('weatherDetail');
             if (detailDiv && data) {
-                const mareaIcono = data.marea.icono;
-                const mareaTexto = data.marea.estado;
-                const mareaAltura = data.marea.altura;
-                const mareaTendencia = data.marea.tendencia;
-                
                 detailDiv.innerHTML = `
                     <i class="fas fa-map-marker-alt"></i> Porto Belo · ${data.fechaCompleta} &nbsp;|&nbsp;
                     <i class="${data.icono}"></i> ${data.desc} &nbsp;|&nbsp;
                     🌡️ ${data.temp} (sensación ${data.sensacion}) &nbsp;|&nbsp;
                     💨 ${data.viento} &nbsp;|&nbsp;
                     💧 ${data.humedad} &nbsp;|&nbsp;
-                    ☔ Lluvia: ${data.lluvia} &nbsp;|&nbsp;
-                    <i class="${mareaIcono}"></i> 🌊 Marea: ${mareaTexto} (${mareaAltura}) · ${mareaTendencia}
+                    ☔ Lluvia: ${data.lluvia}
                 `;
             }
         }
@@ -655,20 +635,23 @@
     async function enviarGoogleSheets(reserva) {
         if (!googleSheetUrl) return;
         
-        const datosEnvio = {
-            id: reserva.id,
-            nombre: reserva.nombre,
-            hotelDireccion: reserva.hotelDireccion,
-            email: reserva.email,
-            whatsapp: reserva.whatsapp,
-            empresa: reserva.empresa,
-            fechaOut: reserva.fechaOut,
-            horario: reserva.horario === "morning" ? "🌅 Tour Mañana (09:00)" : (reserva.horario === "afternoon" ? "🌇 Tour Tarde (14:00)" : "⭐ Tour Extra (18:00)"),
-            adultos: reserva.adultos,
-            menores: reserva.menores,
-            montoTotal: reserva.montoTotal,
-            estado: reserva.estado
-        };
+        // Nuevo orden de columnas:
+        // ID | Fecha Paseo | Nombre | Empresa | Adultos | Menores | Horario | Monto Total (R$) | Hotel / Dirección | Email | WhatsApp | Fecha OUT | Estado
+        const datosEnvio = [
+            reserva.id,
+            reserva.fechaPaseo,
+            reserva.nombre,
+            reserva.empresa,
+            reserva.adultos,
+            reserva.menores,
+            reserva.horario === "morning" ? "🌅 Tour Mañana (09:00)" : (reserva.horario === "afternoon" ? "🌇 Tour Tarde (14:00)" : "⭐ Tour Extra (18:00)"),
+            reserva.montoTotal,
+            reserva.hotelDireccion,
+            reserva.email,
+            reserva.whatsapp,
+            reserva.fechaOut,
+            reserva.estado
+        ];
         
         try {
             await fetch(googleSheetUrl, { 
@@ -694,13 +677,13 @@
         else if (reserva.horario === "afternoon") cuposRestantes = CAPACIDAD_MAXIMA - horariosAngel.afternoon.ocupados;
         else cuposRestantes = CAPACIDAD_MAXIMA - horariosAngel.extra.ocupados;
         
-        const mensaje = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0A✨ *Datos del pasajero:*%0A┣ 📌 Nombre: ${reserva.nombre}%0A┣ 🏨 Hotel/Dirección: ${reserva.hotelDireccion}%0A┣ 📧 Email: ${reserva.email}%0A┣ 📱 WhatsApp: ${reserva.whatsapp}%0A┣ 🏢 Empresa: ${reserva.empresa}%0A%0A⛵ *Detalles del paseo:*%0A┣ 📅 Fecha OUT: ${reserva.fechaOut}%0A┣ ⏰ Horario: ${horarioLabel}%0A┣ 👥 Adultos: ${reserva.adultos} | Menores: ${reserva.menores}%0A┣ 🎫 Código reserva: ${reserva.id}%0A┣ 📊 Cupos restantes en este horario: ${cuposRestantes} / ${CAPACIDAD_MAXIMA}%0A┗ 💰 Monto total: R$ ${reserva.montoTotal}%0A%0A🌊 *¡Gracias por elegir Angel Tour Brasil!* 🌊`;
+        const mensaje = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0A✨ *Datos del pasajero:*%0A┣ 📌 Nombre: ${reserva.nombre}%0A┣ 🏨 Hotel/Dirección: ${reserva.hotelDireccion}%0A┣ 📧 Email: ${reserva.email}%0A┣ 📱 WhatsApp: ${reserva.whatsapp}%0A┣ 🏢 Empresa: ${reserva.empresa}%0A%0A⛵ *Detalles del paseo:*%0A┣ 📅 Fecha Paseo: ${reserva.fechaPaseo}%0A┣ 📅 Fecha OUT: ${reserva.fechaOut}%0A┣ ⏰ Horario: ${horarioLabel}%0A┣ 👥 Adultos: ${reserva.adultos} | Menores: ${reserva.menores}%0A┣ 🎫 Código reserva: ${reserva.id}%0A┣ 📊 Cupos restantes en este horario: ${cuposRestantes} / ${CAPACIDAD_MAXIMA}%0A┗ 💰 Monto total: R$ ${reserva.montoTotal}%0A%0A🌊 *¡Gracias por elegir Angel Tour Brasil!* 🌊`;
         const numeroLimpio = reserva.whatsapp.replace(/\D/g, '');
         window.open(`https://wa.me/${numeroLimpio}?text=${mensaje}`, '_blank');
     }
 
     function crearReserva(datos) {
-        const { nombre, hotelDireccion, email, whatsapp, empresa, fechaOut, horario, adultos, menores } = datos;
+        const { nombre, hotelDireccion, email, whatsapp, empresa, fechaPaseo, fechaOut, horario, adultos, menores } = datos;
         
         let horarioData;
         let disponibles;
@@ -723,7 +706,7 @@
         const id = `ATB-${Math.floor(Math.random()*9000+1000)}-${Date.now().toString().slice(-5)}`;
         const montoTotal = (adultos * tarifasAngel.adulto) + (menores * tarifasAngel.menor);
         const nuevaReserva = { 
-            id, nombre, hotelDireccion, email, whatsapp, empresa, fechaOut,
+            id, nombre, hotelDireccion, email, whatsapp, empresa, fechaPaseo, fechaOut,
             horario, adultos, menores, montoTotal, 
             estado: "Confirmado", fechaRegistro: new Date().toISOString() 
         };
@@ -746,7 +729,8 @@
             <p class="text-sm text-gray-500 mb-2"><i class="fas fa-check-circle text-emerald-500"></i> <strong>Reserva confirmada</strong></p>
             <p><i class="fas fa-user-check text-emerald-500"></i> <strong>${reserva.nombre}</strong></p>
             <p><i class="fas fa-building"></i> <strong>Empresa:</strong> ${reserva.empresa}</p>
-            <p><i class="fas fa-calendar-day"></i> <strong>Fecha:</strong> ${reserva.fechaOut}</p>
+            <p><i class="fas fa-calendar-day"></i> <strong>Fecha Paseo:</strong> ${reserva.fechaPaseo}</p>
+            <p><i class="fas fa-calendar-alt"></i> <strong>Fecha OUT:</strong> ${reserva.fechaOut}</p>
             <p><i class="fas fa-clock"></i> <strong>Horario:</strong> ${horarioNombre}</p>
             <p><i class="fas fa-users"></i> Pasajeros: ${reserva.adultos} adultos, ${reserva.menores} menores</p>
             <p class="text-xs text-gray-500 mt-2 border-t pt-2"><i class="fas fa-ticket-alt"></i> Código: ${reserva.id}</p>
@@ -837,13 +821,14 @@
             const email = document.getElementById("email").value.trim();
             const whatsapp = document.getElementById("whatsapp").value.trim();
             const empresa = document.getElementById("empresa").value.trim();
+            const fechaPaseo = document.getElementById("fechaPaseo").value;
             const fechaOut = document.getElementById("fechaOut").value;
             const adultos = parseInt(document.getElementById("adultos").value) || 0;
             const menores = parseInt(document.getElementById("menores").value) || 0;
             const horario = document.querySelector('input[name="horario"]:checked')?.value;
             
-            if (!nombre || !hotelDireccion || !email || !whatsapp || !fechaOut || !empresa) { 
-                mostrarToast("Complete todos los campos obligatorios (*) - Empresa es obligatorio", true); 
+            if (!nombre || !hotelDireccion || !email || !whatsapp || !fechaPaseo || !fechaOut || !empresa) { 
+                mostrarToast("Complete todos los campos obligatorios (*)", true); 
                 return; 
             }
             if (!horario) { 
@@ -859,7 +844,7 @@
                 return; 
             }
             
-            const result = crearReserva({ nombre, hotelDireccion, email, whatsapp, empresa, fechaOut, horario, adultos, menores });
+            const result = crearReserva({ nombre, hotelDireccion, email, whatsapp, empresa, fechaPaseo, fechaOut, horario, adultos, menores });
             if (!result.success) { 
                 mostrarToast(result.error, true); 
                 return; 
@@ -879,7 +864,11 @@
 
         document.getElementById("adultos").addEventListener("input", actualizarPreview);
         document.getElementById("menores").addEventListener("input", actualizarPreview);
-        document.getElementById("fechaOut").min = new Date().toISOString().split('T')[0];
+        
+        const hoy = new Date().toISOString().split('T')[0];
+        document.getElementById("fechaPaseo").min = hoy;
+        document.getElementById("fechaOut").min = hoy;
+        
         document.getElementById("cerrarModalBtn").addEventListener("click", cerrarModal);
         document.getElementById("btnCerrarModal").addEventListener("click", cerrarModal);
         document.getElementById("modalConfirmacion").addEventListener("click", (e) => { 
@@ -887,7 +876,7 @@
         });
     });
     
-    console.log("⚓ Angel Tour Brasil - Sistema con pronóstico 5 días + mareas");
+    console.log("⚓ Angel Tour Brasil - Sistema con pronóstico 6 días");
 </script>
 </body>
 </html>
