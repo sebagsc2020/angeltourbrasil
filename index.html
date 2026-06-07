@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Angel Tour Brasil | Reservas</title>
+    <title>Angel Tour Brasil | Reservas Náuticas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
@@ -31,6 +31,9 @@
         .modal-content { background: white; border-radius: 32px; padding: 28px; max-width: 400px; width: 90%; text-align: center; }
         .text-center { text-align: center; }
         .mt-2 { margin-top: 8px; }
+        .offline-badge { position: fixed; top: 10px; right: 10px; background: #e74c3c; color: white; padding: 8px 16px; border-radius: 50px; font-size: 12px; font-weight: bold; z-index: 1000; display: none; }
+        .sync-badge { position: fixed; bottom: 20px; right: 20px; background: #667eea; color: white; padding: 10px 18px; border-radius: 50px; font-size: 12px; font-weight: bold; z-index: 1000; cursor: pointer; display: none; }
+        .sync-badge:hover { background: #5a6fd6; transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -48,7 +51,7 @@
 
     <div class="form-card">
         <div class="header">
-            <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> + Formulario de Reserva +
+            <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> Formulario de Reserva
             <p style="font-size: 12px; margin-top: 5px;">Recibirás confirmación vía WhatsApp</p>
         </div>
         
@@ -114,11 +117,155 @@
 
 <div id="toast" class="toast hidden"></div>
 
+<!-- Badges de estado -->
+<div id="offlineBadge" class="offline-badge">📡 Sin conexión - Modo offline</div>
+<div id="syncBadge" class="sync-badge" onclick="sincronizarReservasPendientes()">🔄 Reservas pendientes (0)</div>
+
 <script>
-    // ⚠️ CAMBIA ESTA URL POR LA QUE OBTENGAS DE APPS SCRIPT ⚠️
-    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbyMIUvs8ZzVFkKcaokcHeF_sY_LRImqgGeOHIH6DS5KTpTisd3MawB1xHJoLi6jJApOuw/exec";
+    // ==================================================
+    // CONFIGURACIÓN
+    // ==================================================
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyMIUvs8ZzVFkKcaokcHeF_sY_LRImqgGeOHIH6DS5KTpTisd3MawB1xHJoLi6jJApOuw/exec";
+    const STORAGE_KEY = 'angeltour_reservas_pendientes';
     
     let tarifas = { adulto: 180, menor: 90 };
+    
+    // ==================================================
+    // SISTEMA DE CACHE Y SINCRONIZACIÓN
+    // ==================================================
+    
+    function getReservasPendientes() {
+        const pendientes = localStorage.getItem(STORAGE_KEY);
+        return pendientes ? JSON.parse(pendientes) : [];
+    }
+    
+    function guardarReservaPendiente(reserva) {
+        const pendientes = getReservasPendientes();
+        pendientes.push({
+            ...reserva,
+            timestamp: Date.now(),
+            idLocal: 'RES-LOCAL-' + Date.now()
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(pendientes));
+        actualizarBadgeSincronizacion();
+        console.log('💾 Reserva guardada en caché local. Pendientes:', pendientes.length);
+    }
+    
+    function eliminarReservaPendiente(index) {
+        const pendientes = getReservasPendientes();
+        pendientes.splice(index, 1);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(pendientes));
+        actualizarBadgeSincronizacion();
+    }
+    
+    function actualizarBadgeSincronizacion() {
+        const pendientes = getReservasPendientes();
+        const badge = document.getElementById('syncBadge');
+        if (pendientes.length > 0) {
+            badge.style.display = 'flex';
+            badge.innerHTML = `🔄 ${pendientes.length} reserva(s) pendiente(s)`;
+        } else {
+            badge.style.display = 'none';
+        }
+    }
+    
+    async function enviarReservaAlServidor(reserva, index) {
+        try {
+            const formData = new URLSearchParams();
+            for (const [key, value] of Object.entries(reserva.datos)) {
+                formData.append(key, value);
+            }
+            
+            await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
+            });
+            
+            console.log(`✅ Reserva ${reserva.idLocal} sincronizada correctamente`);
+            eliminarReservaPendiente(index);
+            return true;
+        } catch (error) {
+            console.error(`❌ Error al sincronizar reserva ${reserva.idLocal}:`, error);
+            return false;
+        }
+    }
+    
+    async function sincronizarReservasPendientes() {
+        const pendientes = getReservasPendientes();
+        if (pendientes.length === 0) {
+            mostrarToast('No hay reservas pendientes', false);
+            return;
+        }
+        
+        mostrarToast(`🔄 Sincronizando ${pendientes.length} reserva(s)...`, false);
+        
+        let sincronizadas = 0;
+        for (let i = pendientes.length - 1; i >= 0; i--) {
+            const exito = await enviarReservaAlServidor(pendientes[i], i);
+            if (exito) sincronizadas++;
+        }
+        
+        if (sincronizadas > 0) {
+            mostrarToast(`✅ ${sincronizadas} reserva(s) sincronizadas`, false);
+        } else if (pendientes.length > 0) {
+            mostrarToast(`⚠️ No se pudieron sincronizar. Se reintentará luego.`, true);
+        }
+        
+        actualizarBadgeSincronizacion();
+    }
+    
+    function actualizarEstadoConexion() {
+        const offlineBadge = document.getElementById('offlineBadge');
+        if (!navigator.onLine) {
+            offlineBadge.style.display = 'block';
+            mostrarToast('📡 Sin conexión. Las reservas se guardarán localmente.', true);
+        } else {
+            offlineBadge.style.display = 'none';
+            const pendientes = getReservasPendientes();
+            if (pendientes.length > 0) {
+                mostrarToast(`🌐 Conexión recuperada. Sincronizando ${pendientes.length} reserva(s)...`, false);
+                sincronizarReservasPendientes();
+            }
+        }
+    }
+    
+    async function enviarReservaConCache(datosReserva) {
+        const reserva = { datos: datosReserva, fecha: new Date().toISOString() };
+        
+        if (!navigator.onLine) {
+            guardarReservaPendiente(reserva);
+            mostrarToast('💾 Sin conexión. Reserva guardada localmente.', true);
+            return { success: true, cached: true };
+        }
+        
+        try {
+            const formData = new URLSearchParams();
+            for (const [key, value] of Object.entries(datosReserva)) {
+                formData.append(key, value);
+            }
+            
+            await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
+            });
+            
+            mostrarToast('✅ Reserva enviada correctamente', false);
+            return { success: true, cached: false };
+        } catch (error) {
+            console.error('Error al enviar:', error);
+            guardarReservaPendiente(reserva);
+            mostrarToast('⚠️ Error de conexión. Reserva guardada localmente.', true);
+            return { success: false, cached: true, error };
+        }
+    }
+    
+    // ==================================================
+    // FUNCIONES DEL FORMULARIO
+    // ==================================================
     
     function mostrarToast(msg, error = false) {
         const toast = document.getElementById("toast");
@@ -126,22 +273,6 @@
         toast.style.background = error ? "#dc2626" : "#1f2937";
         toast.classList.remove("hidden");
         setTimeout(() => toast.classList.add("hidden"), 4000);
-    }
-    
-    async function guardarReservaEnSheet(reservaArray) {
-        try {
-            const response = await fetch(GOOGLE_SHEETS_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ reserva: reservaArray })
-            });
-            const result = await response.json();
-            console.log("Respuesta de Google Sheets:", result);
-            return result.success === true;
-        } catch(e) {
-            console.error("Error al enviar:", e);
-            return false;
-        }
     }
     
     function enviarWhatsApp(reserva) {
@@ -176,9 +307,19 @@
         document.getElementById("totalPreview").innerHTML = `R$ ${total.toFixed(2)}`;
     }
     
+    // ==================================================
+    // INICIALIZACIÓN
+    // ==================================================
+    
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("modalConfirmacion").style.display = "none";
         actualizarPreview();
+        
+        // Eventos de conexión
+        window.addEventListener('online', actualizarEstadoConexion);
+        window.addEventListener('offline', actualizarEstadoConexion);
+        actualizarEstadoConexion();
+        actualizarBadgeSincronizacion();
         
         document.getElementById("adultos").addEventListener("input", actualizarPreview);
         document.getElementById("menores").addEventListener("input", actualizarPreview);
@@ -223,17 +364,27 @@
             const id = `ATB-${Math.floor(Math.random()*9000+1000)}-${Date.now().toString().slice(-5)}`;
             const montoTotal = (adultos * tarifas.adulto) + (menores * tarifas.menor);
             
-            const datosSheet = [
-                id, fechaPaseo, nombre, empresa, adultos, menores,
-                horario === "morning" ? "🌅 Tour Mañana" : "🌇 Tour Tarde",
-                montoTotal, hotelDireccion, email, whatsapp, fechaOut, "Confirmado"
-            ];
+            const datosReserva = {
+                id: id,
+                fecha_paseo: fechaPaseo,
+                nombre: nombre,
+                empresa: empresa,
+                adultos: adultos,
+                menores: menores,
+                horario: horario === "morning" ? "🌅 Tour Mañana" : "🌇 Tour Tarde",
+                monto_total: montoTotal,
+                hotel_direccion: hotelDireccion,
+                email: email,
+                whatsapp: whatsapp,
+                fecha_out: fechaOut,
+                estado: "Confirmado"
+            };
             
             mostrarToast("Guardando reserva...");
             
-            const success = await guardarReservaEnSheet(datosSheet);
+            const resultado = await enviarReservaConCache(datosReserva);
             
-            if (success) {
+            if (resultado.success || resultado.cached) {
                 const reservaObj = { id, nombre, empresa, hotelDireccion, email, whatsapp, fechaPaseo, fechaOut, horario, adultos, menores, montoTotal };
                 enviarWhatsApp(reservaObj);
                 mostrarPopup(reservaObj);
@@ -244,7 +395,11 @@
                 document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("selected"));
                 actualizarPreview();
                 
-                mostrarToast("✅ Reserva confirmada y guardada");
+                if (resultado.cached) {
+                    mostrarToast("💾 Reserva guardada localmente. Se sincronizará cuando haya conexión.", false);
+                } else {
+                    mostrarToast("✅ Reserva confirmada y guardada", false);
+                }
             } else {
                 mostrarToast("Error al guardar. Intente nuevamente.", true);
             }
@@ -259,6 +414,9 @@
         document.getElementById("fechaPaseo").min = hoy;
         document.getElementById("fechaOut").min = hoy;
     });
+    
+    // Exponer función de sincronización globalmente
+    window.sincronizarReservasPendientes = sincronizarReservasPendientes;
 </script>
 </body>
 </html>
