@@ -50,7 +50,7 @@
 
     <div class="form-card">
         <div class="header">
-            <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> - Formulario de Reserva
+            <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> + Formulario de Reserva
             <p style="font-size: 12px; margin-top: 5px;">Recibirás confirmación vía WhatsApp</p>
         </div>
         
@@ -113,19 +113,20 @@
     </div>
 </div>
 
-<div id="modal" class="modal hidden">
+<!-- MODAL DE CONFIRMACIÓN -->
+<div id="modalConfirmacion" class="modal hidden">
     <div class="modal-content">
         <span style="font-size: 50px;">⛵✨</span>
         <h3 style="font-size: 24px; margin: 10px 0;">¡Reserva Confirmada!</h3>
         <div id="resumenReserva" style="margin: 15px 0; text-align: left;"></div>
-        <button id="closeModal" style="background: #059669; color: white; border: none; padding: 12px; border-radius: 40px; width: 100%; font-weight: bold; cursor: pointer;">Entendido</button>
+        <button id="btnCerrarModal" style="background: #059669; color: white; border: none; padding: 12px; border-radius: 40px; width: 100%; font-weight: bold; cursor: pointer;">Entendido</button>
     </div>
 </div>
 
 <div id="toast" class="toast hidden"></div>
 
 <script>
-    // ✅ TU URL DE GOOGLE SHEETS - CORRECTA Y FUNCIONANDO
+    // ✅ URL DE GOOGLE SHEETS
     const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbyGOsxKU6fehJ2rD3bXJST02O2N75sadDTGDFzEAbQEPkAVP5zZqr7S02AiE2wLvbXZ9w/exec";
     
     const CAPACIDAD_MAXIMA = 160;
@@ -178,7 +179,7 @@
     
     async function enviarGoogleSheets(reservaArray) {
         try {
-            const response = await fetch(GOOGLE_SHEETS_URL, {
+            await fetch(GOOGLE_SHEETS_URL, {
                 method: "POST",
                 mode: "no-cors",
                 headers: { "Content-Type": "application/json" },
@@ -199,7 +200,7 @@
     }
     
     function mostrarPopup(reserva) {
-        const modal = document.getElementById("modal");
+        const modal = document.getElementById("modalConfirmacion");
         const resumen = document.getElementById("resumenReserva");
         let horarioNombre = reserva.horario === "morning" ? "🌅 Mañana (09:00-12:00)" : (reserva.horario === "afternoon" ? "🌇 Tarde (14:00-17:00)" : "⭐ Tour Extra (18:00-21:00)");
         resumen.innerHTML = `
@@ -214,7 +215,8 @@
     }
     
     function cerrarModal() {
-        document.getElementById("modal").classList.add("hidden");
+        const modal = document.getElementById("modalConfirmacion");
+        modal.classList.add("hidden");
     }
     
     function actualizarPreview() {
@@ -245,8 +247,8 @@
             radio.checked = true;
         }
         
-        morningCard.onclick = () => seleccionarHorario(morningCard, radioMorning);
-        afternoonCard.onclick = () => seleccionarHorario(afternoonCard, radioAfternoon);
+        if(morningCard) morningCard.onclick = () => seleccionarHorario(morningCard, radioMorning);
+        if(afternoonCard) afternoonCard.onclick = () => seleccionarHorario(afternoonCard, radioAfternoon);
         if(extraCard) extraCard.onclick = () => seleccionarHorario(extraCard, radioExtra);
         
         document.getElementById("reservaForm").addEventListener("submit", async (e) => {
@@ -310,7 +312,21 @@
             mostrarToast("✅ Reserva confirmada y guardada");
         });
         
-        document.getElementById("closeModal").addEventListener("click", cerrarModal);
+        // ✅ Botón para cerrar el modal - CORREGIDO
+        const btnCerrar = document.getElementById("btnCerrarModal");
+        if(btnCerrar) {
+            btnCerrar.addEventListener("click", cerrarModal);
+        }
+        
+        // Cerrar modal haciendo clic fuera del contenido
+        const modal = document.getElementById("modalConfirmacion");
+        if(modal) {
+            modal.addEventListener("click", function(e) {
+                if(e.target === modal) {
+                    cerrarModal();
+                }
+            });
+        }
         
         const hoy = new Date().toISOString().split('T')[0];
         document.getElementById("fechaPaseo").min = hoy;
