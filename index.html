@@ -107,6 +107,7 @@
         .cursor-pointer { cursor: pointer; }
         .cursor-not-allowed { cursor: not-allowed; }
         .opacity-50 { opacity: 0.5; }
+        .opacity-100 { opacity: 1; }
         .hidden { display: none; }
         .w-full { width: 100%; }
         .w-6 { width: 1.5rem; }
@@ -132,7 +133,92 @@
         .transition { transition: all 0.2s ease; }
         .hover\:bg-gray-300:hover { background: #d1d5db; }
         .hover\:bg-emerald-700:hover { background: #047857; }
-        .badge-extra { background: linear-gradient(95deg, #7c3aed20, #8b5cf620); border: 1px solid #8b5cf6; }
+        .pointer-events-auto { pointer-events: auto; }
+        .pointer-events-none { pointer-events: none; }
+        
+        /* Estilos para la previsión meteorológica */
+        .weather-container {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            border-radius: 1rem;
+            padding: 0.75rem;
+            margin: 0.75rem 0 1.25rem 0;
+            border: 1px solid rgba(5, 150, 105, 0.3);
+        }
+        .weather-title {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #0369a1;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .weather-buttons {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.25rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .weather-btn {
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            min-width: 85px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .weather-btn:hover {
+            transform: translateY(-2px);
+            border-color: #10b981;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .weather-btn.active {
+            background: #10b981;
+            border-color: #10b981;
+            color: white;
+        }
+        .weather-btn.active .weather-temp {
+            color: white;
+        }
+        .weather-day {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .weather-icon {
+            font-size: 1.25rem;
+            margin: 0.2rem 0;
+        }
+        .weather-temp {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #1e293b;
+        }
+        .weather-desc {
+            font-size: 0.6rem;
+            color: #475569;
+        }
+        .weather-info-detalle {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #0c4a6e;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed #93c5fd;
+        }
+        @media (max-width: 480px) {
+            .weather-btn { min-width: 70px; padding: 0.4rem 0.5rem; }
+            .weather-icon { font-size: 1rem; }
+            .weather-temp { font-size: 0.75rem; }
+        }
     </style>
 </head>
 <body>
@@ -158,7 +244,7 @@
                 </div>
             </div>
             <h1 class="text-3xl font-bold text-white" style="text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Reserve seu passeio de barco</h1>
-            <p class="text-emerald-100 mt-2">Experiencias únicas · Cupos limitados · Confirmación inmediata</p>
+            <p class="text-white mt-2" style="color: #ffffff !important;">Experiencias únicas · Cupos limitados · Confirmación inmediata</p>
         </div>
 
         <!-- FORMULARIO -->
@@ -168,12 +254,27 @@
                     <i class="fab fa-whatsapp text-2xl"></i>
                     <div>
                         <h2 class="text-xl font-bold">📋 Formulario de Reserva</h2>
-                        <p class="text-emerald-100 text-sm">Recibirás confirmación vía WhatsApp y copia en Google Sheets</p>
+                        <p class="text-emerald-100 text-sm">Recibirás confirmación vía WhatsApp</p>
                     </div>
                 </div>
             </div>
 
             <div class="p-6 bg-white/95">
+                <!-- PREVISIÓN METEOROLÓGICA DE PORTO BELO - 4 DÍAS (BOTONES) -->
+                <div class="weather-container">
+                    <div class="weather-title">
+                        <i class="fas fa-cloud-sun"></i>
+                        Previsión para Porto Belo - SC
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <div id="weatherButtons" class="weather-buttons">
+                        <!-- Los botones se generarán con JavaScript -->
+                    </div>
+                    <div id="weatherDetail" class="weather-info-detalle">
+                        Seleccione un día para ver detalles
+                    </div>
+                </div>
+
                 <form id="formReservaAngel">
                     <div class="grid-2">
                         <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-user text-emerald-600 mr-1"></i> Nombre completo *</label>
@@ -204,19 +305,18 @@
                         <p class="text-xs text-gray-400">Menores de 2 años sin cargo</p></div>
                     </div>
 
-                    <!-- HORARIOS: Mañana, Tarde y Extra (solo aparece si los dos primeros están llenos) -->
+                    <!-- HORARIOS -->
                     <div class="mt-7">
                         <label class="block text-gray-800 font-bold mb-3"><i class="fas fa-ship text-emerald-600 mr-2"></i> Selecciona tu horario de navegación *</label>
                         <div id="horariosContainer" class="grid-2">
-                            <!-- Tour Mañana -->
-                            <div id="cardMorning" class="horario-card">
+                            <div id="cardMorning" class="horario-card pointer-events-auto">
                                 <div class="flex-between">
                                     <div>
                                         <div class="font-extrabold text-lg">🌅 Tour Mañana</div>
                                         <div class="text-sm text-gray-500">09:00 - 12:00 hrs</div>
                                         <div class="mt-3">
                                             <div id="cupoMorningDisplay" class="cupo-badge bg-emerald-100 text-emerald-700">
-                                                <i class="fas fa-chair"></i> <span id="morningLibres">--</span> / 160 lugares
+                                                <i class="fas fa-chair"></i> <span id="morningLibres">160</span> / 160 lugares
                                             </div>
                                         </div>
                                     </div>
@@ -224,15 +324,14 @@
                                 </div>
                                 <input type="radio" name="horario" value="morning" class="hidden horario-radio-main">
                             </div>
-                            <!-- Tour Tarde -->
-                            <div id="cardAfternoon" class="horario-card">
+                            <div id="cardAfternoon" class="horario-card pointer-events-auto">
                                 <div class="flex-between">
                                     <div>
                                         <div class="font-extrabold text-lg">🌇 Tour Tarde</div>
                                         <div class="text-sm text-gray-500">14:00 - 17:00 hrs</div>
                                         <div class="mt-3">
                                             <div id="cupoAfternoonDisplay" class="cupo-badge bg-emerald-100 text-emerald-700">
-                                                <i class="fas fa-chair"></i> <span id="afternoonLibres">--</span> / 160 lugares
+                                                <i class="fas fa-chair"></i> <span id="afternoonLibres">160</span> / 160 lugares
                                             </div>
                                         </div>
                                     </div>
@@ -242,7 +341,7 @@
                             </div>
                         </div>
                         <div id="tourExtraContainer" class="mt-4 hidden">
-                            <div id="cardExtra" class="horario-card" style="border-color: #8b5cf6; background: linear-gradient(95deg, #f3e8ff, #faf5ff);">
+                            <div id="cardExtra" class="horario-card pointer-events-auto" style="border-color: #8b5cf6; background: linear-gradient(95deg, #f3e8ff, #faf5ff);">
                                 <div class="flex-between">
                                     <div>
                                         <div class="font-extrabold text-lg">⭐ Tour Extra (Horario Especial)</div>
@@ -276,10 +375,6 @@
                         <button type="submit" class="btn-naval">
                             <i class="fab fa-whatsapp text-xl"></i> Confirmar Reserva · Recibir WhatsApp
                         </button>
-                    </div>
-                    <div class="text-center text-xs text-gray-400 mt-5 flex justify-center gap-4">
-                        <span><i class="fas fa-database text-emerald-500"></i> Datos guardados en Google Sheets</span>
-                        <span><i class="fas fa-clock text-emerald-500"></i> Cupos actualizados en tiempo real</span>
                     </div>
                 </form>
             </div>
@@ -320,7 +415,90 @@
 <div id="toastAngel" class="toast-angel hidden"></div>
 
 <script>
-    // ==================== CONFIGURACIÓN ====================
+    // ==================== PREVISIÓN METEOROLÓGICA ====================
+    // Datos meteorológicos para Porto Belo, Brasil (simulados con base en clima típico)
+    const diasSemana = ['DOM', 'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB'];
+    
+    function getWeatherData() {
+        const hoy = new Date();
+        const datos = [];
+        
+        // Condiciones climáticas típicas de Porto Belo (costa de Santa Catarina)
+        const climas = [
+            { icono: 'fas fa-sun', temp: '28°C', sensacion: '30°C', desc: 'Soleado', viento: '12 km/h', humedad: '65%', lluvia: '0%' },
+            { icono: 'fas fa-cloud-sun', temp: '26°C', sensacion: '28°C', desc: 'Parcialmente nublado', viento: '15 km/h', humedad: '70%', lluvia: '10%' },
+            { icono: 'fas fa-cloud-rain', temp: '23°C', sensacion: '24°C', desc: 'Lluvia ligera', viento: '18 km/h', humedad: '85%', lluvia: '60%' },
+            { icono: 'fas fa-cloud-sun', temp: '25°C', sensacion: '27°C', desc: 'Nubes dispersas', viento: '14 km/h', humedad: '72%', lluvia: '20%' },
+            { icono: 'fas fa-sun', temp: '29°C', sensacion: '32°C', desc: 'Mayormente soleado', viento: '10 km/h', humedad: '62%', lluvia: '5%' },
+            { icono: 'fas fa-cloud', temp: '24°C', sensacion: '25°C', desc: 'Nublado', viento: '16 km/h', humedad: '78%', lluvia: '30%' },
+            { icono: 'fas fa-cloud-rain', temp: '22°C', sensacion: '23°C', desc: 'Lluvias aisladas', viento: '20 km/h', humedad: '88%', lluvia: '70%' }
+        ];
+        
+        for (let i = 0; i < 4; i++) {
+            const fecha = new Date(hoy);
+            fecha.setDate(hoy.getDate() + i);
+            const diaSemana = diasSemana[fecha.getDay()];
+            const dia = fecha.getDate();
+            const mes = fecha.getMonth() + 1;
+            const fechaStr = `${dia}/${mes}`;
+            
+            // Alternar climas para variedad
+            const climaIndex = (i % climas.length);
+            datos.push({
+                id: i,
+                diaSemana: diaSemana,
+                fecha: fechaStr,
+                fechaCompleta: `${diaSemana} ${fechaStr}`,
+                ...climas[climaIndex]
+            });
+        }
+        return datos;
+    }
+    
+    let weatherData = getWeatherData();
+    let selectedWeatherIndex = 0;
+    
+    function renderWeatherButtons() {
+        const container = document.getElementById('weatherButtons');
+        if (!container) return;
+        
+        container.innerHTML = '';
+        weatherData.forEach((item, idx) => {
+            const btn = document.createElement('div');
+            btn.className = `weather-btn ${idx === selectedWeatherIndex ? 'active' : ''}`;
+            btn.innerHTML = `
+                <div class="weather-day">${item.diaSemana}</div>
+                <div class="weather-icon"><i class="${item.icono}"></i></div>
+                <div class="weather-temp">${item.temp}</div>
+                <div class="weather-desc">${item.desc}</div>
+            `;
+            btn.onclick = () => {
+                selectedWeatherIndex = idx;
+                renderWeatherButtons();
+                updateWeatherDetail(item);
+            };
+            container.appendChild(btn);
+        });
+        
+        // Mostrar detalle del día seleccionado
+        updateWeatherDetail(weatherData[selectedWeatherIndex]);
+    }
+    
+    function updateWeatherDetail(data) {
+        const detailDiv = document.getElementById('weatherDetail');
+        if (detailDiv) {
+            detailDiv.innerHTML = `
+                <i class="fas fa-map-marker-alt"></i> Porto Belo - ${data.fechaCompleta} &nbsp;|&nbsp;
+                <i class="${data.icono}"></i> ${data.desc} &nbsp;|&nbsp;
+                🌡️ ${data.temp} (sensación ${data.sensacion}) &nbsp;|&nbsp;
+                💨 ${data.viento} &nbsp;|&nbsp;
+                💧 ${data.humedad} &nbsp;|&nbsp;
+                ☔ Lluvia: ${data.lluvia}
+            `;
+        }
+    }
+    
+    // ==================== CONFIGURACIÓN RESERVAS ====================
     const CAPACIDAD_MAXIMA = 160;
     
     let horariosAngel = {
@@ -346,7 +524,6 @@
         horariosAngel.afternoon.ocupados = reservasAngel.filter(r => r.horario === "afternoon" && r.estado === "Confirmado").reduce((s, r) => s + r.adultos + r.menores, 0);
         horariosAngel.extra.ocupados = reservasAngel.filter(r => r.horario === "extra" && r.estado === "Confirmado").reduce((s, r) => s + r.adultos + r.menores, 0);
         
-        // Verificar si ambos horarios principales están completos para activar Tour Extra
         const morningFull = horariosAngel.morning.ocupados >= CAPACIDAD_MAXIMA;
         const afternoonFull = horariosAngel.afternoon.ocupados >= CAPACIDAD_MAXIMA;
         horariosAngel.extra.activo = morningFull && afternoonFull;
@@ -360,42 +537,64 @@
         const aDisp = CAPACIDAD_MAXIMA - horariosAngel.afternoon.ocupados;
         const eDisp = CAPACIDAD_MAXIMA - horariosAngel.extra.ocupados;
         
-        document.getElementById("morningLibres").textContent = mDisp;
-        document.getElementById("afternoonLibres").textContent = aDisp;
+        const morningLibresSpan = document.getElementById("morningLibres");
+        const afternoonLibresSpan = document.getElementById("afternoonLibres");
+        const extraLibresSpan = document.getElementById("extraLibres");
+        
+        if (morningLibresSpan) morningLibresSpan.textContent = mDisp;
+        if (afternoonLibresSpan) afternoonLibresSpan.textContent = aDisp;
+        if (extraLibresSpan) extraLibresSpan.textContent = eDisp;
         
         const morningDiv = document.getElementById("cupoMorningDisplay");
         const afternoonDiv = document.getElementById("cupoAfternoonDisplay");
-        morningDiv.className = `cupo-badge ${mDisp <= 20 ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}`;
-        afternoonDiv.className = `cupo-badge ${aDisp <= 20 ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}`;
+        if (morningDiv) morningDiv.className = `cupo-badge ${mDisp <= 20 ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}`;
+        if (afternoonDiv) afternoonDiv.className = `cupo-badge ${aDisp <= 20 ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}`;
         
-        // Mostrar/ocultar Tour Extra
         const extraContainer = document.getElementById("tourExtraContainer");
         const horariosContainer = document.getElementById("horariosContainer");
         
-        if (horariosAngel.extra.activo) {
+        if (horariosAngel.extra.activo && extraContainer) {
             extraContainer.classList.remove("hidden");
             horariosContainer.classList.add("grid-3");
             horariosContainer.classList.remove("grid-2");
-            document.getElementById("extraLibres").textContent = eDisp;
-        } else {
+        } else if (extraContainer) {
             extraContainer.classList.add("hidden");
             horariosContainer.classList.remove("grid-3");
             horariosContainer.classList.add("grid-2");
         }
         
-        // Deshabilitar horarios llenos
         const cardM = document.getElementById("cardMorning");
         const cardA = document.getElementById("cardAfternoon");
         const cardE = document.getElementById("cardExtra");
         
-        cardM.classList.toggle("opacity-50", mDisp <= 0);
-        cardM.style.pointerEvents = mDisp <= 0 ? "none" : "auto";
-        cardA.classList.toggle("opacity-50", aDisp <= 0);
-        cardA.style.pointerEvents = aDisp <= 0 ? "none" : "auto";
+        if (cardM) {
+            if (mDisp <= 0) {
+                cardM.classList.add("opacity-50", "cursor-not-allowed");
+                cardM.style.pointerEvents = "none";
+            } else {
+                cardM.classList.remove("opacity-50", "cursor-not-allowed");
+                cardM.style.pointerEvents = "auto";
+            }
+        }
         
-        if (cardE) {
-            cardE.classList.toggle("opacity-50", eDisp <= 0);
-            cardE.style.pointerEvents = eDisp <= 0 ? "none" : "auto";
+        if (cardA) {
+            if (aDisp <= 0) {
+                cardA.classList.add("opacity-50", "cursor-not-allowed");
+                cardA.style.pointerEvents = "none";
+            } else {
+                cardA.classList.remove("opacity-50", "cursor-not-allowed");
+                cardA.style.pointerEvents = "auto";
+            }
+        }
+        
+        if (cardE && horariosAngel.extra.activo) {
+            if (eDisp <= 0) {
+                cardE.classList.add("opacity-50", "cursor-not-allowed");
+                cardE.style.pointerEvents = "none";
+            } else {
+                cardE.classList.remove("opacity-50", "cursor-not-allowed");
+                cardE.style.pointerEvents = "auto";
+            }
         }
     }
 
@@ -420,7 +619,6 @@
     async function enviarGoogleSheets(reserva) {
         if (!googleSheetUrl) return;
         
-        // Datos simplificados - sin Total Mañana ni Total Tarde
         const datosEnvio = {
             id: reserva.id,
             nombre: reserva.nombre,
@@ -532,29 +730,54 @@
         const radioA = document.querySelector('input[value="afternoon"]');
         const radioE = document.querySelector('input[value="extra"]');
         
-        function limpiar() { document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("horario-selected")); }
+        function limpiar() { 
+            document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("horario-selected")); 
+        }
+        
         function seleccionar(card, radio) { 
             limpiar(); 
             card.classList.add("horario-selected"); 
-            radio.checked = true; 
+            if (radio) radio.checked = true; 
             document.getElementById("errorHorarioAngel").classList.add("hidden"); 
         }
         
-        cardM.onclick = () => { 
-            const disponibles = CAPACIDAD_MAXIMA - horariosAngel.morning.ocupados;
-            if (disponibles > 0) seleccionar(cardM, radioM); 
-            else mostrarToast("Tour Mañana sin cupos disponibles", true); 
-        };
-        cardA.onclick = () => { 
-            const disponibles = CAPACIDAD_MAXIMA - horariosAngel.afternoon.ocupados;
-            if (disponibles > 0) seleccionar(cardA, radioA); 
-            else mostrarToast("Tour Tarde sin cupos disponibles", true); 
-        };
+        if (cardM) {
+            cardM.onclick = (e) => {
+                e.stopPropagation();
+                const disponibles = CAPACIDAD_MAXIMA - horariosAngel.morning.ocupados;
+                if (disponibles > 0) {
+                    seleccionar(cardM, radioM);
+                } else {
+                    mostrarToast("Tour Mañana sin cupos disponibles", true);
+                }
+            };
+        }
+        
+        if (cardA) {
+            cardA.onclick = (e) => {
+                e.stopPropagation();
+                const disponibles = CAPACIDAD_MAXIMA - horariosAngel.afternoon.ocupados;
+                if (disponibles > 0) {
+                    seleccionar(cardA, radioA);
+                } else {
+                    mostrarToast("Tour Tarde sin cupos disponibles", true);
+                }
+            };
+        }
+        
         if (cardE) {
-            cardE.onclick = () => { 
-                const disponibles = CAPACIDAD_MAXIMA - horariosAngel.extra.ocupados;
-                if (disponibles > 0 && horariosAngel.extra.activo) seleccionar(cardE, radioE); 
-                else mostrarToast("Tour Extra sin cupos disponibles", true); 
+            cardE.onclick = (e) => {
+                e.stopPropagation();
+                if (horariosAngel.extra.activo) {
+                    const disponibles = CAPACIDAD_MAXIMA - horariosAngel.extra.ocupados;
+                    if (disponibles > 0) {
+                        seleccionar(cardE, radioE);
+                    } else {
+                        mostrarToast("Tour Extra sin cupos disponibles", true);
+                    }
+                } else {
+                    mostrarToast("Tour Extra disponible solo cuando Mañana y Tarde están completos", true);
+                }
             };
         }
     }
@@ -625,8 +848,9 @@
     cargarDatos();
     initHorarioSelector();
     actualizarPreview();
+    renderWeatherButtons();
     
-    console.log("⚓ Angel Tour Brasil - Capacidad: 160 lugares por horario | Tour Extra disponible cuando se completen Mañana y Tarde");
+    console.log("⚓ Angel Tour Brasil - Sistema inicializado correctamente.");
 </script>
 </body>
 </html>
