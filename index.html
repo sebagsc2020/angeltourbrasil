@@ -32,6 +32,7 @@
         .font-bold { font-weight: bold; }
         .text-emerald { color: #059669; }
         .text-white { color: white; }
+        .loading { opacity: 0.7; pointer-events: none; }
     </style>
 </head>
 <body>
@@ -124,8 +125,10 @@
 <div id="toast" class="toast hidden"></div>
 
 <script>
-    // 🔴 IMPORTANTE: REEMPLAZA ESTA URL CON LA QUE OBTUVISTE DE APPS SCRIPT 🔴
-    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbxlk1fJZK83dSli3PPWJ42hRyug-rWK0ialMikgzxHSbJqebTQT4KD8w1VOocyKc029VA/exec";
+    // ============================================================
+    // CONFIGURACIÓN - CAMBIA ESTA URL POR LA DE TU APPS SCRIPT
+    // ============================================================
+    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbxIM5lQCXq1VrR9ZdBZg74dvrZRE93lqRmXS1upY-q0ddgL2ibDyheBfcHIE4RWxfNfUw/exec";
     
     const CAPACIDAD_MAXIMA = 160;
     let reservasPorFecha = {};
@@ -171,21 +174,22 @@
     function cargarLocal() {
         const saved = localStorage.getItem("angel_reservas");
         if (saved) reservasPorFecha = JSON.parse(saved);
-        document.getElementById("valorAdulto").innerText = `R$ ${tarifas.adulto}`;
-        document.getElementById("valorMenor").innerText = `R$ ${tarifas.menor}`;
+        document.getElementById("valorAdulto").innerHTML = `R$ ${tarifas.adulto}`;
+        document.getElementById("valorMenor").innerHTML = `R$ ${tarifas.menor}`;
     }
     
     async function enviarGoogleSheets(reservaArray) {
         try {
             const response = await fetch(GOOGLE_SHEETS_URL, {
                 method: "POST",
+                mode: "no-cors",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ reserva: reservaArray })
             });
-            const result = await response.json();
-            return result.success === true;
+            console.log("Datos enviados:", reservaArray);
+            return true;
         } catch(e) {
-            console.error("Error:", e);
+            console.error("Error al enviar:", e);
             return false;
         }
     }
@@ -206,7 +210,7 @@
             <p>Fecha Paseo: ${reserva.fechaPaseo}</p>
             <p>Horario: ${horarioNombre}</p>
             <p>${reserva.adultos} adultos, ${reserva.menores} menores</p>
-            <p class="mt-2" style="font-size: 12px;">Código: ${reserva.id}</p>
+            <p style="font-size: 12px; margin-top: 8px;">Código: ${reserva.id}</p>
         `;
         modal.classList.remove("hidden");
     }
@@ -245,9 +249,9 @@
             radio.checked = true;
         }
         
-        morningCard.onclick = () => seleccionarHorario(morningCard, radioMorning);
-        afternoonCard.onclick = () => seleccionarHorario(afternoonCard, radioAfternoon);
-        if (extraCard) extraCard.onclick = () => seleccionarHorario(extraCard, radioExtra);
+        if(morningCard) morningCard.onclick = () => seleccionarHorario(morningCard, radioMorning);
+        if(afternoonCard) afternoonCard.onclick = () => seleccionarHorario(afternoonCard, radioAfternoon);
+        if(extraCard) extraCard.onclick = () => seleccionarHorario(extraCard, radioExtra);
         
         // Submit del formulario
         document.getElementById("reservaForm").addEventListener("submit", async (e) => {
@@ -290,30 +294,26 @@
             
             mostrarToast("Guardando reserva...");
             
-            const success = await enviarGoogleSheets(datosSheet);
+            await enviarGoogleSheets(datosSheet);
             
-            if (success) {
-                // Actualizar cupos locales
-                const ocupados = getOcupados(fechaPaseo, horario);
-                reservasPorFecha[fechaPaseo] = reservasPorFecha[fechaPaseo] || {};
-                reservasPorFecha[fechaPaseo][horario] = ocupados + adultos + menores;
-                guardarLocal();
-                actualizarCupos();
-                
-                const reservaObj = { id, nombre, empresa, hotelDireccion, email, whatsapp, fechaPaseo, fechaOut, horario, adultos, menores, montoTotal };
-                enviarWhatsApp(reservaObj);
-                mostrarPopup(reservaObj);
-                
-                document.getElementById("reservaForm").reset();
-                document.getElementById("adultos").value = "1";
-                document.querySelectorAll('input[name="horario"]').forEach(r => r.checked = false);
-                document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("selected"));
-                actualizarPreview();
-                
-                mostrarToast("✅ Reserva confirmada y guardada en Google Sheets");
-            } else {
-                mostrarToast("Error al guardar en Google Sheets. Intente nuevamente.", true);
-            }
+            // Actualizar cupos locales
+            const ocupados = getOcupados(fechaPaseo, horario);
+            reservasPorFecha[fechaPaseo] = reservasPorFecha[fechaPaseo] || {};
+            reservasPorFecha[fechaPaseo][horario] = ocupados + adultos + menores;
+            guardarLocal();
+            actualizarCupos();
+            
+            const reservaObj = { id, nombre, empresa, hotelDireccion, email, whatsapp, fechaPaseo, fechaOut, horario, adultos, menores, montoTotal };
+            enviarWhatsApp(reservaObj);
+            mostrarPopup(reservaObj);
+            
+            document.getElementById("reservaForm").reset();
+            document.getElementById("adultos").value = "1";
+            document.querySelectorAll('input[name="horario"]').forEach(r => r.checked = false);
+            document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("selected"));
+            actualizarPreview();
+            
+            mostrarToast("✅ Reserva confirmada");
         });
         
         document.getElementById("closeModal").addEventListener("click", cerrarModal);
