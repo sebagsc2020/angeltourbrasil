@@ -65,10 +65,10 @@
         .cupo-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 5px 12px;
+            gap: 8px;
+            padding: 6px 14px;
             border-radius: 40px;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             font-weight: 700;
         }
         .toast-angel {
@@ -135,9 +135,9 @@
             background: linear-gradient(95deg, #1e6f5c10, #28967210);
             border-left: 4px solid #1e6f5c;
         }
-        /* Ajuste para números grandes */
-        .text-large-number {
-            font-size: 0.75rem;
+        .lugares-libres {
+            font-size: 0.85rem;
+            font-weight: 800;
         }
     </style>
 </head>
@@ -209,27 +209,37 @@
                         <p class="text-xs text-gray-400">Menores de 2 años sin cargo</p></div>
                     </div>
 
-                    <!-- HORARIOS con cupo máximo 160 -->
+                    <!-- HORARIOS con cupo máximo 160 y mensaje "XXX Lugares libres" -->
                     <div class="mt-7">
                         <label class="block text-gray-800 font-bold mb-3"><i class="fas fa-ship text-emerald-600 mr-2"></i> Selecciona tu horario de navegación *</label>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <!-- Tour Mañana -->
                             <div id="cardMorning" class="horario-card rounded-xl p-4 cursor-pointer bg-white">
                                 <div class="flex justify-between items-start">
                                     <div>
                                         <div class="font-extrabold text-lg">🌅 Tour Mañana</div>
                                         <div class="text-sm text-gray-500">09:00 - 12:00 hrs</div>
-                                        <div class="mt-3"><span id="cupoMorningDisplay" class="cupo-badge bg-emerald-50">Cargando...</span></div>
+                                        <div class="mt-3">
+                                            <div id="cupoMorningDisplay" class="cupo-badge bg-emerald-50">
+                                                <i class="fas fa-chair"></i> <span id="morningLibres">--</span> Lugares libres
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="w-6 h-6 rounded-full border-2 border-gray-300"></div>
                                 </div>
                                 <input type="radio" name="horario" value="morning" class="hidden">
                             </div>
+                            <!-- Tour Tarde -->
                             <div id="cardAfternoon" class="horario-card rounded-xl p-4 cursor-pointer bg-white">
                                 <div class="flex justify-between items-start">
                                     <div>
                                         <div class="font-extrabold text-lg">🌇 Tour Tarde</div>
                                         <div class="text-sm text-gray-500">14:00 - 17:00 hrs</div>
-                                        <div class="mt-3"><span id="cupoAfternoonDisplay" class="cupo-badge bg-emerald-50">Cargando...</span></div>
+                                        <div class="mt-3">
+                                            <div id="cupoAfternoonDisplay" class="cupo-badge bg-emerald-50">
+                                                <i class="fas fa-chair"></i> <span id="afternoonLibres">--</span> Lugares libres
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="w-6 h-6 rounded-full border-2 border-gray-300"></div>
                                 </div>
@@ -297,7 +307,7 @@
 
 <script>
     // ==================== CONFIGURACIÓN ====================
-    // Cupo máximo actualizado a 160 lugares por horario
+    // Cupo máximo: 160 lugares por horario
     let horariosAngel = {
         morning: { id: "morning", nombre: "Tour Mañana", cupoMaximo: 160, ocupados: 0 },
         afternoon: { id: "afternoon", nombre: "Tour Tarde", cupoMaximo: 160, ocupados: 0 }
@@ -325,19 +335,23 @@
     function actualizarCuposUI() {
         const mDisp = horariosAngel.morning.cupoMaximo - horariosAngel.morning.ocupados;
         const aDisp = horariosAngel.afternoon.cupoMaximo - horariosAngel.afternoon.ocupados;
-        const mSpan = document.getElementById("cupoMorningDisplay");
-        const aSpan = document.getElementById("cupoAfternoonDisplay");
-        if (mSpan) {
-            mSpan.innerHTML = `<i class="fas fa-users"></i> ${mDisp} / ${horariosAngel.morning.cupoMaximo} lugares`;
-            // Umbral para mostrar color rojo cuando quedan menos de 20 lugares (10% de 160)
-            const umbral = 20;
-            mSpan.className = `cupo-badge ${mDisp <= umbral ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}`;
+        
+        // Actualizar textos con "XXX Lugares libres"
+        const morningLibresSpan = document.getElementById("morningLibres");
+        const afternoonLibresSpan = document.getElementById("afternoonLibres");
+        const morningDiv = document.getElementById("cupoMorningDisplay");
+        const afternoonDiv = document.getElementById("cupoAfternoonDisplay");
+        
+        if (morningLibresSpan) {
+            morningLibresSpan.textContent = mDisp;
+            morningDiv.className = `cupo-badge ${mDisp <= 20 ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}`;
         }
-        if (aSpan) {
-            aSpan.innerHTML = `<i class="fas fa-users"></i> ${aDisp} / ${horariosAngel.afternoon.cupoMaximo} lugares`;
-            const umbral = 20;
-            aSpan.className = `cupo-badge ${aDisp <= umbral ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}`;
+        if (afternoonLibresSpan) {
+            afternoonLibresSpan.textContent = aDisp;
+            afternoonDiv.className = `cupo-badge ${aDisp <= 20 ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}`;
         }
+        
+        // Deshabilitar tarjetas si no hay cupos
         const cardM = document.getElementById("cardMorning");
         const cardA = document.getElementById("cardAfternoon");
         if (mDisp <= 0) { 
@@ -383,9 +397,9 @@
                 headers: { "Content-Type": "application/json" }, 
                 body: JSON.stringify({ reserva: reserva }) 
             });
-            console.log("Datos enviados a Google Sheets:", reserva.id);
+            console.log("✅ Datos enviados a Google Sheets:", reserva.id);
         } catch(e) { 
-            console.warn("Error al enviar a Sheets:", e); 
+            console.warn("⚠️ Error al enviar a Sheets:", e); 
         }
     }
 
@@ -402,7 +416,7 @@
         const horarioData = horario === "morning" ? horariosAngel.morning : horariosAngel.afternoon;
         const disponibles = horarioData.cupoMaximo - horarioData.ocupados;
         if (adultos + menores > disponibles) {
-            return { success: false, error: `Cupos insuficientes para ${horario === "morning" ? "Tour Mañana" : "Tour Tarde"}. Disponibles: ${disponibles}.` };
+            return { success: false, error: `Cupos insuficientes para ${horario === "morning" ? "Tour Mañana" : "Tour Tarde"}. Lugares libres: ${disponibles}.` };
         }
         const cupoDisponible = disponibles;
         const id = `ATB-${Math.floor(Math.random()*9000+1000)}-${Date.now().toString().slice(-5)}`;
@@ -423,13 +437,14 @@
         const modal = document.getElementById("modalConfirmacion");
         const resumenDiv = document.getElementById("modalResumenInfo");
         const horarioNombre = reserva.horario === "morning" ? "🌅 Mañana (09:00 - 12:00 hrs)" : "🌇 Tarde (14:00 - 17:00 hrs)";
+        const cuposRestantes = reserva.cupoDisponible - (reserva.adultos + reserva.menores);
         resumenDiv.innerHTML = `
             <p class="text-sm text-gray-500 mb-2"><i class="fas fa-check-circle text-emerald-500"></i> <strong>Reserva confirmada</strong></p>
             <p><i class="fas fa-user-check text-emerald-500"></i> <strong>${reserva.nombre}</strong></p>
             <p><i class="fas fa-calendar-day"></i> <strong>Fecha:</strong> ${reserva.fechaOut}</p>
             <p><i class="fas fa-clock"></i> <strong>Horario:</strong> ${horarioNombre}</p>
             <p><i class="fas fa-users"></i> Pasajeros: ${reserva.adultos} adultos, ${reserva.menores} menores</p>
-            <p><i class="fas fa-chart-line"></i> Cupos restantes en este horario: <strong class="text-emerald-700">${reserva.cupoDisponible - (reserva.adultos + reserva.menores)}</strong> / ${reserva.cupoDisponible}</p>
+            <p><i class="fas fa-chair"></i> Lugares libres restantes: <strong class="text-emerald-700">${cuposRestantes}</strong> / 160</p>
             <p class="text-xs text-gray-500 mt-2 border-t pt-2"><i class="fas fa-ticket-alt"></i> Código: ${reserva.id}</p>
         `;
         modal.classList.add("active");
@@ -541,7 +556,7 @@
         mostrarToast("Cupos máximos actualizados");
     };
     
-    console.log("⚓ Angel Tour Brasil - Cupos configurados: Mañana 160 / Tarde 160");
+    console.log("⚓ Angel Tour Brasil - Capacidad: 160 lugares por horario");
 </script>
 </body>
 </html>
