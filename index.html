@@ -2,341 +2,142 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Angel Tour Brasil | Reservas Náuticas</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angel Tour Brasil | Reservas</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: linear-gradient(135deg, #0a2b3e 0%, #0d3b4f 50%, #115e6b 100%); min-height: 100vh; padding: 1rem; }
-        .container { max-width: 56rem; margin: 0 auto; }
-        .card-naval { background: white; border-radius: 2rem; box-shadow: 0 25px 45px -12px rgba(0,0,0,0.35); overflow: hidden; }
-        .gradient-naval { background: linear-gradient(105deg, #0e4b5e 0%, #1b7a7a 100%); padding: 1.25rem 1.5rem; color: white; }
-        .btn-naval { background: linear-gradient(95deg, #1e6f5c, #289672); transition: all 0.3s ease; border: none; cursor: pointer; width: 100%; padding: 0.75rem 1.5rem; border-radius: 0.75rem; color: white; font-weight: bold; font-size: 1.125rem; display: flex; align-items: center; justify-content: center; gap: 0.75rem; }
-        .btn-naval:hover { transform: translateY(-2px); background: linear-gradient(95deg, #258468, #2eae8a); }
-        .input-angel { width: 100%; border: 1px solid #e2e8f0; border-radius: 0.75rem; padding: 0.75rem; }
-        .input-angel:focus { outline: none; box-shadow: 0 0 0 3px rgba(30,111,92,0.2); border-color: #1e6f5c; }
-        .horario-card { transition: all 0.2s ease; border: 2px solid #e2e8f0; border-radius: 0.75rem; padding: 1rem; cursor: pointer; background: white; }
-        .horario-card:hover { transform: translateY(-3px); border-color: #2c7a6e; }
-        .horario-selected { border-color: #1e6f5c !important; background-color: #f0fdf9 !important; }
-        .cupo-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 40px; font-size: 0.75rem; font-weight: 700; }
-        .toast-angel { position: fixed; bottom: 30px; right: 30px; background: #1f2937; color: white; padding: 14px 26px; border-radius: 60px; font-weight: 500; z-index: 1000; animation: slideUp 0.3s ease; }
-        @keyframes slideUp { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        .logo-boat { background: white; border-radius: 50px; padding: 12px 28px; display: inline-flex; align-items: center; gap: 16px; box-shadow: 0 15px 30px -10px rgba(0,0,0,0.25); }
-        .modal-confirmacion { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
-        .modal-confirmacion.active { opacity: 1; visibility: visible; }
-        .modal-content { background: white; max-width: 500px; width: 90%; border-radius: 2rem; padding: 1.5rem; text-align: center; position: relative; }
-        .grid-2 { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
-        @media (min-width: 768px) { .grid-2 { grid-template-columns: repeat(2, 1fr); } }
-        .flex-between { display: flex; justify-content: space-between; align-items: center; }
-        .text-center { text-align: center; }
-        .mt-1 { margin-top: 0.25rem; }
-        .mt-2 { margin-top: 0.5rem; }
-        .mt-3 { margin-top: 0.75rem; }
-        .mt-4 { margin-top: 1rem; }
-        .mt-5 { margin-top: 1.25rem; }
-        .mt-6 { margin-top: 1.5rem; }
-        .mt-7 { margin-top: 1.75rem; }
-        .mb-1 { margin-bottom: 0.25rem; }
-        .mb-2 { margin-bottom: 0.5rem; }
-        .mb-3 { margin-bottom: 0.75rem; }
-        .mb-7 { margin-bottom: 1.75rem; }
-        .p-3 { padding: 0.75rem; }
-        .p-4 { padding: 1rem; }
-        .p-6 { padding: 1.5rem; }
-        .rounded-xl { border-radius: 0.75rem; }
-        .rounded-full { border-radius: 9999px; }
-        .bg-white { background: white; }
-        .bg-emerald-100 { background: #d1fae5; }
-        .bg-rose-100 { background: #ffe4e6; }
-        .bg-gray-50 { background: #f9fafb; }
-        .bg-purple-100 { background: #f3e8ff; }
-        .text-white { color: white; }
-        .text-gray-800 { color: #1f2937; }
-        .text-gray-700 { color: #374151; }
-        .text-gray-600 { color: #4b5563; }
-        .text-gray-500 { color: #6b7280; }
-        .text-emerald-700 { color: #047857; }
-        .text-emerald-800 { color: #065f46; }
-        .text-emerald-600 { color: #059669; }
-        .text-rose-700 { color: #be123c; }
-        .text-red-600 { color: #dc2626; }
-        .text-xs { font-size: 0.75rem; }
-        .text-sm { font-size: 0.875rem; }
-        .text-xl { font-size: 1.25rem; }
-        .text-2xl { font-size: 1.5rem; }
-        .text-3xl { font-size: 1.875rem; }
-        .font-semibold { font-weight: 600; }
-        .font-bold { font-weight: 700; }
-        .font-extrabold { font-weight: 800; }
-        .cursor-pointer { cursor: pointer; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+        body { background: linear-gradient(135deg, #0a2b3e, #115e6b); min-height: 100vh; padding: 20px; }
+        .container { max-width: 700px; margin: 0 auto; }
+        .logo-card { background: white; border-radius: 60px; padding: 10px 24px; display: inline-block; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .form-card { background: white; border-radius: 28px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .header { background: linear-gradient(105deg, #0e4b5e, #1b7a7a); padding: 20px; color: white; text-align: center; }
+        .body-form { padding: 24px; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 14px; margin-top: 4px; margin-bottom: 12px; font-size: 14px; }
+        input:focus { outline: none; border-color: #1e6f5c; box-shadow: 0 0 0 3px rgba(30,111,92,0.2); }
+        .btn { background: linear-gradient(95deg, #1e6f5c, #289672); color: white; padding: 14px; border: none; border-radius: 40px; font-weight: bold; font-size: 16px; width: 100%; cursor: pointer; margin-top: 16px; transition: all 0.3s; }
+        .btn:hover { transform: translateY(-2px); background: linear-gradient(95deg, #258468, #2eae8a); }
+        .horario-card { border: 2px solid #e2e8f0; border-radius: 16px; padding: 14px; cursor: pointer; margin-bottom: 12px; transition: all 0.2s; }
+        .horario-card:hover { transform: translateY(-2px); border-color: #2c7a6e; }
+        .horario-card.selected { border-color: #1e6f5c; background: #f0fdf9; }
+        .cupo { font-size: 11px; background: #d1fae5; padding: 4px 12px; border-radius: 40px; display: inline-block; font-weight: 600; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+        .toast { position: fixed; bottom: 20px; right: 20px; background: #1f2937; color: white; padding: 12px 24px; border-radius: 40px; z-index: 1000; font-size: 14px; }
         .hidden { display: none; }
-        .w-full { width: 100%; }
-        .w-6 { width: 1.5rem; }
-        .h-6 { height: 1.5rem; }
-        .absolute { position: absolute; }
-        .relative { position: relative; }
-        .-top-3 { top: -0.75rem; }
-        .-right-3 { right: -0.75rem; }
-        .gap-2 { gap: 0.5rem; }
-        .gap-3 { gap: 0.75rem; }
-        .gap-4 { gap: 1rem; }
-        .gap-5 { gap: 1.25rem; }
-        .flex { display: flex; }
-        .items-center { align-items: center; }
-        .justify-center { justify-content: center; }
-        .justify-between { justify-content: space-between; }
-        .shadow-xl { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
-        .weather-container { background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); border-radius: 1rem; padding: 0.75rem; margin: 0.75rem 0 1.25rem 0; }
-        .weather-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #0369a1; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
-        .weather-buttons { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
-        .weather-btn { background: white; border: 1px solid #cbd5e1; border-radius: 0.75rem; padding: 0.5rem; min-width: 70px; text-align: center; cursor: pointer; transition: all 0.2s ease; }
-        .weather-btn:hover { transform: translateY(-2px); border-color: #10b981; }
-        .weather-btn.active { background: #10b981; border-color: #10b981; color: white; }
-        .weather-day { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; }
-        .weather-icon { font-size: 0.9rem; margin: 0.15rem 0; }
-        .weather-temp { font-size: 0.7rem; font-weight: 800; }
-        .weather-info-detalle { text-align: center; font-size: 0.7rem; color: #0c4a6e; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed #93c5fd; }
-        .cupo-alert { background: #fef2f2; border: 1px solid #fecaca; border-radius: 0.75rem; padding: 0.75rem; margin-top: 0.5rem; text-align: center; }
-        .cupo-alert span { color: #991b1b; font-weight: 600; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 2000; }
+        .modal-content { background: white; border-radius: 28px; padding: 28px; max-width: 400px; width: 90%; text-align: center; }
+        .text-center { text-align: center; }
+        .mt-2 { margin-top: 8px; }
+        .mb-2 { margin-bottom: 8px; }
+        .font-bold { font-weight: bold; }
+        .text-emerald { color: #059669; }
+        .text-white { color: white; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="text-center mb-7">
-        <div class="flex justify-center mb-4">
-            <div class="logo-boat bg-white shadow-xl">
-                <div class="flex items-center gap-4">
-                    <div class="text-4xl">⛵</div>
-                    <div class="border-l-2 border-emerald-600 pl-4">
-                        <div class="flex flex-col items-start">
-                            <span class="font-extrabold text-3xl text-gray-800">ANGEL TOUR <span class="text-emerald-700">BRASIL</span></span>
-                            <div class="flex gap-3 mt-1">
-                                <span class="text-[11px] font-bold text-gray-500"><i class="fas fa-ship"></i> PASSEIO DE BARCO</span>
-                                <span class="text-[11px] font-bold text-emerald-600">✦ DESDE 1999 ✦</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="text-center">
+        <div class="logo-card">
+            <span style="font-size: 28px;">⛵</span>
+            <span style="font-size: 22px; font-weight: bold;">ANGEL TOUR <span style="color: #059669;">BRASIL</span></span>
+            <div style="font-size: 9px;">PASSEIO DE BARCO ✦ DESDE 1999</div>
         </div>
-        <h1 class="text-3xl font-bold text-white">Reserve seu passeio de barco</h1>
-        <p class="text-white mt-2">Experiencias únicas · Cupos limitados · Confirmación inmediata</p>
+        <h1 style="color: white; margin: 10px 0; font-size: 28px;">Reserve seu passeio de barco</h1>
+        <p style="color: #a7f3d0;">Experiencias únicas · Cupos limitados · Confirmación inmediata</p>
     </div>
 
-    <div class="card-naval">
-        <div class="gradient-naval">
-            <div class="flex items-center gap-3">
-                <i class="fab fa-whatsapp text-2xl"></i>
-                <div>
-                    <h2 class="text-xl font-bold">📋 Formulario de Reserva</h2>
-                    <p class="text-emerald-100 text-sm">Recibirás confirmación vía WhatsApp</p>
-                </div>
-            </div>
+    <div class="form-card mt-2">
+        <div class="header">
+            <i class="fas fa-whatsapp" style="margin-right: 8px;"></i> Formulario de Reserva
+            <p style="font-size: 12px; margin-top: 5px; opacity: 0.9;">Recibirás confirmación vía WhatsApp</p>
         </div>
-
-        <div class="p-6 bg-white">
-            <!-- Clima -->
-            <div class="weather-container">
-                <div class="weather-title">
-                    <i class="fas fa-cloud-sun"></i>
-                    PREVISIÓN PARA PORTO BELO - SC (6 DÍAS)
-                    <i class="fas fa-water"></i>
-                </div>
-                <div id="weatherButtons" class="weather-buttons">
-                    <div class="weather-btn">Cargando...</div>
-                </div>
-                <div id="weatherDetail" class="weather-info-detalle">Seleccione un día</div>
-            </div>
-
-            <form id="formReservaAngel">
+        
+        <div class="body-form">
+            <form id="reservaForm">
                 <div class="grid-2">
-                    <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-user"></i> Nombre completo *</label>
-                    <input type="text" id="nombre" required class="input-angel" placeholder="Ej: Luciana Menezes"></div>
-                    
-                    <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-building"></i> Empresa / Grupo *</label>
-                    <input type="text" id="empresa" required class="input-angel" placeholder="Nombre de la empresa"></div>
-                    
-                    <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-user-friends"></i> Adultos (12+ años) *</label>
-                    <input type="number" id="adultos" min="0" value="1" required class="input-angel"></div>
-                    
-                    <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-child"></i> Menores (2-11 años)</label>
-                    <input type="number" id="menores" min="0" value="0" class="input-angel">
-                    <p class="text-xs text-gray-400">Menores de 2 años sin cargo</p></div>
-                    
-                    <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-hotel"></i> Hotel / Dirección *</label>
-                    <input type="text" id="hotelDireccion" required class="input-angel" placeholder="Ej: Resort Costa do Sauípe"></div>
-                    
-                    <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-envelope"></i> Correo electrónico *</label>
-                    <input type="email" id="email" required class="input-angel" placeholder="contacto@ejemplo.com"></div>
-                    
-                    <div><label class="block text-gray-700 font-semibold mb-1"><i class="fab fa-whatsapp"></i> WhatsApp (código país) *</label>
-                    <input type="tel" id="whatsapp" required class="input-angel" placeholder="+55 11 91234-5678">
-                    <p class="text-xs text-gray-400">Incluir código: +55 para Brasil</p></div>
-                    
-                    <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-ship"></i> Fecha de Paseo *</label>
-                    <input type="date" id="fechaPaseo" required class="input-angel"></div>
-                    
-                    <div><label class="block text-gray-700 font-semibold mb-1"><i class="fas fa-calendar-alt"></i> Fecha de salida (OUT) *</label>
-                    <input type="date" id="fechaOut" required class="input-angel"></div>
+                    <div><label class="font-bold">Nombre completo *</label><input type="text" id="nombre" required placeholder="Ej: Luciana Menezes"></div>
+                    <div><label class="font-bold">Empresa / Grupo *</label><input type="text" id="empresa" required placeholder="Nombre de la empresa"></div>
+                    <div><label class="font-bold">Adultos (12+) *</label><input type="number" id="adultos" min="0" value="1" required></div>
+                    <div><label class="font-bold">Menores (2-11 años)</label><input type="number" id="menores" min="0" value="0"></div>
+                    <div><label class="font-bold">Hotel / Dirección *</label><input type="text" id="hotelDireccion" required placeholder="Ej: Resort Costa do Sauípe"></div>
+                    <div><label class="font-bold">Email *</label><input type="email" id="email" required placeholder="contacto@ejemplo.com"></div>
+                    <div><label class="font-bold">WhatsApp (código país) *</label><input type="tel" id="whatsapp" required placeholder="+55 11 91234-5678"></div>
+                    <div><label class="font-bold">Fecha de Paseo *</label><input type="date" id="fechaPaseo" required></div>
+                    <div><label class="font-bold">Fecha de salida (OUT) *</label><input type="date" id="fechaOut" required></div>
                 </div>
 
-                <div id="cupoAlertMessage" class="cupo-alert hidden">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <span id="cupoAlertText"></span>
-                </div>
-
-                <div class="mt-7">
-                    <label class="block text-gray-800 font-bold mb-3">Selecciona tu horario *</label>
-                    <div id="horariosContainer" class="grid-2">
-                        <div id="cardMorning" class="horario-card">
-                            <div class="flex-between">
-                                <div>
-                                    <div class="font-extrabold text-lg">🌅 Tour Mañana</div>
-                                    <div class="text-sm text-gray-500">09:00 - 12:00 hrs</div>
-                                    <div class="mt-3">
-                                        <div id="cupoMorningDisplay" class="cupo-badge bg-emerald-100 text-emerald-700">
-                                            <i class="fas fa-chair"></i> <span id="morningLibres">160</span> lugares
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="w-6 h-6 rounded-full border-2 border-gray-300"></div>
-                            </div>
-                            <input type="radio" name="horario" value="morning" class="hidden">
-                        </div>
-                        <div id="cardAfternoon" class="horario-card">
-                            <div class="flex-between">
-                                <div>
-                                    <div class="font-extrabold text-lg">🌇 Tour Tarde</div>
-                                    <div class="text-sm text-gray-500">14:00 - 17:00 hrs</div>
-                                    <div class="mt-3">
-                                        <div id="cupoAfternoonDisplay" class="cupo-badge bg-emerald-100 text-emerald-700">
-                                            <i class="fas fa-chair"></i> <span id="afternoonLibres">160</span> lugares
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="w-6 h-6 rounded-full border-2 border-gray-300"></div>
-                            </div>
-                            <input type="radio" name="horario" value="afternoon" class="hidden">
-                        </div>
+                <div style="margin: 16px 0 12px 0; font-weight: bold;">Selecciona tu horario *</div>
+                
+                <div id="cardMorning" class="horario-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div><span style="font-weight: bold;">🌅 Tour Mañana</span><br><span style="font-size: 12px;">09:00 - 12:00 hrs</span></div>
+                        <div><span id="morningCupo" class="cupo">160 lugares</span></div>
                     </div>
-                    <div id="tourExtraContainer" class="mt-4 hidden">
-                        <div id="cardExtra" class="horario-card" style="border-color: #8b5cf6; background: #faf5ff;">
-                            <div class="flex-between">
-                                <div>
-                                    <div class="font-extrabold text-lg">⭐ Tour Extra</div>
-                                    <div class="text-sm text-gray-600">18:00 - 21:00 hrs</div>
-                                    <div class="mt-3">
-                                        <div class="cupo-badge bg-purple-100 text-purple-700">
-                                            <i class="fas fa-star"></i> <span id="extraLibres">160</span> lugares
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="w-6 h-6 rounded-full border-2 border-purple-400"></div>
-                            </div>
-                            <input type="radio" name="horario" value="extra" class="hidden">
-                        </div>
+                    <input type="radio" name="horario" value="morning" style="display: none;">
+                </div>
+                
+                <div id="cardAfternoon" class="horario-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div><span style="font-weight: bold;">🌇 Tour Tarde</span><br><span style="font-size: 12px;">14:00 - 17:00 hrs</span></div>
+                        <div><span id="afternoonCupo" class="cupo">160 lugares</span></div>
                     </div>
-                    <p id="errorHorarioAngel" class="text-red-600 text-sm mt-2 hidden">⚠️ Elige un horario disponible</p>
+                    <input type="radio" name="horario" value="afternoon" style="display: none;">
                 </div>
 
-                <div class="mt-6 bg-gray-50 rounded-xl p-4">
-                    <div class="flex-between"><span>Tarifa por adulto:</span><span class="font-semibold" id="valorAdultoTexto">R$ 180</span></div>
-                    <div class="flex-between mt-1"><span>Tarifa por menor:</span><span class="font-semibold" id="valorMenorTexto">R$ 90</span></div>
-                    <div class="border-t mt-3 pt-2 flex-between font-bold text-emerald-800">
+                <div id="tourExtra" style="display: none;" class="horario-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div><span style="font-weight: bold;">⭐ Tour Extra</span><br><span style="font-size: 12px;">18:00 - 21:00 hrs</span></div>
+                        <div><span id="extraCupo" class="cupo">160 lugares</span></div>
+                    </div>
+                    <input type="radio" name="horario" value="extra" style="display: none;">
+                </div>
+
+                <div style="margin-top: 20px; padding: 16px; background: #f0fdf4; border-radius: 20px;">
+                    <div style="display: flex; justify-content: space-between;"><span>Tarifa por adulto:</span><span id="valorAdulto">R$ 180</span></div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 5px;"><span>Tarifa por menor:</span><span id="valorMenor">R$ 90</span></div>
+                    <div style="border-top: 1px solid #ccc; margin-top: 10px; padding-top: 10px; display: flex; justify-content: space-between; font-weight: bold;">
                         <span>Total estimado:</span>
-                        <span id="totalPreviewAngel" class="text-xl">R$ 0</span>
+                        <span id="totalPreview" style="font-size: 20px; color: #059669;">R$ 0</span>
                     </div>
                 </div>
 
-                <div class="mt-7">
-                    <button type="submit" class="btn-naval">
-                        <i class="fab fa-whatsapp text-xl"></i> Confirmar Reserva
-                    </button>
-                </div>
+                <button type="submit" class="btn"><i class="fas fa-whatsapp"></i> Confirmar Reserva</button>
             </form>
         </div>
     </div>
     
-    <div class="text-center text-white/70 text-xs mt-8">
-        <span><i class="fas fa-anchor"></i> Angel Tour Brasil - Desde 1999</span>
+    <div class="text-center text-white" style="font-size: 11px; margin-top: 20px;">
+        <i class="fas fa-anchor"></i> Angel Tour Brasil - Desde 1999
     </div>
 </div>
 
-<div id="modalConfirmacion" class="modal-confirmacion">
+<div id="modal" class="modal hidden">
     <div class="modal-content">
-        <button id="cerrarModalBtn" class="absolute -top-3 -right-3 bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center"><i class="fas fa-times"></i></button>
-        <div class="text-6xl mb-2">⛵✨</div>
-        <h3 class="text-2xl font-bold text-gray-800">¡Reserva Confirmada!</h3>
-        <div class="w-16 h-1 bg-emerald-500 mx-auto my-3 rounded-full"></div>
-        <p class="text-gray-600">¡Gracias por elegir <strong>Angel Tour Brasil</strong>!</p>
-        <div id="modalResumenInfo" class="bg-gray-50 rounded-xl p-4 text-left my-4"></div>
-        <button id="btnCerrarModal" class="mt-2 bg-emerald-600 text-white font-bold py-2 px-6 rounded-full w-full">Entendido</button>
+        <span style="font-size: 50px;">⛵✨</span>
+        <h3 style="font-size: 24px; margin: 10px 0;">¡Reserva Confirmada!</h3>
+        <div id="resumenReserva" style="margin: 15px 0; text-align: left;"></div>
+        <button id="closeModal" style="background: #059669; color: white; border: none; padding: 12px 20px; border-radius: 40px; width: 100%; font-weight: bold; cursor: pointer;">Entendido</button>
     </div>
 </div>
 
-<div id="toastAngel" class="toast-angel hidden"></div>
+<div id="toast" class="toast hidden"></div>
 
 <script>
-    // ==================== CLIMA ====================
-    const diasSemana = ['DOM', 'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB'];
-    const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-    const climas = [
-        { icono: 'fas fa-sun', temp: '29°C', desc: 'Soleado', viento: '12 km/h', humedad: '65%', lluvia: '0%' },
-        { icono: 'fas fa-cloud-sun', temp: '27°C', desc: 'Parcialmente nublado', viento: '14 km/h', humedad: '68%', lluvia: '5%' },
-        { icono: 'fas fa-cloud-sun', temp: '26°C', desc: 'Nubes dispersas', viento: '16 km/h', humedad: '72%', lluvia: '15%' },
-        { icono: 'fas fa-cloud-rain', temp: '24°C', desc: 'Lluvia ligera', viento: '18 km/h', humedad: '85%', lluvia: '60%' },
-        { icono: 'fas fa-sun', temp: '30°C', desc: 'Soleado', viento: '10 km/h', humedad: '60%', lluvia: '0%' },
-        { icono: 'fas fa-cloud', temp: '25°C', desc: 'Nublado', viento: '15 km/h', humedad: '75%', lluvia: '25%' }
-    ];
+    // 🔴 IMPORTANTE: REEMPLAZA ESTA URL CON LA QUE OBTUVISTE DE APPS SCRIPT 🔴
+    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbxlk1fJZK83dSli3PPWJ42hRyug-rWK0ialMikgzxHSbJqebTQT4KD8w1VOocyKc029VA/exec";
     
-    function getWeatherData() {
-        const hoy = new Date();
-        const datos = [];
-        for (let i = 0; i < 6; i++) {
-            const fecha = new Date(hoy);
-            fecha.setDate(hoy.getDate() + i);
-            datos.push({
-                diaSemana: diasSemana[fecha.getDay()],
-                fecha: `${fecha.getDate()} ${meses[fecha.getMonth()]}`,
-                ...climas[i % climas.length]
-            });
-        }
-        return datos;
-    }
-    
-    let weatherData = getWeatherData();
-    let selectedWeatherIndex = 0;
-    
-    function renderWeatherButtons() {
-        const container = document.getElementById('weatherButtons');
-        if (!container) return;
-        container.innerHTML = '';
-        weatherData.forEach((item, idx) => {
-            const btn = document.createElement('div');
-            btn.className = `weather-btn ${idx === selectedWeatherIndex ? 'active' : ''}`;
-            btn.innerHTML = `<div class="weather-day">${item.diaSemana}</div><div class="weather-icon"><i class="${item.icono}"></i></div><div class="weather-temp">${item.temp}</div><div class="weather-desc">${item.desc}</div>`;
-            btn.onclick = () => { selectedWeatherIndex = idx; renderWeatherButtons(); updateWeatherDetail(item); };
-            container.appendChild(btn);
-        });
-        updateWeatherDetail(weatherData[selectedWeatherIndex]);
-    }
-    
-    function updateWeatherDetail(data) {
-        const detailDiv = document.getElementById('weatherDetail');
-        if (detailDiv && data) {
-            detailDiv.innerHTML = `Porto Belo · ${data.diaSemana} ${data.fecha} | ${data.desc} | 🌡️ ${data.temp} | 💨 ${data.viento} | 💧 ${data.humedad} | ☔ ${data.lluvia}`;
-        }
-    }
-    
-    // ==================== RESERVAS ====================
     const CAPACIDAD_MAXIMA = 160;
-    // ⚠️ CAMBIA ESTA URL POR LA QUE OBTENGAS DE APPS SCRIPT ⚠️
-    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbyFG6RmmTxuZr8lz9MX6_re6tUMigMGP8RcmbV-qqlMTjZBJeluPXibZtTlDT0TqWErjw/exec";
-    
     let reservasPorFecha = {};
-    let tarifasAngel = { adulto: 180, menor: 90 };
+    let tarifas = { adulto: 180, menor: 90 };
+    
+    function mostrarToast(msg, error = false) {
+        const toast = document.getElementById("toast");
+        toast.textContent = msg;
+        toast.style.background = error ? "#dc2626" : "#1f2937";
+        toast.classList.remove("hidden");
+        setTimeout(() => toast.classList.add("hidden"), 4000);
+    }
     
     function getOcupados(fecha, horario) {
         return reservasPorFecha[fecha]?.[horario] || 0;
@@ -346,60 +147,45 @@
         return CAPACIDAD_MAXIMA - getOcupados(fecha, horario);
     }
     
-    function actualizarCuposUI() {
+    function actualizarCupos() {
         const fecha = document.getElementById("fechaPaseo").value;
         if (!fecha) return;
         
         const morningDisp = getDisponibles(fecha, "morning");
         const afternoonDisp = getDisponibles(fecha, "afternoon");
         
-        document.getElementById("morningLibres").textContent = morningDisp;
-        document.getElementById("afternoonLibres").textContent = afternoonDisp;
-        
-        const cardM = document.getElementById("cardMorning");
-        const cardA = document.getElementById("cardAfternoon");
-        const alertDiv = document.getElementById("cupoAlertMessage");
-        const alertText = document.getElementById("cupoAlertText");
+        document.getElementById("morningCupo").innerHTML = morningDisp + " lugares";
+        document.getElementById("afternoonCupo").innerHTML = afternoonDisp + " lugares";
         
         if (morningDisp <= 0 && afternoonDisp <= 0) {
-            alertDiv.classList.remove("hidden");
-            alertText.textContent = `No hay cupos disponibles para el ${fecha}. Por favor, seleccione otra fecha.`;
+            document.getElementById("tourExtra").style.display = "block";
         } else {
-            alertDiv.classList.add("hidden");
+            document.getElementById("tourExtra").style.display = "none";
         }
-        
-        if (cardM) cardM.style.opacity = morningDisp <= 0 ? "0.5" : "1";
-        if (cardA) cardA.style.opacity = afternoonDisp <= 0 ? "0.5" : "1";
     }
     
     function guardarLocal() {
-        localStorage.setItem("angel_reservas_por_fecha", JSON.stringify(reservasPorFecha));
-        localStorage.setItem("angel_tarifas", JSON.stringify(tarifasAngel));
+        localStorage.setItem("angel_reservas", JSON.stringify(reservasPorFecha));
     }
     
-    function cargarDatos() {
-        const stored = localStorage.getItem("angel_reservas_por_fecha");
-        if (stored) reservasPorFecha = JSON.parse(stored);
-        const storedTar = localStorage.getItem("angel_tarifas");
-        if (storedTar) tarifasAngel = JSON.parse(storedTar);
-        document.getElementById("valorAdultoTexto").innerText = `R$ ${tarifasAngel.adulto}`;
-        document.getElementById("valorMenorTexto").innerText = `R$ ${tarifasAngel.menor}`;
+    function cargarLocal() {
+        const saved = localStorage.getItem("angel_reservas");
+        if (saved) reservasPorFecha = JSON.parse(saved);
+        document.getElementById("valorAdulto").innerText = `R$ ${tarifas.adulto}`;
+        document.getElementById("valorMenor").innerText = `R$ ${tarifas.menor}`;
     }
     
     async function enviarGoogleSheets(reservaArray) {
         try {
-            console.log("Enviando a Google Sheets:", reservaArray);
-            const response = await fetch(GOOGLE_SHEETS_URL, { 
-                method: "POST", 
-                mode: "cors",
-                headers: { "Content-Type": "application/json" }, 
-                body: JSON.stringify({ reserva: reservaArray }) 
+            const response = await fetch(GOOGLE_SHEETS_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ reserva: reservaArray })
             });
             const result = await response.json();
-            console.log("Respuesta de Google Sheets:", result);
             return result.success === true;
-        } catch(e) { 
-            console.error("Error al enviar a Sheets:", e);
+        } catch(e) {
+            console.error("Error:", e);
             return false;
         }
     }
@@ -410,150 +196,133 @@
         window.open(`https://wa.me/${reserva.whatsapp.replace(/\D/g, '')}?text=${mensaje}`, '_blank');
     }
     
-    async function crearReserva(datos) {
-        const { nombre, hotelDireccion, email, whatsapp, empresa, fechaPaseo, fechaOut, horario, adultos, menores } = datos;
-        
-        const disponibles = getDisponibles(fechaPaseo, horario);
-        if (adultos + menores > disponibles) {
-            return { success: false, error: `Cupos insuficientes para ${fechaPaseo}. Quedan ${disponibles} lugares.` };
-        }
-        
-        const id = `ATB-${Math.floor(Math.random()*9000+1000)}-${Date.now().toString().slice(-5)}`;
-        const montoTotal = (adultos * tarifasAngel.adulto) + (menores * tarifasAngel.menor);
-        
-        const datosSheet = [
-            id, fechaPaseo, nombre, empresa, adultos, menores,
-            horario === "morning" ? "🌅 Tour Mañana" : (horario === "afternoon" ? "🌇 Tour Tarde" : "⭐ Tour Extra"),
-            montoTotal, hotelDireccion, email, whatsapp, fechaOut, "Confirmado"
-        ];
-        
-        const sheetResult = await enviarGoogleSheets(datosSheet);
-        
-        if (!sheetResult) {
-            mostrarToast("⚠️ No se pudo guardar en Google Sheets, pero la reserva se guardó localmente", true);
-        } else {
-            mostrarToast("✅ Reserva guardada en Google Sheets");
-        }
-        
-        const ocupadosActual = getOcupados(fechaPaseo, horario);
-        reservasPorFecha[fechaPaseo] = reservasPorFecha[fechaPaseo] || {};
-        reservasPorFecha[fechaPaseo][horario] = ocupadosActual + adultos + menores;
-        guardarLocal();
-        actualizarCuposUI();
-        
-        const reservaObj = { id, nombre, hotelDireccion, email, whatsapp, empresa, fechaPaseo, fechaOut, horario, adultos, menores, montoTotal };
-        return { success: true, reserva: reservaObj };
-    }
-    
     function mostrarPopup(reserva) {
-        const modal = document.getElementById("modalConfirmacion");
-        const resumenDiv = document.getElementById("modalResumenInfo");
+        const modal = document.getElementById("modal");
+        const resumen = document.getElementById("resumenReserva");
         let horarioNombre = reserva.horario === "morning" ? "🌅 Mañana (09:00-12:00)" : (reserva.horario === "afternoon" ? "🌇 Tarde (14:00-17:00)" : "⭐ Tour Extra (18:00-21:00)");
-        resumenDiv.innerHTML = `
-            <p><i class="fas fa-user-check"></i> <strong>${reserva.nombre}</strong></p>
-            <p><i class="fas fa-building"></i> ${reserva.empresa}</p>
-            <p><i class="fas fa-calendar-day"></i> Fecha Paseo: ${reserva.fechaPaseo}</p>
-            <p><i class="fas fa-clock"></i> ${horarioNombre}</p>
-            <p><i class="fas fa-users"></i> ${reserva.adultos} adultos, ${reserva.menores} menores</p>
-            <p class="text-xs text-gray-500 mt-2">Código: ${reserva.id}</p>
+        resumen.innerHTML = `
+            <p><strong>${reserva.nombre}</strong></p>
+            <p>Empresa: ${reserva.empresa}</p>
+            <p>Fecha Paseo: ${reserva.fechaPaseo}</p>
+            <p>Horario: ${horarioNombre}</p>
+            <p>${reserva.adultos} adultos, ${reserva.menores} menores</p>
+            <p class="mt-2" style="font-size: 12px;">Código: ${reserva.id}</p>
         `;
-        modal.classList.add("active");
+        modal.classList.remove("hidden");
     }
     
-    function cerrarModal() { document.getElementById("modalConfirmacion").classList.remove("active"); }
+    function cerrarModal() {
+        document.getElementById("modal").classList.add("hidden");
+    }
     
     function actualizarPreview() {
         const adultos = parseInt(document.getElementById("adultos").value) || 0;
         const menores = parseInt(document.getElementById("menores").value) || 0;
-        const total = (adultos * tarifasAngel.adulto) + (menores * tarifasAngel.menor);
-        document.getElementById("totalPreviewAngel").innerHTML = `R$ ${total.toFixed(2)}`;
-    }
-    
-    function mostrarToast(msg, error = false) {
-        const toast = document.getElementById("toastAngel");
-        toast.textContent = msg;
-        toast.style.background = error ? "#dc2626" : "#1f2937";
-        toast.classList.remove("hidden");
-        setTimeout(() => toast.classList.add("hidden"), 4000);
+        const total = (adultos * tarifas.adulto) + (menores * tarifas.menor);
+        document.getElementById("totalPreview").innerHTML = `R$ ${total.toFixed(2)}`;
     }
     
     // Inicialización
     document.addEventListener("DOMContentLoaded", function() {
-        renderWeatherButtons();
-        cargarDatos();
+        cargarLocal();
         actualizarPreview();
         
-        document.getElementById("fechaPaseo").addEventListener("change", function() {
-            actualizarCuposUI();
-            document.querySelectorAll('input[name="horario"]').forEach(r => r.checked = false);
-            document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("horario-selected"));
-        });
+        document.getElementById("fechaPaseo").addEventListener("change", actualizarCupos);
+        document.getElementById("adultos").addEventListener("input", actualizarPreview);
+        document.getElementById("menores").addEventListener("input", actualizarPreview);
         
         // Selector de horarios
-        const cardM = document.getElementById("cardMorning");
-        const cardA = document.getElementById("cardAfternoon");
-        const cardE = document.getElementById("cardExtra");
-        const radioM = document.querySelector('input[value="morning"]');
-        const radioA = document.querySelector('input[value="afternoon"]');
-        const radioE = document.querySelector('input[value="extra"]');
+        const morningCard = document.getElementById("cardMorning");
+        const afternoonCard = document.getElementById("cardAfternoon");
+        const extraCard = document.getElementById("tourExtra");
+        const radioMorning = document.querySelector('input[value="morning"]');
+        const radioAfternoon = document.querySelector('input[value="afternoon"]');
+        const radioExtra = document.querySelector('input[value="extra"]');
         
-        function limpiar() { document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("horario-selected")); }
-        function seleccionar(card, radio) { limpiar(); card.classList.add("horario-selected"); if(radio) radio.checked = true; document.getElementById("errorHorarioAngel").classList.add("hidden"); }
+        function seleccionarHorario(card, radio) {
+            document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("selected"));
+            card.classList.add("selected");
+            radio.checked = true;
+        }
         
-        if(cardM) cardM.onclick = () => { const disp = getDisponibles(document.getElementById("fechaPaseo").value, "morning"); if(disp > 0) seleccionar(cardM, radioM); else mostrarToast("Tour Mañana sin cupos", true); };
-        if(cardA) cardA.onclick = () => { const disp = getDisponibles(document.getElementById("fechaPaseo").value, "afternoon"); if(disp > 0) seleccionar(cardA, radioA); else mostrarToast("Tour Tarde sin cupos", true); };
-        if(cardE) cardE.onclick = () => { seleccionar(cardE, radioE); };
+        morningCard.onclick = () => seleccionarHorario(morningCard, radioMorning);
+        afternoonCard.onclick = () => seleccionarHorario(afternoonCard, radioAfternoon);
+        if (extraCard) extraCard.onclick = () => seleccionarHorario(extraCard, radioExtra);
         
-        document.getElementById("formReservaAngel").addEventListener("submit", async (e) => {
+        // Submit del formulario
+        document.getElementById("reservaForm").addEventListener("submit", async (e) => {
             e.preventDefault();
+            
             const nombre = document.getElementById("nombre").value.trim();
+            const empresa = document.getElementById("empresa").value.trim();
+            const adultos = parseInt(document.getElementById("adultos").value) || 0;
+            const menores = parseInt(document.getElementById("menores").value) || 0;
             const hotelDireccion = document.getElementById("hotelDireccion").value.trim();
             const email = document.getElementById("email").value.trim();
             const whatsapp = document.getElementById("whatsapp").value.trim();
-            const empresa = document.getElementById("empresa").value.trim();
             const fechaPaseo = document.getElementById("fechaPaseo").value;
             const fechaOut = document.getElementById("fechaOut").value;
-            const adultos = parseInt(document.getElementById("adultos").value) || 0;
-            const menores = parseInt(document.getElementById("menores").value) || 0;
             const horario = document.querySelector('input[name="horario"]:checked')?.value;
             
-            if (!nombre || !hotelDireccion || !email || !whatsapp || !fechaPaseo || !fechaOut || !empresa) { 
-                mostrarToast("Complete todos los campos", true); 
-                return; 
+            if (!nombre || !empresa || !hotelDireccion || !email || !whatsapp || !fechaPaseo || !fechaOut) {
+                mostrarToast("Complete todos los campos", true);
+                return;
             }
-            if (!horario) { 
-                document.getElementById("errorHorarioAngel").classList.remove("hidden"); 
-                return; 
-            }
-            
-            mostrarToast("Procesando reserva...");
-            
-            const result = await crearReserva({ nombre, hotelDireccion, email, whatsapp, empresa, fechaPaseo, fechaOut, horario, adultos, menores });
-            if (!result.success) { 
-                mostrarToast(result.error, true); 
-                return; 
+            if (!horario) {
+                mostrarToast("Seleccione un horario", true);
+                return;
             }
             
-            enviarWhatsApp(result.reserva);
-            mostrarPopup(result.reserva);
+            const disponibles = getDisponibles(fechaPaseo, horario);
+            if (adultos + menores > disponibles) {
+                mostrarToast(`Cupos insuficientes. Quedan ${disponibles} lugares.`, true);
+                return;
+            }
             
-            document.getElementById("formReservaAngel").reset();
-            document.getElementById("adultos").value = "1";
-            document.getElementById("menores").value = "0";
-            document.querySelectorAll('input[name="horario"]').forEach(r => r.checked = false);
-            document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("horario-selected"));
-            actualizarPreview();
+            const id = `ATB-${Math.floor(Math.random()*9000+1000)}-${Date.now().toString().slice(-5)}`;
+            const montoTotal = (adultos * tarifas.adulto) + (menores * tarifas.menor);
+            
+            const datosSheet = [
+                id, fechaPaseo, nombre, empresa, adultos, menores,
+                horario === "morning" ? "🌅 Tour Mañana" : (horario === "afternoon" ? "🌇 Tour Tarde" : "⭐ Tour Extra"),
+                montoTotal, hotelDireccion, email, whatsapp, fechaOut, "Confirmado"
+            ];
+            
+            mostrarToast("Guardando reserva...");
+            
+            const success = await enviarGoogleSheets(datosSheet);
+            
+            if (success) {
+                // Actualizar cupos locales
+                const ocupados = getOcupados(fechaPaseo, horario);
+                reservasPorFecha[fechaPaseo] = reservasPorFecha[fechaPaseo] || {};
+                reservasPorFecha[fechaPaseo][horario] = ocupados + adultos + menores;
+                guardarLocal();
+                actualizarCupos();
+                
+                const reservaObj = { id, nombre, empresa, hotelDireccion, email, whatsapp, fechaPaseo, fechaOut, horario, adultos, menores, montoTotal };
+                enviarWhatsApp(reservaObj);
+                mostrarPopup(reservaObj);
+                
+                document.getElementById("reservaForm").reset();
+                document.getElementById("adultos").value = "1";
+                document.querySelectorAll('input[name="horario"]').forEach(r => r.checked = false);
+                document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("selected"));
+                actualizarPreview();
+                
+                mostrarToast("✅ Reserva confirmada y guardada en Google Sheets");
+            } else {
+                mostrarToast("Error al guardar en Google Sheets. Intente nuevamente.", true);
+            }
         });
         
-        document.getElementById("adultos").addEventListener("input", actualizarPreview);
-        document.getElementById("menores").addEventListener("input", actualizarPreview);
+        document.getElementById("closeModal").addEventListener("click", cerrarModal);
         
         const hoy = new Date().toISOString().split('T')[0];
         document.getElementById("fechaPaseo").min = hoy;
         document.getElementById("fechaOut").min = hoy;
         
-        document.getElementById("cerrarModalBtn").addEventListener("click", cerrarModal);
-        document.getElementById("btnCerrarModal").addEventListener("click", cerrarModal);
+        actualizarCupos();
     });
 </script>
 </body>
