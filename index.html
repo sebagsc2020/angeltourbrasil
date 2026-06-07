@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Angel Tour Brasil | Reservas Náuticas</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Angel Tour Brasil | Reservas</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
         body { background: linear-gradient(135deg, #0a2b3e 0%, #0d3b4f 50%, #115e6b 100%); min-height: 100vh; padding: 20px; }
@@ -30,10 +29,8 @@
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 2000; }
         .modal-content { background: white; border-radius: 32px; padding: 28px; max-width: 400px; width: 90%; text-align: center; }
         .text-center { text-align: center; }
-        .mt-2 { margin-top: 8px; }
         .offline-badge { position: fixed; top: 10px; right: 10px; background: #e74c3c; color: white; padding: 8px 16px; border-radius: 50px; font-size: 12px; font-weight: bold; z-index: 1000; display: none; }
         .sync-badge { position: fixed; bottom: 20px; right: 20px; background: #667eea; color: white; padding: 10px 18px; border-radius: 50px; font-size: 12px; font-weight: bold; z-index: 1000; cursor: pointer; display: none; }
-        .sync-badge:hover { background: #5a6fd6; transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -51,7 +48,7 @@
 
     <div class="form-card">
         <div class="header">
-            <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> + Formulario de Reserva +
+            <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> Formulario de Reserva
             <p style="font-size: 12px; margin-top: 5px;">Recibirás confirmación vía WhatsApp</p>
         </div>
         
@@ -88,8 +85,8 @@
                 </div>
 
                 <div style="margin-top: 20px; padding: 16px; background: #f0fdf4; border-radius: 20px;">
-                    <div style="display: flex; justify-content: space-between;"><span>Tarifa por adulto:</span><span id="valorAdulto">R$ 180</span></div>
-                    <div style="display: flex; justify-content: space-between; margin-top: 5px;"><span>Tarifa por menor:</span><span id="valorMenor">R$ 90</span></div>
+                    <div><span>Tarifa por adulto: R$ 180</span></div>
+                    <div style="margin-top: 5px;"><span>Tarifa por menor: R$ 90</span></div>
                     <div style="border-top: 1px solid #ccc; margin-top: 10px; padding-top: 10px; display: flex; justify-content: space-between; font-weight: bold;">
                         <span>Total estimado:</span>
                         <span id="totalPreview" style="font-size: 20px; color: #059669;">R$ 0</span>
@@ -116,156 +113,35 @@
 </div>
 
 <div id="toast" class="toast hidden"></div>
-
-<!-- Badges de estado -->
-<div id="offlineBadge" class="offline-badge">📡 Sin conexión - Modo offline</div>
-<div id="syncBadge" class="sync-badge" onclick="sincronizarReservasPendientes()">🔄 Reservas pendientes (0)</div>
+<div id="offlineBadge" class="offline-badge">📡 Sin conexión</div>
+<div id="syncBadge" class="sync-badge" onclick="sincronizarPendientes()">🔄 Pendientes (0)</div>
 
 <script>
-    // ==================================================
-    // CONFIGURACIÓN
-    // ==================================================
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyMIUvs8ZzVFkKcaokcHeF_sY_LRImqgGeOHIH6DS5KTpTisd3MawB1xHJoLi6jJApOuw/exec";
-    const STORAGE_KEY = 'angeltour_reservas_pendientes';
+    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbz1X-6jAYI08ZjEWff4Stz6EHgKdPb3wCzO4A_-W8Jdi0pDyNMHVqqLQOGrPgmaO8mJGw/exec";
+    const STORAGE_KEY = 'angeltour_pendientes';
     
-    let tarifas = { adulto: 180, menor: 90 };
+    function getPendientes() { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
     
-    // ==================================================
-    // SISTEMA DE CACHE Y SINCRONIZACIÓN
-    // ==================================================
-    
-    function getReservasPendientes() {
-        const pendientes = localStorage.getItem(STORAGE_KEY);
-        return pendientes ? JSON.parse(pendientes) : [];
-    }
-    
-    function guardarReservaPendiente(reserva) {
-        const pendientes = getReservasPendientes();
-        pendientes.push({
-            ...reserva,
-            timestamp: Date.now(),
-            idLocal: 'RES-LOCAL-' + Date.now()
-        });
+    function guardarPendiente(reserva) {
+        const pendientes = getPendientes();
+        pendientes.push({ ...reserva, idLocal: Date.now() });
         localStorage.setItem(STORAGE_KEY, JSON.stringify(pendientes));
-        actualizarBadgeSincronizacion();
-        console.log('💾 Reserva guardada en caché local. Pendientes:', pendientes.length);
+        actualizarBadge();
     }
     
-    function eliminarReservaPendiente(index) {
-        const pendientes = getReservasPendientes();
+    function eliminarPendiente(index) {
+        const pendientes = getPendientes();
         pendientes.splice(index, 1);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(pendientes));
-        actualizarBadgeSincronizacion();
+        actualizarBadge();
     }
     
-    function actualizarBadgeSincronizacion() {
-        const pendientes = getReservasPendientes();
+    function actualizarBadge() {
+        const p = getPendientes();
         const badge = document.getElementById('syncBadge');
-        if (pendientes.length > 0) {
-            badge.style.display = 'flex';
-            badge.innerHTML = `🔄 ${pendientes.length} reserva(s) pendiente(s)`;
-        } else {
-            badge.style.display = 'none';
-        }
+        if (p.length > 0) { badge.style.display = 'flex'; badge.innerHTML = `🔄 ${p.length} pendiente(s)`; }
+        else { badge.style.display = 'none'; }
     }
-    
-    async function enviarReservaAlServidor(reserva, index) {
-        try {
-            const formData = new URLSearchParams();
-            for (const [key, value] of Object.entries(reserva.datos)) {
-                formData.append(key, value);
-            }
-            
-            await fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: formData
-            });
-            
-            console.log(`✅ Reserva ${reserva.idLocal} sincronizada correctamente`);
-            eliminarReservaPendiente(index);
-            return true;
-        } catch (error) {
-            console.error(`❌ Error al sincronizar reserva ${reserva.idLocal}:`, error);
-            return false;
-        }
-    }
-    
-    async function sincronizarReservasPendientes() {
-        const pendientes = getReservasPendientes();
-        if (pendientes.length === 0) {
-            mostrarToast('No hay reservas pendientes', false);
-            return;
-        }
-        
-        mostrarToast(`🔄 Sincronizando ${pendientes.length} reserva(s)...`, false);
-        
-        let sincronizadas = 0;
-        for (let i = pendientes.length - 1; i >= 0; i--) {
-            const exito = await enviarReservaAlServidor(pendientes[i], i);
-            if (exito) sincronizadas++;
-        }
-        
-        if (sincronizadas > 0) {
-            mostrarToast(`✅ ${sincronizadas} reserva(s) sincronizadas`, false);
-        } else if (pendientes.length > 0) {
-            mostrarToast(`⚠️ No se pudieron sincronizar. Se reintentará luego.`, true);
-        }
-        
-        actualizarBadgeSincronizacion();
-    }
-    
-    function actualizarEstadoConexion() {
-        const offlineBadge = document.getElementById('offlineBadge');
-        if (!navigator.onLine) {
-            offlineBadge.style.display = 'block';
-            mostrarToast('📡 Sin conexión. Las reservas se guardarán localmente.', true);
-        } else {
-            offlineBadge.style.display = 'none';
-            const pendientes = getReservasPendientes();
-            if (pendientes.length > 0) {
-                mostrarToast(`🌐 Conexión recuperada. Sincronizando ${pendientes.length} reserva(s)...`, false);
-                sincronizarReservasPendientes();
-            }
-        }
-    }
-    
-    async function enviarReservaConCache(datosReserva) {
-        const reserva = { datos: datosReserva, fecha: new Date().toISOString() };
-        
-        if (!navigator.onLine) {
-            guardarReservaPendiente(reserva);
-            mostrarToast('💾 Sin conexión. Reserva guardada localmente.', true);
-            return { success: true, cached: true };
-        }
-        
-        try {
-            const formData = new URLSearchParams();
-            for (const [key, value] of Object.entries(datosReserva)) {
-                formData.append(key, value);
-            }
-            
-            await fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: formData
-            });
-            
-            mostrarToast('✅ Reserva enviada correctamente', false);
-            return { success: true, cached: false };
-        } catch (error) {
-            console.error('Error al enviar:', error);
-            guardarReservaPendiente(reserva);
-            mostrarToast('⚠️ Error de conexión. Reserva guardada localmente.', true);
-            return { success: false, cached: true, error };
-        }
-    }
-    
-    // ==================================================
-    // FUNCIONES DEL FORMULARIO
-    // ==================================================
     
     function mostrarToast(msg, error = false) {
         const toast = document.getElementById("toast");
@@ -275,51 +151,59 @@
         setTimeout(() => toast.classList.add("hidden"), 4000);
     }
     
-    function enviarWhatsApp(reserva) {
-        let horarioLabel = reserva.horario === "morning" ? "🌅 Tour Mañana (09:00-12:00)" : "🌇 Tour Tarde (14:00-17:00)";
-        const mensaje = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0A✨ Datos:%0A📌 Nombre: ${reserva.nombre}%0A🏨 Hotel: ${reserva.hotelDireccion}%0A📧 Email: ${reserva.email}%0A📱 WhatsApp: ${reserva.whatsapp}%0A🏢 Empresa: ${reserva.empresa}%0A%0A⛵ Paseo:%0A📅 Fecha Paseo: ${reserva.fechaPaseo}%0A📅 Fecha OUT: ${reserva.fechaOut}%0A⏰ Horario: ${horarioLabel}%0A👥 ${reserva.adultos} adultos, ${reserva.menores} menores%0A🎫 Código: ${reserva.id}%0A💰 Total: R$ ${reserva.montoTotal}%0A%0A🌊 Gracias por elegirnos!`;
-        window.open(`https://wa.me/${reserva.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(mensaje)}`, '_blank');
+    async function enviarReserva(reserva) {
+        const params = new URLSearchParams();
+        for (let [key, val] of Object.entries(reserva)) params.append(key, val);
+        try {
+            await fetch(GOOGLE_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: params });
+            return true;
+        } catch(e) { return false; }
     }
     
-    function mostrarPopup(reserva) {
-        const modal = document.getElementById("modalConfirmacion");
-        const resumen = document.getElementById("resumenReserva");
-        let horarioNombre = reserva.horario === "morning" ? "🌅 Mañana (09:00-12:00)" : "🌇 Tarde (14:00-17:00)";
-        resumen.innerHTML = `
-            <p><strong>${reserva.nombre}</strong></p>
-            <p>Empresa: ${reserva.empresa}</p>
-            <p>Fecha Paseo: ${reserva.fechaPaseo}</p>
-            <p>Horario: ${horarioNombre}</p>
-            <p>${reserva.adultos} adultos, ${reserva.menores} menores</p>
-            <p style="font-size: 12px; margin-top: 8px;">Código: ${reserva.id}</p>
-        `;
-        modal.style.display = "flex";
+    async function sincronizarPendientes() {
+        const pendientes = getPendientes();
+        if (pendientes.length === 0) return;
+        mostrarToast(`Sincronizando ${pendientes.length} reservas...`);
+        for (let i = pendientes.length - 1; i >= 0; i--) {
+            if (await enviarReserva(pendientes[i].datos)) eliminarPendiente(i);
+        }
+        actualizarBadge();
+        mostrarToast('✅ Sincronización completada');
     }
     
-    function cerrarModal() {
-        document.getElementById("modalConfirmacion").style.display = "none";
-    }
+    window.addEventListener('online', () => { document.getElementById('offlineBadge').style.display = 'none'; sincronizarPendientes(); });
+    window.addEventListener('offline', () => { document.getElementById('offlineBadge').style.display = 'block'; });
     
     function actualizarPreview() {
         const adultos = parseInt(document.getElementById("adultos").value) || 0;
         const menores = parseInt(document.getElementById("menores").value) || 0;
-        const total = (adultos * tarifas.adulto) + (menores * tarifas.menor);
-        document.getElementById("totalPreview").innerHTML = `R$ ${total.toFixed(2)}`;
+        document.getElementById("totalPreview").innerHTML = `R$ ${(adultos * 180 + menores * 90).toFixed(2)}`;
     }
     
-    // ==================================================
-    // INICIALIZACIÓN
-    // ==================================================
+    function mostrarPopup(reserva) {
+        const modal = document.getElementById("modalConfirmacion");
+        document.getElementById("resumenReserva").innerHTML = `
+            <p><strong>${reserva.nombre}</strong></p>
+            <p>Empresa: ${reserva.empresa}</p>
+            <p>Fecha Paseo: ${reserva.fechaPaseo}</p>
+            <p>Horario: ${reserva.horario === "morning" ? "🌅 Mañana (09:00-12:00)" : "🌇 Tarde (14:00-17:00)"}</p>
+            <p>${reserva.adultos} adultos, ${reserva.menores} menores</p>
+            <p style="font-size:12px; margin-top:8px;">Código: ${reserva.id}</p>
+        `;
+        modal.style.display = "flex";
+    }
+    
+    function cerrarModal() { document.getElementById("modalConfirmacion").style.display = "none"; }
+    
+    function enviarWhatsApp(reserva) {
+        const horarioLabel = reserva.horario === "morning" ? "Tour Mañana (09:00-12:00)" : "Tour Tarde (14:00-17:00)";
+        const msg = `🛥️ ANGEL TOUR BRASIL - RESERVA CONFIRMADA%0A%0ANombre: ${reserva.nombre}%0AHotel: ${reserva.hotelDireccion}%0AEmail: ${reserva.email}%0AWhatsApp: ${reserva.whatsapp}%0AEmpresa: ${reserva.empresa}%0A%0APaseo:%0AFecha: ${reserva.fechaPaseo}%0AFecha OUT: ${reserva.fechaOut}%0AHorario: ${horarioLabel}%0APasajeros: ${reserva.adultos} adultos, ${reserva.menores} menores%0ACódigo: ${reserva.id}%0ATotal: R$ ${reserva.montoTotal}%0A%0AGracias por elegirnos!`;
+        window.open(`https://wa.me/${reserva.whatsapp.replace(/\D/g, '')}?text=${msg}`, '_blank');
+    }
     
     document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById("modalConfirmacion").style.display = "none";
         actualizarPreview();
-        
-        // Eventos de conexión
-        window.addEventListener('online', actualizarEstadoConexion);
-        window.addEventListener('offline', actualizarEstadoConexion);
-        actualizarEstadoConexion();
-        actualizarBadgeSincronizacion();
+        actualizarBadge();
         
         document.getElementById("adultos").addEventListener("input", actualizarPreview);
         document.getElementById("menores").addEventListener("input", actualizarPreview);
@@ -329,14 +213,14 @@
         const radioMorning = document.querySelector('input[value="morning"]');
         const radioAfternoon = document.querySelector('input[value="afternoon"]');
         
-        function seleccionarHorario(card, radio) {
+        function seleccionar(card, radio) {
             document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("selected"));
             card.classList.add("selected");
             radio.checked = true;
         }
         
-        morningCard.onclick = () => seleccionarHorario(morningCard, radioMorning);
-        afternoonCard.onclick = () => seleccionarHorario(afternoonCard, radioAfternoon);
+        morningCard.onclick = () => seleccionar(morningCard, radioMorning);
+        afternoonCard.onclick = () => seleccionar(afternoonCard, radioAfternoon);
         
         document.getElementById("reservaForm").addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -345,14 +229,14 @@
             const empresa = document.getElementById("empresa").value.trim();
             const adultos = parseInt(document.getElementById("adultos").value) || 0;
             const menores = parseInt(document.getElementById("menores").value) || 0;
-            const hotelDireccion = document.getElementById("hotelDireccion").value.trim();
+            const hotel = document.getElementById("hotelDireccion").value.trim();
             const email = document.getElementById("email").value.trim();
             const whatsapp = document.getElementById("whatsapp").value.trim();
             const fechaPaseo = document.getElementById("fechaPaseo").value;
             const fechaOut = document.getElementById("fechaOut").value;
             const horario = document.querySelector('input[name="horario"]:checked')?.value;
             
-            if (!nombre || !empresa || !hotelDireccion || !email || !whatsapp || !fechaPaseo || !fechaOut) {
+            if (!nombre || !empresa || !hotel || !email || !whatsapp || !fechaPaseo || !fechaOut) {
                 mostrarToast("Complete todos los campos", true);
                 return;
             }
@@ -361,8 +245,8 @@
                 return;
             }
             
-            const id = `ATB-${Math.floor(Math.random()*9000+1000)}-${Date.now().toString().slice(-5)}`;
-            const montoTotal = (adultos * tarifas.adulto) + (menores * tarifas.menor);
+            const id = `ATB-${Date.now()}-${Math.floor(Math.random()*1000)}`;
+            const montoTotal = (adultos * 180) + (menores * 90);
             
             const datosReserva = {
                 id: id,
@@ -373,36 +257,38 @@
                 menores: menores,
                 horario: horario === "morning" ? "🌅 Tour Mañana" : "🌇 Tour Tarde",
                 monto_total: montoTotal,
-                hotel_direccion: hotelDireccion,
+                hotel: hotel,
                 email: email,
                 whatsapp: whatsapp,
                 fecha_out: fechaOut,
                 estado: "Confirmado"
             };
             
-            mostrarToast("Guardando reserva...");
+            mostrarToast("Procesando...");
             
-            const resultado = await enviarReservaConCache(datosReserva);
+            const online = navigator.onLine;
+            let exito = false;
+            if (online) exito = await enviarReserva(datosReserva);
             
-            if (resultado.success || resultado.cached) {
-                const reservaObj = { id, nombre, empresa, hotelDireccion, email, whatsapp, fechaPaseo, fechaOut, horario, adultos, menores, montoTotal };
-                enviarWhatsApp(reservaObj);
-                mostrarPopup(reservaObj);
-                
-                document.getElementById("reservaForm").reset();
-                document.getElementById("adultos").value = "1";
-                document.querySelectorAll('input[name="horario"]').forEach(r => r.checked = false);
-                document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("selected"));
-                actualizarPreview();
-                
-                if (resultado.cached) {
-                    mostrarToast("💾 Reserva guardada localmente. Se sincronizará cuando haya conexión.", false);
-                } else {
-                    mostrarToast("✅ Reserva confirmada y guardada", false);
-                }
+            if (!exito && !online) {
+                guardarPendiente({ datos: datosReserva });
+                mostrarToast("💾 Sin conexión. Reserva guardada localmente.", true);
+            } else if (!exito) {
+                guardarPendiente({ datos: datosReserva });
+                mostrarToast("⚠️ Error. Reserva guardada localmente.", true);
             } else {
-                mostrarToast("Error al guardar. Intente nuevamente.", true);
+                mostrarToast("✅ Reserva confirmada", false);
             }
+            
+            const reservaObj = { id, nombre, empresa, hotelDireccion: hotel, email, whatsapp, fechaPaseo, fechaOut, horario, adultos, menores, montoTotal };
+            enviarWhatsApp(reservaObj);
+            mostrarPopup(reservaObj);
+            
+            document.getElementById("reservaForm").reset();
+            document.getElementById("adultos").value = "1";
+            document.querySelectorAll('input[name="horario"]').forEach(r => r.checked = false);
+            document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("selected"));
+            actualizarPreview();
         });
         
         document.getElementById("btnCerrarModal").addEventListener("click", cerrarModal);
@@ -415,8 +301,8 @@
         document.getElementById("fechaOut").min = hoy;
     });
     
-    // Exponer función de sincronización globalmente
-    window.sincronizarReservasPendientes = sincronizarReservasPendientes;
+    window.sincronizarPendientes = sincronizarPendientes;
 </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </body>
 </html>
