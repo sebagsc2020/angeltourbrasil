@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Acceso Administrador | Angel Tour Brasil</title>
+    <meta name="theme-color" content="#1e6f5c">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.15/index.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --primary: #1e6f5c;
+            --primary-hover: #155a4a;
+            --primary-light: #d1fae5;
+            --bg-body: #f8fafc;
+            --bg-surface: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+        body.dark-mode {
+            --bg-body: #0f172a;
+            --bg-surface: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a2b3e 0%, #0d3b4f 50%, #115e6b 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: background 0.3s;
+        }
+        body.dark-mode {
+            background: linear-gradient(135deg, #0a1a2a 0%, #0a2a35 50%, #0d3b4f 100%);
+        }
+        .login-container {
+            max-width: 450px;
+            width: 100%;
+            animation: fadeIn 0.4s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .logo-area {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 60px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+        .logo-area h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+        .logo-area h1 span {
+            color: #a7f3d0;
+        }
+        .logo-area p {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            margin-top: 8px;
+        }
+        .login-card {
+            background: var(--bg-surface);
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+            transition: background 0.3s, color 0.3s;
+        }
+        .login-header {
+            background: linear-gradient(105deg, #0e4b5e 0%, #1b7a7a 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        .login-header h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .login-header p {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+        .login-body {
+            padding: 32px;
+        }
+        .input-group {
+            margin-bottom: 24px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            font-size: 15px;
+            background: var(--bg-body);
+            color: var(--text-main);
+            transition: all 0.2s;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30,111,92,0.15);
+        }
+        .btn-login {
+            background: linear-gradient(95deg, #1e6f5c, #289672);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 16px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+        .error-msg {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .back-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+        .theme-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--bg-surface);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 12px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .theme-btn:hover {
+            background: var(--bg-body);
+        }
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            color: rgba(255,255,255,0.5);
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">
+        <i class="ph ph-moon" id="themeIcon"></i> Modo Oscuro
+    </button>
+
+    <div class="login-container">
+        <div class="logo-area">
+            <div class="logo">⛵</div>
+            <h1>Angel Tour <span>Brasil</span></h1>
+            <p>PASSEIO DE BARCO ✦ DESDE 1999</p>
+        </div>
+
+        <div class="login-card">
+            <div class="login-header">
+                <h2><i class="ph ph-lock-simple"></i> Acceso Administrador</h2>
+                <p>Ingrese sus credenciales para acceder al panel de gestión</p>
+            </div>
+            <div class="login-body">
+                <div class="input-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="password" placeholder="Ingrese la contraseña" autofocus>
+                </div>
+                <button class="btn-login" onclick="login()">
+                    <i class="ph ph-sign-in"></i> Ingresar al Sistema
+                </button>
+                <div id="errorMsg" class="error-msg">
+                    <i class="ph ph-warning-circle"></i> Contraseña incorrecta. Intente nuevamente.
+                </div>
+                <div class="back-link">
+                    <a href="index.html">
+                        <i class="ph ph-arrow-left"></i> Volver al formulario de reservas
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-text">
+            <i class="ph ph-shield-check"></i> Acceso restringido al personal autorizado
+        </div>
+    </div>
+
+    <script>
+        // Contraseña de administrador
+        const ADMIN_PASSWORD = "angel2024";
+        
+        function login() {
+            const password = document.getElementById("password").value;
+            if (password === ADMIN_PASSWORD) {
+                sessionStorage.setItem("admin_logged", "true");
+                window.location.href = "reservas.html";
+            } else {
+                document.getElementById("errorMsg").style.display = "block";
+                document.getElementById("password").value = "";
+                document.getElementById("password").focus();
+            }
+        }
+        
+        // Permitir login con Enter
+        document.getElementById("password").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                login();
+            }
+        });
+        
+        // Modo oscuro
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            const icon = document.getElementById('themeIcon');
+            const btnText = document.getElementById('themeBtn');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.className = 'ph ph-sun';
+                btnText.innerHTML = '<i class="ph ph-sun"></i> Modo Claro';
+            } else {
+                icon.className = 'ph ph-moon';
+                btnText.innerHTML = '<i class="ph ph-moon"></i> Modo Oscuro';
+            }
+        }
+        
+        // Cargar tema guardado
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            const icon = document.getElementById('themeIcon');
+            const btnText = document.getElementById('themeBtn');
+            if (icon) icon.className = 'ph ph-sun';
+            if (btnText) btnText.innerHTML = '<i class="ph ph-sun"></i> Modo Claro';
+        }
+    </script>
+</body>
+</html>
