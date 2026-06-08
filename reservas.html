@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Reservas | Angel Tour Brasil</title>
+    <meta name="theme-color" content="#1e6f5c">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.15/index.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --primary: #1e6f5c; --primary-hover: #155a4a; --primary-light: #d1fae5;
+            --success: #10b981; --warning: #f59e0b; --bg-body: #f8fafc; --bg-surface: #ffffff;
+            --text-main: #0f172a; --text-muted: #64748b; --border-color: #e2e8f0;
+            --sidebar-bg: #ffffff; --sidebar-text: #475569; --sidebar-active-bg: #d1fae5; --sidebar-active-text: #1e6f5c;
+            --radius: 12px; --radius-sm: 8px;
+        }
+        body.dark-mode {
+            --bg-body: #0f172a; --bg-surface: #1e293b; --text-main: #f1f5f9; --text-muted: #94a3b8;
+            --border-color: #334155; --sidebar-bg: #1e293b; --sidebar-text: #cbd5e1;
+            --sidebar-active-bg: #1e6f5c; --sidebar-active-text: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-body); color: var(--text-main); transition: background-color 0.3s; }
+        .app-container { display: flex; min-height: 100vh; }
+        .sidebar { width: 260px; background: var(--sidebar-bg); border-right: 1px solid var(--border-color); position: fixed; height: 100vh; z-index: 1001; transition: transform 0.3s; display: flex; flex-direction: column; }
+        .sidebar-header { padding: 20px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border-color); }
+        .brand-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), #0e4b5e); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; }
+        .brand-text { font-weight: 700; font-size: 18px; color: var(--text-main); }
+        .brand-text span { color: var(--primary); }
+        .nav-menu { list-style: none; padding: 16px 12px; flex: 1; }
+        .nav-link { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: var(--sidebar-text); text-decoration: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; transition: all 0.2s; }
+        .nav-link i { font-size: 20px; }
+        .nav-link:hover { background: var(--bg-body); color: var(--primary); }
+        .nav-link.active { background: var(--sidebar-active-bg); color: var(--sidebar-active-text); font-weight: 600; }
+        .sidebar-footer { padding: 16px; border-top: 1px solid var(--border-color); }
+        .user-profile { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: var(--radius-sm); background: var(--bg-body); cursor: pointer; }
+        .avatar { width: 36px; height: 36px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+        .main-content { margin-left: 260px; flex: 1; padding: 32px; transition: margin-left 0.3s; }
+        .menu-toggle { display: none; position: fixed; top: 16px; left: 16px; z-index: 1002; background: var(--bg-surface); border: 1px solid var(--border-color); width: 44px; height: 44px; border-radius: var(--radius-sm); align-items: center; justify-content: center; cursor: pointer; }
+        .overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(4px); }
+        .overlay.active { opacity: 1; pointer-events: auto; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 16px; }
+        .page-title h1 { font-size: 24px; font-weight: 700; }
+        .page-title p { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
+        .btn { padding: 10px 20px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-secondary { background: var(--bg-surface); color: var(--text-main); border: 1px solid var(--border-color); }
+        .btn-sm { padding: 6px 12px; font-size: 12px; }
+        .btn-icon { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--text-muted); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .btn-icon:hover { color: var(--primary); border-color: var(--primary); }
+        .table-section { background: var(--bg-surface); border-radius: var(--radius); box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); border: 1px solid var(--border-color); overflow: hidden; }
+        .section-header { padding: 20px 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+        .search-box { position: relative; }
+        .search-box input { padding: 8px 12px 8px 36px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: var(--bg-body); color: var(--text-main); font-size: 13px; width: 250px; }
+        .search-box i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        .table-responsive { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        th { text-align: left; padding: 14px 20px; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); background: var(--bg-body); border-bottom: 1px solid var(--border-color); }
+        td { padding: 16px 20px; border-bottom: 1px solid var(--border-color); font-size: 14px; vertical-align: middle; }
+        tr:hover td { background: rgba(30, 111, 92, 0.02); }
+        .badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+        .badge-confirmado { background: #d1fae5; color: #047857; }
+        .badge-pendiente { background: #fef3c7; color: #b45309; }
+        .dark-mode .badge-confirmado { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); width: 280px; }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: 20px; padding-top: 76px; }
+            .menu-toggle { display: flex; }
+            .search-box input { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" id="menuBtn"><i class="ph ph-list" style="font-size: 24px;"></i></button>
+    <div class="overlay" id="menuOverlay"></div>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand-icon"><i class="ph-bold ph-ship"></i></div>
+                <div class="brand-text">Angel Tour <span>Brasil</span></div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link"><i class="ph ph-squares-four"></i> Dashboard</a></li>
+                <li class="nav-item"><a href="clientes.html" class="nav-link"><i class="ph ph-users"></i> Clientes</a></li>
+                <li class="nav-item"><a href="reservas.html" class="nav-link active"><i class="ph ph-calendar-check"></i> Reservas</a></li>
+                <li class="nav-item"><a href="seguimiento.html" class="nav-link"><i class="ph ph-chart-line-up"></i> Seguimiento</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="user-profile" onclick="logout()">
+                    <div class="avatar">AT</div>
+                    <div><h4 style="font-size:13px; font-weight:600;">Administrador</h4><p style="font-size:11px; color:var(--text-muted);">Cerrar Sesión</p></div>
+                    <i class="ph ph-sign-out" style="margin-left:auto;"></i>
+                </div>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="page-header">
+                <div class="page-title"><h1>Gestión de Reservas</h1><p>Administra las cuotas de pasajeros y registra nuevas reservas.</p></div>
+                <div style="display:flex; gap:12px;"><button class="btn-icon" onclick="toggleTheme()"><i class="ph ph-moon" id="themeIcon"></i></button><button class="btn btn-primary" onclick="alert('Configurar horarios')"><i class="ph ph-gear"></i> Configurar Horarios</button></div>
+            </header>
+            <div class="table-section">
+                <div class="section-header"><div class="search-box"><i class="ph ph-magnifying-glass"></i><input type="text" placeholder="Buscar por ID, cliente..." onkeyup="filterReservas(this.value)"></div><button class="btn btn-secondary btn-sm" onclick="alert('Exportar a PDF')"><i class="ph ph-download-simple"></i> Exportar</button></div>
+                <div class="table-responsive"><table id="reservasTable"><thead><tr><th>ID</th><th>Fecha Paseo</th><th>Cliente</th><th>Empresa</th><th>Adultos</th><th>Menores</th><th>Horario</th><th>Monto</th><th>Estado</th><th>Acciones</th></tr></thead><tbody><tr><td colspan="10" style="text-align:center;">Cargando...</td></tr></tbody></table></div>
+            </div>
+        </main>
+    </div>
+    <script>
+        let reservasData = [];
+        async function cargarDatos() {
+            try {
+                const proxyUrl = 'https://api.allorigins.win/raw?url=';
+                const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTAuEiFi8pDWKqQlsYh5mhMuSZxEojyaM5Vcg-FyBqyCu4FGXFECi5FqhWV4w46oHDcWQSRDxBf4nfm/pubhtml';
+                const response = await fetch(proxyUrl + encodeURIComponent(sheetUrl));
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const tables = doc.getElementsByTagName('table');
+                if (tables.length === 0) return;
+                const rows = tables[0].getElementsByTagName('tr');
+                reservasData = [];
+                for (let i = 1; i < rows.length; i++) {
+                    const cells = rows[i].getElementsByTagName('td');
+                    if (cells.length >= 12) {
+                        reservasData.push({
+                            id: cells[0]?.textContent?.trim() || '',
+                            fecha: cells[1]?.textContent?.trim() || '',
+                            nombre: cells[2]?.textContent?.trim() || '',
+                            empresa: cells[3]?.textContent?.trim() || '',
+                            adultos: parseInt(cells[4]?.textContent?.trim()) || 0,
+                            menores: parseInt(cells[5]?.textContent?.trim()) || 0,
+                            horario: cells[6]?.textContent?.trim() || '',
+                            monto: parseFloat(cells[7]?.textContent?.trim().replace('R$', '').replace(',', '')) || 0,
+                            estado: cells[11]?.textContent?.trim() || 'Confirmado'
+                        });
+                    }
+                }
+                actualizarTabla();
+            } catch(e) { console.error("Error:", e); }
+        }
+        
+        function actualizarTabla() {
+            const tbody = document.querySelector('#reservasTable tbody');
+            tbody.innerHTML = reservasData.map(r => `
+                <tr>
+                    <td style="font-family:monospace;">${r.id}</td>
+                    <td>${r.fecha}</td>
+                    <td style="font-weight:500;">${r.nombre}</td>
+                    <td>${r.empresa || 'N/A'}</td>
+                    <td>${r.adultos}</td>
+                    <td>${r.menores}</td>
+                    <td>${r.horario}</td>
+                    <td>R$ ${r.monto.toFixed(2)}</td>
+                    <td><span class="badge badge-confirmado">${r.estado}</span></td>
+                    <td><button class="btn btn-secondary btn-sm" onclick="alert('Editar reserva: ${r.id}')"><i class="ph ph-pencil-simple"></i></button></td>
+                </tr>
+            `).join('');
+        }
+        
+        function filterReservas(val) {
+            const rows = document.querySelectorAll('#reservasTable tbody tr');
+            rows.forEach(row => { row.style.display = row.innerText.toLowerCase().includes(val.toLowerCase()) ? '' : 'none'; });
+        }
+        
+        document.getElementById('menuBtn').addEventListener('click', () => { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('menuOverlay').classList.toggle('active'); });
+        document.getElementById('menuOverlay').addEventListener('click', () => { document.getElementById('sidebar').classList.remove('open'); document.getElementById('menuOverlay').classList.remove('active'); });
+        function toggleTheme() { document.body.classList.toggle('dark-mode'); localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light'); }
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) document.body.classList.add('dark-mode');
+        function logout() { if(confirm('¿Cerrar sesión?')) window.location.href = 'login.html'; }
+        cargarDatos();
+    </script>
+</body>
+</html>
