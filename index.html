@@ -50,8 +50,8 @@
         }
         .container { max-width: 1200px; margin: 0 auto; padding: 32px; }
         .logo-area { text-align: center; margin-bottom: 20px; }
-        .logo-area .logo { font-size: 40px; }
-        .logo-area h1 { font-size: 24px; margin-top: 10px; }
+        .logo-area img { height: 80px; width: auto; margin-bottom: 10px; }
+        .logo-area h1 { font-size: 24px; margin-top: 5px; }
         
         .admin-btn {
             position: fixed;
@@ -142,7 +142,7 @@
 
     <div class="container">
         <div class="logo-area">
-            <div class="logo">⛵</div>
+            <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Angel Tour Brasil">
             <h1>Angel Tour Brasil</h1>
             <p style="color: var(--text-muted);">Reserve seu passeio de barco · Cupos limitados · Confirmación inmediata</p>
         </div>
@@ -216,7 +216,7 @@
                 <div class="table-responsive">
                     <table id="reservasRecientesTable">
                         <thead><tr><th>ID</th><th>Cliente</th><th>Empresa</th><th>Fecha OUT</th><th>Horario</th><th>Pax</th><th>Estado</th></tr></thead>
-                        <tbody id="reservasRecientesBody"><tr><td colspan="7" style="text-align:center;">Cargando...</td></tr></tbody>
+                        <tbody id="reservasRecientesBody"><td><td colspan="7" style="text-align:center;">Cargando...</td></tr></tbody>
                     </table>
                 </div>
             </div>
@@ -294,7 +294,7 @@
                         <td>${r.horario}</td>
                         <td>${r.pax}</td>
                         <td><span class="badge badge-confirmado">${r.estado}</span></td>
-                    </table>
+                    </tr>
                 `).join('');
                 
             } catch(e) { console.error("Error:", e); }
