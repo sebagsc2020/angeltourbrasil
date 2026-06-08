@@ -93,7 +93,7 @@
 
     <div class="form-card">
         <div class="header">
-            <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> + Formulario de Reserva
+            <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> Formulario de Reserva
             <p style="font-size: 12px; margin-top: 5px;">Recibirás confirmación vía WhatsApp</p>
         </div>
         
@@ -195,7 +195,7 @@
 
 <script>
     const CAPACIDAD_MAXIMA = 160;
-    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbzLycfWFDQzTX8WLflL-2LyB5mVcXeiVzXHEl2mb5_pXAykBVSgMEN7dID4v51fcTbgKA/exec";
+    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbyGGzgeB9nImH4LCkENil08abxodc71_pbbyJk6axN1CmW1ucLHujZqfPJGbtVyMVumbQ/exec";
     
     let ocupacionActual = { morning: 0, afternoon: 0, extra: 0 };
     let disponiblesActual = { morning: 160, afternoon: 160, extra: 160 };
@@ -216,8 +216,8 @@
         setTimeout(() => toast.classList.add("hidden"), 4000);
     }
     
-    function formatearFecha(fecha) {
-        const partes = fecha.split('-');
+    function formatearFechaMostrar(fechaISO) {
+        const partes = fechaISO.split('-');
         return `${partes[2]}/${partes[1]}/${partes[0]}`;
     }
     
@@ -271,10 +271,10 @@
         return fechas;
     }
     
-    async function consultarOcupacion(fecha) {
+    async function consultarOcupacion(fechaISO) {
         mostrarLoading(true);
         try {
-            const url = `${GOOGLE_URL}?accion=obtenerOcupacion&fecha=${encodeURIComponent(fecha)}`;
+            const url = `${GOOGLE_URL}?accion=obtenerOcupacion&fecha=${encodeURIComponent(fechaISO)}`;
             console.log("Consultando:", url);
             
             const response = await fetch(url, { method: "GET" });
@@ -284,8 +284,8 @@
             if (result.success) {
                 ocupacionActual = result.ocupacion;
                 disponiblesActual = result.disponibles;
-                actualizarUI(fecha);
-                actualizarPreviews(fecha);
+                actualizarUI(fechaISO, result.fecha);
+                actualizarPreviews(fechaISO);
             } else {
                 mostrarToast("Error al cargar datos", true);
             }
@@ -296,9 +296,9 @@
         mostrarLoading(false);
     }
     
-    function actualizarPreviews(fecha) {
+    function actualizarPreviews(fechaISO) {
         const fechas = generarProximosDias();
-        const index = fechas.findIndex(f => f.value === fecha);
+        const index = fechas.findIndex(f => f.value === fechaISO);
         if (index !== -1) {
             const preview = document.getElementById(`preview_${index}`);
             if (preview) {
@@ -312,8 +312,10 @@
         }
     }
     
-    function actualizarUI(fecha) {
-        document.getElementById("fechaSeleccionada").textContent = formatearFecha(fecha);
+    function actualizarUI(fechaISO, fechaFormateada) {
+        // Mostrar fecha en formato DD/MM/YYYY
+        const fechaMostrar = fechaFormateada || formatearFechaMostrar(fechaISO);
+        document.getElementById("fechaSeleccionada").textContent = fechaMostrar;
         
         document.getElementById("morningOcupados").textContent = ocupacionActual.morning;
         document.getElementById("afternoonOcupados").textContent = ocupacionActual.afternoon;
@@ -386,7 +388,8 @@
     function enviarWhatsApp(reserva) {
         let horarioTexto = reserva.horario === "morning" ? "🌅 Tour Mañana (09:00-12:00)" : 
                           (reserva.horario === "afternoon" ? "🌇 Tour Tarde (14:00-17:00)" : "⭐ Tour Extra (18:00-21:00)");
-        const msg = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0A📌 Nombre: ${reserva.nombre}%0A🏨 Hotel: ${reserva.hotelDireccion}%0A📧 Email: ${reserva.email}%0A📱 WhatsApp: ${reserva.whatsapp}%0A🏢 Empresa: ${reserva.empresa}%0A%0A📅 Fecha: ${reserva.fechaPaseo}%0A⏰ Horario: ${horarioTexto}%0A👥 ${reserva.adultos} adultos, ${reserva.menores} menores%0A🎫 Código: ${reserva.id}%0A💰 Total: R$ ${reserva.montoTotal}%0A%0A🌊 Gracias por elegirnos!`;
+        const fechaMostrar = formatearFechaMostrar(reserva.fechaPaseo);
+        const msg = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0A📌 Nombre: ${reserva.nombre}%0A🏨 Hotel: ${reserva.hotelDireccion}%0A📧 Email: ${reserva.email}%0A📱 WhatsApp: ${reserva.whatsapp}%0A🏢 Empresa: ${reserva.empresa}%0A%0A📅 Fecha: ${fechaMostrar}%0A⏰ Horario: ${horarioTexto}%0A👥 ${reserva.adultos} adultos, ${reserva.menores} menores%0A🎫 Código: ${reserva.id}%0A💰 Total: R$ ${reserva.montoTotal}%0A%0A🌊 Gracias por elegirnos!`;
         window.open(`https://wa.me/${reserva.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
     }
     
@@ -394,10 +397,11 @@
         const modal = document.getElementById("modalConfirmacion");
         let horarioTexto = reserva.horario === "morning" ? "🌅 Mañana (09:00-12:00)" : 
                           (reserva.horario === "afternoon" ? "🌇 Tarde (14:00-17:00)" : "⭐ Tour Extra (18:00-21:00)");
+        const fechaMostrar = formatearFechaMostrar(reserva.fechaPaseo);
         document.getElementById("resumenReservaPopup").innerHTML = `
             <p><strong>${reserva.nombre}</strong></p>
             <p>🏢 Empresa: ${reserva.empresa}</p>
-            <p>📅 Fecha: ${reserva.fechaPaseo}</p>
+            <p>📅 Fecha: ${fechaMostrar}</p>
             <p>⏰ Horario: ${horarioTexto}</p>
             <p>👥 ${reserva.adultos} adultos, ${reserva.menores} menores</p>
             <p>🎫 Código: ${reserva.id}</p>
