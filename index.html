@@ -22,10 +22,6 @@
         .horario-card:hover:not(.disabled) { border-color: #2c7a6e; transform: translateY(-2px); }
         .horario-card.selected { border-color: #1e6f5c !important; background: #f0fdf9 !important; }
         .horario-card.disabled { opacity: 0.5; cursor: not-allowed; background: #f1f5f9; }
-        .badge { font-size: 11px; padding: 4px 12px; border-radius: 40px; display: inline-block; font-weight: 600; }
-        .badge-verde { background: #d1fae5; color: #065f46; }
-        .badge-naranja { background: #fef3c7; color: #92400e; }
-        .badge-rojo { background: #fee2e2; color: #dc2626; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
         @media (max-width: 700px) { .grid-3 { grid-template-columns: 1fr; } }
@@ -138,15 +134,19 @@
                 <div id="horariosContainer" class="grid-2">
                     <div id="cardMorning" class="horario-card">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div><span style="font-weight: bold;">🌅 Tour Mañana</span><br><span style="font-size: 12px;">09:00 - 12:00 hrs</span></div>
-                            <div><span id="morningBadge" class="badge badge-verde">Cargando...</span></div>
+                            <div>
+                                <span style="font-weight: bold;">🌅 Tour Mañana</span><br>
+                                <span style="font-size: 12px;">09:00 - 12:00 hrs</span>
+                            </div>
                         </div>
                         <input type="radio" name="horario" value="morning" style="display: none;">
                     </div>
                     <div id="cardAfternoon" class="horario-card">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div><span style="font-weight: bold;">🌇 Tour Tarde</span><br><span style="font-size: 12px;">14:00 - 17:00 hrs</span></div>
-                            <div><span id="afternoonBadge" class="badge badge-verde">Cargando...</span></div>
+                            <div>
+                                <span style="font-weight: bold;">🌇 Tour Tarde</span><br>
+                                <span style="font-size: 12px;">14:00 - 17:00 hrs</span>
+                            </div>
                         </div>
                         <input type="radio" name="horario" value="afternoon" style="display: none;">
                     </div>
@@ -155,8 +155,10 @@
                 <div id="tourExtraContainer" class="hidden" style="margin-top: 12px;">
                     <div id="cardExtra" class="horario-card" style="border-color: #8b5cf6; background: #faf5ff;">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div><span style="font-weight: bold;">⭐ Tour Extra</span><br><span style="font-size: 12px;">18:00 - 21:00 hrs</span></div>
-                            <div><span id="extraBadge" class="badge badge-verde">Cargando...</span></div>
+                            <div>
+                                <span style="font-weight: bold;">⭐ Tour Extra</span><br>
+                                <span style="font-size: 12px;">18:00 - 21:00 hrs</span>
+                            </div>
                         </div>
                         <input type="radio" name="horario" value="extra" style="display: none;">
                     </div>
@@ -302,7 +304,6 @@
         if (index !== -1) {
             const preview = document.getElementById(`preview_${index}`);
             if (preview) {
-                // Mostrar OCUPADOS en lugar de libres
                 const ocupadosMorning = ocupacionActual.morning;
                 const ocupadosAfternoon = ocupacionActual.afternoon;
                 preview.innerHTML = `🏅 ${ocupadosMorning} | 🏅 ${ocupadosAfternoon}`;
@@ -322,10 +323,6 @@
         document.getElementById("morningLibres").textContent = disponiblesActual.morning;
         document.getElementById("afternoonLibres").textContent = disponiblesActual.afternoon;
         
-        actualizarBadge("morningBadge", disponiblesActual.morning);
-        actualizarBadge("afternoonBadge", disponiblesActual.afternoon);
-        actualizarBadge("extraBadge", disponiblesActual.extra);
-        
         const extraRow = document.getElementById("extraRow");
         const extraContainer = document.getElementById("tourExtraContainer");
         const horariosContainer = document.getElementById("horariosContainer");
@@ -342,6 +339,7 @@
             horariosContainer.className = "grid-2";
         }
         
+        // Habilitar/deshabilitar tarjetas de horario según disponibilidad
         document.getElementById("cardMorning").classList.toggle("disabled", disponiblesActual.morning <= 0);
         document.getElementById("cardAfternoon").classList.toggle("disabled", disponiblesActual.afternoon <= 0);
         if (document.getElementById("cardExtra")) {
@@ -349,21 +347,6 @@
         }
         
         document.getElementById("infoOcupacion").classList.remove("hidden");
-    }
-    
-    function actualizarBadge(elementId, disponibles) {
-        const el = document.getElementById(elementId);
-        if (!el) return;
-        if (disponibles <= 0) {
-            el.textContent = "❌ AGOTADO";
-            el.className = "badge badge-rojo";
-        } else if (disponibles <= 30) {
-            el.textContent = `⚠️ ¡Últimos ${disponibles}!`;
-            el.className = "badge badge-naranja";
-        } else {
-            el.textContent = `✅ ${disponibles} disponibles`;
-            el.className = "badge badge-verde";
-        }
     }
     
     async function guardarReserva(datos) {
