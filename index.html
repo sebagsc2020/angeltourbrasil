@@ -40,14 +40,10 @@
         .spinner { width: 50px; height: 50px; border: 5px solid white; border-top-color: #1e6f5c; border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .info-ocupacion { background: #f0fdf4; border-radius: 16px; padding: 12px 16px; margin: 15px 0; border-left: 4px solid #1e6f5c; }
-        .info-ocupacion i { width: 24px; color: #1e6f5c; }
         .info-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #e2e8f0; }
         .info-row:last-child { border-bottom: none; }
         .tour-nombre { font-weight: 600; }
         .tour-ocupados { font-weight: 700; font-size: 14px; }
-        .tour-disponibles { font-size: 12px; color: #64748b; margin-left: 8px; }
-        .ocupacion-bar { height: 6px; background: #e2e8f0; border-radius: 3px; margin-top: 4px; overflow: hidden; }
-        .ocupacion-bar-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
         .selector-dias { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
         .dia-btn { background: white; border: 1px solid #cbd5e1; border-radius: 12px; padding: 10px 16px; cursor: pointer; text-align: center; transition: all 0.2s; flex: 1; min-width: 70px; }
         .dia-btn:hover { border-color: #1e6f5c; background: #f0fdf9; transform: translateY(-2px); }
@@ -86,7 +82,6 @@
                     <div><label>Hotel / Dirección *</label><input type="text" id="hotelDireccion" required placeholder="Ej: Resort Costa do Sauípe"></div>
                     <div><label>Email *</label><input type="email" id="email" required placeholder="contacto@ejemplo.com"></div>
                     <div><label>WhatsApp (código país) *</label><input type="tel" id="whatsapp" required placeholder="+55 11 91234-5678"></div>
-                    <div><label>Fecha de salida (OUT) *</label><input type="date" id="fechaOut" required></div>
                 </div>
 
                 <!-- Selector de próximos 4 días -->
@@ -110,8 +105,8 @@
                             <span class="tour-disponibles" id="morningDisponibles">/ 160</span>
                         </div>
                     </div>
-                    <div class="ocupacion-bar">
-                        <div id="morningBar" class="ocupacion-bar-fill bar-verde" style="width: 0%"></div>
+                    <div class="ocupacion-bar" style="height: 6px; background: #e2e8f0; border-radius: 3px; margin-top: 4px; overflow: hidden;">
+                        <div id="morningBar" class="ocupacion-bar-fill" style="width: 0%; height: 100%; border-radius: 3px; transition: width 0.3s;"></div>
                     </div>
                     
                     <div class="info-row">
@@ -121,8 +116,8 @@
                             <span class="tour-disponibles" id="afternoonDisponibles">/ 160</span>
                         </div>
                     </div>
-                    <div class="ocupacion-bar">
-                        <div id="afternoonBar" class="ocupacion-bar-fill bar-verde" style="width: 0%"></div>
+                    <div class="ocupacion-bar" style="height: 6px; background: #e2e8f0; border-radius: 3px; margin-top: 4px; overflow: hidden;">
+                        <div id="afternoonBar" class="ocupacion-bar-fill" style="width: 0%; height: 100%; border-radius: 3px; transition: width 0.3s;"></div>
                     </div>
                     
                     <div id="extraRow" class="info-row hidden">
@@ -132,8 +127,8 @@
                             <span class="tour-disponibles" id="extraDisponibles">/ 160</span>
                         </div>
                     </div>
-                    <div id="extraBar" class="ocupacion-bar hidden">
-                        <div id="extraBarFill" class="ocupacion-bar-fill bar-verde" style="width: 0%"></div>
+                    <div id="extraBar" class="ocupacion-bar hidden" style="height: 6px; background: #e2e8f0; border-radius: 3px; margin-top: 4px; overflow: hidden;">
+                        <div id="extraBarFill" class="ocupacion-bar-fill" style="width: 0%; height: 100%; border-radius: 3px; transition: width 0.3s;"></div>
                     </div>
                 </div>
 
@@ -199,7 +194,7 @@
 
 <script>
     const CAPACIDAD_MAXIMA = 160;
-    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbyO3Z6DGTznI3Rl2cdfHRTypmt-adE22_y_9Fuzc5cnVAXAILHYFpc6GlJpeKK3rKTM_g/exec";
+    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbwK5b1lnDWBMlxNJwCxZJai6viOHRzsCV3C-djyfABOOndYrhPUM97-NeC9IbUidqfuQA/exec";
     
     let ocupacionActual = { morning: 0, afternoon: 0, extra: 0 };
     let disponiblesActual = { morning: 160, afternoon: 160, extra: 160 };
@@ -209,7 +204,8 @@
     const diasSemana = ['DOM', 'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB'];
     
     function mostrarLoading(mostrar) {
-        document.getElementById("loadingOverlay").classList.toggle("hidden", !mostrar);
+        const overlay = document.getElementById("loadingOverlay");
+        if (overlay) overlay.classList.toggle("hidden", !mostrar);
     }
     
     function mostrarToast(msg, error = false) {
@@ -220,11 +216,9 @@
         setTimeout(() => toast.classList.add("hidden"), 4000);
     }
     
-    // Generar próximos 4 días (excluyendo hoy)
     function generarProximosDias() {
         const hoy = new Date();
         const fechas = [];
-        
         for (let i = 1; i <= 4; i++) {
             const fecha = new Date(hoy);
             fecha.setDate(hoy.getDate() + i);
@@ -235,7 +229,6 @@
             const diaSemana = diasSemana[fecha.getDay()];
             const diaNum = fecha.getDate();
             const mesNum = fecha.getMonth() + 1;
-            
             fechas.push({
                 value: fechaStr,
                 label: `${diaSemana} ${diaNum}/${mesNum}`,
@@ -259,33 +252,29 @@
             btn.innerHTML = `
                 <div class="dia-nombre">${fecha.diaSemana}</div>
                 <div class="dia-fecha">${fecha.dia}/${fecha.mes}</div>
-                <div class="dia-ocupacion" id="ocupacionPreview_${index}">Cargando...</div>
+                <div class="dia-ocupacion" id="ocupacionPreview_${index}">📅 Cargando...</div>
             `;
-            btn.onclick = () => {
+            btn.onclick = async () => {
                 document.querySelectorAll('.dia-btn').forEach(b => b.classList.remove('selected'));
                 btn.classList.add('selected');
                 fechaSeleccionada = fecha.value;
                 document.getElementById("fechaPaseo").value = fechaSeleccionada;
-                consultarOcupacion(fechaSeleccionada);
+                await consultarOcupacion(fechaSeleccionada);
             };
             container.appendChild(btn);
         });
         
-        // Seleccionar el primer día por defecto
         fechaSeleccionada = fechasDisponibles[0].value;
         document.getElementById("fechaPaseo").value = fechaSeleccionada;
     }
     
     function actualizarPreviewOcupacion(fecha, ocupacionMorning, ocupacionAfternoon) {
-        // Actualizar vista previa en los botones
         const index = fechasDisponibles.findIndex(f => f.value === fecha);
         if (index !== -1) {
             const previewSpan = document.getElementById(`ocupacionPreview_${index}`);
             if (previewSpan) {
-                const totalMorning = ocupacionMorning;
-                const totalAfternoon = ocupacionAfternoon;
-                const libresMorning = CAPACIDAD_MAXIMA - totalMorning;
-                const libresAfternoon = CAPACIDAD_MAXIMA - totalAfternoon;
+                const libresMorning = CAPACIDAD_MAXIMA - ocupacionMorning;
+                const libresAfternoon = CAPACIDAD_MAXIMA - ocupacionAfternoon;
                 previewSpan.innerHTML = `🌅 ${libresMorning} | 🌇 ${libresAfternoon}`;
                 if (libresMorning <= 0 && libresAfternoon <= 0) {
                     previewSpan.style.color = "#dc2626";
@@ -307,24 +296,24 @@
     async function consultarOcupacion(fecha) {
         mostrarLoading(true);
         try {
-            const response = await fetch(GOOGLE_URL + "?accion=obtenerOcupacion&fecha=" + encodeURIComponent(fecha), { method: "GET" });
+            const url = `${GOOGLE_URL}?accion=obtenerOcupacion&fecha=${encodeURIComponent(fecha)}`;
+            console.log("Consultando:", url);
+            const response = await fetch(url, { method: "GET" });
             const result = await response.json();
             
             if (result.success) {
                 ocupacionActual = result.ocupacion;
                 disponiblesActual = result.disponibles;
                 actualizarUI(fecha);
-                
-                // Actualizar preview en los botones
                 actualizarPreviewOcupacion(fecha, ocupacionActual.morning, ocupacionActual.afternoon);
-                return true;
+            } else {
+                mostrarToast("Error al cargar datos", true);
             }
         } catch(e) {
-            console.error("Error consultando ocupación:", e);
-            mostrarToast("Error de conexión", true);
+            console.error("Error:", e);
+            mostrarToast("Error de conexión con el servidor", true);
         }
         mostrarLoading(false);
-        return false;
     }
     
     function actualizarUI(fecha) {
@@ -336,23 +325,17 @@
         
         const morningPorcentaje = (ocupacionActual.morning / CAPACIDAD_MAXIMA) * 100;
         const afternoonPorcentaje = (ocupacionActual.afternoon / CAPACIDAD_MAXIMA) * 100;
-        const extraPorcentaje = (ocupacionActual.extra / CAPACIDAD_MAXIMA) * 100;
         
         document.getElementById("morningOcupados").textContent = ocupacionActual.morning;
         document.getElementById("afternoonOcupados").textContent = ocupacionActual.afternoon;
-        document.getElementById("extraOcupados").textContent = ocupacionActual.extra;
         
         document.getElementById("morningDisponibles").innerHTML = `/ ${CAPACIDAD_MAXIMA} (${disponiblesActual.morning} libres)`;
         document.getElementById("afternoonDisponibles").innerHTML = `/ ${CAPACIDAD_MAXIMA} (${disponiblesActual.afternoon} libres)`;
-        document.getElementById("extraDisponibles").innerHTML = `/ ${CAPACIDAD_MAXIMA} (${disponiblesActual.extra} libres)`;
         
-        const morningBar = document.getElementById("morningBar");
-        const afternoonBar = document.getElementById("afternoonBar");
-        
-        morningBar.style.width = `${morningPorcentaje}%`;
-        morningBar.style.backgroundColor = getColorPorPorcentaje(morningPorcentaje);
-        afternoonBar.style.width = `${afternoonPorcentaje}%`;
-        afternoonBar.style.backgroundColor = getColorPorPorcentaje(afternoonPorcentaje);
+        document.getElementById("morningBar").style.width = `${morningPorcentaje}%`;
+        document.getElementById("morningBar").style.backgroundColor = getColorPorPorcentaje(morningPorcentaje);
+        document.getElementById("afternoonBar").style.width = `${afternoonPorcentaje}%`;
+        document.getElementById("afternoonBar").style.backgroundColor = getColorPorPorcentaje(afternoonPorcentaje);
         
         const extraRow = document.getElementById("extraRow");
         const extraBar = document.getElementById("extraBar");
@@ -363,6 +346,9 @@
             document.getElementById("tourExtraContainer").classList.remove("hidden");
             document.getElementById("horariosContainer").className = "grid-3";
             
+            const extraPorcentaje = (ocupacionActual.extra / CAPACIDAD_MAXIMA) * 100;
+            document.getElementById("extraOcupados").textContent = ocupacionActual.extra;
+            document.getElementById("extraDisponibles").innerHTML = `/ ${CAPACIDAD_MAXIMA} (${disponiblesActual.extra} libres)`;
             const extraBarFill = document.getElementById("extraBarFill");
             if (extraBarFill) {
                 extraBarFill.style.width = `${extraPorcentaje}%`;
@@ -388,7 +374,6 @@
         if (cardE) cardE.classList.toggle("disabled", disponiblesActual.extra <= 0);
         
         document.getElementById("infoOcupacion").classList.remove("hidden");
-        mostrarLoading(false);
     }
     
     function actualizarBadgeCupo(elementId, disponibles) {
@@ -428,7 +413,7 @@
         else if (reserva.horario === "afternoon") horarioTexto = "🌇 Tour Tarde (14:00-17:00)";
         else horarioTexto = "⭐ Tour Extra (18:00-21:00)";
         
-        const msg = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0A✨ *Datos del pasajero:*%0A📌 Nombre: ${reserva.nombre}%0A🏨 Hotel: ${reserva.hotelDireccion}%0A📧 Email: ${reserva.email}%0A📱 WhatsApp: ${reserva.whatsapp}%0A🏢 Empresa: ${reserva.empresa}%0A%0A⛵ *Detalles del paseo:*%0A📅 Fecha Paseo: ${reserva.fechaPaseo}%0A📅 Fecha OUT: ${reserva.fechaOut}%0A⏰ Horario: ${horarioTexto}%0A👥 Pasajeros: ${reserva.adultos} adultos, ${reserva.menores} menores%0A🎫 Código: ${reserva.id}%0A💰 Total: R$ ${reserva.montoTotal}%0A%0A🌊 *¡Gracias por elegir Angel Tour Brasil!* 🌊`;
+        const msg = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0A✨ *Datos:*%0A📌 Nombre: ${reserva.nombre}%0A🏨 Hotel: ${reserva.hotelDireccion}%0A📧 Email: ${reserva.email}%0A📱 WhatsApp: ${reserva.whatsapp}%0A🏢 Empresa: ${reserva.empresa}%0A%0A⛵ *Paseo:*%0A📅 Fecha: ${reserva.fechaPaseo}%0A⏰ Horario: ${horarioTexto}%0A👥 ${reserva.adultos} adultos, ${reserva.menores} menores%0A🎫 Código: ${reserva.id}%0A💰 Total: R$ ${reserva.montoTotal}%0A%0A🌊 *Gracias por elegir Angel Tour Brasil!* 🌊`;
         window.open(`https://wa.me/${reserva.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
     }
     
@@ -442,7 +427,7 @@
         document.getElementById("resumenReservaPopup").innerHTML = `
             <p><strong>${reserva.nombre}</strong></p>
             <p>🏢 Empresa: ${reserva.empresa}</p>
-            <p>📅 Fecha Paseo: ${reserva.fechaPaseo}</p>
+            <p>📅 Fecha: ${reserva.fechaPaseo}</p>
             <p>⏰ Horario: ${horarioTexto}</p>
             <p>👥 ${reserva.adultos} adultos, ${reserva.menores} menores</p>
             <p style="font-size:12px; margin-top:8px;">🎫 Código: ${reserva.id}</p>
@@ -464,7 +449,6 @@
         crearSelectorDias();
         actualizarPreview();
         
-        // Cargar ocupación del primer día
         if (fechaSeleccionada) {
             await consultarOcupacion(fechaSeleccionada);
         }
@@ -504,10 +488,9 @@
             const email = document.getElementById("email").value.trim();
             const whatsapp = document.getElementById("whatsapp").value.trim();
             const fechaPaseo = fechaSeleccionada;
-            const fechaOut = document.getElementById("fechaOut").value;
             const horario = document.querySelector('input[name="horario"]:checked')?.value;
             
-            if (!nombre || !empresa || !hotel || !email || !whatsapp || !fechaPaseo || !fechaOut) {
+            if (!nombre || !empresa || !hotel || !email || !whatsapp || !fechaPaseo) {
                 mostrarToast("⚠️ Complete todos los campos obligatorios", true);
                 return;
             }
@@ -546,7 +529,6 @@
                 hotel: hotel,
                 email: email,
                 whatsapp: whatsapp,
-                fecha_out: fechaOut,
                 estado: "Confirmado"
             };
             
@@ -562,7 +544,7 @@
                 disponiblesActual[horario] -= adultos + menores;
                 actualizarUI(fechaPaseo);
                 
-                const reservaObj = { id, nombre, empresa, hotelDireccion: hotel, email, whatsapp, fechaPaseo, fechaOut, horario, adultos, menores, montoTotal };
+                const reservaObj = { id, nombre, empresa, hotelDireccion: hotel, email, whatsapp, fechaPaseo, horario, adultos, menores, montoTotal };
                 enviarWhatsApp(reservaObj);
                 mostrarPopup(reservaObj);
                 
@@ -582,9 +564,6 @@
         document.getElementById("modalConfirmacion").addEventListener("click", function(e) {
             if(e.target === this) cerrarModal();
         });
-        
-        const hoy = new Date().toISOString().split('T')[0];
-        document.getElementById("fechaOut").min = hoy;
     });
 </script>
 </body>
