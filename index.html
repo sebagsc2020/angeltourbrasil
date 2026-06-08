@@ -71,7 +71,6 @@
         .dia-btn-h.selected .dia-fecha-h { color: #d1fae5; }
         .dia-nombre-h { font-size: 14px; font-weight: 700; }
         .dia-fecha-h { font-size: 12px; opacity: 0.7; margin-top: 4px; }
-        .dia-cupo-h { font-size: 10px; margin-top: 6px; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -133,20 +132,16 @@
                 <div style="margin: 16px 0 12px 0; font-weight: bold;">🏅 Selecciona tu horario *</div>
                 <div id="horariosContainer" class="grid-2">
                     <div id="cardMorning" class="horario-card">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <span style="font-weight: bold;">🌅 Tour Mañana</span><br>
-                                <span style="font-size: 12px;">09:00 - 12:00 hrs</span>
-                            </div>
+                        <div>
+                            <span style="font-weight: bold;">🌅 Tour Mañana</span><br>
+                            <span style="font-size: 12px;">09:00 - 12:00 hrs</span>
                         </div>
                         <input type="radio" name="horario" value="morning" style="display: none;">
                     </div>
                     <div id="cardAfternoon" class="horario-card">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <span style="font-weight: bold;">🌇 Tour Tarde</span><br>
-                                <span style="font-size: 12px;">14:00 - 17:00 hrs</span>
-                            </div>
+                        <div>
+                            <span style="font-weight: bold;">🌇 Tour Tarde</span><br>
+                            <span style="font-size: 12px;">14:00 - 17:00 hrs</span>
                         </div>
                         <input type="radio" name="horario" value="afternoon" style="display: none;">
                     </div>
@@ -154,11 +149,9 @@
                 
                 <div id="tourExtraContainer" class="hidden" style="margin-top: 12px;">
                     <div id="cardExtra" class="horario-card" style="border-color: #8b5cf6; background: #faf5ff;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <span style="font-weight: bold;">⭐ Tour Extra</span><br>
-                                <span style="font-size: 12px;">18:00 - 21:00 hrs</span>
-                            </div>
+                        <div>
+                            <span style="font-weight: bold;">⭐ Tour Extra</span><br>
+                            <span style="font-size: 12px;">18:00 - 21:00 hrs</span>
                         </div>
                         <input type="radio" name="horario" value="extra" style="display: none;">
                     </div>
@@ -226,7 +219,7 @@
     function generarProximosDias() {
         const hoy = new Date();
         const fechas = [];
-        for (let i = 1; i <= 4; i++) {
+        for (let i = 1; i <= 5; i++) {
             const fecha = new Date(hoy);
             fecha.setDate(hoy.getDate() + i);
             const año = fecha.getFullYear();
@@ -254,7 +247,6 @@
             btn.innerHTML = `
                 <div class="dia-nombre-h">${fecha.diaSemana}</div>
                 <div class="dia-fecha-h">${fecha.dia}/${fecha.mes}</div>
-                <div class="dia-cupo-h" id="preview_${index}">📅 Cargando...</div>
             `;
             btn.onclick = async () => {
                 if (fechaSeleccionada === fecha.value) return;
@@ -287,7 +279,6 @@
                 ocupacionActual = result.ocupacion;
                 disponiblesActual = result.disponibles;
                 actualizarUI(fechaISO, result.fecha);
-                actualizarPreviews(fechaISO);
             } else {
                 mostrarToast("Error al cargar datos", true);
             }
@@ -296,22 +287,6 @@
             mostrarToast("Error de conexión", true);
         }
         mostrarLoading(false);
-    }
-    
-    function actualizarPreviews(fechaISO) {
-        const fechas = generarProximosDias();
-        const index = fechas.findIndex(f => f.value === fechaISO);
-        if (index !== -1) {
-            const preview = document.getElementById(`preview_${index}`);
-            if (preview) {
-                const ocupadosMorning = ocupacionActual.morning;
-                const ocupadosAfternoon = ocupacionActual.afternoon;
-                preview.innerHTML = `🏅 ${ocupadosMorning} | 🏅 ${ocupadosAfternoon}`;
-                if (ocupadosMorning >= 160 && ocupadosAfternoon >= 160) preview.style.color = "#dc2626";
-                else if (ocupadosMorning >= 130 || ocupadosAfternoon >= 130) preview.style.color = "#f59e0b";
-                else preview.style.color = "#10b981";
-            }
-        }
     }
     
     function actualizarUI(fechaISO, fechaFormateada) {
@@ -492,7 +467,6 @@
                 ocupacionActual[horario] += adultos + menores;
                 disponiblesActual[horario] -= adultos + menores;
                 actualizarUI(fechaSeleccionada);
-                actualizarPreviews(fechaSeleccionada);
                 
                 const reservaObj = { id, nombre, empresa, hotelDireccion: hotel, email, whatsapp, fechaPaseo: fechaSeleccionada, horario, adultos, menores, montoTotal };
                 enviarWhatsApp(reservaObj);
