@@ -42,13 +42,41 @@
         .info-ocupacion { background: #f0fdf4; border-radius: 16px; padding: 12px 16px; margin: 15px 0; border-left: 4px solid #1e6f5c; }
         .info-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #e2e8f0; }
         .info-row:last-child { border-bottom: none; }
-        .selector-dias { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
-        .dia-btn { background: white; border: 1px solid #cbd5e1; border-radius: 12px; padding: 10px 12px; cursor: pointer; text-align: center; transition: all 0.2s; flex: 1; min-width: 70px; }
-        .dia-btn:hover { border-color: #1e6f5c; background: #f0fdf9; transform: translateY(-2px); }
-        .dia-btn.selected { background: #1e6f5c; border-color: #1e6f5c; color: white; }
-        .dia-nombre { font-size: 12px; font-weight: 600; }
-        .dia-fecha { font-size: 11px; }
-        .dia-info { font-size: 10px; margin-top: 4px; }
+        
+        /* Botones horizontales de días */
+        .dias-horizontales {
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .dia-btn-h {
+            flex: 1;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 12px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 70px;
+        }
+        .dia-btn-h:hover {
+            border-color: #1e6f5c;
+            background: #f0fdf9;
+            transform: translateY(-2px);
+        }
+        .dia-btn-h.selected {
+            border-color: #1e6f5c;
+            background: #1e6f5c;
+            color: white;
+        }
+        .dia-btn-h.selected .dia-nombre-h { color: white; }
+        .dia-btn-h.selected .dia-fecha-h { color: #d1fae5; }
+        .dia-nombre-h { font-size: 14px; font-weight: 700; }
+        .dia-fecha-h { font-size: 12px; opacity: 0.7; margin-top: 4px; }
+        .dia-cupo-h { font-size: 10px; margin-top: 6px; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -82,12 +110,14 @@
                     <div><label>WhatsApp (código país) *</label><input type="tel" id="whatsapp" required placeholder="+55 11 91234-5678"></div>
                 </div>
 
+                <!-- Botones horizontales de días -->
                 <div style="margin-bottom: 15px;">
                     <label>📅 Fecha de Paseo *</label>
-                    <div id="diasSelector" class="selector-dias"></div>
+                    <div id="diasSelector" class="dias-horizontales"></div>
                     <input type="hidden" id="fechaPaseo">
                 </div>
 
+                <!-- Panel de ocupación -->
                 <div id="infoOcupacion" class="info-ocupacion hidden">
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
                         <i class="fas fa-chart-line"></i>
@@ -177,7 +207,8 @@
     const diasSemana = ['DOM', 'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB'];
     
     function mostrarLoading(mostrar) {
-        document.getElementById("loadingOverlay").classList.toggle("hidden", !mostrar);
+        const overlay = document.getElementById("loadingOverlay");
+        if (overlay) overlay.classList.toggle("hidden", !mostrar);
     }
     
     function mostrarToast(msg, error = false) {
@@ -186,6 +217,11 @@
         toast.style.background = error ? "#dc2626" : "#1f2937";
         toast.classList.remove("hidden");
         setTimeout(() => toast.classList.add("hidden"), 4000);
+    }
+    
+    function formatearFecha(fecha) {
+        const partes = fecha.split('-');
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
     }
     
     function generarProximosDias() {
@@ -214,15 +250,18 @@
         
         fechas.forEach((fecha, index) => {
             const btn = document.createElement('div');
-            btn.className = 'dia-btn';
+            btn.className = 'dia-btn-h';
             if (index === 0) btn.classList.add('selected');
             btn.innerHTML = `
-                <div class="dia-nombre">${fecha.diaSemana}</div>
-                <div class="dia-fecha">${fecha.dia}/${fecha.mes}</div>
-                <div class="dia-info" id="preview_${index}">📅 Cargando...</div>
+                <div class="dia-nombre-h">${fecha.diaSemana}</div>
+                <div class="dia-fecha-h">${fecha.dia}/${fecha.mes}</div>
+                <div class="dia-cupo-h" id="preview_${index}">📅 Cargando...</div>
             `;
             btn.onclick = async () => {
-                document.querySelectorAll('.dia-btn').forEach(b => b.classList.remove('selected'));
+                // Si ya está seleccionado, no hacer nada
+                if (fechaSeleccionada === fecha.value) return;
+                
+                document.querySelectorAll('.dia-btn-h').forEach(b => b.classList.remove('selected'));
                 btn.classList.add('selected');
                 fechaSeleccionada = fecha.value;
                 document.getElementById("fechaPaseo").value = fechaSeleccionada;
@@ -240,39 +279,46 @@
         mostrarLoading(true);
         try {
             const url = `${GOOGLE_URL}?accion=obtenerOcupacion&fecha=${encodeURIComponent(fecha)}`;
+            console.log("Consultando:", url);
+            
             const response = await fetch(url, { method: "GET" });
             const result = await response.json();
+            console.log("Respuesta:", result);
             
             if (result.success) {
                 ocupacionActual = result.ocupacion;
                 disponiblesActual = result.disponibles;
                 actualizarUI(fecha);
-                
-                // Actualizar preview en los botones
-                const index = fechasDisponibles.findIndex(f => f.value === fecha);
-                if (index !== -1) {
-                    const preview = document.getElementById(`preview_${index}`);
-                    if (preview) {
-                        preview.innerHTML = `🌅 ${disponiblesActual.morning} | 🌇 ${disponiblesActual.afternoon}`;
-                        if (disponiblesActual.morning <= 0 && disponiblesActual.afternoon <= 0) preview.style.color = "#dc2626";
-                        else if (disponiblesActual.morning <= 30 || disponiblesActual.afternoon <= 30) preview.style.color = "#f59e0b";
-                        else preview.style.color = "#10b981";
-                    }
-                }
+                actualizarPreviews(fecha);
             } else {
-                mostrarToast("Error al cargar datos", true);
+                mostrarToast("Error al cargar datos: " + (result.message || "desconocido"), true);
             }
         } catch(e) {
             console.error("Error:", e);
-            mostrarToast("Error de conexión", true);
+            mostrarToast("Error de conexión al servidor", true);
         }
         mostrarLoading(false);
     }
     
+    function actualizarPreviews(fecha) {
+        const fechas = generarProximosDias();
+        const index = fechas.findIndex(f => f.value === fecha);
+        if (index !== -1) {
+            const preview = document.getElementById(`preview_${index}`);
+            if (preview) {
+                const libresMorning = disponiblesActual.morning;
+                const libresAfternoon = disponiblesActual.afternoon;
+                preview.innerHTML = `🌅 ${libresMorning} | 🌇 ${libresAfternoon}`;
+                if (libresMorning <= 0 && libresAfternoon <= 0) preview.style.color = "#dc2626";
+                else if (libresMorning <= 30 || libresAfternoon <= 30) preview.style.color = "#f59e0b";
+                else preview.style.color = "#10b981";
+            }
+        }
+    }
+    
     function actualizarUI(fecha) {
         // Actualizar fecha mostrada
-        const partes = fecha.split('-');
-        document.getElementById("fechaSeleccionada").textContent = `${partes[2]}/${partes[1]}/${partes[0]}`;
+        document.getElementById("fechaSeleccionada").textContent = formatearFecha(fecha);
         
         // Actualizar panel de ocupación
         document.getElementById("morningOcupados").textContent = ocupacionActual.morning;
@@ -328,7 +374,12 @@
     }
     
     async function guardarReserva(datos) {
-        const params = new URLSearchParams({ accion: "guardar", ...datos });
+        const params = new URLSearchParams();
+        params.append("accion", "guardar");
+        for (const [key, value] of Object.entries(datos)) {
+            params.append(key, value);
+        }
+        
         try {
             const response = await fetch(GOOGLE_URL, { 
                 method: 'POST', 
@@ -377,6 +428,7 @@
         fechasDisponibles = crearSelectorDias();
         actualizarPreview();
         
+        // Cargar datos del primer día
         if (fechaSeleccionada) {
             await consultarOcupacion(fechaSeleccionada);
         }
@@ -464,6 +516,7 @@
                 ocupacionActual[horario] += adultos + menores;
                 disponiblesActual[horario] -= adultos + menores;
                 actualizarUI(fechaSeleccionada);
+                actualizarPreviews(fechaSeleccionada);
                 
                 const reservaObj = { id, nombre, empresa, hotelDireccion: hotel, email, whatsapp, fechaPaseo: fechaSeleccionada, horario, adultos, menores, montoTotal };
                 enviarWhatsApp(reservaObj);
