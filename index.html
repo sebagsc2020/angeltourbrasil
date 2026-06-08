@@ -182,10 +182,9 @@
 <script>
     const CAPACIDAD_MAXIMA = 160;
     // ⚠️ TU URL DEL WEB APP (la que ya está funcionando) ⚠️
-    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbyO3Z6DGTznI3Rl2cdfHRTypmt-adE22_y_9Fuzc5cnVAXAILHYFpc6GlJpeKK3rKTM_g/exec";
-    const SHEETS_PUBLIC_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTAuEiFi8pDWKqQlsYh5mhMuSZxEojyaM5Vcg-FyBqyCu4FGXFECi5FqhWV4w46oHDcWQSRDxBf4nfm/pubhtml";
+    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbwnUTPcjyo7xvTBTzNPrr9v1VGRSGZ66lQ5JDP8pGZgtCPgHABwyErDAMn48D3BL9CguA/exec";
     
-    let ocupacionPorFecha = {};
+    let disponibilidadCache = {};
     let diasDisponibles = [];
     let fechaSeleccionada = "";
     let tarifas = { adulto: 180, menor: 90 };
@@ -202,50 +201,37 @@
         setTimeout(() => toast.classList.add("hidden"), 4000);
     }
     
-    async function cargarDatosDesdeSheets() {
+    async function obtenerDisponibilidad(fecha) {
+        try {
+            const response = await fetch(`${GOOGLE_URL}?accion=obtenerDisponibilidad&fecha=${encodeURIComponent(fecha)}`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const data = await response.json();
+            return data;
+        } catch(e) {
+            console.error("Error obteniendo disponibilidad:", e);
+            return { success: false, error: e.toString() };
+        }
+    }
+    
+    async function cargarDisponibilidad(fecha) {
+        if (disponibilidadCache[fecha]) {
+            return disponibilidadCache[fecha];
+        }
         mostrarLoading(true);
         try {
-            const proxyUrl = 'https://api.allorigins.win/raw?url=';
-            const response = await fetch(proxyUrl + encodeURIComponent(SHEETS_PUBLIC_URL));
-            const html = await response.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            const tables = doc.getElementsByTagName('table');
-            if (tables.length === 0) throw new Error('No se encontraron tablas');
-            
-            const rows = tables[0].getElementsByTagName('tr');
-            const reservas = [];
-            for (let i = 1; i < rows.length; i++) {
-                const cells = rows[i].getElementsByTagName('td');
-                if (cells.length >= 7) {
-                    reservas.push({
-                        fecha: cells[1]?.textContent?.trim() || '',
-                        adultos: parseInt(cells[4]?.textContent?.trim()) || 0,
-                        menores: parseInt(cells[5]?.textContent?.trim()) || 0,
-                        horario: cells[6]?.textContent?.trim() || ''
-                    });
-                }
+            const resultado = await obtenerDisponibilidad(fecha);
+            if (resultado.success) {
+                disponibilidadCache[fecha] = resultado;
+                return resultado;
+            } else {
+                mostrarToast("Error al cargar disponibilidad", true);
+                return null;
             }
-            
-            ocupacionPorFecha = {};
-            for (const reserva of reservas) {
-                const total = reserva.adultos + reserva.menores;
-                if (!ocupacionPorFecha[reserva.fecha]) {
-                    ocupacionPorFecha[reserva.fecha] = { morning: 0, afternoon: 0, extra: 0 };
-                }
-                if (reserva.horario === "Tour Mañana") {
-                    ocupacionPorFecha[reserva.fecha].morning += total;
-                } else if (reserva.horario === "Tour Tarde") {
-                    ocupacionPorFecha[reserva.fecha].afternoon += total;
-                } else if (reserva.horario === "Tour Extra") {
-                    ocupacionPorFecha[reserva.fecha].extra += total;
-                }
-            }
-            return true;
         } catch(e) {
-            console.error("Error cargando datos:", e);
-            mostrarToast("Error al cargar disponibilidad", true);
-            return false;
+            mostrarToast("Error de conexión", true);
+            return null;
         } finally {
             mostrarLoading(false);
         }
@@ -281,11 +267,11 @@
             btn.className = 'dia-tab';
             if (index === 0) btn.classList.add('active');
             btn.innerHTML = `<div class="dia-nombre">${dia.diaSemana}</div><div class="dia-fecha">${dia.dia}/${dia.mes}</div>`;
-            btn.onclick = () => {
+            btn.onclick = async () => {
                 document.querySelectorAll('.dia-tab').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 fechaSeleccionada = dia.value;
-                actualizarUI();
+                await cargarYActualizarUI();
             };
             container.appendChild(btn);
         });
@@ -293,42 +279,42 @@
         fechaSeleccionada = diasDisponibles[0].value;
     }
     
-    function actualizarUI() {
+    async function cargarYActualizarUI() {
         if (!fechaSeleccionada) return;
         
-        const ocupacion = ocupacionPorFecha[fechaSeleccionada] || { morning: 0, afternoon: 0, extra: 0 };
-        const disponiblesMorning = CAPACIDAD_MAXIMA - ocupacion.morning;
-        const disponiblesAfternoon = CAPACIDAD_MAXIMA - ocupacion.afternoon;
-        const disponiblesExtra = CAPACIDAD_MAXIMA - ocupacion.extra;
-        
-        const morningSpan = document.getElementById("morningDisponibilidad");
-        const afternoonSpan = document.getElementById("afternoonDisponibilidad");
-        const extraSpan = document.getElementById("extraDisponibilidad");
-        
-        morningSpan.innerHTML = `<span class="${disponiblesMorning <= 0 ? 'cupo-rojo' : (disponiblesMorning <= 30 ? 'cupo-naranja' : 'cupo-verde')}">${disponiblesMorning} lugares disponibles</span>`;
-        afternoonSpan.innerHTML = `<span class="${disponiblesAfternoon <= 0 ? 'cupo-rojo' : (disponiblesAfternoon <= 30 ? 'cupo-naranja' : 'cupo-verde')}">${disponiblesAfternoon} lugares disponibles</span>`;
-        
-        if (disponiblesMorning <= 0 && disponiblesAfternoon <= 0) {
-            document.getElementById("extraRow").classList.remove("hidden");
-            document.getElementById("tourExtraContainer").classList.remove("hidden");
-            extraSpan.innerHTML = `<span class="${disponiblesExtra <= 0 ? 'cupo-rojo' : (disponiblesExtra <= 30 ? 'cupo-naranja' : 'cupo-verde')}">${disponiblesExtra} lugares disponibles</span>`;
-        } else {
-            document.getElementById("extraRow").classList.add("hidden");
-            document.getElementById("tourExtraContainer").classList.add("hidden");
+        const data = await cargarDisponibilidad(fechaSeleccionada);
+        if (data && data.success) {
+            const disponibles = data.disponibles;
+            
+            const morningSpan = document.getElementById("morningDisponibilidad");
+            const afternoonSpan = document.getElementById("afternoonDisponibilidad");
+            const extraSpan = document.getElementById("extraDisponibilidad");
+            
+            morningSpan.innerHTML = `<span class="${disponibles.morning <= 0 ? 'cupo-rojo' : (disponibles.morning <= 30 ? 'cupo-naranja' : 'cupo-verde')}">${disponibles.morning} lugares disponibles</span>`;
+            afternoonSpan.innerHTML = `<span class="${disponibles.afternoon <= 0 ? 'cupo-rojo' : (disponibles.afternoon <= 30 ? 'cupo-naranja' : 'cupo-verde')}">${disponibles.afternoon} lugares disponibles</span>`;
+            
+            if (disponibles.morning <= 0 && disponibles.afternoon <= 0) {
+                document.getElementById("extraRow").classList.remove("hidden");
+                document.getElementById("tourExtraContainer").classList.remove("hidden");
+                extraSpan.innerHTML = `<span class="${disponibles.extra <= 0 ? 'cupo-rojo' : (disponibles.extra <= 30 ? 'cupo-naranja' : 'cupo-verde')}">${disponibles.extra} lugares disponibles</span>`;
+            } else {
+                document.getElementById("extraRow").classList.add("hidden");
+                document.getElementById("tourExtraContainer").classList.add("hidden");
+            }
+            
+            const cardM = document.getElementById("cardMorning");
+            const cardA = document.getElementById("cardAfternoon");
+            const cardE = document.getElementById("cardExtra");
+            
+            if (disponibles.morning <= 0) cardM.classList.add("disabled");
+            else cardM.classList.remove("disabled");
+            
+            if (disponibles.afternoon <= 0) cardA.classList.add("disabled");
+            else cardA.classList.remove("disabled");
+            
+            if (cardE && disponibles.extra <= 0) cardE.classList.add("disabled");
+            else if (cardE) cardE.classList.remove("disabled");
         }
-        
-        const cardM = document.getElementById("cardMorning");
-        const cardA = document.getElementById("cardAfternoon");
-        const cardE = document.getElementById("cardExtra");
-        
-        if (disponiblesMorning <= 0) cardM.classList.add("disabled");
-        else cardM.classList.remove("disabled");
-        
-        if (disponiblesAfternoon <= 0) cardA.classList.add("disabled");
-        else cardA.classList.remove("disabled");
-        
-        if (cardE && disponiblesExtra <= 0) cardE.classList.add("disabled");
-        else if (cardE) cardE.classList.remove("disabled");
     }
     
     function actualizarPreview() {
@@ -354,8 +340,7 @@
     function enviarWhatsApp(reserva) {
         let horarioTexto = reserva.horario === "morning" ? "🌅 Tour Mañana (09:00-12:00)" : 
                           (reserva.horario === "afternoon" ? "🌇 Tour Tarde (14:00-17:00)" : "⭐ Tour Extra (18:00-21:00)");
-        const fechaMostrar = reserva.fecha;
-        const msg = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0A📌 Nombre: ${reserva.nombre}%0A🏨 Hotel: ${reserva.hotel}%0A📧 Email: ${reserva.email}%0A📱 WhatsApp: ${reserva.whatsapp}%0A🏢 Empresa: ${reserva.empresa}%0A%0A📅 Fecha: ${fechaMostrar}%0A⏰ Horario: ${horarioTexto}%0A👥 ${reserva.adultos} adultos, ${reserva.menores} menores%0A🎫 Código: ${reserva.id}%0A💰 Total: R$ ${reserva.montoTotal}%0A%0A🌊 Gracias por elegirnos!`;
+        const msg = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0A📌 Nombre: ${reserva.nombre}%0A🏨 Hotel: ${reserva.hotel}%0A📧 Email: ${reserva.email}%0A📱 WhatsApp: ${reserva.whatsapp}%0A🏢 Empresa: ${reserva.empresa}%0A%0A📅 Fecha: ${reserva.fecha}%0A⏰ Horario: ${horarioTexto}%0A👥 ${reserva.adultos} adultos, ${reserva.menores} menores%0A🎫 Código: ${reserva.id}%0A💰 Total: R$ ${reserva.montoTotal}%0A%0A🌊 Gracias por elegirnos!`;
         window.open(`https://wa.me/${reserva.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
     }
     
@@ -380,8 +365,8 @@
         crearSelectorDias();
         actualizarPreview();
         
-        await cargarDatosDesdeSheets();
-        actualizarUI();
+        // Cargar disponibilidad del primer día
+        await cargarYActualizarUI();
         
         document.getElementById("adultos").addEventListener("input", actualizarPreview);
         document.getElementById("menores").addEventListener("input", actualizarPreview);
@@ -428,11 +413,17 @@
                 return;
             }
             
-            const ocupacion = ocupacionPorFecha[fechaSeleccionada] || { morning: 0, afternoon: 0, extra: 0 };
+            // Verificar cupo consultando nuevamente
+            const disponibilidad = await cargarDisponibilidad(fechaSeleccionada);
+            if (!disponibilidad || !disponibilidad.success) {
+                mostrarToast("Error al verificar disponibilidad", true);
+                return;
+            }
+            
             let ocupados = 0;
-            if (horario === "morning") ocupados = ocupacion.morning;
-            else if (horario === "afternoon") ocupados = ocupacion.afternoon;
-            else ocupados = ocupacion.extra;
+            if (horario === "morning") ocupados = disponibilidad.morning;
+            else if (horario === "afternoon") ocupados = disponibilidad.afternoon;
+            else ocupados = disponibilidad.extra;
             
             if (adultos + menores + ocupados > CAPACIDAD_MAXIMA) {
                 mostrarToast(`❌ Cupos insuficientes. Quedan ${CAPACIDAD_MAXIMA - ocupados} lugares.`, true);
@@ -448,6 +439,7 @@
             else horarioTexto = "Tour Extra";
             
             const datosReserva = {
+                accion: "guardar",
                 id: id,
                 fecha_paseo: fechaSeleccionada,
                 nombre: nombre,
@@ -466,8 +458,9 @@
             mostrarLoading(false);
             
             if (resultado.success) {
-                await cargarDatosDesdeSheets();
-                actualizarUI();
+                // Limpiar cache y recargar
+                disponibilidadCache = {};
+                await cargarYActualizarUI();
                 
                 const reservaObj = { id, nombre, empresa, hotel, email, whatsapp, fecha: fechaSeleccionada, horario, adultos, menores, montoTotal };
                 enviarWhatsApp(reservaObj);
