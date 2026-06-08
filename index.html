@@ -53,12 +53,7 @@
         .brand-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), #0e4b5e); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; }
         .brand-text { font-weight: 700; font-size: 18px; color: var(--text-main); }
         .brand-text span { color: var(--primary); }
-        .nav-menu { list-style: none; padding: 16px 12px; flex: 1; }
-        .nav-link { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: var(--sidebar-text); text-decoration: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; transition: all 0.2s; }
-        .nav-link i { font-size: 20px; }
-        .nav-link:hover { background: var(--bg-body); color: var(--primary); }
-        .nav-link.active { background: var(--sidebar-active-bg); color: var(--sidebar-active-text); font-weight: 600; }
-        .sidebar-footer { padding: 16px; border-top: 1px solid var(--border-color); }
+        .sidebar-footer { padding: 16px; border-top: 1px solid var(--border-color); margin-top: auto; }
         .user-profile { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: var(--radius-sm); background: var(--bg-body); cursor: pointer; }
         .avatar { width: 36px; height: 36px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; }
         .main-content { margin-left: 260px; flex: 1; padding: 32px; width: 100%; transition: margin-left 0.3s; }
@@ -130,17 +125,13 @@
                 <div class="brand-icon"><i class="ph-bold ph-ship"></i></div>
                 <div class="brand-text">Angel Tour <span>Brasil</span></div>
             </div>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="index.html" class="nav-link active"><i class="ph ph-squares-four"></i> Reservar</a></li>
-                <li class="nav-item"><a href="dashboard.html" class="nav-link"><i class="ph ph-chart-line"></i> Dashboard</a></li>
-                <li class="nav-item"><a href="clientes.html" class="nav-link"><i class="ph ph-users"></i> Clientes</a></li>
-                <li class="nav-item"><a href="reservas.html" class="nav-link"><i class="ph ph-calendar-check"></i> Reservas</a></li>
-                <li class="nav-item"><a href="seguimiento.html" class="nav-link"><i class="ph ph-chart-line-up"></i> Seguimiento</a></li>
-            </ul>
             <div class="sidebar-footer">
                 <div class="user-profile" onclick="logout()">
                     <div class="avatar">AT</div>
-                    <div style="overflow:hidden;"><h4 style="font-size:13px; font-weight:600; white-space:nowrap;">Administrador</h4><p style="font-size:11px; color:var(--text-muted);">Cerrar Sesión</p></div>
+                    <div style="overflow:hidden;">
+                        <h4 style="font-size:13px; font-weight:600; white-space:nowrap;">Administrador</h4>
+                        <p style="font-size:11px; color:var(--text-muted);">Cerrar Sesión</p>
+                    </div>
                     <i class="ph ph-sign-out" style="margin-left:auto; color:var(--text-muted);"></i>
                 </div>
             </div>
@@ -444,7 +435,12 @@
         function toggleTheme() { document.body.classList.toggle('dark-mode'); localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light'); }
         if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) document.body.classList.add('dark-mode');
         
-        function logout() { if(confirm('¿Cerrar sesión?')) window.location.href = 'login.html'; }
+        function logout() { 
+            if(confirm('¿Cerrar sesión?')) {
+                sessionStorage.removeItem('admin_logged');
+                window.location.href = 'reservas.html';
+            }
+        }
         
         document.getElementById('fechaOut').min = new Date().toISOString().split('T')[0];
         cargarDisponibilidad();
