@@ -48,9 +48,13 @@
         .tour-disponibles { font-size: 12px; color: #64748b; margin-left: 8px; }
         .ocupacion-bar { height: 6px; background: #e2e8f0; border-radius: 3px; margin-top: 4px; overflow: hidden; }
         .ocupacion-bar-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
-        .bar-verde { background: #10b981; }
-        .bar-amarillo { background: #f59e0b; }
-        .bar-rojo { background: #ef4444; }
+        .selector-dias { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
+        .dia-btn { background: white; border: 1px solid #cbd5e1; border-radius: 12px; padding: 10px 16px; cursor: pointer; text-align: center; transition: all 0.2s; flex: 1; min-width: 70px; }
+        .dia-btn:hover { border-color: #1e6f5c; background: #f0fdf9; transform: translateY(-2px); }
+        .dia-btn.selected { background: #1e6f5c; border-color: #1e6f5c; color: white; }
+        .dia-nombre { font-size: 12px; font-weight: 600; }
+        .dia-fecha { font-size: 11px; }
+        .dia-ocupacion { font-size: 10px; margin-top: 4px; }
     </style>
 </head>
 <body>
@@ -83,17 +87,22 @@
                     <div><label>Email *</label><input type="email" id="email" required placeholder="contacto@ejemplo.com"></div>
                     <div><label>WhatsApp (código país) *</label><input type="tel" id="whatsapp" required placeholder="+55 11 91234-5678"></div>
                     <div><label>Fecha de salida (OUT) *</label><input type="date" id="fechaOut" required></div>
-                    <div><label>Fecha de Paseo *</label><input type="date" id="fechaPaseo" required></div>
                 </div>
 
-                <!-- Panel de ocupación actual (se muestra siempre) -->
-                <div id="infoOcupacion" class="info-ocupacion">
+                <!-- Selector de próximos 4 días -->
+                <div style="margin-bottom: 15px;">
+                    <label>📅 Fecha de Paseo *</label>
+                    <div id="diasSelector" class="selector-dias"></div>
+                    <input type="hidden" id="fechaPaseo" required>
+                </div>
+
+                <!-- Panel de ocupación actual -->
+                <div id="infoOcupacion" class="info-ocupacion hidden">
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
                         <i class="fas fa-chart-line"></i>
-                        <span style="font-weight: 600;">📊 Ocupación actual para <span id="fechaSeleccionada">---</span></span>
+                        <span style="font-weight: 600;">📊 Ocupación para <span id="fechaSeleccionada">---</span></span>
                     </div>
                     
-                    <!-- Tour Mañana -->
                     <div class="info-row">
                         <span class="tour-nombre">🌅 Tour Mañana (09:00-12:00)</span>
                         <div style="text-align: right;">
@@ -105,7 +114,6 @@
                         <div id="morningBar" class="ocupacion-bar-fill bar-verde" style="width: 0%"></div>
                     </div>
                     
-                    <!-- Tour Tarde -->
                     <div class="info-row">
                         <span class="tour-nombre">🌇 Tour Tarde (14:00-17:00)</span>
                         <div style="text-align: right;">
@@ -117,7 +125,6 @@
                         <div id="afternoonBar" class="ocupacion-bar-fill bar-verde" style="width: 0%"></div>
                     </div>
                     
-                    <!-- Tour Extra (oculto inicialmente) -->
                     <div id="extraRow" class="info-row hidden">
                         <span class="tour-nombre">⭐ Tour Extra (18:00-21:00)</span>
                         <div style="text-align: right;">
@@ -161,7 +168,7 @@
 
                 <div style="margin-top: 20px; padding: 16px; background: #f0fdf4; border-radius: 20px;">
                     <div><span>💰 Tarifa por adulto: R$ 180</span></div>
-                    <div style="margin-top: 5px;"><span>👶 Tarifa por menor: R$ 90</span></div>
+                    <div><span>👶 Tarifa por menor: R$ 90</span></div>
                     <div style="border-top: 1px solid #ccc; margin-top: 10px; padding-top: 10px; display: flex; justify-content: space-between; font-weight: bold;">
                         <span>💵 Total estimado:</span>
                         <span id="totalPreview" style="font-size: 20px; color: #059669;">R$ 0</span>
@@ -196,6 +203,10 @@
     
     let ocupacionActual = { morning: 0, afternoon: 0, extra: 0 };
     let disponiblesActual = { morning: 160, afternoon: 160, extra: 160 };
+    let fechasDisponibles = [];
+    let fechaSeleccionada = "";
+    
+    const diasSemana = ['DOM', 'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB'];
     
     function mostrarLoading(mostrar) {
         document.getElementById("loadingOverlay").classList.toggle("hidden", !mostrar);
@@ -209,28 +220,81 @@
         setTimeout(() => toast.classList.add("hidden"), 4000);
     }
     
-    // Configurar fechas: solo próximos 7 días desde hoy
-    function configurarFechas() {
-        const fechaInput = document.getElementById("fechaPaseo");
+    // Generar próximos 4 días (excluyendo hoy)
+    function generarProximosDias() {
         const hoy = new Date();
-        const hoyStr = hoy.toISOString().split('T')[0];
-        fechaInput.min = hoyStr;
+        const fechas = [];
         
-        const maxFecha = new Date(hoy);
-        maxFecha.setDate(hoy.getDate() + 7);
-        fechaInput.max = maxFecha.toISOString().split('T')[0];
-        
-        // Establecer fecha por defecto = hoy
-        if (!fechaInput.value) {
-            fechaInput.value = hoyStr;
+        for (let i = 1; i <= 4; i++) {
+            const fecha = new Date(hoy);
+            fecha.setDate(hoy.getDate() + i);
+            const año = fecha.getFullYear();
+            const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+            const dia = String(fecha.getDate()).padStart(2, '0');
+            const fechaStr = `${año}-${mes}-${dia}`;
+            const diaSemana = diasSemana[fecha.getDay()];
+            const diaNum = fecha.getDate();
+            const mesNum = fecha.getMonth() + 1;
+            
+            fechas.push({
+                value: fechaStr,
+                label: `${diaSemana} ${diaNum}/${mesNum}`,
+                diaSemana: diaSemana,
+                dia: diaNum,
+                mes: mesNum
+            });
         }
+        return fechas;
     }
     
-    function actualizarFechaMostrada(fecha) {
-        const fechaSpan = document.getElementById("fechaSeleccionada");
-        if (fechaSpan && fecha) {
-            const partes = fecha.split('-');
-            fechaSpan.textContent = `${partes[2]}/${partes[1]}/${partes[0]}`;
+    function crearSelectorDias() {
+        fechasDisponibles = generarProximosDias();
+        const container = document.getElementById("diasSelector");
+        container.innerHTML = '';
+        
+        fechasDisponibles.forEach((fecha, index) => {
+            const btn = document.createElement('div');
+            btn.className = 'dia-btn';
+            if (index === 0) btn.classList.add('selected');
+            btn.innerHTML = `
+                <div class="dia-nombre">${fecha.diaSemana}</div>
+                <div class="dia-fecha">${fecha.dia}/${fecha.mes}</div>
+                <div class="dia-ocupacion" id="ocupacionPreview_${index}">Cargando...</div>
+            `;
+            btn.onclick = () => {
+                document.querySelectorAll('.dia-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                fechaSeleccionada = fecha.value;
+                document.getElementById("fechaPaseo").value = fechaSeleccionada;
+                consultarOcupacion(fechaSeleccionada);
+            };
+            container.appendChild(btn);
+        });
+        
+        // Seleccionar el primer día por defecto
+        fechaSeleccionada = fechasDisponibles[0].value;
+        document.getElementById("fechaPaseo").value = fechaSeleccionada;
+    }
+    
+    function actualizarPreviewOcupacion(fecha, ocupacionMorning, ocupacionAfternoon) {
+        // Actualizar vista previa en los botones
+        const index = fechasDisponibles.findIndex(f => f.value === fecha);
+        if (index !== -1) {
+            const previewSpan = document.getElementById(`ocupacionPreview_${index}`);
+            if (previewSpan) {
+                const totalMorning = ocupacionMorning;
+                const totalAfternoon = ocupacionAfternoon;
+                const libresMorning = CAPACIDAD_MAXIMA - totalMorning;
+                const libresAfternoon = CAPACIDAD_MAXIMA - totalAfternoon;
+                previewSpan.innerHTML = `🌅 ${libresMorning} | 🌇 ${libresAfternoon}`;
+                if (libresMorning <= 0 && libresAfternoon <= 0) {
+                    previewSpan.style.color = "#dc2626";
+                } else if (libresMorning <= 30 || libresAfternoon <= 30) {
+                    previewSpan.style.color = "#f59e0b";
+                } else {
+                    previewSpan.style.color = "#10b981";
+                }
+            }
         }
     }
     
@@ -240,7 +304,6 @@
         return "#ef4444";
     }
     
-    // Consultar ocupación desde Google Sheets
     async function consultarOcupacion(fecha) {
         mostrarLoading(true);
         try {
@@ -251,9 +314,10 @@
                 ocupacionActual = result.ocupacion;
                 disponiblesActual = result.disponibles;
                 actualizarUI(fecha);
+                
+                // Actualizar preview en los botones
+                actualizarPreviewOcupacion(fecha, ocupacionActual.morning, ocupacionActual.afternoon);
                 return true;
-            } else {
-                mostrarToast("Error al cargar datos", true);
             }
         } catch(e) {
             console.error("Error consultando ocupación:", e);
@@ -264,15 +328,16 @@
     }
     
     function actualizarUI(fecha) {
-        // Actualizar fecha mostrada
-        actualizarFechaMostrada(fecha);
+        const fechaSpan = document.getElementById("fechaSeleccionada");
+        if (fechaSpan && fecha) {
+            const partes = fecha.split('-');
+            fechaSpan.textContent = `${partes[2]}/${partes[1]}/${partes[0]}`;
+        }
         
-        // Calcular porcentajes
         const morningPorcentaje = (ocupacionActual.morning / CAPACIDAD_MAXIMA) * 100;
         const afternoonPorcentaje = (ocupacionActual.afternoon / CAPACIDAD_MAXIMA) * 100;
         const extraPorcentaje = (ocupacionActual.extra / CAPACIDAD_MAXIMA) * 100;
         
-        // Actualizar textos de ocupación
         document.getElementById("morningOcupados").textContent = ocupacionActual.morning;
         document.getElementById("afternoonOcupados").textContent = ocupacionActual.afternoon;
         document.getElementById("extraOcupados").textContent = ocupacionActual.extra;
@@ -281,17 +346,14 @@
         document.getElementById("afternoonDisponibles").innerHTML = `/ ${CAPACIDAD_MAXIMA} (${disponiblesActual.afternoon} libres)`;
         document.getElementById("extraDisponibles").innerHTML = `/ ${CAPACIDAD_MAXIMA} (${disponiblesActual.extra} libres)`;
         
-        // Actualizar barras de progreso
         const morningBar = document.getElementById("morningBar");
         const afternoonBar = document.getElementById("afternoonBar");
         
         morningBar.style.width = `${morningPorcentaje}%`;
         morningBar.style.backgroundColor = getColorPorPorcentaje(morningPorcentaje);
-        
         afternoonBar.style.width = `${afternoonPorcentaje}%`;
         afternoonBar.style.backgroundColor = getColorPorPorcentaje(afternoonPorcentaje);
         
-        // Mostrar/ocultar Tour Extra si es necesario
         const extraRow = document.getElementById("extraRow");
         const extraBar = document.getElementById("extraBar");
         
@@ -313,12 +375,10 @@
             document.getElementById("horariosContainer").className = "grid-2";
         }
         
-        // Actualizar badges de cupos en las tarjetas
         actualizarBadgeCupo("morningCupo", disponiblesActual.morning);
         actualizarBadgeCupo("afternoonCupo", disponiblesActual.afternoon);
         actualizarBadgeCupo("extraCupo", disponiblesActual.extra);
         
-        // Habilitar/deshabilitar tarjetas de horarios
         const cardM = document.getElementById("cardMorning");
         const cardA = document.getElementById("cardAfternoon");
         const cardE = document.getElementById("cardExtra");
@@ -327,6 +387,7 @@
         if (cardA) cardA.classList.toggle("disabled", disponiblesActual.afternoon <= 0);
         if (cardE) cardE.classList.toggle("disabled", disponiblesActual.extra <= 0);
         
+        document.getElementById("infoOcupacion").classList.remove("hidden");
         mostrarLoading(false);
     }
     
@@ -400,27 +461,17 @@
     
     // ========== INICIALIZACIÓN ==========
     document.addEventListener("DOMContentLoaded", async function() {
-        configurarFechas();
+        crearSelectorDias();
         actualizarPreview();
         
-        // Obtener fecha inicial (hoy por defecto)
-        const fechaInicial = document.getElementById("fechaPaseo").value;
-        if (fechaInicial) {
-            await consultarOcupacion(fechaInicial);
+        // Cargar ocupación del primer día
+        if (fechaSeleccionada) {
+            await consultarOcupacion(fechaSeleccionada);
         }
-        
-        // Evento: al cambiar la fecha, consultar ocupación
-        document.getElementById("fechaPaseo").addEventListener("change", async function() {
-            const fecha = this.value;
-            if (fecha) {
-                await consultarOcupacion(fecha);
-            }
-        });
         
         document.getElementById("adultos").addEventListener("input", actualizarPreview);
         document.getElementById("menores").addEventListener("input", actualizarPreview);
         
-        // Selección de horarios
         const morningCard = document.getElementById("cardMorning");
         const afternoonCard = document.getElementById("cardAfternoon");
         const extraCard = document.getElementById("cardExtra");
@@ -442,7 +493,6 @@
         if (afternoonCard) afternoonCard.onclick = () => seleccionar(afternoonCard, radioAfternoon);
         if (extraCard) extraCard.onclick = () => seleccionar(extraCard, radioExtra);
         
-        // Submit
         document.getElementById("reservaForm").addEventListener("submit", async (e) => {
             e.preventDefault();
             
@@ -453,7 +503,7 @@
             const hotel = document.getElementById("hotelDireccion").value.trim();
             const email = document.getElementById("email").value.trim();
             const whatsapp = document.getElementById("whatsapp").value.trim();
-            const fechaPaseo = document.getElementById("fechaPaseo").value;
+            const fechaPaseo = fechaSeleccionada;
             const fechaOut = document.getElementById("fechaOut").value;
             const horario = document.querySelector('input[name="horario"]:checked')?.value;
             
@@ -466,14 +516,13 @@
                 return;
             }
             
-            // Verificar cupo disponible
             let disponibles = 0;
             if (horario === "morning") disponibles = disponiblesActual.morning;
             else if (horario === "afternoon") disponibles = disponiblesActual.afternoon;
             else disponibles = disponiblesActual.extra;
             
             if (adultos + menores > disponibles) {
-                mostrarToast(`❌ Cupos insuficientes. Quedan ${disponibles} lugares para el ${fechaPaseo}.`, true);
+                mostrarToast(`❌ Cupos insuficientes. Quedan ${disponibles} lugares.`, true);
                 return;
             }
             
@@ -509,7 +558,6 @@
             mostrarLoading(false);
             
             if (resultado.success) {
-                // Actualizar datos localmente
                 ocupacionActual[horario] += adultos + menores;
                 disponiblesActual[horario] -= adultos + menores;
                 actualizarUI(fechaPaseo);
