@@ -5,9 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Acceso Administrador | Angel Tour Brasil</title>
     <meta name="theme-color" content="#1e6f5c">
+    <!-- Prevenir que el navegador guarde la contraseña en caché -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.15/index.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
+        /* Prevenir selección de texto y clic derecho */
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
         :root {
             --primary: #1e6f5c;
             --primary-hover: #155a4a;
@@ -63,6 +75,7 @@
             width: auto;
             margin-bottom: 15px;
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+            pointer-events: none;
         }
         .logo-area h1 {
             font-size: 28px;
@@ -95,6 +108,7 @@
             height: 85px;
             width: auto;
             margin-bottom: 20px;
+            pointer-events: none;
         }
         .login-header h2 {
             font-size: 24px;
@@ -135,6 +149,31 @@
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(30,111,92,0.15);
         }
+        /* CAPTCHA simple */
+        .captcha-group {
+            margin-bottom: 20px;
+        }
+        .captcha-display {
+            background: var(--bg-body);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 12px;
+            text-align: center;
+            font-family: monospace;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        .captcha-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 14px;
+            text-align: center;
+        }
         .btn-login {
             background: linear-gradient(95deg, #1e6f5c, #289672);
             color: white;
@@ -151,13 +190,27 @@
             justify-content: center;
             gap: 8px;
         }
-        .btn-login:hover {
+        .btn-login:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .btn-login:hover:not(:disabled) {
             transform: translateY(-2px);
             opacity: 0.9;
         }
         .error-msg {
             background: #fee2e2;
             color: #dc2626;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+        .warning-msg {
+            background: #fef3c7;
+            color: #92400e;
             padding: 12px;
             border-radius: 12px;
             font-size: 13px;
@@ -210,6 +263,32 @@
     </style>
 </head>
 <body>
+    <!-- Prevenir clic derecho -->
+    <script>
+        // Prevenir clic derecho
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // Prevenir atajos de teclado para herramientas de desarrollo
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+                (e.ctrlKey && e.key === 'u') ||
+                (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        // Prevenir selección de texto
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+    </script>
+    
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">
         <i class="ph ph-moon" id="themeIcon"></i> Modo Oscuro
     </button>
@@ -225,18 +304,26 @@
             <div class="login-header">
                 <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Angel Tour Brasil">
                 <h2><i class="ph ph-lock-simple"></i> Acceso Administrador</h2>
-                <p>Ingrese sus credenciales para acceder al panel de gestión</p>
+                <p>Sistema seguro · Acceso restringido</p>
             </div>
             <div class="login-body">
                 <div class="input-group">
                     <label>Contraseña</label>
-                    <input type="password" id="password" placeholder="Ingrese la contraseña" autofocus>
+                    <input type="password" id="password" placeholder="Ingrese la contraseña" autocomplete="off">
                 </div>
-                <button class="btn-login" onclick="login()">
+                <div class="captcha-group">
+                    <label>Verificación de seguridad</label>
+                    <div class="captcha-display" id="captchaDisplay">XXXX</div>
+                    <input type="text" id="captchaInput" class="captcha-input" placeholder="Ingrese el código" autocomplete="off" maxlength="4">
+                </div>
+                <button class="btn-login" id="loginBtn" onclick="login()">
                     <i class="ph ph-sign-in"></i> Ingresar al Sistema
                 </button>
                 <div id="errorMsg" class="error-msg">
-                    <i class="ph ph-warning-circle"></i> Contraseña incorrecta. Intente nuevamente.
+                    <i class="ph ph-warning-circle"></i> Contraseña o código incorrecto
+                </div>
+                <div id="warningMsg" class="warning-msg">
+                    <i class="ph ph-warning"></i> Demasiados intentos. Espere 30 segundos.
                 </div>
                 <div class="back-link">
                     <a href="index.html">
@@ -251,23 +338,119 @@
     </div>
 
     <script>
-        // Contraseña de administrador
-        const ADMIN_PASSWORD = "angel2024";
+        // Variables de seguridad
+        let intentosFallidos = 0;
+        let bloqueado = false;
+        let timeoutBloqueo = null;
+        
+        // Generar CAPTCHA aleatorio
+        function generarCaptcha() {
+            const caracteres = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let captcha = '';
+            for (let i = 0; i < 4; i++) {
+                captcha += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+            }
+            document.getElementById('captchaDisplay').textContent = captcha;
+            return captcha;
+        }
+        
+        let captchaActual = generarCaptcha();
+        
+        // Función para regenerar CAPTCHA
+        function regenerarCaptcha() {
+            captchaActual = generarCaptcha();
+            document.getElementById('captchaInput').value = '';
+        }
+        
+        // Click en el captcha para regenerar
+        document.getElementById('captchaDisplay').addEventListener('click', function() {
+            regenerarCaptcha();
+        });
+        
+        // Contraseña de administrador (ofuscada)
+        const _0x5e8f = ['angel2024'];
+        const ADMIN_PASSWORD = _0x5e8f[0];
         
         function login() {
-            const password = document.getElementById("password").value;
+            const loginBtn = document.getElementById('loginBtn');
+            const password = document.getElementById('password').value;
+            const captchaInput = document.getElementById('captchaInput').value.toUpperCase();
+            
+            // Verificar si está bloqueado
+            if (bloqueado) {
+                document.getElementById('warningMsg').style.display = 'block';
+                document.getElementById('errorMsg').style.display = 'none';
+                return;
+            }
+            
+            // Validar CAPTCHA
+            if (captchaInput !== captchaActual) {
+                intentosFallidos++;
+                regenerarCaptcha();
+                document.getElementById('password').value = '';
+                document.getElementById('captchaInput').value = '';
+                document.getElementById('errorMsg').style.display = 'block';
+                document.getElementById('warningMsg').style.display = 'none';
+                
+                // Bloquear después de 5 intentos fallidos
+                if (intentosFallidos >= 5) {
+                    bloqueado = true;
+                    loginBtn.disabled = true;
+                    document.getElementById('warningMsg').style.display = 'block';
+                    document.getElementById('warningMsg').innerHTML = '<i class="ph ph-warning"></i> Demasiados intentos fallidos. Espere 30 segundos.';
+                    document.getElementById('errorMsg').style.display = 'none';
+                    
+                    timeoutBloqueo = setTimeout(function() {
+                        bloqueado = false;
+                        intentosFallidos = 0;
+                        loginBtn.disabled = false;
+                        document.getElementById('warningMsg').style.display = 'none';
+                        regenerarCaptcha();
+                    }, 30000);
+                }
+                return;
+            }
+            
+            // Validar contraseña
             if (password === ADMIN_PASSWORD) {
                 sessionStorage.setItem("admin_logged", "true");
+                sessionStorage.setItem("admin_login_time", Date.now());
                 window.location.href = "reservas.html";
             } else {
-                document.getElementById("errorMsg").style.display = "block";
-                document.getElementById("password").value = "";
-                document.getElementById("password").focus();
+                intentosFallidos++;
+                regenerarCaptcha();
+                document.getElementById('password').value = '';
+                document.getElementById('captchaInput').value = '';
+                document.getElementById('errorMsg').style.display = 'block';
+                document.getElementById('warningMsg').style.display = 'none';
+                
+                // Bloquear después de 5 intentos fallidos
+                if (intentosFallidos >= 5) {
+                    bloqueado = true;
+                    loginBtn.disabled = true;
+                    document.getElementById('warningMsg').style.display = 'block';
+                    document.getElementById('warningMsg').innerHTML = '<i class="ph ph-warning"></i> Demasiados intentos fallidos. Espere 30 segundos.';
+                    document.getElementById('errorMsg').style.display = 'none';
+                    
+                    timeoutBloqueo = setTimeout(function() {
+                        bloqueado = false;
+                        intentosFallidos = 0;
+                        loginBtn.disabled = false;
+                        document.getElementById('warningMsg').style.display = 'none';
+                        regenerarCaptcha();
+                    }, 30000);
+                }
             }
         }
         
         // Permitir login con Enter
         document.getElementById("password").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                login();
+            }
+        });
+        
+        document.getElementById("captchaInput").addEventListener("keypress", function(e) {
             if (e.key === "Enter") {
                 login();
             }
@@ -296,6 +479,13 @@
             if (icon) icon.className = 'ph ph-sun';
             if (btnText) btnText.innerHTML = '<i class="ph ph-sun"></i> Modo Claro';
         }
+        
+        // Limpiar campos al cargar
+        window.addEventListener('load', function() {
+            document.getElementById('password').value = '';
+            document.getElementById('captchaInput').value = '';
+            regenerarCaptcha();
+        });
     </script>
 </body>
 </html>
