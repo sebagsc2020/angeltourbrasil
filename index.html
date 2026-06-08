@@ -43,7 +43,6 @@
         .info-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #e2e8f0; }
         .info-row:last-child { border-bottom: none; }
         
-        /* Botones horizontales de días */
         .dias-horizontales {
             display: flex;
             gap: 12px;
@@ -110,14 +109,12 @@
                     <div><label>WhatsApp (código país) *</label><input type="tel" id="whatsapp" required placeholder="+55 11 91234-5678"></div>
                 </div>
 
-                <!-- Botones horizontales de días -->
                 <div style="margin-bottom: 15px;">
                     <label>📅 Fecha de Paseo *</label>
                     <div id="diasSelector" class="dias-horizontales"></div>
                     <input type="hidden" id="fechaPaseo">
                 </div>
 
-                <!-- Panel de ocupación -->
                 <div id="infoOcupacion" class="info-ocupacion hidden">
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
                         <i class="fas fa-chart-line"></i>
@@ -198,7 +195,7 @@
 
 <script>
     const CAPACIDAD_MAXIMA = 160;
-    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbxpghSVDfCdVN7t6NW9TNDGoT4flU9rUWQb9FABJbbUZfjRJHrxVpXAN1O5tS8pMgOdTQ/exec";
+    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbzLycfWFDQzTX8WLflL-2LyB5mVcXeiVzXHEl2mb5_pXAykBVSgMEN7dID4v51fcTbgKA/exec";
     
     let ocupacionActual = { morning: 0, afternoon: 0, extra: 0 };
     let disponiblesActual = { morning: 160, afternoon: 160, extra: 160 };
@@ -258,7 +255,6 @@
                 <div class="dia-cupo-h" id="preview_${index}">📅 Cargando...</div>
             `;
             btn.onclick = async () => {
-                // Si ya está seleccionado, no hacer nada
                 if (fechaSeleccionada === fecha.value) return;
                 
                 document.querySelectorAll('.dia-btn-h').forEach(b => b.classList.remove('selected'));
@@ -291,11 +287,11 @@
                 actualizarUI(fecha);
                 actualizarPreviews(fecha);
             } else {
-                mostrarToast("Error al cargar datos: " + (result.message || "desconocido"), true);
+                mostrarToast("Error al cargar datos", true);
             }
         } catch(e) {
             console.error("Error:", e);
-            mostrarToast("Error de conexión al servidor", true);
+            mostrarToast("Error de conexión", true);
         }
         mostrarLoading(false);
     }
@@ -317,21 +313,17 @@
     }
     
     function actualizarUI(fecha) {
-        // Actualizar fecha mostrada
         document.getElementById("fechaSeleccionada").textContent = formatearFecha(fecha);
         
-        // Actualizar panel de ocupación
         document.getElementById("morningOcupados").textContent = ocupacionActual.morning;
         document.getElementById("afternoonOcupados").textContent = ocupacionActual.afternoon;
         document.getElementById("morningLibres").textContent = disponiblesActual.morning;
         document.getElementById("afternoonLibres").textContent = disponiblesActual.afternoon;
         
-        // Actualizar badges
         actualizarBadge("morningBadge", disponiblesActual.morning);
         actualizarBadge("afternoonBadge", disponiblesActual.afternoon);
         actualizarBadge("extraBadge", disponiblesActual.extra);
         
-        // Mostrar/ocultar Tour Extra
         const extraRow = document.getElementById("extraRow");
         const extraContainer = document.getElementById("tourExtraContainer");
         const horariosContainer = document.getElementById("horariosContainer");
@@ -348,7 +340,6 @@
             horariosContainer.className = "grid-2";
         }
         
-        // Habilitar/deshabilitar tarjetas
         document.getElementById("cardMorning").classList.toggle("disabled", disponiblesActual.morning <= 0);
         document.getElementById("cardAfternoon").classList.toggle("disabled", disponiblesActual.afternoon <= 0);
         if (document.getElementById("cardExtra")) {
@@ -428,7 +419,6 @@
         fechasDisponibles = crearSelectorDias();
         actualizarPreview();
         
-        // Cargar datos del primer día
         if (fechaSeleccionada) {
             await consultarOcupacion(fechaSeleccionada);
         }
@@ -436,7 +426,6 @@
         document.getElementById("adultos").addEventListener("input", actualizarPreview);
         document.getElementById("menores").addEventListener("input", actualizarPreview);
         
-        // Selección de horarios
         const morningCard = document.getElementById("cardMorning");
         const afternoonCard = document.getElementById("cardAfternoon");
         const extraCard = document.getElementById("cardExtra");
