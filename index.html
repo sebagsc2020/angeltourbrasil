@@ -118,14 +118,14 @@
                 <div id="infoOcupacion" class="info-ocupacion hidden">
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
                         <i class="fas fa-chart-line"></i>
-                        <span style="font-weight: 600;">📊 Ocupación para <span id="fechaSeleccionada">---</span></span>
+                        <span style="font-weight: 600;">🏅 Ocupación para <span id="fechaSeleccionada">---</span></span>
                     </div>
                     <div class="info-row">
-                        <span>🌅 Tour Mañana (09:00-12:00)</span>
+                        <span>🏅 Tour Mañana (09:00-12:00)</span>
                         <span><strong id="morningOcupados">0</strong> / 160 (<span id="morningLibres">160</span> libres)</span>
                     </div>
                     <div class="info-row">
-                        <span>🌇 Tour Tarde (14:00-17:00)</span>
+                        <span>🏅 Tour Tarde (14:00-17:00)</span>
                         <span><strong id="afternoonOcupados">0</strong> / 160 (<span id="afternoonLibres">160</span> libres)</span>
                     </div>
                     <div id="extraRow" class="info-row hidden">
@@ -134,7 +134,7 @@
                     </div>
                 </div>
 
-                <div style="margin: 16px 0 12px 0; font-weight: bold;">🎫 Selecciona tu horario *</div>
+                <div style="margin: 16px 0 12px 0; font-weight: bold;">🏅 Selecciona tu horario *</div>
                 <div id="horariosContainer" class="grid-2">
                     <div id="cardMorning" class="horario-card">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -302,11 +302,12 @@
         if (index !== -1) {
             const preview = document.getElementById(`preview_${index}`);
             if (preview) {
-                const libresMorning = disponiblesActual.morning;
-                const libresAfternoon = disponiblesActual.afternoon;
-                preview.innerHTML = `🌅 ${libresMorning} | 🌇 ${libresAfternoon}`;
-                if (libresMorning <= 0 && libresAfternoon <= 0) preview.style.color = "#dc2626";
-                else if (libresMorning <= 30 || libresAfternoon <= 30) preview.style.color = "#f59e0b";
+                // Mostrar OCUPADOS en lugar de libres
+                const ocupadosMorning = ocupacionActual.morning;
+                const ocupadosAfternoon = ocupacionActual.afternoon;
+                preview.innerHTML = `🏅 ${ocupadosMorning} | 🏅 ${ocupadosAfternoon}`;
+                if (ocupadosMorning >= 160 && ocupadosAfternoon >= 160) preview.style.color = "#dc2626";
+                else if (ocupadosMorning >= 130 || ocupadosAfternoon >= 130) preview.style.color = "#f59e0b";
                 else preview.style.color = "#10b981";
             }
         }
