@@ -102,14 +102,98 @@
         .toast { position: fixed; bottom: 20px; right: 20px; background: #1f2937; color: white; padding: 12px 24px; border-radius: 40px; z-index: 1000; display: none; }
         .theme-btn { position: fixed; bottom: 20px; left: 20px; background: var(--bg-surface); color: var(--text-main); border: 1px solid var(--border-color); padding: 12px 20px; border-radius: 40px; cursor: pointer; font-weight: 600; z-index: 100; box-shadow: var(--shadow-md); display: flex; align-items: center; gap: 8px; }
         
+        /* Menú flotante */
+        .floating-menu {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .floating-toggle {
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            color: white;
+            font-size: 24px;
+        }
+        .floating-toggle:hover {
+            transform: scale(1.05);
+            background: var(--primary-hover);
+        }
+        .floating-items {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s;
+        }
+        .floating-menu.open .floating-items {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .floating-item {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 40px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: var(--shadow-md);
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .floating-item:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(-5px);
+        }
+        .floating-item i { font-size: 18px; }
+        
         @media (max-width: 768px) {
             .container { padding: 16px; }
             .header { flex-direction: column; align-items: flex-start; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .floating-item { padding: 8px 16px; font-size: 12px; }
         }
     </style>
 </head>
 <body>
+    <!-- Botón flotante con links -->
+    <div class="floating-menu" id="floatingMenu">
+        <div class="floating-toggle" onclick="toggleFloatingMenu()">
+            <i class="ph ph-list"></i>
+        </div>
+        <div class="floating-items">
+            <a href="reservas.html" class="floating-item">
+                <i class="ph ph-calendar-check"></i> Reservas Públicas
+            </a>
+            <a href="clientes.html" class="floating-item">
+                <i class="ph ph-users"></i> Gestión de Clientes
+            </a>
+            <a href="seguimiento.html" class="floating-item">
+                <i class="ph ph-chart-line-up"></i> Seguimiento
+            </a>
+        </div>
+    </div>
+
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">
         <i class="ph ph-moon" id="themeIcon"></i> Modo Oscuro
     </button>
@@ -123,9 +207,6 @@
             <div class="header-actions">
                 <button class="btn btn-secondary" onclick="window.location.href='dashboard.html'">
                     <i class="ph ph-squares-four"></i> Dashboard
-                </button>
-                <button class="btn btn-primary" onclick="window.location.href='reservas.html'">
-                    <i class="ph ph-calendar-check"></i> Reservas Públicas
                 </button>
                 <button class="btn-icon" onclick="logout()">
                     <i class="ph ph-sign-out"></i>
@@ -238,6 +319,18 @@
         const SHEETS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTAuEiFi8pDWKqQlsYh5mhMuSZxEojyaM5Vcg-FyBqyCu4FGXFECi5FqhWV4w46oHDcWQSRDxBf4nfm/pubhtml";
         
         let reservasData = [];
+        
+        function toggleFloatingMenu() {
+            document.getElementById('floatingMenu').classList.toggle('open');
+        }
+        
+        // Cerrar menú flotante al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('floatingMenu');
+            if (!menu.contains(e.target) && menu.classList.contains('open')) {
+                menu.classList.remove('open');
+            }
+        });
         
         function mostrarToast(mensaje, error = false) {
             const toast = document.getElementById('toast');
@@ -380,7 +473,6 @@
                 estado: document.getElementById('editEstado').value
             };
             
-            // Actualizar localmente
             const index = reservasData.findIndex(r => r.id === reservaEditando.id);
             if (index !== -1) {
                 reservasData[index] = datosActualizados;
