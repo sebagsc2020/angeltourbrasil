@@ -195,7 +195,7 @@
 
 <script>
     const CAPACIDAD_MAXIMA = 160;
-    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbyGGzgeB9nImH4LCkENil08abxodc71_pbbyJk6axN1CmW1ucLHujZqfPJGbtVyMVumbQ/exec";
+    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbw1GyHNHpa3dkdIvcpP9g7009cixapNIiinOv1SlakWyc2SbVjejWVtxBMw4LQjQKeuIA/exec";
     
     let ocupacionActual = { morning: 0, afternoon: 0, extra: 0 };
     let disponiblesActual = { morning: 160, afternoon: 160, extra: 160 };
@@ -313,7 +313,6 @@
     }
     
     function actualizarUI(fechaISO, fechaFormateada) {
-        // Mostrar fecha en formato DD/MM/YYYY
         const fechaMostrar = fechaFormateada || formatearFechaMostrar(fechaISO);
         document.getElementById("fechaSeleccionada").textContent = fechaMostrar;
         
@@ -483,8 +482,8 @@
             const id = `ATB-${Date.now()}-${Math.floor(Math.random()*1000)}`;
             const montoTotal = (adultos * 180) + (menores * 90);
             
-            let horarioTexto = horario === "morning" ? "🌅 Tour Mañana" : 
-                              (horario === "afternoon" ? "🌇 Tour Tarde" : "⭐ Tour Extra");
+            let horarioTexto = horario === "morning" ? "Tour Mañana" : 
+                              (horario === "afternoon" ? "Tour Tarde" : "Tour Extra");
             
             const datosReserva = {
                 id: id,
