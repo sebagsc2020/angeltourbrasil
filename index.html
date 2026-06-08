@@ -39,13 +39,18 @@
         .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 3000; }
         .spinner { width: 50px; height: 50px; border: 5px solid white; border-top-color: #1e6f5c; border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .info-ocupacion { background: #f0fdf4; border-radius: 16px; padding: 12px 16px; margin: 10px 0; border-left: 4px solid #1e6f5c; }
+        .info-ocupacion { background: #f0fdf4; border-radius: 16px; padding: 12px 16px; margin: 15px 0; border-left: 4px solid #1e6f5c; }
         .info-ocupacion i { width: 24px; color: #1e6f5c; }
-        .info-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px dashed #e2e8f0; }
+        .info-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #e2e8f0; }
         .info-row:last-child { border-bottom: none; }
         .tour-nombre { font-weight: 600; }
-        .tour-ocupados { font-weight: 700; }
-        .tour-disponibles { font-size: 12px; color: #64748b; }
+        .tour-ocupados { font-weight: 700; font-size: 14px; }
+        .tour-disponibles { font-size: 12px; color: #64748b; margin-left: 8px; }
+        .ocupacion-bar { height: 6px; background: #e2e8f0; border-radius: 3px; margin-top: 4px; overflow: hidden; }
+        .ocupacion-bar-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
+        .bar-verde { background: #10b981; }
+        .bar-amarillo { background: #f59e0b; }
+        .bar-rojo { background: #ef4444; }
     </style>
 </head>
 <body>
@@ -78,35 +83,54 @@
                     <div><label>Email *</label><input type="email" id="email" required placeholder="contacto@ejemplo.com"></div>
                     <div><label>WhatsApp (código país) *</label><input type="tel" id="whatsapp" required placeholder="+55 11 91234-5678"></div>
                     <div><label>Fecha de salida (OUT) *</label><input type="date" id="fechaOut" required></div>
+                    <div><label>Fecha de Paseo *</label><input type="date" id="fechaPaseo" required></div>
                 </div>
 
-                <!-- Fecha de Paseo con selector de solo 7 días -->
-                <div>
-                    <label>Fecha de Paseo *</label>
-                    <input type="date" id="fechaPaseo" required>
-                </div>
-
-                <!-- Panel de ocupación en tiempo real (se muestra al seleccionar fecha) -->
-                <div id="infoOcupacion" class="info-ocupacion hidden">
+                <!-- Panel de ocupación actual (se muestra siempre) -->
+                <div id="infoOcupacion" class="info-ocupacion">
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
                         <i class="fas fa-chart-line"></i>
-                        <span style="font-weight: 600;">Ocupación actual</span>
+                        <span style="font-weight: 600;">📊 Ocupación actual para <span id="fechaSeleccionada">---</span></span>
                     </div>
-                    <div id="ocupacionMorning" class="info-row">
-                        <span class="tour-nombre">🌅 Tour Mañana</span>
-                        <span><span id="morningOcupados" class="tour-ocupados">0</span> <span class="tour-disponibles" id="morningDisponibles">(160 disponibles)</span></span>
+                    
+                    <!-- Tour Mañana -->
+                    <div class="info-row">
+                        <span class="tour-nombre">🌅 Tour Mañana (09:00-12:00)</span>
+                        <div style="text-align: right;">
+                            <span class="tour-ocupados" id="morningOcupados">0</span>
+                            <span class="tour-disponibles" id="morningDisponibles">/ 160</span>
+                        </div>
                     </div>
-                    <div id="ocupacionAfternoon" class="info-row">
-                        <span class="tour-nombre">🌇 Tour Tarde</span>
-                        <span><span id="afternoonOcupados" class="tour-ocupados">0</span> <span class="tour-disponibles" id="afternoonDisponibles">(160 disponibles)</span></span>
+                    <div class="ocupacion-bar">
+                        <div id="morningBar" class="ocupacion-bar-fill bar-verde" style="width: 0%"></div>
                     </div>
-                    <div id="ocupacionExtra" class="info-row hidden">
-                        <span class="tour-nombre">⭐ Tour Extra</span>
-                        <span><span id="extraOcupados" class="tour-ocupados">0</span> <span class="tour-disponibles" id="extraDisponibles">(160 disponibles)</span></span>
+                    
+                    <!-- Tour Tarde -->
+                    <div class="info-row">
+                        <span class="tour-nombre">🌇 Tour Tarde (14:00-17:00)</span>
+                        <div style="text-align: right;">
+                            <span class="tour-ocupados" id="afternoonOcupados">0</span>
+                            <span class="tour-disponibles" id="afternoonDisponibles">/ 160</span>
+                        </div>
+                    </div>
+                    <div class="ocupacion-bar">
+                        <div id="afternoonBar" class="ocupacion-bar-fill bar-verde" style="width: 0%"></div>
+                    </div>
+                    
+                    <!-- Tour Extra (oculto inicialmente) -->
+                    <div id="extraRow" class="info-row hidden">
+                        <span class="tour-nombre">⭐ Tour Extra (18:00-21:00)</span>
+                        <div style="text-align: right;">
+                            <span class="tour-ocupados" id="extraOcupados">0</span>
+                            <span class="tour-disponibles" id="extraDisponibles">/ 160</span>
+                        </div>
+                    </div>
+                    <div id="extraBar" class="ocupacion-bar hidden">
+                        <div id="extraBarFill" class="ocupacion-bar-fill bar-verde" style="width: 0%"></div>
                     </div>
                 </div>
 
-                <div style="margin: 16px 0 12px 0; font-weight: bold;">Selecciona tu horario *</div>
+                <div style="margin: 16px 0 12px 0; font-weight: bold;">🎫 Selecciona tu horario *</div>
                 <div id="horariosContainer" class="grid-2">
                     <div id="cardMorning" class="horario-card">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -136,15 +160,15 @@
                 </div>
 
                 <div style="margin-top: 20px; padding: 16px; background: #f0fdf4; border-radius: 20px;">
-                    <div><span>Tarifa por adulto: R$ 180</span></div>
-                    <div style="margin-top: 5px;"><span>Tarifa por menor: R$ 90</span></div>
+                    <div><span>💰 Tarifa por adulto: R$ 180</span></div>
+                    <div style="margin-top: 5px;"><span>👶 Tarifa por menor: R$ 90</span></div>
                     <div style="border-top: 1px solid #ccc; margin-top: 10px; padding-top: 10px; display: flex; justify-content: space-between; font-weight: bold;">
-                        <span>Total estimado:</span>
+                        <span>💵 Total estimado:</span>
                         <span id="totalPreview" style="font-size: 20px; color: #059669;">R$ 0</span>
                     </div>
                 </div>
 
-                <button type="submit" class="btn"><i class="fab fa-whatsapp"></i> Confirmar Reserva</button>
+                <button type="submit" class="btn"><i class="fab fa-whatsapp"></i> ✅ Confirmar Reserva</button>
             </form>
         </div>
     </div>
@@ -159,7 +183,7 @@
         <span style="font-size: 50px;">⛵✨</span>
         <h3 style="font-size: 24px; margin: 10px 0;">¡Reserva Confirmada!</h3>
         <div id="resumenReservaPopup" style="margin: 15px 0; text-align: left;"></div>
-        <button id="btnCerrarModal" style="background: #059669; color: white; border: none; padding: 12px; border-radius: 40px; width: 100%; font-weight: bold; cursor: pointer;">Entendido</button>
+        <button id="btnCerrarModal" style="background: #059669; color: white; border: none; padding: 12px; border-radius: 40px; width: 100%; font-weight: bold; cursor: pointer;">👍 Entendido</button>
     </div>
 </div>
 
@@ -168,7 +192,7 @@
 
 <script>
     const CAPACIDAD_MAXIMA = 160;
-    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbwNn6BR648iVVZFkhyDEs1WQcNB27Xn5CsGv4UbaeALvjcjWhhtAeIFa7SlGgoU_40Hiw/exec";
+    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbyO3Z6DGTznI3Rl2cdfHRTypmt-adE22_y_9Fuzc5cnVAXAILHYFpc6GlJpeKK3rKTM_g/exec";
     
     let ocupacionActual = { morning: 0, afternoon: 0, extra: 0 };
     let disponiblesActual = { morning: 160, afternoon: 160, extra: 160 };
@@ -189,11 +213,31 @@
     function configurarFechas() {
         const fechaInput = document.getElementById("fechaPaseo");
         const hoy = new Date();
-        fechaInput.min = hoy.toISOString().split('T')[0];
+        const hoyStr = hoy.toISOString().split('T')[0];
+        fechaInput.min = hoyStr;
         
         const maxFecha = new Date(hoy);
         maxFecha.setDate(hoy.getDate() + 7);
         fechaInput.max = maxFecha.toISOString().split('T')[0];
+        
+        // Establecer fecha por defecto = hoy
+        if (!fechaInput.value) {
+            fechaInput.value = hoyStr;
+        }
+    }
+    
+    function actualizarFechaMostrada(fecha) {
+        const fechaSpan = document.getElementById("fechaSeleccionada");
+        if (fechaSpan && fecha) {
+            const partes = fecha.split('-');
+            fechaSpan.textContent = `${partes[2]}/${partes[1]}/${partes[0]}`;
+        }
+    }
+    
+    function getColorPorPorcentaje(porcentaje) {
+        if (porcentaje < 60) return "#10b981";
+        if (porcentaje < 85) return "#f59e0b";
+        return "#ef4444";
     }
     
     // Consultar ocupación desde Google Sheets
@@ -206,35 +250,65 @@
             if (result.success) {
                 ocupacionActual = result.ocupacion;
                 disponiblesActual = result.disponibles;
-                actualizarUI();
+                actualizarUI(fecha);
                 return true;
+            } else {
+                mostrarToast("Error al cargar datos", true);
             }
         } catch(e) {
             console.error("Error consultando ocupación:", e);
-            mostrarToast("Error al cargar la ocupación", true);
+            mostrarToast("Error de conexión", true);
         }
         mostrarLoading(false);
         return false;
     }
     
-    function actualizarUI() {
-        // Actualizar panel de ocupación
+    function actualizarUI(fecha) {
+        // Actualizar fecha mostrada
+        actualizarFechaMostrada(fecha);
+        
+        // Calcular porcentajes
+        const morningPorcentaje = (ocupacionActual.morning / CAPACIDAD_MAXIMA) * 100;
+        const afternoonPorcentaje = (ocupacionActual.afternoon / CAPACIDAD_MAXIMA) * 100;
+        const extraPorcentaje = (ocupacionActual.extra / CAPACIDAD_MAXIMA) * 100;
+        
+        // Actualizar textos de ocupación
         document.getElementById("morningOcupados").textContent = ocupacionActual.morning;
         document.getElementById("afternoonOcupados").textContent = ocupacionActual.afternoon;
         document.getElementById("extraOcupados").textContent = ocupacionActual.extra;
         
-        document.getElementById("morningDisponibles").innerHTML = `(${disponiblesActual.morning} disponibles)`;
-        document.getElementById("afternoonDisponibles").innerHTML = `(${disponiblesActual.afternoon} disponibles)`;
-        document.getElementById("extraDisponibles").innerHTML = `(${disponiblesActual.extra} disponibles)`;
+        document.getElementById("morningDisponibles").innerHTML = `/ ${CAPACIDAD_MAXIMA} (${disponiblesActual.morning} libres)`;
+        document.getElementById("afternoonDisponibles").innerHTML = `/ ${CAPACIDAD_MAXIMA} (${disponiblesActual.afternoon} libres)`;
+        document.getElementById("extraDisponibles").innerHTML = `/ ${CAPACIDAD_MAXIMA} (${disponiblesActual.extra} libres)`;
         
-        // Mostrar/ocultar Tour Extra en el panel de ocupación
-        const extraRow = document.getElementById("ocupacionExtra");
+        // Actualizar barras de progreso
+        const morningBar = document.getElementById("morningBar");
+        const afternoonBar = document.getElementById("afternoonBar");
+        
+        morningBar.style.width = `${morningPorcentaje}%`;
+        morningBar.style.backgroundColor = getColorPorPorcentaje(morningPorcentaje);
+        
+        afternoonBar.style.width = `${afternoonPorcentaje}%`;
+        afternoonBar.style.backgroundColor = getColorPorPorcentaje(afternoonPorcentaje);
+        
+        // Mostrar/ocultar Tour Extra si es necesario
+        const extraRow = document.getElementById("extraRow");
+        const extraBar = document.getElementById("extraBar");
+        
         if (disponiblesActual.morning <= 0 && disponiblesActual.afternoon <= 0) {
             extraRow.classList.remove("hidden");
+            extraBar.classList.remove("hidden");
             document.getElementById("tourExtraContainer").classList.remove("hidden");
             document.getElementById("horariosContainer").className = "grid-3";
+            
+            const extraBarFill = document.getElementById("extraBarFill");
+            if (extraBarFill) {
+                extraBarFill.style.width = `${extraPorcentaje}%`;
+                extraBarFill.style.backgroundColor = getColorPorPorcentaje(extraPorcentaje);
+            }
         } else {
             extraRow.classList.add("hidden");
+            extraBar.classList.add("hidden");
             document.getElementById("tourExtraContainer").classList.add("hidden");
             document.getElementById("horariosContainer").className = "grid-2";
         }
@@ -253,8 +327,6 @@
         if (cardA) cardA.classList.toggle("disabled", disponiblesActual.afternoon <= 0);
         if (cardE) cardE.classList.toggle("disabled", disponiblesActual.extra <= 0);
         
-        // Mostrar panel de ocupación
-        document.getElementById("infoOcupacion").classList.remove("hidden");
         mostrarLoading(false);
     }
     
@@ -263,13 +335,13 @@
         if (!elemento) return;
         
         if (disponibles <= 0) {
-            elemento.textContent = "AGOTADO";
+            elemento.textContent = "❌ AGOTADO";
             elemento.className = "ocupacion-badge ocupacion-completo";
         } else if (disponibles <= 30) {
-            elemento.textContent = `¡Últimos ${disponibles} lugares!`;
+            elemento.textContent = `⚠️ ¡Últimos ${disponibles} lugares!`;
             elemento.className = "ocupacion-badge ocupacion-limitado";
         } else {
-            elemento.textContent = `${disponibles} lugares disponibles`;
+            elemento.textContent = `✅ ${disponibles} lugares disponibles`;
             elemento.className = "ocupacion-badge ocupacion-disponible";
         }
     }
@@ -291,12 +363,12 @@
     
     function enviarWhatsApp(reserva) {
         let horarioTexto = "";
-        if (reserva.horario === "morning") horarioTexto = "Tour Mañana (09:00-12:00)";
-        else if (reserva.horario === "afternoon") horarioTexto = "Tour Tarde (14:00-17:00)";
-        else horarioTexto = "Tour Extra (18:00-21:00)";
+        if (reserva.horario === "morning") horarioTexto = "🌅 Tour Mañana (09:00-12:00)";
+        else if (reserva.horario === "afternoon") horarioTexto = "🌇 Tour Tarde (14:00-17:00)";
+        else horarioTexto = "⭐ Tour Extra (18:00-21:00)";
         
-        const msg = `🛥️ ANGEL TOUR BRASIL - RESERVA CONFIRMADA%0A%0ANombre: ${reserva.nombre}%0AHotel: ${reserva.hotelDireccion}%0AEmail: ${reserva.email}%0AWhatsApp: ${reserva.whatsapp}%0AEmpresa: ${reserva.empresa}%0A%0APaseo:%0AFecha: ${reserva.fechaPaseo}%0AFecha OUT: ${reserva.fechaOut}%0AHorario: ${horarioTexto}%0APasajeros: ${reserva.adultos} adultos, ${reserva.menores} menores%0ACódigo: ${reserva.id}%0ATotal: R$ ${reserva.montoTotal}%0A%0AGracias por elegirnos!`;
-        window.open(`https://wa.me/${reserva.whatsapp.replace(/\D/g, '')}?text=${msg}`, '_blank');
+        const msg = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0A✨ *Datos del pasajero:*%0A📌 Nombre: ${reserva.nombre}%0A🏨 Hotel: ${reserva.hotelDireccion}%0A📧 Email: ${reserva.email}%0A📱 WhatsApp: ${reserva.whatsapp}%0A🏢 Empresa: ${reserva.empresa}%0A%0A⛵ *Detalles del paseo:*%0A📅 Fecha Paseo: ${reserva.fechaPaseo}%0A📅 Fecha OUT: ${reserva.fechaOut}%0A⏰ Horario: ${horarioTexto}%0A👥 Pasajeros: ${reserva.adultos} adultos, ${reserva.menores} menores%0A🎫 Código: ${reserva.id}%0A💰 Total: R$ ${reserva.montoTotal}%0A%0A🌊 *¡Gracias por elegir Angel Tour Brasil!* 🌊`;
+        window.open(`https://wa.me/${reserva.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
     }
     
     function mostrarPopup(reserva) {
@@ -308,11 +380,11 @@
         
         document.getElementById("resumenReservaPopup").innerHTML = `
             <p><strong>${reserva.nombre}</strong></p>
-            <p>Empresa: ${reserva.empresa}</p>
-            <p>Fecha Paseo: ${reserva.fechaPaseo}</p>
-            <p>Horario: ${horarioTexto}</p>
-            <p>${reserva.adultos} adultos, ${reserva.menores} menores</p>
-            <p style="font-size:12px; margin-top:8px;">Código: ${reserva.id}</p>
+            <p>🏢 Empresa: ${reserva.empresa}</p>
+            <p>📅 Fecha Paseo: ${reserva.fechaPaseo}</p>
+            <p>⏰ Horario: ${horarioTexto}</p>
+            <p>👥 ${reserva.adultos} adultos, ${reserva.menores} menores</p>
+            <p style="font-size:12px; margin-top:8px;">🎫 Código: ${reserva.id}</p>
         `;
         modal.style.display = "flex";
     }
@@ -322,13 +394,20 @@
     function actualizarPreview() {
         const adultos = parseInt(document.getElementById("adultos").value) || 0;
         const menores = parseInt(document.getElementById("menores").value) || 0;
-        document.getElementById("totalPreview").innerHTML = `R$ ${(adultos * 180 + menores * 90).toFixed(2)}`;
+        const total = (adultos * 180) + (menores * 90);
+        document.getElementById("totalPreview").innerHTML = `R$ ${total.toFixed(2)}`;
     }
     
     // ========== INICIALIZACIÓN ==========
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", async function() {
         configurarFechas();
         actualizarPreview();
+        
+        // Obtener fecha inicial (hoy por defecto)
+        const fechaInicial = document.getElementById("fechaPaseo").value;
+        if (fechaInicial) {
+            await consultarOcupacion(fechaInicial);
+        }
         
         // Evento: al cambiar la fecha, consultar ocupación
         document.getElementById("fechaPaseo").addEventListener("change", async function() {
@@ -351,7 +430,7 @@
         
         function seleccionar(card, radio) {
             if (card.classList.contains("disabled")) {
-                mostrarToast("Este horario no tiene cupos disponibles", true);
+                mostrarToast("❌ Este horario no tiene cupos disponibles", true);
                 return;
             }
             document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("selected"));
@@ -379,11 +458,11 @@
             const horario = document.querySelector('input[name="horario"]:checked')?.value;
             
             if (!nombre || !empresa || !hotel || !email || !whatsapp || !fechaPaseo || !fechaOut) {
-                mostrarToast("Complete todos los campos", true);
+                mostrarToast("⚠️ Complete todos los campos obligatorios", true);
                 return;
             }
             if (!horario) {
-                mostrarToast("Seleccione un horario", true);
+                mostrarToast("⚠️ Seleccione un horario", true);
                 return;
             }
             
@@ -394,7 +473,7 @@
             else disponibles = disponiblesActual.extra;
             
             if (adultos + menores > disponibles) {
-                mostrarToast(`❌ Cupos insuficientes. Quedan ${disponibles} lugares.`, true);
+                mostrarToast(`❌ Cupos insuficientes. Quedan ${disponibles} lugares para el ${fechaPaseo}.`, true);
                 return;
             }
             
@@ -423,7 +502,7 @@
             };
             
             mostrarLoading(true);
-            mostrarToast("Guardando reserva...");
+            mostrarToast("💾 Guardando reserva...");
             
             const resultado = await guardarReserva(datosReserva);
             
@@ -433,7 +512,7 @@
                 // Actualizar datos localmente
                 ocupacionActual[horario] += adultos + menores;
                 disponiblesActual[horario] -= adultos + menores;
-                actualizarUI();
+                actualizarUI(fechaPaseo);
                 
                 const reservaObj = { id, nombre, empresa, hotelDireccion: hotel, email, whatsapp, fechaPaseo, fechaOut, horario, adultos, menores, montoTotal };
                 enviarWhatsApp(reservaObj);
@@ -445,9 +524,9 @@
                 document.querySelectorAll(".horario-card").forEach(c => c.classList.remove("selected"));
                 actualizarPreview();
                 
-                mostrarToast("✅ Reserva confirmada", false);
+                mostrarToast("✅ ¡Reserva confirmada exitosamente!", false);
             } else {
-                mostrarToast(`❌ ${resultado.message}`, true);
+                mostrarToast(`❌ Error: ${resultado.message}`, true);
             }
         });
         
@@ -458,12 +537,6 @@
         
         const hoy = new Date().toISOString().split('T')[0];
         document.getElementById("fechaOut").min = hoy;
-        
-        // Forzar fecha inicial para cargar datos
-        const fechaInicial = document.getElementById("fechaPaseo").value;
-        if (fechaInicial) {
-            consultarOcupacion(fechaInicial);
-        }
     });
 </script>
 </body>
