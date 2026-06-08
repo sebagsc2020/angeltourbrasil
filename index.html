@@ -39,7 +39,8 @@
         .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 3000; }
         .spinner { width: 50px; height: 50px; border: 5px solid white; border-top-color: #1e6f5c; border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .offline-badge { position: fixed; top: 10px; right: 10px; background: #e74c3c; color: white; padding: 8px 16px; border-radius: 50px; font-size: 12px; font-weight: bold; z-index: 1000; display: none; }
+        .resumen-reservas { background: #f8fafc; border-radius: 16px; padding: 12px; margin: 10px 0; font-size: 13px; border-left: 4px solid #1e6f5c; }
+        .resumen-reservas i { width: 24px; color: #1e6f5c; }
     </style>
 </head>
 <body>
@@ -57,7 +58,7 @@
 
     <div class="form-card">
         <div class="header">
-            <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> + Formulario de Reserva +
+            <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> Formulario de Reserva
             <p style="font-size: 12px; margin-top: 5px;">Recibirás confirmación vía WhatsApp</p>
         </div>
         
@@ -73,6 +74,25 @@
                     <div><label>WhatsApp (código país) *</label><input type="tel" id="whatsapp" required placeholder="+55 11 91234-5678"></div>
                     <div><label>Fecha de Paseo *</label><input type="date" id="fechaPaseo" required></div>
                     <div><label>Fecha de salida (OUT) *</label><input type="date" id="fechaOut" required></div>
+                </div>
+
+                <!-- Resumen de reservas existentes para la fecha seleccionada -->
+                <div id="resumenReservas" class="resumen-reservas hidden">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span><i class="fas fa-ship"></i> <strong>🌅 Tour Mañana</strong></span>
+                        <span id="resumenMorning">0</span>
+                        <span id="disponibleMorning">(160 disponibles)</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span><i class="fas fa-ship"></i> <strong>🌇 Tour Tarde</strong></span>
+                        <span id="resumenAfternoon">0</span>
+                        <span id="disponibleAfternoon">(160 disponibles)</span>
+                    </div>
+                    <div id="resumenExtraRow" style="display: flex; justify-content: space-between; margin-bottom: 8px; display: none;">
+                        <span><i class="fas fa-star"></i> <strong>⭐ Tour Extra</strong></span>
+                        <span id="resumenExtra">0</span>
+                        <span id="disponibleExtra">(160 disponibles)</span>
+                    </div>
                 </div>
 
                 <div style="margin: 16px 0 12px 0; font-weight: bold;">Selecciona tu horario *</div>
@@ -127,20 +147,20 @@
     <div class="modal-content">
         <span style="font-size: 50px;">⛵✨</span>
         <h3 style="font-size: 24px; margin: 10px 0;">¡Reserva Confirmada!</h3>
-        <div id="resumenReserva" style="margin: 15px 0; text-align: left;"></div>
+        <div id="resumenReservaPopup" style="margin: 15px 0; text-align: left;"></div>
         <button id="btnCerrarModal" style="background: #059669; color: white; border: none; padding: 12px; border-radius: 40px; width: 100%; font-weight: bold; cursor: pointer;">Entendido</button>
     </div>
 </div>
 
 <div id="toast" class="toast hidden"></div>
 <div id="loadingOverlay" class="loading-overlay hidden"><div class="spinner"></div></div>
-<div id="offlineBadge" class="offline-badge">📡 Sin conexión</div>
 
 <script>
     const CAPACIDAD_MAXIMA = 160;
-    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbxa6K6FEnVq4bNHOJg_OFctEncpJrPxF2B60ozOga0UNVShL-1BuiLJJDpt01BBsHZ3gg/exec";
+    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbwsLdY3zFgseZaFRHOkF2BAiGZuTro3VHi4tWgQq15QbbgTUP7PmSk0VHdfODWcbFR2_g/exec";
     
-    let cuposPorFecha = {};  // { fecha: { horario: ocupados } }
+    let reservasActuales = { morning: 0, afternoon: 0, extra: 0 };
+    let disponiblesActuales = { morning: 160, afternoon: 160, extra: 160 };
     
     function mostrarLoading(mostrar) {
         document.getElementById("loadingOverlay").classList.toggle("hidden", !mostrar);
@@ -154,63 +174,77 @@
         setTimeout(() => toast.classList.add("hidden"), 4000);
     }
     
-    // ========== CUPOS ==========
-    async function cargarCupos() {
+    // Configurar fechas: solo próximos 7 días
+    function configurarFechas() {
+        const fechaInput = document.getElementById("fechaPaseo");
+        const hoy = new Date();
+        fechaInput.min = hoy.toISOString().split('T')[0];
+        
+        const maxFecha = new Date(hoy);
+        maxFecha.setDate(hoy.getDate() + 7);
+        fechaInput.max = maxFecha.toISOString().split('T')[0];
+    }
+    
+    // Consultar reservas por fecha desde Google Sheets
+    async function consultarReservasPorFecha(fecha) {
         mostrarLoading(true);
         try {
-            const response = await fetch(GOOGLE_URL + "?accion=obtenerCupos", { method: "GET" });
+            const response = await fetch(GOOGLE_URL + "?accion=obtenerReservasPorFecha&fecha=" + encodeURIComponent(fecha), { method: "GET" });
             const result = await response.json();
+            
             if (result.success) {
-                cuposPorFecha = result.cupos || {};
+                reservasActuales = result.reservas;
+                disponiblesActuales = result.disponibles;
+                actualizarUIReservas();
+                return true;
             }
         } catch(e) {
-            console.error("Error cargando cupos:", e);
+            console.error("Error consultando reservas:", e);
         }
         mostrarLoading(false);
-        actualizarCuposUI();
+        return false;
     }
     
-    function getOcupados(fecha, horario) {
-        return cuposPorFecha[fecha]?.[horario] || 0;
-    }
-    
-    function getDisponibles(fecha, horario) {
-        return CAPACIDAD_MAXIMA - getOcupados(fecha, horario);
-    }
-    
-    function actualizarCuposUI() {
-        const fecha = document.getElementById("fechaPaseo").value;
-        if (!fecha) return;
+    function actualizarUIReservas() {
+        // Actualizar resumen de reservas
+        document.getElementById("resumenMorning").textContent = reservasActuales.morning;
+        document.getElementById("resumenAfternoon").textContent = reservasActuales.afternoon;
+        document.getElementById("resumenExtra").textContent = reservasActuales.extra;
         
-        const morningDisp = getDisponibles(fecha, "morning");
-        const afternoonDisp = getDisponibles(fecha, "afternoon");
-        const extraDisp = getDisponibles(fecha, "extra");
+        document.getElementById("disponibleMorning").innerHTML = `(${disponiblesActuales.morning} disponibles)`;
+        document.getElementById("disponibleAfternoon").innerHTML = `(${disponiblesActuales.afternoon} disponibles)`;
+        document.getElementById("disponibleExtra").innerHTML = `(${disponiblesActuales.extra} disponibles)`;
         
-        // Actualizar textos y clases
-        actualizarCupoElemento("morningCupo", morningDisp);
-        actualizarCupoElemento("afternoonCupo", afternoonDisp);
-        actualizarCupoElemento("extraCupo", extraDisp);
+        // Mostrar/ocultar fila de Tour Extra
+        const extraRow = document.getElementById("resumenExtraRow");
+        if (disponiblesActuales.morning <= 0 && disponiblesActuales.afternoon <= 0) {
+            extraRow.style.display = "flex";
+            document.getElementById("tourExtraContainer").classList.remove("hidden");
+            document.getElementById("horariosContainer").className = "grid-3";
+        } else {
+            extraRow.style.display = "none";
+            document.getElementById("tourExtraContainer").classList.add("hidden");
+            document.getElementById("horariosContainer").className = "grid-2";
+        }
+        
+        // Mostrar resumen
+        document.getElementById("resumenReservas").classList.remove("hidden");
+        
+        // Actualizar badges de cupos
+        actualizarCupoElemento("morningCupo", disponiblesActuales.morning);
+        actualizarCupoElemento("afternoonCupo", disponiblesActuales.afternoon);
+        actualizarCupoElemento("extraCupo", disponiblesActuales.extra);
         
         // Habilitar/deshabilitar tarjetas
         const cardM = document.getElementById("cardMorning");
         const cardA = document.getElementById("cardAfternoon");
         const cardE = document.getElementById("cardExtra");
         
-        cardM.classList.toggle("disabled", morningDisp <= 0);
-        cardA.classList.toggle("disabled", afternoonDisp <= 0);
+        if (cardM) cardM.classList.toggle("disabled", disponiblesActuales.morning <= 0);
+        if (cardA) cardA.classList.toggle("disabled", disponiblesActuales.afternoon <= 0);
+        if (cardE) cardE.classList.toggle("disabled", disponiblesActuales.extra <= 0);
         
-        // Tour Extra: aparece SOLO cuando ambos están completos (0 disponibles)
-        const extraContainer = document.getElementById("tourExtraContainer");
-        const horariosContainer = document.getElementById("horariosContainer");
-        
-        if (morningDisp <= 0 && afternoonDisp <= 0) {
-            extraContainer.classList.remove("hidden");
-            horariosContainer.className = "grid-3";
-            if (cardE) cardE.classList.toggle("disabled", extraDisp <= 0);
-        } else {
-            extraContainer.classList.add("hidden");
-            horariosContainer.className = "grid-2";
-        }
+        mostrarLoading(false);
     }
     
     function actualizarCupoElemento(id, disponibles) {
@@ -229,7 +263,7 @@
         }
     }
     
-    // ========== RESERVAS ==========
+    // Guardar reserva
     async function guardarReserva(datosReserva) {
         const params = new URLSearchParams({ accion: "guardar", ...datosReserva });
         try {
@@ -262,7 +296,7 @@
         else if (reserva.horario === "afternoon") horarioTexto = "🌇 Tarde (14:00-17:00)";
         else horarioTexto = "⭐ Tour Extra (18:00-21:00)";
         
-        document.getElementById("resumenReserva").innerHTML = `
+        document.getElementById("resumenReservaPopup").innerHTML = `
             <p><strong>${reserva.nombre}</strong></p>
             <p>Empresa: ${reserva.empresa}</p>
             <p>Fecha Paseo: ${reserva.fechaPaseo}</p>
@@ -283,12 +317,17 @@
     
     // ========== INICIALIZACIÓN ==========
     document.addEventListener("DOMContentLoaded", async function() {
+        configurarFechas();
         actualizarPreview();
         
-        // Cargar cupos iniciales
-        await cargarCupos();
+        // Evento: al cambiar la fecha, consultar reservas
+        document.getElementById("fechaPaseo").addEventListener("change", async function() {
+            const fecha = this.value;
+            if (fecha) {
+                await consultarReservasPorFecha(fecha);
+            }
+        });
         
-        document.getElementById("fechaPaseo").addEventListener("change", actualizarCuposUI);
         document.getElementById("adultos").addEventListener("input", actualizarPreview);
         document.getElementById("menores").addEventListener("input", actualizarPreview);
         
@@ -310,8 +349,8 @@
             radio.checked = true;
         }
         
-        morningCard.onclick = () => seleccionar(morningCard, radioMorning);
-        afternoonCard.onclick = () => seleccionar(afternoonCard, radioAfternoon);
+        if (morningCard) morningCard.onclick = () => seleccionar(morningCard, radioMorning);
+        if (afternoonCard) afternoonCard.onclick = () => seleccionar(afternoonCard, radioAfternoon);
         if (extraCard) extraCard.onclick = () => seleccionar(extraCard, radioExtra);
         
         // Submit
@@ -338,8 +377,12 @@
                 return;
             }
             
-            // Verificar cupo disponible ANTES de enviar
-            const disponibles = getDisponibles(fechaPaseo, horario);
+            // Verificar cupo disponible (usando los datos ya consultados)
+            let disponibles = 0;
+            if (horario === "morning") disponibles = disponiblesActuales.morning;
+            else if (horario === "afternoon") disponibles = disponiblesActuales.afternoon;
+            else disponibles = disponiblesActuales.extra;
+            
             if (adultos + menores > disponibles) {
                 mostrarToast(`❌ Cupos insuficientes. Quedan ${disponibles} lugares para ${fechaPaseo}.`, true);
                 return;
@@ -377,10 +420,10 @@
             mostrarLoading(false);
             
             if (resultado.success) {
-                // Actualizar cupos localmente
-                if (!cuposPorFecha[fechaPaseo]) cuposPorFecha[fechaPaseo] = {};
-                cuposPorFecha[fechaPaseo][horario] = (cuposPorFecha[fechaPaseo][horario] || 0) + adultos + menores;
-                actualizarCuposUI();
+                // Actualizar los datos localmente
+                reservasActuales[horario] += adultos + menores;
+                disponiblesActuales[horario] -= adultos + menores;
+                actualizarUIReservas();
                 
                 const reservaObj = { id, nombre, empresa, hotelDireccion: hotel, email, whatsapp, fechaPaseo, fechaOut, horario, adultos, menores, montoTotal };
                 enviarWhatsApp(reservaObj);
@@ -404,7 +447,6 @@
         });
         
         const hoy = new Date().toISOString().split('T')[0];
-        document.getElementById("fechaPaseo").min = hoy;
         document.getElementById("fechaOut").min = hoy;
     });
 </script>
