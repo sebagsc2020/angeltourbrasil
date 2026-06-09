@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Formulario Profesional | Angel Tour Style</title>
+    <title>Angel Tour Brasil | Formulario de Reserva</title>
     <style>
-        /* ===== RESET Y ESTILOS BASE (HEREDADOS DEL SITIO) ===== */
+        /* ===== RESET Y ESTILOS BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -22,19 +22,60 @@
             padding: 20px;
             position: relative;
             color: #E2E8F0;
+            transition: background 0.3s ease;
         }
 
-        /* Contenedor principal estilo tarjeta (como las tarjetas de tours) */
+        /* ===== MODO OSCURO / CLARO ===== */
+        body.light-mode {
+            background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
+            color: #0F172A;
+        }
+
+        body.light-mode .container {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        body.light-mode h2 {
+            background: linear-gradient(135deg, #0F172A, #1E293B);
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        body.light-mode .subtitle,
+        body.light-mode label,
+        body.light-mode .footer {
+            color: #334155;
+        }
+
+        body.light-mode input {
+            background: #FFFFFF;
+            border-color: #CBD5E1;
+            color: #0F172A;
+        }
+
+        body.light-mode input:focus {
+            border-color: #0EA5E9;
+            background: #FFFFFF;
+        }
+
+        body.light-mode .input-icon {
+            color: #94A3B8;
+        }
+
+        /* Contenedor principal */
         .container {
-            max-width: 500px;
+            max-width: 520px;
             width: 100%;
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(12px);
             border-radius: 2rem;
             border: 1px solid rgba(56, 189, 248, 0.2);
             box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(56, 189, 248, 0.1);
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
         .container:hover {
@@ -42,37 +83,67 @@
             box-shadow: 0 30px 50px -12px rgba(0, 0, 0, 0.6);
         }
 
-        /* Encabezado con ícono destacado */
-        .header {
-            padding: 2rem 2rem 0.5rem 2rem;
-            text-align: center;
-            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
-        }
-
-        .icon-badge {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #0EA5E9, #3B82F6);
-            border-radius: 30px;
+        /* Botón de modo oscuro (dentro de la tarjeta, arriba a la derecha) */
+        .theme-toggle-card {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 40px;
+            padding: 8px 14px;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.2rem;
-            box-shadow: 0 10px 20px -5px rgba(14, 165, 233, 0.3);
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #E2E8F0;
+            transition: all 0.2s ease;
+            z-index: 10;
         }
 
-        .icon-badge svg {
-            width: 38px;
-            height: 38px;
-            stroke: white;
-            stroke-width: 1.5;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        body.light-mode .theme-toggle-card {
+            background: rgba(0, 0, 0, 0.05);
+            color: #0F172A;
+            border-color: #CBD5E1;
+        }
+
+        .theme-toggle-card:hover {
+            background: rgba(14, 165, 233, 0.2);
+            transform: scale(1.02);
+        }
+
+        /* Header con logo */
+        .header {
+            padding: 2rem 2rem 1rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+            position: relative;
+        }
+
+        .logo-container {
+            margin-bottom: 1.2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo-image {
+            max-width: 180px;
+            height: auto;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+            transition: filter 0.3s ease;
+        }
+
+        body.light-mode .logo-image {
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.1));
         }
 
         h2 {
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #FFFFFF, #94A3B8);
+            background: linear-gradient(135deg, #FFFFFF, #60A5FA);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
@@ -84,20 +155,8 @@
             color: #94A3B8;
             font-size: 0.85rem;
             font-weight: 500;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Precio / etiqueta destacada */
-        .price-tag {
-            background: rgba(14, 165, 233, 0.15);
-            border: 1px solid rgba(14, 165, 233, 0.3);
-            border-radius: 100px;
-            padding: 0.4rem 1rem;
-            display: inline-block;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #38BDF8;
-            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
+            letter-spacing: 0.3px;
         }
 
         /* ===== FORMULARIO ===== */
@@ -113,7 +172,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -164,7 +223,7 @@
             font-weight: 400;
         }
 
-        /* Botón principal estilo "Reservar" */
+        /* Botón principal - TEXTO ACTUALIZADO */
         .btn-submit {
             width: 100%;
             background: linear-gradient(95deg, #0EA5E9, #3B82F6);
@@ -269,6 +328,11 @@
             background: rgba(0, 0, 0, 0.2);
         }
 
+        body.light-mode .footer {
+            background: rgba(0, 0, 0, 0.03);
+            border-top-color: #CBD5E1;
+        }
+
         .footer span {
             display: inline-flex;
             align-items: center;
@@ -284,10 +348,22 @@
                 padding: 1.5rem;
             }
             .header {
-                padding: 1.5rem 1.5rem 0;
+                padding: 1.5rem 1.5rem 0.5rem;
             }
             h2 {
-                font-size: 1.5rem;
+                font-size: 1.6rem;
+            }
+            .subtitle {
+                font-size: 0.7rem;
+            }
+            .theme-toggle-card {
+                top: 12px;
+                right: 12px;
+                padding: 5px 10px;
+                font-size: 11px;
+            }
+            .logo-image {
+                max-width: 140px;
             }
         }
     </style>
@@ -295,15 +371,21 @@
 <body>
 
 <div class="container">
+    <!-- Botón de modo oscuro dentro de la tarjeta, arriba derecha -->
+    <div class="theme-toggle-card" id="themeToggleCard">
+        <span id="themeIcon">🌙</span>
+        <span id="themeText">Modo oscuro</span>
+    </div>
+
     <div class="header">
-        <div class="icon-badge">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
+        <!-- Logo desde la URL proporcionada -->
+        <div class="logo-container">
+            <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Angel Tour Brasil Logo" class="logo-image">
         </div>
-        <div class="price-tag">REGISTRO SEGURO</div>
-        <h2>Google Sheets</h2>
-        <p class="subtitle">Complete sus datos para guardar la información</p>
+        <h2>Angel Tour Brasil</h2>
+        <div class="subtitle">
+            Reserve seu passeio de barco · Cupos limitados · Confirmación inmediata
+        </div>
     </div>
 
     <div class="form-wrapper">
@@ -334,7 +416,7 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round"/>
                 </svg>
-                GUARDAR EN SHEETS
+                ENVIANDO TU RESERVA
             </button>
         </form>
 
@@ -345,9 +427,9 @@
     </div>
 
     <div class="footer">
-        <span>🔒 Datos seguros</span>
-        <span>☁️ Google Sheets</span>
-        <span>⚡ Confirmación inmediata</span>
+        <span>⛵ Passeios de barco</span>
+        <span>🔒 Dados seguros</span>
+        <span>⚡ Confirmação imediata</span>
     </div>
 </div>
 
@@ -364,13 +446,47 @@
     const nombreInput = document.getElementById('nombre');
     const numeroInput = document.getElementById('numero');
 
-    // Función para mostrar mensajes estilo toast
+    // ===== MODO OSCURO/CLARO (dentro de la tarjeta) =====
+    function initTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
+            document.body.classList.add('light-mode');
+            updateThemeUI(false);
+        } else {
+            document.body.classList.remove('light-mode');
+            updateThemeUI(true);
+        }
+    }
+    
+    function updateThemeUI(isDark) {
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        if (isDark) {
+            themeIcon.textContent = '☀️';
+            themeText.textContent = 'Modo claro';
+        } else {
+            themeIcon.textContent = '🌙';
+            themeText.textContent = 'Modo oscuro';
+        }
+    }
+    
+    function toggleTheme() {
+        const isLight = document.body.classList.toggle('light-mode');
+        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        updateThemeUI(!isLight);
+    }
+    
+    document.getElementById('themeToggleCard').addEventListener('click', toggleTheme);
+    initTheme();
+
+    // ===== FUNCIONALIDAD DEL FORMULARIO (sin cambios) =====
     function showMessage(msg, type) {
         messageDiv.textContent = msg;
         messageDiv.className = `message ${type}`;
         messageDiv.style.display = 'block';
 
-        // Auto-ocultar después de 4.5 segundos
         setTimeout(() => {
             if (messageDiv.style.display === 'block') {
                 messageDiv.style.opacity = '0';
@@ -382,14 +498,12 @@
         }, 4500);
     }
 
-    // Manejo del envío del formulario (igual funcionamiento)
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const nombre = nombreInput.value.trim();
         const numero = numeroInput.value;
 
-        // Validaciones básicas
         if (!nombre || numero === '') {
             showMessage('❌ Por favor completa ambos campos', 'error');
             return;
@@ -399,7 +513,6 @@
             return;
         }
 
-        // Preparar para enviar
         messageDiv.style.display = 'none';
         spinner.classList.add('active');
 
@@ -408,33 +521,31 @@
         formData.append('numero', numero);
 
         try {
-            // Mantenemos el mismo método de envío (mode: 'no-cors' para evitar CORS)
             await fetch(scriptURL, {
                 method: 'POST',
                 mode: 'no-cors',
                 body: formData
             });
 
-            showMessage('✅ ¡Datos guardados exitosamente en Google Sheets!', 'success');
+            showMessage('✅ ¡Reserva enviada exitosamente! Los datos han sido guardados.', 'success');
             form.reset();
 
-            // Feedback extra en el botón
             const btn = document.querySelector('.btn-submit');
             const originalHTML = btn.innerHTML;
-            btn.innerHTML = '✓ REGISTRADO';
+            btn.innerHTML = '✓ RESERVA ENVIADA';
             setTimeout(() => {
                 btn.innerHTML = originalHTML;
             }, 2000);
 
         } catch (error) {
             console.error('Error de conexión:', error);
-            showMessage('❌ Error al guardar. Verifica la URL del script.', 'error');
+            showMessage('❌ Error al enviar la reserva. Verifica tu conexión.', 'error');
         } finally {
             spinner.classList.remove('active');
         }
     });
 
-    // Efecto sutil en inputs al focus (solo visual)
+    // Efecto sutil en inputs al focus
     const inputs = document.querySelectorAll('input');
     inputs.forEach(input => {
         input.addEventListener('focus', () => {
