@@ -281,13 +281,13 @@
                         <th>Adultos</th>
                         <th>Menores</th>
                         <th>Horario</th>
-                        <th>Monto</th>
+                        <th>Total Pagantes</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="reservasTableBody">
-                    <tr><td colspan="10" style="text-align:center;">Cargando reservas...</td></tr>
+                    <tr><td colspan="10" style="text-align:center;">Cargando reservas...<\/td></tr>
                 </tbody>
             </table>
         </div>
@@ -334,7 +334,6 @@
                 <button class="btn-icon" onclick="cerrarViewModal()" style="width:32px;height:32px;"><i class="ph ph-x"></i></button>
             </div>
             <div class="modal-body" id="viewModalBody">
-                <!-- Contenido dinámico -->
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="cerrarViewModal()">Cerrar</button>
@@ -351,7 +350,9 @@
             window.location.href = "login.html";
         }
 
-        const SHEETS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRDSFxP7wBMqpnK7lC572nBMbDpWsRjqASWfm8OWmugBnDw4bR4wg5XOkzfNuNcVJp63253thQphnXc/pubhtml?gid=0&single=true";
+        // URL pública de tu hoja de cálculo
+        const SPREADSHEET_ID = "1uOAcy1X8yMHDK03CUKLix4cUm_l4m3E4vaZHgSk33as";
+        const JSON_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json`;
         
         let reservasData = [];
         let currentViewReserva = null;
@@ -378,42 +379,52 @@
         async function cargarReservas() {
             try {
                 mostrarToast('Cargando reservas...');
-                const proxyUrl = 'https://api.allorigins.win/raw?url=';
-                const response = await fetch(proxyUrl + encodeURIComponent(SHEETS_URL));
-                const html = await response.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const tables = doc.getElementsByTagName('table');
                 
-                if (tables.length === 0) {
-                    console.warn("No se encontraron tablas");
+                const response = await fetch(JSON_URL + '&t=' + Date.now());
+                const text = await response.text();
+                
+                // Limpiar respuesta JSONP
+                let jsonStr = text.replace("/*O_o*/", "").replace("google.visualization.Query.setResponse(", "").slice(0, -2);
+                const data = JSON.parse(jsonStr);
+                const rows = data.table.rows;
+                
+                if (!rows || rows.length === 0) {
+                    mostrarToast("No se encontraron datos", true);
                     return;
                 }
                 
-                const rows = tables[0].getElementsByTagName('tr');
                 reservasData = [];
                 
-                for (let i = 1; i < rows.length; i++) {
-                    const cells = rows[i].getElementsByTagName('td');
-                    if (cells.length >= 9) {
-                        const estado = cells[8]?.textContent?.trim() || 'Pendiente';
-                        let monto = 0;
-                        const montoText = cells[7]?.textContent?.trim() || '0';
-                        monto = parseFloat(montoText.replace('R$', '').replace(',', '.')) || 0;
-                        
-                        reservasData.push({
-                            id: cells[0]?.textContent?.trim() || '',
-                            fecha: cells[1]?.textContent?.trim() || '',
-                            cliente: cells[2]?.textContent?.trim() || '',
-                            empresa: cells[3]?.textContent?.trim() || '',
-                            adultos: parseInt(cells[4]?.textContent?.trim()) || 0,
-                            menores: parseInt(cells[5]?.textContent?.trim()) || 0,
-                            horario: cells[6]?.textContent?.trim() || '',
-                            monto: monto,
-                            estado: estado,
-                            whatsapp: '' // Se puede editar manualmente
-                        });
-                    }
+                // Saltar la primera fila si es encabezado
+                const startIndex = (rows[0]?.c[0]?.v === "ID") ? 1 : 0;
+                
+                for (let i = startIndex; i < rows.length; i++) {
+                    const cells = rows[i].c;
+                    if (!cells || cells.length < 8) continue;
+                    
+                    const id = cells[0]?.v || '';
+                    const fecha = cells[1]?.v || '';
+                    const cliente = cells[2]?.v || '';
+                    const empresa = cells[3]?.v || '';
+                    const adultos = parseInt(cells[4]?.v) || 0;
+                    const menores = parseInt(cells[5]?.v) || 0;
+                    const horario = cells[6]?.v || '';
+                    const totalPagantes = cells[7]?.v || (adultos + menores + " pagantes");
+                    
+                    if (!id && !cliente) continue;
+                    
+                    reservasData.push({
+                        id: id,
+                        fecha: fecha,
+                        cliente: cliente,
+                        empresa: empresa,
+                        adultos: adultos,
+                        menores: menores,
+                        horario: horario,
+                        totalPagantes: totalPagantes,
+                        estado: 'Confirmado',
+                        whatsapp: ''
+                    });
                 }
                 
                 actualizarEstadisticas();
@@ -422,20 +433,18 @@
                 
             } catch(e) { 
                 console.error("Error:", e);
-                mostrarToast("Error al cargar reservas", true);
+                mostrarToast("Error al cargar reservas: " + e.message, true);
             }
         }
         
         function actualizarEstadisticas() {
             let totalPasajeros = 0;
-            let totalIngresos = 0;
             reservasData.forEach(r => {
-                totalPasajeros += r.adultos + r.menores;
-                totalIngresos += r.monto;
+                totalPasajeros += (r.adultos || 0) + (r.menores || 0);
             });
             document.getElementById('totalReservas').innerHTML = reservasData.length;
             document.getElementById('totalPasajeros').innerHTML = totalPasajeros;
-            document.getElementById('totalIngresos').innerHTML = `R$ ${totalIngresos.toFixed(2)}`;
+            document.getElementById('totalIngresos').innerHTML = `R$ ${(totalPasajeros * 85).toFixed(2)}`;
             let ocupacion = reservasData.length > 0 ? Math.min(100, Math.round((totalPasajeros / (reservasData.length * 4)) * 100)) : 0;
             document.getElementById('ocupacionMedia').innerHTML = `${ocupacion}%`;
         }
@@ -449,29 +458,39 @@
         function renderizarTabla() {
             const tbody = document.getElementById('reservasTableBody');
             if (reservasData.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;">No hay reservas para mostrar</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;">No hay reservas para mostrar<\/td></tr>';
                 return;
             }
             
             tbody.innerHTML = reservasData.map(r => `
                 <tr>
-                    <td style="font-family:monospace; font-size:12px;">${r.id}</td>
-                    <td>${r.fecha}</td>
-                    <td style="font-weight:500;">${r.cliente}</td>
-                    <td>${r.empresa || '—'}</td>
-                    <td>${r.adultos}</td>
-                    <td>${r.menores}</td>
-                    <td>${r.horario}</td>
-                    <td>R$ ${r.monto.toFixed(2)}</td>
-                    <td><span class="badge ${getBadgeClass(r.estado)}">${r.estado}</span></td>
+                    <td style="font-family:monospace; font-size:12px;">${escapeHtml(r.id)}<\/td>
+                    <td>${escapeHtml(r.fecha)}<\/td>
+                    <td style="font-weight:500;">${escapeHtml(r.cliente)}<\/td>
+                    <td>${escapeHtml(r.empresa) || '—'}<\/td>
+                    <td>${r.adultos}<\/td>
+                    <td>${r.menores}<\/td>
+                    <td>${escapeHtml(r.horario)}<\/td>
+                    <td>${escapeHtml(r.totalPagantes)}<\/td>
+                    <td><span class="badge ${getBadgeClass(r.estado)}">${r.estado}<\/span><\/td>
                     <td class="action-buttons">
-                        <button class="btn-sm btn-edit" onclick="editarReserva('${r.id}')" title="Editar"><i class="ph ph-pencil-simple"></i></button>
-                        <button class="btn-sm btn-delete" onclick="eliminarReserva('${r.id}')" title="Eliminar"><i class="ph ph-trash"></i></button>
-                        <button class="btn-sm btn-whatsapp" onclick="enviarWhatsapp('${r.id}')" title="Enviar por WhatsApp"><i class="ph ph-whatsapp-logo"></i></button>
-                        <button class="btn-sm btn-view" onclick="verEnLinea('${r.id}')" title="Ver en línea"><i class="ph ph-eye"></i></button>
-                    </td>
+                        <button class="btn-sm btn-edit" onclick="editarReserva('${escapeHtml(r.id)}')" title="Editar"><i class="ph ph-pencil-simple"></i><\/button>
+                        <button class="btn-sm btn-delete" onclick="eliminarReserva('${escapeHtml(r.id)}')" title="Eliminar"><i class="ph ph-trash"></i><\/button>
+                        <button class="btn-sm btn-whatsapp" onclick="enviarWhatsapp('${escapeHtml(r.id)}')" title="Enviar por WhatsApp"><i class="ph ph-whatsapp-logo"></i><\/button>
+                        <button class="btn-sm btn-view" onclick="verEnLinea('${escapeHtml(r.id)}')" title="Ver en línea"><i class="ph ph-eye"></i><\/button>
+                    <\/td>
                 </tr>
             `).join('');
+        }
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            return text.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
         }
         
         function filtrarReservas() {
@@ -485,27 +504,27 @@
             
             const tbody = document.getElementById('reservasTableBody');
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;">No se encontraron resultados</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;">No se encontraron resultados<\/td></tr>';
                 return;
             }
             
             tbody.innerHTML = filtered.map(r => `
                 <tr>
-                    <td style="font-family:monospace; font-size:12px;">${r.id}</td>
-                    <td>${r.fecha}</td>
-                    <td style="font-weight:500;">${r.cliente}</td>
-                    <td>${r.empresa || '—'}</td>
-                    <td>${r.adultos}</td>
-                    <td>${r.menores}</td>
-                    <td>${r.horario}</td>
-                    <td>R$ ${r.monto.toFixed(2)}</td>
-                    <td><span class="badge ${getBadgeClass(r.estado)}">${r.estado}</span></td>
+                    <td style="font-family:monospace; font-size:12px;">${escapeHtml(r.id)}<\/td>
+                    <td>${escapeHtml(r.fecha)}<\/td>
+                    <td style="font-weight:500;">${escapeHtml(r.cliente)}<\/td>
+                    <td>${escapeHtml(r.empresa) || '—'}<\/td>
+                    <td>${r.adultos}<\/td>
+                    <td>${r.menores}<\/td>
+                    <td>${escapeHtml(r.horario)}<\/td>
+                    <td>${escapeHtml(r.totalPagantes)}<\/td>
+                    <td><span class="badge ${getBadgeClass(r.estado)}">${r.estado}<\/span><\/td>
                     <td class="action-buttons">
-                        <button class="btn-sm btn-edit" onclick="editarReserva('${r.id}')" title="Editar"><i class="ph ph-pencil-simple"></i></button>
-                        <button class="btn-sm btn-delete" onclick="eliminarReserva('${r.id}')" title="Eliminar"><i class="ph ph-trash"></i></button>
-                        <button class="btn-sm btn-whatsapp" onclick="enviarWhatsapp('${r.id}')" title="Enviar por WhatsApp"><i class="ph ph-whatsapp-logo"></i></button>
-                        <button class="btn-sm btn-view" onclick="verEnLinea('${r.id}')" title="Ver en línea"><i class="ph ph-eye"></i></button>
-                    </td>
+                        <button class="btn-sm btn-edit" onclick="editarReserva('${escapeHtml(r.id)}')" title="Editar"><i class="ph ph-pencil-simple"></i><\/button>
+                        <button class="btn-sm btn-delete" onclick="eliminarReserva('${escapeHtml(r.id)}')" title="Eliminar"><i class="ph ph-trash"></i><\/button>
+                        <button class="btn-sm btn-whatsapp" onclick="enviarWhatsapp('${escapeHtml(r.id)}')" title="Enviar por WhatsApp"><i class="ph ph-whatsapp-logo"></i><\/button>
+                        <button class="btn-sm btn-view" onclick="verEnLinea('${escapeHtml(r.id)}')" title="Ver en línea"><i class="ph ph-eye"></i><\/button>
+                    <\/td>
                 </tr>
             `).join('');
         }
@@ -569,7 +588,6 @@
                 reserva.whatsapp = telefono;
             }
             
-            // Limpiar número: eliminar espacios, guiones, etc.
             let numeroLimpio = telefono.replace(/\D/g, '');
             if (!numeroLimpio.startsWith('55')) {
                 numeroLimpio = '55' + numeroLimpio;
@@ -580,7 +598,7 @@
                 `⏰ *Horario:* ${reserva.horario}\n` +
                 `👥 *Adultos:* ${reserva.adultos}\n` +
                 `🧒 *Menores:* ${reserva.menores}\n` +
-                `💰 *Total:* R$ ${reserva.monto.toFixed(2)}\n` +
+                `👥 *Total Personas:* ${reserva.adultos + reserva.menores}\n` +
                 `🆔 *ID:* ${reserva.id}\n\n` +
                 `¡Gracias por confiar en nosotros! 🌊`;
             
@@ -598,14 +616,14 @@
             
             const html = `
                 <div class="reserva-detalle">
-                    <p><strong>🆔 ID:</strong> ${reserva.id}</p>
-                    <p><strong>📅 Fecha Paseo:</strong> ${reserva.fecha}</p>
-                    <p><strong>👤 Cliente:</strong> ${reserva.cliente}</p>
-                    <p><strong>🏢 Empresa:</strong> ${reserva.empresa || '—'}</p>
+                    <p><strong>🆔 ID:</strong> ${escapeHtml(reserva.id)}</p>
+                    <p><strong>📅 Fecha Paseo:</strong> ${escapeHtml(reserva.fecha)}</p>
+                    <p><strong>👤 Cliente:</strong> ${escapeHtml(reserva.cliente)}</p>
+                    <p><strong>🏢 Empresa:</strong> ${escapeHtml(reserva.empresa) || '—'}</p>
                     <p><strong>👥 Adultos:</strong> ${reserva.adultos}</p>
-                    <p><strong>🧒 Menores 6/11:</strong> ${reserva.menores}</p>
-                    <p><strong>⏰ Horario:</strong> ${reserva.horario}</p>
-                    <p><strong>💰 Monto:</strong> R$ ${reserva.monto.toFixed(2)}</p>
+                    <p><strong>🧒 Menores:</strong> ${reserva.menores}</p>
+                    <p><strong>⏰ Horario:</strong> ${escapeHtml(reserva.horario)}</p>
+                    <p><strong>👥 Total Pagantes:</strong> ${escapeHtml(reserva.totalPagantes)}</p>
                     <p><strong>📱 WhatsApp:</strong> ${reserva.whatsapp || 'No registrado'}</p>
                     <p><strong>🏷️ Estado:</strong> <span class="badge ${getBadgeClass(reserva.estado)}">${reserva.estado}</span></p>
                 </div>
@@ -628,9 +646,9 @@
         
         // ========== EXPORTAR ==========
         function exportarExcel() {
-            let csv = "ID,Fecha Paseo,Cliente,Empresa,Adultos,Menores,Horario,Monto,Estado,WhatsApp\n";
+            let csv = "ID,Fecha Paseo,Cliente,Empresa,Adultos,Menores,Horario,Total Pagantes,Estado,WhatsApp\n";
             reservasData.forEach(r => {
-                csv += `"${r.id}","${r.fecha}","${r.cliente}","${r.empresa || ''}",${r.adultos},${r.menores},"${r.horario}",${r.monto},"${r.estado}","${r.whatsapp || ''}"\n`;
+                csv += `"${r.id}","${r.fecha}","${r.cliente}","${r.empresa || ''}",${r.adultos},${r.menores},"${r.horario}","${r.totalPagantes}","${r.estado}","${r.whatsapp || ''}"\n`;
             });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
