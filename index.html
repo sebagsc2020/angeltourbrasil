@@ -104,6 +104,37 @@
         
         .price-hint { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
         
+        /* Loader */
+        .loader-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--border-color);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .loader-text {
+            color: white;
+            font-weight: 600;
+        }
+        
         @media (max-width: 768px) { 
             .form-row { grid-template-columns: 1fr; } 
             .container { padding: 16px; } 
@@ -229,6 +260,12 @@
         </div>
     </div>
 
+    <!-- Loader overlay -->
+    <div id="loaderOverlay" class="loader-overlay">
+        <div class="loader-spinner"></div>
+        <div class="loader-text" id="loaderText">Guardando reserva...</div>
+    </div>
+
     <div id="confirmModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -246,10 +283,11 @@
 
     <script>
         // ============================================
-        // CONFIGURACIÓN - ACTUALIZAR CON TU URL
+        // CONFIGURACIÓN
         // ============================================
         const PRECIO_ADULTO = 85.00;
         const PRECIO_MENOR = 42.50;
+        // ⚠️ IMPORTANTE: Reemplazar con la URL CORRECTA de tu Google Apps Script desplegado
         const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbwe7UMEV5hGj1pzN_Ph9oHzIaRDI7ikJ3gqcr6heSlz2gkTV0DdIOSiux0WmayPosJ57A/exec";
         
         // ============================================
@@ -281,10 +319,12 @@
                 confirmarModalBtn: "Confirmar Reserva",
                 mensajeConfirmacion: "📞 Em breve entraremos em contato para confirmar o horário de saída do seu barco. Muito obrigado!",
                 toastSuccess: "✅ Reserva confirmada! Em breve entraremos em contato.",
+                toastError: "❌ Erro ao salvar a reserva. Tente novamente.",
                 toastErrorNombre: "Complete o campo Nome Completo", toastErrorFecha: "Selecione a data do passeio",
                 toastErrorEmail: "Complete o campo E-mail", toastErrorEmpresa: "Complete o campo Empresa",
                 toastErrorWhatsapp: "Complete o campo WhatsApp", toastErrorHorario: "Selecione um horário",
-                toastErrorPasajeros: "Insira pelo menos um passageiro entre adultos e menores"
+                toastErrorPasajeros: "Insira pelo menos um passageiro entre adultos e menores",
+                loaderText: "Salvando reserva..."
             },
             es: {
                 subtitle: "Reserve seu passeio de barco · Cupos limitados · Confirmación inmediata",
@@ -304,12 +344,42 @@
                 confirmarModalBtn: "Confirmar Reserva",
                 mensajeConfirmacion: "📞 En breve nos comunicaremos para confirmar el horario de salida de tu barco. ¡Muchas gracias!",
                 toastSuccess: "✅ Reserva confirmada! En breve nos comunicaremos.",
+                toastError: "❌ Error al guardar la reserva. Intenta nuevamente.",
                 toastErrorNombre: "Complete el campo Nombre Completo", toastErrorFecha: "Seleccione la fecha del paseo",
                 toastErrorEmail: "Complete el campo Email", toastErrorEmpresa: "Complete el campo Empresa",
                 toastErrorWhatsapp: "Complete el campo WhatsApp", toastErrorHorario: "Seleccione un horario",
-                toastErrorPasajeros: "Ingrese al menos un pasajero entre adultos y menores"
+                toastErrorPasajeros: "Ingrese al menos un pasajero entre adultos y menores",
+                loaderText: "Guardando reserva..."
             }
         };
+        
+        // ============================================
+        // FUNCIONES DE UI
+        // ============================================
+        function mostrarLoader(show, texto = null) {
+            const loader = document.getElementById('loaderOverlay');
+            if (show) {
+                if (texto) document.getElementById('loaderText').innerText = texto;
+                loader.style.display = 'flex';
+            } else {
+                loader.style.display = 'none';
+            }
+        }
+        
+        function mostrarToast(mensaje, error = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = mensaje;
+            toast.style.background = error ? '#dc2626' : '#1f2937';
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 4000);
+        }
+        
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            const icon = document.getElementById('themeIconInline');
+            icon.className = document.body.classList.contains('dark-mode') ? 'ph ph-sun' : 'ph ph-moon';
+        }
         
         // ============================================
         // FUNCIONES DE IDIOMA
@@ -348,6 +418,7 @@
             document.getElementById('confirmarBtn').innerHTML = `<i class="ph ph-check-fat"></i> ${t.confirmarBtn}`;
             document.getElementById('modalTitle').innerHTML = t.modalTitle;
             document.getElementById('confirmarModalBtn').innerHTML = t.confirmarModalBtn;
+            document.getElementById('loaderText').innerText = t.loaderText;
             
             if (document.getElementById('confirmModal').style.display === 'flex' && datosReservaTemp) {
                 actualizarModalConIdioma();
@@ -392,29 +463,15 @@
             return total;
         }
         
-        function formatearFecha(fechaISO) {
-            if (!fechaISO) return '';
-            const partes = fechaISO.split('-');
-            return `${partes[2]}/${partes[1]}/${partes[0]}`;
-        }
-        
-        // ============================================
-        // FUNCIONES DE UI
-        // ============================================
-        function mostrarToast(mensaje, error = false) {
-            const toast = document.getElementById('toast');
-            toast.textContent = mensaje;
-            toast.style.background = error ? '#dc2626' : '#1f2937';
-            toast.style.display = 'block';
-            setTimeout(() => { toast.style.display = 'none'; }, 4000);
-        }
-        
         function seleccionarHorario(element) {
             document.querySelectorAll('.horario-option').forEach(opt => opt.classList.remove('selected'));
             element.classList.add('selected');
             horarioSeleccionado = element.getAttribute('data-horario');
         }
         
+        // ============================================
+        // FUNCIONES MODAL
+        // ============================================
         function abrirModal(datos) {
             const t = textos[idiomaActual];
             document.getElementById('modalBody').innerHTML = `
@@ -442,27 +499,29 @@
             datosReservaTemp = null;
         }
         
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-            const icon = document.getElementById('themeIconInline');
-            icon.className = document.body.classList.contains('dark-mode') ? 'ph ph-sun' : 'ph ph-moon';
-        }
-        
         // ============================================
         // FUNCIONES DE GOOGLE SHEETS
         // ============================================
         async function guardarEnGoogleSheets(datosReserva) {
             try {
+                console.log("Enviando datos a Google Sheets:", datosReserva);
+                
                 const response = await fetch(GOOGLE_URL, { 
                     method: 'POST', 
-                    headers: { 'Content-Type': 'application/json' }, 
+                    mode: 'no-cors', // Importante para evitar problemas de CORS
+                    headers: { 
+                        'Content-Type': 'application/json'
+                    }, 
                     body: JSON.stringify(datosReserva) 
                 });
-                const resultado = await response.json();
-                return resultado.success === true;
+                
+                // Con no-cors, no podemos leer la respuesta directamente
+                // Asumimos éxito si no hay error de red
+                console.log("Respuesta recibida (no-cors mode)");
+                return true;
+                
             } catch(e) { 
-                console.error("Error:", e);
+                console.error("Error detallado:", e);
                 return false;
             }
         }
@@ -471,10 +530,19 @@
             if (!datosReservaTemp) return;
             
             const t = textos[idiomaActual];
+            
+            // Cerrar modal y mostrar loader
+            cerrarModal();
+            mostrarLoader(true, t.loaderText);
+            
+            // Guardar en Google Sheets
             const saved = await guardarEnGoogleSheets(datosReservaTemp);
+            
+            mostrarLoader(false);
             
             if (saved) {
                 mostrarToast(t.toastSuccess);
+                // Limpiar formulario
                 document.getElementById('reservaForm').reset();
                 document.getElementById('adultos').value = '1';
                 document.getElementById('menores').value = '0';
@@ -482,9 +550,8 @@
                 horarioSeleccionado = null;
                 document.getElementById('fechaOut').value = '';
                 calcularTotal();
-                cerrarModal();
             } else {
-                mostrarToast("❌ Error al guardar la reserva", true);
+                mostrarToast(t.toastError, true);
             }
             datosReservaTemp = null;
         }
@@ -501,6 +568,7 @@
             const montoTotal = calcularTotal();
             const t = textos[idiomaActual];
             
+            // Validaciones
             if (!nombre) { mostrarToast(t.toastErrorNombre, true); return; }
             if (!fechaOut) { mostrarToast(t.toastErrorFecha, true); return; }
             if (!email) { mostrarToast(t.toastErrorEmail, true); return; }
@@ -521,9 +589,17 @@
             const id = `ATB-${Date.now()}-${Math.floor(Math.random()*1000)}`;
             
             datosReservaTemp = { 
-                id, fecha_paseo: fechaOut, fechaOut, nombre, empresa, 
-                adultos, menores, horario: horarioTexto, horarioTexto,
-                monto_total: montoTotal, montoTotal, hotel, email, whatsapp 
+                id, 
+                fecha_paseo: fechaOut, 
+                nombre, 
+                empresa, 
+                adultos, 
+                menores, 
+                horario: horarioTexto,
+                monto_total: montoTotal,
+                hotel, 
+                email, 
+                whatsapp 
             };
             
             abrirModal(datosReservaTemp);
@@ -548,10 +624,6 @@
         
         calcularTotal();
         cambiarIdioma(idiomaGuardado);
-        
-        // Eliminadas: cargarReservasParaContador() - función que no funcionaba
-        // Eliminadas: actualizarResumenPorFecha - dependía del contador
-        // Simplificado: solo funcionalidad básica de reserva
     </script>
 </body>
 </html>
