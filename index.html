@@ -121,23 +121,61 @@
             transform: translateY(-1px);
         }
         
-        .slot-selector { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
-        .slot-option { border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 12px; cursor: pointer; transition: all 0.2s; background: var(--bg-body); }
-        .slot-option:hover:not(.disabled) { border-color: var(--primary); background: var(--primary-light); }
-        .slot-option.selected { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 2px var(--primary); }
-        .slot-option.disabled { opacity: 0.6; cursor: not-allowed; background: var(--bg-surface); }
-        .slot-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-        .slot-name { font-weight: 600; font-size: 14px; }
-        .slot-badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 12px; }
-        .badge-available { background: var(--success-light); color: var(--success); }
-        .badge-full { background: var(--danger-light); color: var(--danger); }
-        .slot-progress { height: 4px; background: var(--border-color); border-radius: 2px; overflow: hidden; margin-top: 8px; }
-        .slot-progress-bar { height: 100%; background: var(--primary); transition: width 0.3s; }
+        /* Selector de horarios - solo preferencia, sin cupos */
+        .horario-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .horario-option {
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--bg-body);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .horario-option:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            transform: translateX(4px);
+        }
+        .horario-option.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+        .horario-icon {
+            font-size: 24px;
+            min-width: 40px;
+            text-align: center;
+        }
+        .horario-info {
+            flex: 1;
+        }
+        .horario-nombre {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--text-main);
+        }
+        .horario-hora {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .horario-radio {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
         
         .table-section { background: var(--bg-surface); border-radius: var(--radius); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); overflow: hidden; }
         .section-header { padding: 20px 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
         .table-responsive { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        table { width: 100%; border-collapse: collapse; min-width: 700px; }
         th { text-align: left; padding: 14px 20px; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); background: var(--bg-body); border-bottom: 1px solid var(--border-color); }
         td { padding: 16px 20px; border-bottom: 1px solid var(--border-color); font-size: 14px; vertical-align: middle; }
         tr:hover td { background: rgba(30, 111, 92, 0.02); }
@@ -152,6 +190,8 @@
             .form-row { grid-template-columns: 1fr; } 
             .container { padding: 20px; } 
             .form-header { flex-direction: column; align-items: flex-start; }
+            .horario-option { padding: 10px 12px; }
+            .horario-icon { font-size: 20px; min-width: 32px; }
         }
     </style>
 </head>
@@ -178,31 +218,29 @@
                     </div>
                 </div>
                 <form id="reservaForm" onsubmit="event.preventDefault(); guardarReserva();">
-                    <div class="form-group">
-                        <label>Nombre Completo</label>
-                        <input type="text" id="nombre" class="form-control" required placeholder="Ej: Juan Pérez">
-                    </div>
                     <div class="form-row">
+                        <div class="form-group">
+                            <label>Nombre Completo</label>
+                            <input type="text" id="nombre" class="form-control" required placeholder="Ej: Juan Pérez">
+                        </div>
                         <div class="form-group">
                             <label>Email</label>
                             <input type="email" id="email" class="form-control" required placeholder="juan@empresa.com">
                         </div>
+                    </div>
+                    <div class="form-row">
                         <div class="form-group">
                             <label>Empresa</label>
                             <input type="text" id="empresa" class="form-control" placeholder="Opcional">
                         </div>
+                        <div class="form-group">
+                            <label>Dia de Paseo</label>
+                            <input type="date" id="fechaOut" class="form-control" required>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label>Dia de Paseo</label>
-                        <input type="date" id="fechaOut" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Adultos (12+)</label>
-                        <input type="number" id="adultos" class="form-control" min="0" value="1" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Menores (2-11 años)</label>
-                        <input type="number" id="menores" class="form-control" min="0" value="0">
+                        <label>Pax</label>
+                        <input type="number" id="pax" class="form-control" min="1" value="1" required>
                     </div>
                     <div class="form-group">
                         <label>Hotel / Dirección</label>
@@ -213,22 +251,31 @@
                         <input type="tel" id="whatsapp" class="form-control" placeholder="+55 11 91234-5678">
                     </div>
                     <div class="form-group">
-                        <label>Seleccionar Horario Disponible</label>
-                        <div class="slot-selector" id="slotSelector">
-                            <div class="slot-option" data-horario="morning" onclick="seleccionarHorario(this)">
-                                <div class="slot-header"><span class="slot-name">🌅 Mañana - 09:00 AM</span><span class="slot-badge badge-available" id="morningBadge">Cargando...</span></div>
-                                <div style="font-size:12px; color:var(--text-muted);" id="morningInfo">Cargando disponibilidad...</div>
-                                <div class="slot-progress"><div class="slot-progress-bar" id="morningProgress" style="width: 0%;"></div></div>
+                        <label>Selecciona tu horario de preferencia</label>
+                        <div class="horario-selector" id="horarioSelector">
+                            <div class="horario-option" data-horario="morning" onclick="seleccionarHorario(this)">
+                                <div class="horario-icon">🌅</div>
+                                <div class="horario-info">
+                                    <div class="horario-nombre">Tour Mañana</div>
+                                    <div class="horario-hora">Salida: 09:30 Hs</div>
+                                </div>
+                                <div class="horario-radio"></div>
                             </div>
-                            <div class="slot-option" data-horario="afternoon" onclick="seleccionarHorario(this)">
-                                <div class="slot-header"><span class="slot-name">🌇 Tarde - 02:00 PM</span><span class="slot-badge badge-available" id="afternoonBadge">Cargando...</span></div>
-                                <div style="font-size:12px; color:var(--text-muted);" id="afternoonInfo">Cargando disponibilidad...</div>
-                                <div class="slot-progress"><div class="slot-progress-bar" id="afternoonProgress" style="width: 0%;"></div></div>
+                            <div class="horario-option" data-horario="mid" onclick="seleccionarHorario(this)">
+                                <div class="horario-icon">🌤️</div>
+                                <div class="horario-info">
+                                    <div class="horario-nombre">Tour Media Mañana</div>
+                                    <div class="horario-hora">Salida: 11:10 Hs</div>
+                                </div>
+                                <div class="horario-radio"></div>
                             </div>
-                            <div class="slot-option hidden" data-horario="extra" id="extraOption" onclick="seleccionarHorario(this)">
-                                <div class="slot-header"><span class="slot-name">⭐ Extra - 06:00 PM</span><span class="slot-badge badge-available" id="extraBadge">Cargando...</span></div>
-                                <div style="font-size:12px; color:var(--text-muted);" id="extraInfo">Cargando disponibilidad...</div>
-                                <div class="slot-progress"><div class="slot-progress-bar" id="extraProgress" style="width: 0%;"></div></div>
+                            <div class="horario-option" data-horario="afternoon" onclick="seleccionarHorario(this)">
+                                <div class="horario-icon">🌇</div>
+                                <div class="horario-info">
+                                    <div class="horario-nombre">Tour Tarde</div>
+                                    <div class="horario-hora">Salida: 13:30 Hs</div>
+                                </div>
+                                <div class="horario-radio"></div>
                             </div>
                         </div>
                     </div>
@@ -242,8 +289,8 @@
                 </div>
                 <div class="table-responsive">
                     <table id="reservasRecientesTable">
-                        <thead><tr><th>ID</th><th>Cliente</th><th>Empresa</th><th>Fecha OUT</th><th>Horario</th><th>Pax</th><th>Estado</th></tr></thead>
-                        <tbody id="reservasRecientesBody"><td><td colspan="7" style="text-align:center;">Cargando...<\/td></tr></tbody>
+                        <thead><tr><th>ID</th><th>Cliente</th><th>Empresa</th><th>Fecha</th><th>Horario</th><th>Pax</th><th>Estado</th></tr></thead>
+                        <tbody id="reservasRecientesBody"><tr><td colspan="7" style="text-align:center;">Cargando...<\/td></tr></tbody>
                     </table>
                 </div>
             </div>
@@ -253,12 +300,10 @@
     <div id="toast" class="toast"></div>
 
     <script>
-        const CAPACIDAD_MAXIMA = 160;
         const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbyO3Z6DGTznI3Rl2cdfHRTypmt-adE22_y_9Fuzc5cnVAXAILHYFpc6GlJpeKK3rKTM_g/exec";
         const SHEETS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTAuEiFi8pDWKqQlsYh5mhMuSZxEojyaM5Vcg-FyBqyCu4FGXFECi5FqhWV4w46oHDcWQSRDxBf4nfm/pubhtml";
         
         let horarioSeleccionado = null;
-        let ocupacionData = { morning: 0, afternoon: 0, extra: 0 };
         
         function mostrarToast(mensaje, error = false) {
             const toast = document.getElementById('toast');
@@ -268,7 +313,7 @@
             setTimeout(() => { toast.style.display = 'none'; }, 4000);
         }
         
-        async function cargarDisponibilidad() {
+        async function cargarReservasRecientes() {
             try {
                 const proxyUrl = 'https://api.allorigins.win/raw?url=';
                 const response = await fetch(proxyUrl + encodeURIComponent(SHEETS_URL));
@@ -279,40 +324,31 @@
                 if (tables.length === 0) return;
                 const rows = tables[0].getElementsByTagName('tr');
                 
-                let morning = 0, afternoon = 0, extra = 0;
                 const reservasRecientes = [];
                 
                 for (let i = 1; i < rows.length; i++) {
                     const cells = rows[i].getElementsByTagName('td');
                     if (cells.length >= 7) {
                         const horario = cells[6]?.textContent?.trim() || '';
-                        const adultos = parseInt(cells[4]?.textContent?.trim()) || 0;
-                        const menores = parseInt(cells[5]?.textContent?.trim()) || 0;
-                        const total = adultos + menores;
+                        let horarioMostrar = horario;
+                        if (horario === "Tour Mañana (09:30)") horarioMostrar = "🌅 09:30";
+                        else if (horario === "Tour Media Mañana (11:10)") horarioMostrar = "🌤️ 11:10";
+                        else if (horario === "Tour Tarde (13:30)") horarioMostrar = "🌇 13:30";
                         
-                        if (horario === "Tour Mañana") morning += total;
-                        else if (horario === "Tour Tarde") afternoon += total;
-                        else if (horario === "Tour Extra") extra += total;
-                        
-                        if (i <= 10) {
-                            reservasRecientes.push({
-                                id: cells[0]?.textContent?.trim() || '',
-                                nombre: cells[2]?.textContent?.trim() || '',
-                                empresa: cells[3]?.textContent?.trim() || '',
-                                fecha: cells[1]?.textContent?.trim() || '',
-                                horario: horario,
-                                pax: total,
-                                estado: cells[11]?.textContent?.trim() || 'Confirmado'
-                            });
-                        }
+                        reservasRecientes.push({
+                            id: cells[0]?.textContent?.trim() || '',
+                            nombre: cells[2]?.textContent?.trim() || '',
+                            empresa: cells[3]?.textContent?.trim() || '',
+                            fecha: cells[1]?.textContent?.trim() || '',
+                            horario: horarioMostrar,
+                            pax: parseInt(cells[4]?.textContent?.trim()) || 0,
+                            estado: cells[11]?.textContent?.trim() || 'Confirmado'
+                        });
                     }
                 }
                 
-                ocupacionData = { morning, afternoon, extra };
-                actualizarUI();
-                
                 const tbody = document.getElementById('reservasRecientesBody');
-                tbody.innerHTML = reservasRecientes.slice(0, 5).map(r => `
+                tbody.innerHTML = reservasRecientes.slice(0, 8).reverse().map(r => `
                     <tr>
                         <td style="font-family:monospace;">${r.id}<\/td>
                         <td><div style="display:flex; align-items:center;"><div class="client-avatar-sm">${r.nombre.charAt(0)}</div>${r.nombre}<\/div><\/td>
@@ -327,47 +363,8 @@
             } catch(e) { console.error("Error:", e); }
         }
         
-        function actualizarUI() {
-            const dispMorning = CAPACIDAD_MAXIMA - ocupacionData.morning;
-            const dispAfternoon = CAPACIDAD_MAXIMA - ocupacionData.afternoon;
-            const dispExtra = CAPACIDAD_MAXIMA - ocupacionData.extra;
-            
-            document.getElementById('morningBadge').innerHTML = `${dispMorning} disponibles`;
-            document.getElementById('afternoonBadge').innerHTML = `${dispAfternoon} disponibles`;
-            document.getElementById('extraBadge').innerHTML = `${dispExtra} disponibles`;
-            
-            document.getElementById('morningInfo').innerHTML = `Ocupados: ${ocupacionData.morning} / ${CAPACIDAD_MAXIMA}`;
-            document.getElementById('afternoonInfo').innerHTML = `Ocupados: ${ocupacionData.afternoon} / ${CAPACIDAD_MAXIMA}`;
-            document.getElementById('extraInfo').innerHTML = `Ocupados: ${ocupacionData.extra} / ${CAPACIDAD_MAXIMA}`;
-            
-            document.getElementById('morningProgress').style.width = `${(ocupacionData.morning / CAPACIDAD_MAXIMA) * 100}%`;
-            document.getElementById('afternoonProgress').style.width = `${(ocupacionData.afternoon / CAPACIDAD_MAXIMA) * 100}%`;
-            document.getElementById('extraProgress').style.width = `${(ocupacionData.extra / CAPACIDAD_MAXIMA) * 100}%`;
-            
-            const extraOption = document.getElementById('extraOption');
-            if (dispMorning <= 0 && dispAfternoon <= 0) {
-                extraOption.classList.remove('hidden');
-            } else {
-                extraOption.classList.add('hidden');
-                if (horarioSeleccionado === 'extra') horarioSeleccionado = null;
-            }
-            
-            const morningOption = document.querySelector('.slot-option[data-horario="morning"]');
-            const afternoonOption = document.querySelector('.slot-option[data-horario="afternoon"]');
-            
-            if (dispMorning <= 0) morningOption.classList.add('disabled');
-            else morningOption.classList.remove('disabled');
-            
-            if (dispAfternoon <= 0) afternoonOption.classList.add('disabled');
-            else afternoonOption.classList.remove('disabled');
-        }
-        
         function seleccionarHorario(element) {
-            if (element.classList.contains('disabled')) {
-                mostrarToast('Este horario no tiene cupos disponibles', true);
-                return;
-            }
-            document.querySelectorAll('.slot-option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelectorAll('.horario-option').forEach(opt => opt.classList.remove('selected'));
             element.classList.add('selected');
             horarioSeleccionado = element.getAttribute('data-horario');
         }
@@ -377,8 +374,7 @@
             const email = document.getElementById('email').value.trim();
             const empresa = document.getElementById('empresa').value.trim();
             const fechaOut = document.getElementById('fechaOut').value;
-            const adultos = parseInt(document.getElementById('adultos').value) || 0;
-            const menores = parseInt(document.getElementById('menores').value) || 0;
+            const pax = parseInt(document.getElementById('pax').value) || 0;
             const hotel = document.getElementById('hotel').value.trim();
             const whatsapp = document.getElementById('whatsapp').value.trim();
             
@@ -390,20 +386,35 @@
                 mostrarToast('Seleccione un horario', true);
                 return;
             }
-            
-            let ocupados = 0, horarioTexto = '';
-            if (horarioSeleccionado === 'morning') { ocupados = ocupacionData.morning; horarioTexto = 'Tour Mañana'; }
-            else if (horarioSeleccionado === 'afternoon') { ocupados = ocupacionData.afternoon; horarioTexto = 'Tour Tarde'; }
-            else { ocupados = ocupacionData.extra; horarioTexto = 'Tour Extra'; }
-            
-            if (adultos + menores + ocupados > CAPACIDAD_MAXIMA) {
-                mostrarToast(`Cupos insuficientes. Quedan ${CAPACIDAD_MAXIMA - ocupados} lugares.`, true);
+            if (pax === 0) {
+                mostrarToast('Ingrese al menos un pasajero', true);
                 return;
             }
             
+            let horarioTexto = '';
+            if (horarioSeleccionado === 'morning') { 
+                horarioTexto = 'Tour Mañana (09:30)';
+            } else if (horarioSeleccionado === 'mid') { 
+                horarioTexto = 'Tour Media Mañana (11:10)';
+            } else { 
+                horarioTexto = 'Tour Tarde (13:30)';
+            }
+            
             const id = `ATB-${Date.now()}-${Math.floor(Math.random()*1000)}`;
-            const montoTotal = (adultos * 180) + (menores * 90);
-            const datosReserva = { id, fecha_paseo: fechaOut, nombre, empresa, adultos, menores, horario: horarioTexto, monto_total: montoTotal, hotel, email, whatsapp };
+            const montoTotal = pax * 180;
+            const datosReserva = { 
+                id, 
+                fecha_paseo: fechaOut, 
+                nombre, 
+                empresa, 
+                adultos: pax, 
+                menores: 0, 
+                horario: horarioTexto, 
+                monto_total: montoTotal, 
+                hotel, 
+                email, 
+                whatsapp 
+            };
             
             try {
                 const response = await fetch(GOOGLE_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(datosReserva) });
@@ -412,20 +423,21 @@
                 if (resultado.success) {
                     mostrarToast('✅ Reserva confirmada');
                     document.getElementById('reservaForm').reset();
-                    document.getElementById('adultos').value = '1';
-                    document.querySelectorAll('.slot-option').forEach(opt => opt.classList.remove('selected'));
+                    document.getElementById('pax').value = '1';
+                    document.querySelectorAll('.horario-option').forEach(opt => opt.classList.remove('selected'));
                     horarioSeleccionado = null;
-                    await cargarDisponibilidad();
+                    await cargarReservasRecientes();
                     
-                    const mensajeWhatsApp = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0ANombre: ${nombre}%0AHotel: ${hotel}%0AEmail: ${email}%0AWhatsApp: ${whatsapp}%0AEmpresa: ${empresa}%0AFecha: ${fechaOut}%0AHorario: ${horarioTexto}%0APasajeros: ${adultos} adultos, ${menores} menores%0ACódigo: ${id}%0ATotal: R$ ${montoTotal}`;
+                    const mensajeWhatsApp = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0ANombre: ${nombre}%0AHotel: ${hotel}%0AEmail: ${email}%0AWhatsApp: ${whatsapp}%0AEmpresa: ${empresa}%0AFecha: ${fechaOut}%0AHorario: ${horarioTexto}%0APasajeros: ${pax}%0ACódigo: ${id}%0ATotal: R$ ${montoTotal}`;
                     if (whatsapp) window.open(`https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(mensajeWhatsApp)}`, '_blank');
                 } else {
                     mostrarToast('Error al guardar la reserva', true);
                 }
-            } catch(e) { mostrarToast('Error de conexión', true); }
+            } catch(e) { 
+                console.error("Error:", e);
+                mostrarToast('Error de conexión', true); 
+            }
         }
-        
-        async function cargarReservasRecientes() { await cargarDisponibilidad(); }
         
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
@@ -445,7 +457,7 @@
         }
         
         document.getElementById('fechaOut').min = new Date().toISOString().split('T')[0];
-        cargarDisponibilidad();
+        cargarReservasRecientes();
     </script>
 </body>
 </html>
