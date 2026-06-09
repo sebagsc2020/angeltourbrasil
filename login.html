@@ -84,9 +84,16 @@
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 8px;
-            display: inline-flex;
+            display: flex;
             align-items: center;
+            justify-content: center;
             gap: 12px;
+            flex-wrap: wrap;
+        }
+        .logo-header {
+            height: 65px;
+            width: auto;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
         .login-header p {
             font-size: 14px;
@@ -229,6 +236,12 @@
             color: rgba(255,255,255,0.5);
             font-size: 11px;
         }
+        @media (max-width: 480px) {
+            .login-header h2 { flex-direction: column; }
+            .logo-header { height: 50px; }
+            .login-header { padding: 25px; }
+            .login-body { padding: 25px; }
+        }
     </style>
 </head>
 <body>
@@ -262,7 +275,8 @@
         <div class="login-card">
             <div class="login-header">
                 <h2>
-                    <i class="ph ph-lock-simple"></i> Acceso Administrador
+                    <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Angel Tour Brasil" class="logo-header">
+                    Acceso Administrador
                     <button class="header-theme-btn" id="headerThemeBtn" onclick="toggleTheme()">
                         <i class="ph ph-moon" id="themeIcon"></i>
                     </button>
