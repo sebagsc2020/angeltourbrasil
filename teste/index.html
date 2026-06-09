@@ -25,6 +25,7 @@
             transition: background 0.3s ease;
         }
 
+        /* ===== MODO OSCURO / CLARO ===== */
         body.light-mode {
             background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
             color: #0F172A;
@@ -44,8 +45,7 @@
 
         body.light-mode .subtitle,
         body.light-mode label,
-        body.light-mode .footer,
-        body.light-mode .weather-desc {
+        body.light-mode .footer {
             color: #334155;
         }
 
@@ -73,18 +73,6 @@
 
         body.light-mode .btn-language:hover,
         body.light-mode .btn-admin:hover {
-            background: #0EA5E9;
-            border-color: #0EA5E9;
-            color: white;
-        }
-
-        body.light-mode .weather-btn {
-            background: rgba(0, 0, 0, 0.05);
-            border-color: #CBD5E1;
-            color: #0F172A;
-        }
-
-        body.light-mode .weather-btn:hover {
             background: #0EA5E9;
             border-color: #0EA5E9;
             color: white;
@@ -263,83 +251,6 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
             color: white;
-        }
-
-        /* ===== SECCIÓN DEL CLIMA REAL ===== */
-        .weather-section {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
-        }
-
-        .weather-title {
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #94A3B8;
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .weather-update {
-            font-size: 0.6rem;
-            font-weight: normal;
-            color: #64748B;
-        }
-
-        .weather-buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.6rem;
-        }
-
-        .weather-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            border-radius: 1rem;
-            padding: 0.6rem 0.3rem;
-            transition: all 0.2s ease;
-            text-align: center;
-            font-family: inherit;
-            color: #E2E8F0;
-        }
-
-        .weather-btn:hover {
-            background: rgba(14, 165, 233, 0.2);
-            transform: translateY(-2px);
-            border-color: #0EA5E9;
-        }
-
-        .weather-day {
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-bottom: 0.2rem;
-        }
-
-        .weather-icon {
-            font-size: 1.5rem;
-            margin: 0.2rem 0;
-        }
-
-        .weather-temp {
-            font-size: 0.9rem;
-            font-weight: 700;
-        }
-
-        .weather-desc {
-            font-size: 0.6rem;
-            color: #94A3B8;
-            margin-top: 0.2rem;
-        }
-
-        .weather-loading {
-            text-align: center;
-            padding: 1rem;
-            color: #94A3B8;
-            font-size: 0.8rem;
         }
 
         /* ===== FORMULARIO ===== */
@@ -588,21 +499,6 @@
             .actions-bar {
                 padding: 0.6rem 1.2rem;
             }
-            .weather-buttons {
-                gap: 0.4rem;
-            }
-            .weather-btn {
-                padding: 0.4rem 0.2rem;
-            }
-            .weather-icon {
-                font-size: 1.2rem;
-            }
-            .weather-temp {
-                font-size: 0.8rem;
-            }
-            .weather-day {
-                font-size: 0.6rem;
-            }
         }
     </style>
 </head>
@@ -643,17 +539,6 @@
             <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Admin Logo">
             Admin
         </button>
-    </div>
-
-    <!-- SECCIÓN DEL CLIMA REAL - PORTO BELO -->
-    <div class="weather-section">
-        <div class="weather-title">
-            <span>⛅ <span id="weatherTitle">PREVISÃO DO TEMPO - PORTO BELO</span></span>
-            <span class="weather-update" id="weatherUpdate"></span>
-        </div>
-        <div class="weather-buttons" id="weatherButtons">
-            <div class="weather-loading">🌤️ Carregando previsão do tempo...</div>
-        </div>
     </div>
 
     <!-- FORMULARIO -->
@@ -747,10 +632,6 @@
     // ============================================================
     const scriptURL = 'https://script.google.com/macros/s/AKfycbw6XLSNqMfEfc5XaBV3X53Ono8oUuQVOynk0UcaAGsxWvyjQDYB31sWicMIFCTnOHblJA/exec';
 
-    // ===== COORDENADAS DE PORTO BELO =====
-    const PORTO_BELO_LAT = -27.149;
-    const PORTO_BELO_LON = -48.550;
-
     // ===== TRADUCCIONES =====
     const translations = {
         es: {
@@ -774,10 +655,7 @@
             error_adultos: "❌ Ingresa un número válido de adultos",
             error_menores: "❌ Ingresa un número válido de menores",
             error_cortesia: "❌ Ingresa un número válido para cortesía",
-            btn_success: "✓ RESERVA ENVIADA",
-            weather_title: "PRONÓSTICO - PORTO BELO",
-            weather_loading: "🌤️ Cargando pronóstico...",
-            weather_error: "⚠️ Error al cargar el clima"
+            btn_success: "✓ RESERVA ENVIADA"
         },
         pt: {
             subtitle: "Reserve seu passeio de barco · Vagas limitadas · Confirmação imediata",
@@ -800,10 +678,7 @@
             error_adultos: "❌ Digite um número válido de adultos",
             error_menores: "❌ Digite um número válido de menores",
             error_cortesia: "❌ Digite um número válido para cortesia",
-            btn_success: "✓ RESERVA ENVIADA",
-            weather_title: "PREVISÃO - PORTO BELO",
-            weather_loading: "🌤️ Carregando previsão...",
-            weather_error: "⚠️ Erro ao carregar o clima"
+            btn_success: "✓ RESERVA ENVIADA"
         },
         en: {
             subtitle: "Book your boat tour · Limited spots · Instant confirmation",
@@ -826,150 +701,12 @@
             error_adultos: "❌ Enter a valid number of adults",
             error_menores: "❌ Enter a valid number of children",
             error_cortesia: "❌ Enter a valid number for complimentary",
-            btn_success: "✓ RESERVATION SENT",
-            weather_title: "FORECAST - PORTO BELO",
-            weather_loading: "🌤️ Loading forecast...",
-            weather_error: "⚠️ Error loading weather"
+            btn_success: "✓ RESERVATION SENT"
         }
     };
 
     let currentLang = 'en';
-    let weatherData = [];
 
-    // Mapeo de códigos WMO a íconos y descripciones
-    const weatherCodes = {
-        0: { icon: "☀️", desc: "Céu limpo" },
-        1: { icon: "🌤️", desc: "Principalmente limpo" },
-        2: { icon: "⛅", desc: "Parcialmente nublado" },
-        3: { icon: "☁️", desc: "Nublado" },
-        45: { icon: "🌫️", desc: "Nevoeiro" },
-        48: { icon: "🌫️", desc: "Nevoeiro" },
-        51: { icon: "🌦️", desc: "Chuvisco" },
-        53: { icon: "🌦️", desc: "Chuvisco" },
-        55: { icon: "🌧️", desc: "Chuvisco" },
-        61: { icon: "🌧️", desc: "Chuva" },
-        63: { icon: "🌧️", desc: "Chuva" },
-        65: { icon: "🌧️", desc: "Chuva" },
-        71: { icon: "❄️", desc: "Neve" },
-        73: { icon: "❄️", desc: "Neve" },
-        75: { icon: "❄️", desc: "Neve" },
-        80: { icon: "🌧️", desc: "Aguaceiro" },
-        81: { icon: "🌧️", desc: "Aguaceiro" },
-        82: { icon: "🌧️", desc: "Aguaceiro" },
-        95: { icon: "⛈️", desc: "Trovoada" },
-        96: { icon: "⛈️", desc: "Trovoada" },
-        99: { icon: "⛈️", desc: "Trovoada" }
-    };
-
-    // Obtener descripción en el idioma actual
-    function getWeatherDescription(code, lang) {
-        const descMap = {
-            es: {
-                0: "Despejado", 1: "Mayormente despejado", 2: "Parcialmente nublado", 3: "Nublado",
-                45: "Niebla", 48: "Niebla", 51: "Llovizna", 53: "Llovizna", 55: "Llovizna",
-                61: "Lluvia", 63: "Lluvia", 65: "Lluvia", 71: "Nieve", 73: "Nieve", 75: "Nieve",
-                80: "Chubasco", 81: "Chubasco", 82: "Chubasco", 95: "Tormenta", 96: "Tormenta", 99: "Tormenta"
-            },
-            pt: {
-                0: "Céu limpo", 1: "Maiormente limpo", 2: "Parcialmente nublado", 3: "Nublado",
-                45: "Nevoeiro", 48: "Nevoeiro", 51: "Chuvisco", 53: "Chuvisco", 55: "Chuvisco",
-                61: "Chuva", 63: "Chuva", 65: "Chuva", 71: "Neve", 73: "Neve", 75: "Neve",
-                80: "Pancada", 81: "Pancada", 82: "Pancada", 95: "Trovoada", 96: "Trovoada", 99: "Trovoada"
-            },
-            en: {
-                0: "Clear sky", 1: "Mainly clear", 2: "Partly cloudy", 3: "Overcast",
-                45: "Fog", 48: "Fog", 51: "Drizzle", 53: "Drizzle", 55: "Drizzle",
-                61: "Rain", 63: "Rain", 65: "Rain", 71: "Snow", 73: "Snow", 75: "Snow",
-                80: "Shower", 81: "Shower", 82: "Shower", 95: "Thunderstorm", 96: "Thunderstorm", 99: "Thunderstorm"
-            }
-        };
-        return descMap[lang][code] || weatherCodes[code]?.desc || "Desconocido";
-    }
-
-    // Obtener nombre del día
-    function getDayName(date, lang) {
-        const options = { weekday: 'short' };
-        if (lang === 'es') return date.toLocaleDateString('es-ES', options).toUpperCase();
-        if (lang === 'pt') return date.toLocaleDateString('pt-BR', options).toUpperCase();
-        return date.toLocaleDateString('en-US', options).toUpperCase();
-    }
-
-    // Cargar clima real desde Open-Meteo API
-    async function loadRealWeather() {
-        const t = translations[currentLang];
-        const container = document.getElementById('weatherButtons');
-        container.innerHTML = `<div class="weather-loading">${t.weather_loading}</div>`;
-        
-        try {
-            // Llamada a la API gratuita de Open-Meteo (sin API key!)
-            const url = `https://api.open-meteo.com/v1/forecast?latitude=${PORTO_BELO_LAT}&longitude=${PORTO_BELO_LON}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=America/Sao_Paulo&forecast_days=4`;
-            
-            const response = await fetch(url);
-            const data = await response.json();
-            
-            if (!data.daily) throw new Error('No se pudieron obtener los datos');
-            
-            // Procesar datos
-            weatherData = [];
-            for (let i = 0; i < data.daily.time.length; i++) {
-                const date = new Date(data.daily.time[i]);
-                const code = data.daily.weather_code[i];
-                const tempMax = Math.round(data.daily.temperature_2m_max[i]);
-                const tempMin = Math.round(data.daily.temperature_2m_min[i]);
-                
-                weatherData.push({
-                    date: date,
-                    dayName: getDayName(date, currentLang),
-                    icon: weatherCodes[code]?.icon || "🌡️",
-                    tempMax: tempMax,
-                    tempMin: tempMin,
-                    description: getWeatherDescription(code, currentLang),
-                    code: code
-                });
-            }
-            
-            // Renderizar botones
-            renderWeatherButtons();
-            
-            // Actualizar hora de la actualización
-            const now = new Date();
-            const updateTime = now.toLocaleTimeString(currentLang === 'es' ? 'es-ES' : (currentLang === 'pt' ? 'pt-BR' : 'en-US'), { hour: '2-digit', minute: '2-digit' });
-            document.getElementById('weatherUpdate').textContent = `🔄 ${updateTime}`;
-            
-        } catch (error) {
-            console.error('Error cargando clima:', error);
-            container.innerHTML = `<div class="weather-loading">${t.weather_error}</div>`;
-        }
-    }
-
-    // Renderizar botones del clima
-    function renderWeatherButtons() {
-        const container = document.getElementById('weatherButtons');
-        if (!container || weatherData.length === 0) return;
-        
-        container.innerHTML = '';
-        
-        weatherData.forEach((day) => {
-            const btn = document.createElement('button');
-            btn.className = 'weather-btn';
-            btn.innerHTML = `
-                <div class="weather-day">${day.dayName}</div>
-                <div class="weather-icon">${day.icon}</div>
-                <div class="weather-temp">${day.tempMax}° / ${day.tempMin}°</div>
-                <div class="weather-desc">${day.description}</div>
-            `;
-            btn.addEventListener('click', () => {
-                const t = translations[currentLang];
-                const formattedDate = day.date.toLocaleDateString(currentLang === 'es' ? 'es-ES' : (currentLang === 'pt' ? 'pt-BR' : 'en-US'));
-                showMessage(`📅 ${formattedDate}: ${day.icon} ${day.tempMax}°C - ${day.description}`, 'success');
-            });
-            container.appendChild(btn);
-        });
-    }
-
-    // ===== FUNCIONES DEL FORMULARIO =====
-    let currentLang = 'pt';
-    
     // Elementos del DOM
     const form = document.getElementById('dataForm');
     const messageDiv = document.getElementById('message');
@@ -999,7 +736,6 @@
         document.getElementById('footerBoat').textContent = t.footer_boat;
         document.getElementById('footerSecure').textContent = t.footer_secure;
         document.getElementById('footerConfirm').textContent = t.footer_confirm;
-        document.getElementById('weatherTitle').textContent = t.weather_title;
         
         nombreInput.placeholder = t.placeholder_nombre;
         adultosInput.placeholder = t.placeholder_adultos;
@@ -1012,9 +748,6 @@
                 btn.classList.add('active');
             }
         });
-        
-        // Recargar clima con nuevo idioma
-        loadRealWeather();
         
         localStorage.setItem('preferred_language', lang);
     }
@@ -1071,13 +804,10 @@
     if (savedLang && translations[savedLang]) {
         changeLanguage(savedLang);
     } else {
-        changeLanguage('pt');
+        changeLanguage('en');
     }
     
     initTheme();
-    
-    // Cargar clima real al iniciar
-    loadRealWeather();
 
     // ===== FUNCIONALIDAD DEL FORMULARIO =====
     function showMessage(msg, type) {
