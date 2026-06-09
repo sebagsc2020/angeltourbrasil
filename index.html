@@ -11,7 +11,7 @@
         :root {
             --primary: #1e6f5c;
             --primary-hover: #155a4a;
-            --primary-light: #d1fae5;re
+            --primary-light: #d1fae5;
             --success: #10b981;
             --success-light: #d1fae5;
             --warning: #f59e0b;
@@ -327,7 +327,7 @@
         <div class="logo-area">
             <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Angel Tour Brasil">
             <h1>Angel Tour Brasil</h1>
-            <p style="color: var(--text-muted);" id="subtitleText">Reserve seu passeio de barco · Cupos limitados · Confirmación inmediata</p>
+            <p style="color: var(--text-muted);" id="subtitleText">Reserve su paseo de barco · Cupos limitados · Confirmación inmediata</p>
         </div>
 
         <div class="form-card">
@@ -458,13 +458,13 @@
         
         let horarioSeleccionado = null;
         let reservasPorFecha = {};
-        let idiomaActual = 'es';
+        let idiomaActual = 'es'; // Español como idioma predeterminado
         
         // Diccionario de textos
         const textos = {
             pt: {
                 subtitle: "Reserve seu passeio de barco · Vagas limitadas · Confirmação imediata",
-                formTitle: "Nova Reserva",
+                formTitle: "+ Reserva",
                 adminText: "Admin",
                 fechaLabel: "📅 Dia do Passeio",
                 summaryTitle: "📊 Total de passageiros para esta data",
@@ -500,7 +500,7 @@
             },
             es: {
                 subtitle: "Reserve seu passeio de barco · Cupos limitados · Confirmación inmediata",
-                formTitle: "Nueva Reserva",
+                formTitle: "+ Reserva",
                 adminText: "Admin",
                 fechaLabel: "📅 Dia de Paseo",
                 summaryTitle: "📊 Total de pasajeros para esta fecha",
@@ -795,8 +795,8 @@
             }
         }
         
-        // Cargar preferencias guardadas
-        const idiomaGuardado = localStorage.getItem('idioma') || 'es';
+        // Cargar preferencias guardadas - Español como idioma predeterminado
+        const idiomaGuardado = localStorage.getItem('idioma') || 'es'; // Español por defecto
         if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.body.classList.add('dark-mode');
             const iconInline = document.getElementById('themeIconInline');
