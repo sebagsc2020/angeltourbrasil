@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>--Gestión de Reservas | Angel Tour Brasil</title>
+    <title>Gestión de Reservas | Angel Tour Brasil</title>
     <meta name="theme-color" content="#1e6f5c">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.15/index.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -293,7 +293,6 @@
         </div>
     </div>
 
-    <!-- Modal Editar Reserva -->
     <div id="editModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -326,7 +325,6 @@
         </div>
     </div>
 
-    <!-- Modal Vista en Línea -->
     <div id="viewModal" class="modal">
         <div class="modal-content view-modal-content">
             <div class="modal-header">
@@ -345,14 +343,14 @@
     <div id="toast" class="toast"></div>
 
     <script>
-        // Verificar sesión
         if (!sessionStorage.getItem("admin_logged")) {
             window.location.href = "login.html";
         }
 
-        // URL pública de tu hoja de cálculo
         const SPREADSHEET_ID = "1uOAcy1X8yMHDK03CUKLix4cUm_l4m3E4vaZHgSk33as";
-        const JSON_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json`;
+        // Usamos CORS Anywhere como proxy para evitar el error CORS
+        const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
+        const SHEETS_API = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json`;
         
         let reservasData = [];
         let currentViewReserva = null;
@@ -380,7 +378,8 @@
             try {
                 mostrarToast('Cargando reservas...');
                 
-                const response = await fetch(JSON_URL + '&t=' + Date.now());
+                // Usar CORS Anywhere para evitar el bloqueo
+                const response = await fetch(PROXY_URL + SHEETS_API);
                 const text = await response.text();
                 
                 // Limpiar respuesta JSONP
@@ -394,8 +393,6 @@
                 }
                 
                 reservasData = [];
-                
-                // Saltar la primera fila si es encabezado
                 const startIndex = (rows[0]?.c[0]?.v === "ID") ? 1 : 0;
                 
                 for (let i = startIndex; i < rows.length; i++) {
@@ -433,7 +430,7 @@
                 
             } catch(e) { 
                 console.error("Error:", e);
-                mostrarToast("Error al cargar reservas: " + e.message, true);
+                mostrarToast("Error al cargar reservas. Verifica tu conexión.", true);
             }
         }
         
@@ -453,6 +450,16 @@
             if (estado === 'Confirmado') return 'badge-confirmado';
             if (estado === 'Cancelado') return 'badge-cancelado';
             return 'badge-pendiente';
+        }
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            return String(text).replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
         }
         
         function renderizarTabla() {
@@ -481,16 +488,6 @@
                     <\/td>
                 </tr>
             `).join('');
-        }
-        
-        function escapeHtml(text) {
-            if (!text) return '';
-            return text.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
         }
         
         function filtrarReservas() {
@@ -529,7 +526,6 @@
             `).join('');
         }
         
-        // ========== EDITAR ==========
         let reservaEditando = null;
         
         function editarReserva(id) {
@@ -565,9 +561,8 @@
             cerrarModal();
         }
         
-        // ========== ELIMINAR ==========
         function eliminarReserva(id) {
-            if (confirm('¿Está seguro de eliminar esta reserva? Esta acción no se puede deshacer.')) {
+            if (confirm('¿Está seguro de eliminar esta reserva?')) {
                 reservasData = reservasData.filter(r => r.id !== id);
                 renderizarTabla();
                 actualizarEstadisticas();
@@ -575,7 +570,6 @@
             }
         }
         
-        // ========== WHATSAPP ==========
         function enviarWhatsapp(id) {
             const reserva = reservasData.find(r => r.id === id);
             if (!reserva) return;
@@ -607,7 +601,6 @@
             mostrarToast(`📱 Abriendo WhatsApp para ${reserva.cliente}`);
         }
         
-        // ========== VISTA EN LÍNEA ==========
         function verEnLinea(id) {
             const reserva = reservasData.find(r => r.id === id);
             if (!reserva) return;
@@ -644,7 +637,6 @@
             }
         }
         
-        // ========== EXPORTAR ==========
         function exportarExcel() {
             let csv = "ID,Fecha Paseo,Cliente,Empresa,Adultos,Menores,Horario,Total Pagantes,Estado,WhatsApp\n";
             reservasData.forEach(r => {
@@ -662,7 +654,6 @@
             mostrarToast('📥 Exportación completada');
         }
         
-        // ========== TEMAS Y SESIÓN ==========
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
             localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
