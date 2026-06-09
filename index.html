@@ -40,7 +40,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Inter', sans-serif; background: var(--bg-body); color: var(--text-main); min-height: 100vh; transition: background-color 0.3s, color 0.3s; }
         
-        .container { max-width: 1200px; margin: 0 auto; padding: 32px; }
+        .container { max-width: 500px; margin: 0 auto; padding: 20px; }
         .logo-area { text-align: center; margin-bottom: 20px; }
         .logo-area img { height: 80px; width: auto; margin-bottom: 10px; }
         .logo-area h1 { font-size: 24px; margin-top: 5px; }
@@ -57,7 +57,7 @@
         .btn-secondary { background: var(--bg-surface); color: var(--text-main); border: 1px solid var(--border-color); }
         .btn-sm { padding: 6px 12px; font-size: 12px; }
         
-        /* Header del formulario con título y botones en la misma línea */
+        /* Header del formulario */
         .form-header {
             display: flex;
             justify-content: space-between;
@@ -121,7 +121,88 @@
             transform: translateY(-1px);
         }
         
-        /* Selector de horarios - solo preferencia, sin cupos */
+        /* Campo fecha destacada arriba del resumen */
+        .fecha-destacada {
+            background: var(--bg-body);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+        .fecha-destacada label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .fecha-destacada input {
+            font-size: 16px;
+            font-weight: 600;
+            padding: 12px;
+            background: var(--bg-surface);
+        }
+        
+        /* Panel de resumen de pasajeros por día */
+        .summary-card {
+            background: linear-gradient(135deg, var(--primary-light), var(--bg-surface));
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .summary-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .summary-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .summary-message {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+        .celebrate {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+        
+        /* Campo Total a Pagar */
+        .total-card {
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            text-align: center;
+            color: white;
+        }
+        .total-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+        .total-value {
+            font-size: 32px;
+            font-weight: 800;
+        }
+        .total-detail {
+            font-size: 11px;
+            opacity: 0.8;
+            margin-top: 6px;
+        }
+        
+        /* Selector de horarios */
         .horario-selector {
             display: flex;
             flex-direction: column;
@@ -172,23 +253,16 @@
             accent-color: var(--primary);
         }
         
-        .table-section { background: var(--bg-surface); border-radius: var(--radius); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); overflow: hidden; }
-        .section-header { padding: 20px 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-        .table-responsive { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 700px; }
-        th { text-align: left; padding: 14px 20px; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); background: var(--bg-body); border-bottom: 1px solid var(--border-color); }
-        td { padding: 16px 20px; border-bottom: 1px solid var(--border-color); font-size: 14px; vertical-align: middle; }
-        tr:hover td { background: rgba(30, 111, 92, 0.02); }
-        .badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
-        .badge-confirmado { background: var(--success-light); color: #047857; }
-        .client-avatar-sm { width: 28px; height: 28px; border-radius: 50%; background: var(--primary-light); color: var(--primary); display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; margin-right: 8px; vertical-align: middle; }
+        .required-asterisk::after {
+            content: " *";
+            color: var(--danger);
+        }
         
         .toast { position: fixed; bottom: 20px; right: 20px; background: #1f2937; color: white; padding: 12px 24px; border-radius: 40px; z-index: 1000; display: none; }
-        .reservations-layout { display: grid; grid-template-columns: 380px 1fr; gap: 28px; align-items: start; }
-        @media (max-width: 1024px) { .reservations-layout { grid-template-columns: 1fr; } }
+        
         @media (max-width: 768px) { 
             .form-row { grid-template-columns: 1fr; } 
-            .container { padding: 20px; } 
+            .container { padding: 16px; } 
             .form-header { flex-direction: column; align-items: flex-start; }
             .horario-option { padding: 10px 12px; }
             .horario-icon { font-size: 20px; min-width: 32px; }
@@ -203,107 +277,154 @@
             <p style="color: var(--text-muted);">Reserve seu passeio de barco · Cupos limitados · Confirmación inmediata</p>
         </div>
 
-        <div class="reservations-layout">
-            <div class="form-card">
-                <div class="form-header">
-                    <h3><i class="ph ph-plus-circle" style="color:var(--primary);"></i> Nueva Reserva</h3>
-                    <div class="header-buttons">
-                        <button class="theme-btn-inline" id="themeBtnInline" onclick="toggleTheme()">
-                            <i class="ph ph-moon" id="themeIconInline"></i>
-                        </button>
-                        <button class="admin-btn-inline" onclick="window.location.href='login.html'">
-                            <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Admin" class="admin-logo">
-                            Admin
-                        </button>
-                    </div>
-                </div>
-                <form id="reservaForm" onsubmit="event.preventDefault(); guardarReserva();">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Nombre Completo</label>
-                            <input type="text" id="nombre" class="form-control" required placeholder="Ej: Juan Pérez">
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" id="email" class="form-control" required placeholder="juan@empresa.com">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Empresa</label>
-                            <input type="text" id="empresa" class="form-control" placeholder="Opcional">
-                        </div>
-                        <div class="form-group">
-                            <label>Dia de Paseo</label>
-                            <input type="date" id="fechaOut" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Pax</label>
-                        <input type="number" id="pax" class="form-control" min="1" value="1" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Hotel / Dirección</label>
-                        <input type="text" id="hotel" class="form-control" placeholder="Ej: Resort Costa do Sauípe">
-                    </div>
-                    <div class="form-group">
-                        <label>WhatsApp (código país)</label>
-                        <input type="tel" id="whatsapp" class="form-control" placeholder="+55 11 91234-5678">
-                    </div>
-                    <div class="form-group">
-                        <label>Selecciona tu horario de preferencia</label>
-                        <div class="horario-selector" id="horarioSelector">
-                            <div class="horario-option" data-horario="morning" onclick="seleccionarHorario(this)">
-                                <div class="horario-icon">🌅</div>
-                                <div class="horario-info">
-                                    <div class="horario-nombre">Tour Mañana</div>
-                                    <div class="horario-hora">Salida: 09:30 Hs</div>
-                                </div>
-                                <div class="horario-radio"></div>
-                            </div>
-                            <div class="horario-option" data-horario="mid" onclick="seleccionarHorario(this)">
-                                <div class="horario-icon">🌤️</div>
-                                <div class="horario-info">
-                                    <div class="horario-nombre">Tour Media Mañana</div>
-                                    <div class="horario-hora">Salida: 11:10 Hs</div>
-                                </div>
-                                <div class="horario-radio"></div>
-                            </div>
-                            <div class="horario-option" data-horario="afternoon" onclick="seleccionarHorario(this)">
-                                <div class="horario-icon">🌇</div>
-                                <div class="horario-info">
-                                    <div class="horario-nombre">Tour Tarde</div>
-                                    <div class="horario-hora">Salida: 13:30 Hs</div>
-                                </div>
-                                <div class="horario-radio"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:8px; padding:12px;"><i class="ph ph-check-fat"></i> Confirmar Reserva</button>
-                </form>
-            </div>
-            <div class="table-section">
-                <div class="section-header">
-                    <h3 style="font-size:16px; font-weight:600;">Reservas Recientes</h3>
-                    <button class="btn btn-secondary btn-sm" onclick="cargarReservasRecientes()"><i class="ph ph-arrows-clockwise"></i> Actualizar</button>
-                </div>
-                <div class="table-responsive">
-                    <table id="reservasRecientesTable">
-                        <thead><tr><th>ID</th><th>Cliente</th><th>Empresa</th><th>Fecha</th><th>Horario</th><th>Pax</th><th>Estado</th></tr></thead>
-                        <tbody id="reservasRecientesBody"><tr><td colspan="7" style="text-align:center;">Cargando...<\/td></tr></tbody>
-                    </table>
+        <div class="form-card">
+            <div class="form-header">
+                <h3><i class="ph ph-plus-circle" style="color:var(--primary);"></i> Nueva Reserva</h3>
+                <div class="header-buttons">
+                    <button class="theme-btn-inline" id="themeBtnInline" onclick="toggleTheme()">
+                        <i class="ph ph-moon" id="themeIconInline"></i>
+                    </button>
+                    <button class="admin-btn-inline" onclick="window.location.href='login.html'">
+                        <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Admin" class="admin-logo">
+                        Admin
+                    </button>
                 </div>
             </div>
+            
+            <!-- Campo DIA DE PASEO (arriba del resumen) -->
+            <div class="fecha-destacada">
+                <label class="required-asterisk">📅 Dia de Paseo</label>
+                <input type="date" id="fechaOut" class="form-control" required style="font-weight: 600; font-size: 16px;">
+            </div>
+            
+            <!-- Panel de resumen de pasajeros por día -->
+            <div class="summary-card" id="summaryCard">
+                <div class="summary-title">📊 Total de pasajeros para esta fecha</div>
+                <div class="summary-value" id="totalPasajerosDia">-</div>
+                <div class="summary-message" id="summaryMessage">Seleccione una fecha</div>
+            </div>
+            
+            <form id="reservaForm" onsubmit="event.preventDefault(); guardarReserva();">
+                <!-- Campo Nombre Completo -->
+                <div class="form-group">
+                    <label class="required-asterisk">Nombre Completo</label>
+                    <input type="text" id="nombre" class="form-control" required placeholder="Ej: Juan Pérez">
+                </div>
+                
+                <!-- Fila con Email y Empresa -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="required-asterisk">Email</label>
+                        <input type="email" id="email" class="form-control" required placeholder="juan@empresa.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="required-asterisk">Empresa</label>
+                        <input type="text" id="empresa" class="form-control" required placeholder="Nombre de la empresa">
+                    </div>
+                </div>
+                
+                <!-- Fila con Adultos y Menores -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="required-asterisk">Adultos (R$ 85,00 c/u)</label>
+                        <input type="number" id="adultos" class="form-control" min="0" value="1" required oninput="calcularTotal()">
+                    </div>
+                    <div class="form-group">
+                        <label>Menores (R$ 42,50 c/u) | 2-11 años</label>
+                        <input type="number" id="menores" class="form-control" min="0" value="0" oninput="calcularTotal()">
+                        <p class="text-xs text-muted" style="margin-top: 4px; color: var(--text-muted);">Menores de 2 años sin cargo</p>
+                    </div>
+                </div>
+                
+                <!-- Campo Total a Pagar -->
+                <div class="total-card" id="totalCard">
+                    <div class="total-title">💰 TOTAL A PAGAR</div>
+                    <div class="total-value" id="totalValue">R$ 85,00</div>
+                    <div class="total-detail" id="totalDetail">1 Adulto · 0 Menores</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Hotel / Dirección</label>
+                    <input type="text" id="hotel" class="form-control" placeholder="Ej: Resort Costa do Sauípe">
+                </div>
+                
+                <div class="form-group">
+                    <label class="required-asterisk">WhatsApp (código país)</label>
+                    <input type="tel" id="whatsapp" class="form-control" required placeholder="+55 11 91234-5678">
+                </div>
+                
+                <div class="form-group">
+                    <label>Selecciona tu horario de preferencia</label>
+                    <div class="horario-selector" id="horarioSelector">
+                        <div class="horario-option" data-horario="morning" onclick="seleccionarHorario(this)">
+                            <div class="horario-icon">🌅</div>
+                            <div class="horario-info">
+                                <div class="horario-nombre">Tour Mañana</div>
+                                <div class="horario-hora">Salida: 09:30 Hs</div>
+                            </div>
+                            <div class="horario-radio"></div>
+                        </div>
+                        <div class="horario-option" data-horario="mid" onclick="seleccionarHorario(this)">
+                            <div class="horario-icon">🌤️</div>
+                            <div class="horario-info">
+                                <div class="horario-nombre">Tour Media Mañana</div>
+                                <div class="horario-hora">Salida: 11:10 Hs</div>
+                            </div>
+                            <div class="horario-radio"></div>
+                        </div>
+                        <div class="horario-option" data-horario="afternoon" onclick="seleccionarHorario(this)">
+                            <div class="horario-icon">🌇</div>
+                            <div class="horario-info">
+                                <div class="horario-nombre">Tour Tarde</div>
+                                <div class="horario-hora">Salida: 13:30 Hs</div>
+                            </div>
+                            <div class="horario-radio"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:8px; padding:12px;"><i class="ph ph-check-fat"></i> Confirmar Reserva</button>
+            </form>
         </div>
     </div>
 
     <div id="toast" class="toast"></div>
 
     <script>
+        const PRECIO_ADULTO = 85.00;
+        const PRECIO_MENOR = 42.50;
         const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbyO3Z6DGTznI3Rl2cdfHRTypmt-adE22_y_9Fuzc5cnVAXAILHYFpc6GlJpeKK3rKTM_g/exec";
         const SHEETS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTAuEiFi8pDWKqQlsYh5mhMuSZxEojyaM5Vcg-FyBqyCu4FGXFECi5FqhWV4w46oHDcWQSRDxBf4nfm/pubhtml";
         
         let horarioSeleccionado = null;
+        let reservasPorFecha = {}; // { "DD/MM/YYYY": totalPasajeros }
+        
+        function calcularTotal() {
+            const adultos = parseInt(document.getElementById('adultos').value) || 0;
+            const menores = parseInt(document.getElementById('menores').value) || 0;
+            
+            const totalAdultos = adultos * PRECIO_ADULTO;
+            const totalMenores = menores * PRECIO_MENOR;
+            const total = totalAdultos + totalMenores;
+            
+            // Formatear el total
+            document.getElementById('totalValue').innerHTML = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            
+            // Texto de detalle
+            let detalle = '';
+            if (adultos === 1 && menores === 0) detalle = '1 Adulto · 0 Menores';
+            else if (adultos > 0 && menores === 0) detalle = `${adultos} Adultos · 0 Menores`;
+            else if (adultos === 0 && menores === 1) detalle = '0 Adultos · 1 Menor';
+            else if (adultos === 0 && menores > 0) detalle = `0 Adultos · ${menores} Menores`;
+            else if (adultos === 1 && menores === 1) detalle = `1 Adulto · 1 Menor`;
+            else if (adultos === 1 && menores > 0) detalle = `1 Adulto · ${menores} Menores`;
+            else if (adultos > 0 && menores === 1) detalle = `${adultos} Adultos · 1 Menor`;
+            else detalle = `${adultos} Adultos · ${menores} Menores`;
+            
+            document.getElementById('totalDetail').innerHTML = detalle;
+            
+            return total;
+        }
         
         function mostrarToast(mensaje, error = false) {
             const toast = document.getElementById('toast');
@@ -313,7 +434,37 @@
             setTimeout(() => { toast.style.display = 'none'; }, 4000);
         }
         
-        async function cargarReservasRecientes() {
+        // Formatear fecha de YYYY-MM-DD a DD/MM/YYYY
+        function formatearFecha(fechaISO) {
+            if (!fechaISO) return '';
+            const partes = fechaISO.split('-');
+            return `${partes[2]}/${partes[1]}/${partes[0]}`;
+        }
+        
+        // Actualizar el resumen de pasajeros para la fecha seleccionada
+        function actualizarResumenPorFecha() {
+            const fechaInput = document.getElementById('fechaOut').value;
+            if (!fechaInput) {
+                document.getElementById('totalPasajerosDia').innerHTML = '-';
+                document.getElementById('summaryMessage').innerHTML = 'Seleccione una fecha';
+                return;
+            }
+            
+            const fechaFormateada = formatearFecha(fechaInput);
+            const total = reservasPorFecha[fechaFormateada] || 0;
+            
+            document.getElementById('totalPasajerosDia').innerHTML = total;
+            
+            if (total === 0) {
+                document.getElementById('summaryMessage').innerHTML = '🎉 ¡Felicitaciones! Sos el primero en reservar este día';
+                document.getElementById('summaryMessage').className = 'summary-message celebrate';
+            } else {
+                document.getElementById('summaryMessage').innerHTML = `✈️ Ya hay ${total} pasajero(s) confirmado(s) para este día`;
+                document.getElementById('summaryMessage').className = 'summary-message';
+            }
+        }
+        
+        async function cargarReservasParaContador() {
             try {
                 const proxyUrl = 'https://api.allorigins.win/raw?url=';
                 const response = await fetch(proxyUrl + encodeURIComponent(SHEETS_URL));
@@ -324,43 +475,27 @@
                 if (tables.length === 0) return;
                 const rows = tables[0].getElementsByTagName('tr');
                 
-                const reservasRecientes = [];
+                reservasPorFecha = {};
                 
                 for (let i = 1; i < rows.length; i++) {
                     const cells = rows[i].getElementsByTagName('td');
                     if (cells.length >= 7) {
-                        const horario = cells[6]?.textContent?.trim() || '';
-                        let horarioMostrar = horario;
-                        if (horario === "Tour Mañana (09:30)") horarioMostrar = "🌅 09:30";
-                        else if (horario === "Tour Media Mañana (11:10)") horarioMostrar = "🌤️ 11:10";
-                        else if (horario === "Tour Tarde (13:30)") horarioMostrar = "🌇 13:30";
+                        const fecha = cells[1]?.textContent?.trim() || '';
+                        const adultos = parseInt(cells[4]?.textContent?.trim()) || 0;
+                        const menores = parseInt(cells[5]?.textContent?.trim()) || 0;
+                        const total = adultos + menores;
                         
-                        reservasRecientes.push({
-                            id: cells[0]?.textContent?.trim() || '',
-                            nombre: cells[2]?.textContent?.trim() || '',
-                            empresa: cells[3]?.textContent?.trim() || '',
-                            fecha: cells[1]?.textContent?.trim() || '',
-                            horario: horarioMostrar,
-                            pax: parseInt(cells[4]?.textContent?.trim()) || 0,
-                            estado: cells[11]?.textContent?.trim() || 'Confirmado'
-                        });
+                        if (fecha) {
+                            reservasPorFecha[fecha] = (reservasPorFecha[fecha] || 0) + total;
+                        }
                     }
                 }
                 
-                const tbody = document.getElementById('reservasRecientesBody');
-                tbody.innerHTML = reservasRecientes.slice(0, 8).reverse().map(r => `
-                    <tr>
-                        <td style="font-family:monospace;">${r.id}<\/td>
-                        <td><div style="display:flex; align-items:center;"><div class="client-avatar-sm">${r.nombre.charAt(0)}</div>${r.nombre}<\/div><\/td>
-                        <td>${r.empresa || 'N/A'}<\/td>
-                        <td>${r.fecha}<\/td>
-                        <td>${r.horario}<\/td>
-                        <td>${r.pax}<\/td>
-                        <td><span class="badge badge-confirmado">${r.estado}<\/span><\/td>
-                    </tr>
-                `).join('');
+                actualizarResumenPorFecha();
                 
-            } catch(e) { console.error("Error:", e); }
+            } catch(e) { 
+                console.error("Error al cargar contador:", e); 
+            }
         }
         
         function seleccionarHorario(element) {
@@ -371,23 +506,42 @@
         
         async function guardarReserva() {
             const nombre = document.getElementById('nombre').value.trim();
+            const fechaOut = document.getElementById('fechaOut').value;
             const email = document.getElementById('email').value.trim();
             const empresa = document.getElementById('empresa').value.trim();
-            const fechaOut = document.getElementById('fechaOut').value;
-            const pax = parseInt(document.getElementById('pax').value) || 0;
+            const adultos = parseInt(document.getElementById('adultos').value) || 0;
+            const menores = parseInt(document.getElementById('menores').value) || 0;
             const hotel = document.getElementById('hotel').value.trim();
             const whatsapp = document.getElementById('whatsapp').value.trim();
+            const montoTotal = calcularTotal();
             
-            if (!nombre || !email || !fechaOut) {
-                mostrarToast('Complete los campos obligatorios', true);
+            // Validaciones
+            if (!nombre) {
+                mostrarToast('Complete el campo Nombre Completo', true);
+                return;
+            }
+            if (!fechaOut) {
+                mostrarToast('Seleccione la fecha del paseo', true);
+                return;
+            }
+            if (!email) {
+                mostrarToast('Complete el campo Email', true);
+                return;
+            }
+            if (!empresa) {
+                mostrarToast('Complete el campo Empresa', true);
+                return;
+            }
+            if (!whatsapp) {
+                mostrarToast('Complete el campo WhatsApp', true);
                 return;
             }
             if (!horarioSeleccionado) {
                 mostrarToast('Seleccione un horario', true);
                 return;
             }
-            if (pax === 0) {
-                mostrarToast('Ingrese al menos un pasajero', true);
+            if (adultos === 0 && menores === 0) {
+                mostrarToast('Ingrese al menos un pasajero entre adultos y menores', true);
                 return;
             }
             
@@ -401,14 +555,13 @@
             }
             
             const id = `ATB-${Date.now()}-${Math.floor(Math.random()*1000)}`;
-            const montoTotal = pax * 180;
             const datosReserva = { 
                 id, 
                 fecha_paseo: fechaOut, 
                 nombre, 
                 empresa, 
-                adultos: pax, 
-                menores: 0, 
+                adultos: adultos, 
+                menores: menores, 
                 horario: horarioTexto, 
                 monto_total: montoTotal, 
                 hotel, 
@@ -422,13 +575,24 @@
                 
                 if (resultado.success) {
                     mostrarToast('✅ Reserva confirmada');
+                    
+                    // Actualizar el contador local de reservas por fecha
+                    const fechaFormateada = formatearFecha(fechaOut);
+                    const totalActual = reservasPorFecha[fechaFormateada] || 0;
+                    reservasPorFecha[fechaFormateada] = totalActual + adultos + menores;
+                    actualizarResumenPorFecha();
+                    
+                    // Limpiar formulario
                     document.getElementById('reservaForm').reset();
-                    document.getElementById('pax').value = '1';
+                    document.getElementById('adultos').value = '1';
+                    document.getElementById('menores').value = '0';
                     document.querySelectorAll('.horario-option').forEach(opt => opt.classList.remove('selected'));
                     horarioSeleccionado = null;
-                    await cargarReservasRecientes();
+                    document.getElementById('fechaOut').value = '';
+                    calcularTotal(); // Resetear el total mostrado
                     
-                    const mensajeWhatsApp = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0ANombre: ${nombre}%0AHotel: ${hotel}%0AEmail: ${email}%0AWhatsApp: ${whatsapp}%0AEmpresa: ${empresa}%0AFecha: ${fechaOut}%0AHorario: ${horarioTexto}%0APasajeros: ${pax}%0ACódigo: ${id}%0ATotal: R$ ${montoTotal}`;
+                    const totalPax = adultos + menores;
+                    const mensajeWhatsApp = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0ANombre: ${nombre}%0AHotel: ${hotel}%0AEmail: ${email}%0AWhatsApp: ${whatsapp}%0AEmpresa: ${empresa}%0AFecha: ${fechaOut}%0AHorario: ${horarioTexto}%0AAdultos: ${adultos} (R$ 85,00 c/u)%0AMenores: ${menores} (R$ 42,50 c/u)%0ATotal Pasajeros: ${totalPax}%0ACódigo: ${id}%0ATotal: R$ ${montoTotal.toFixed(2)}`;
                     if (whatsapp) window.open(`https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(mensajeWhatsApp)}`, '_blank');
                 } else {
                     mostrarToast('Error al guardar la reserva', true);
@@ -456,8 +620,14 @@
             if (iconInline) iconInline.className = 'ph ph-sun';
         }
         
-        document.getElementById('fechaOut').min = new Date().toISOString().split('T')[0];
-        cargarReservasRecientes();
+        // Establecer fecha mínima para que no se puedan elegir fechas pasadas
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('fechaOut').min = today;
+        document.getElementById('fechaOut').addEventListener('change', actualizarResumenPorFecha);
+        
+        // Inicializar el cálculo del total
+        calcularTotal();
+        cargarReservasParaContador();
     </script>
 </body>
 </html>
