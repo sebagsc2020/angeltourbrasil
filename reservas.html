@@ -13,6 +13,7 @@
             padding: 20px;
             color: #E2E8F0;
             transition: background 0.3s ease;
+            overflow-x: auto;
         }
         body.light-mode {
             background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
@@ -112,18 +113,41 @@
             color: white;
             cursor: pointer;
         }
-        .table-wrapper { overflow-x: auto; max-height: 65vh; overflow-y: auto; padding: 0 0 1rem 0; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        
+        /* CONTENEDOR DE TABLA CON SCROLL CONTROLADO */
+        .table-wrapper {
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 55vh;
+            margin: 0 0 0.5rem 0;
+            scrollbar-width: thin;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            min-width: 1000px;
+        }
+        
         th {
             text-align: left;
             padding: 1rem;
-            background: rgba(14,165,233,0.1);
+            background: rgba(14,165,233,0.15);
             position: sticky;
             top: 0;
             font-size: 0.7rem;
             text-transform: uppercase;
+            backdrop-filter: blur(8px);
+            z-index: 10;
         }
-        td { padding: 0.9rem 1rem; border-bottom: 1px solid rgba(56,189,248,0.1); vertical-align: middle; }
+        
+        td {
+            padding: 0.9rem 1rem;
+            border-bottom: 1px solid rgba(56,189,248,0.1);
+            vertical-align: middle;
+        }
+        
         .entry-row { cursor: pointer; transition: background 0.2s; }
         .entry-row:hover { background: rgba(14,165,233,0.15); }
         .badge { background: #1E293B; border-radius: 30px; padding: 0.2rem 0.6rem; font-size: 0.7rem; display: inline-block; }
@@ -146,7 +170,7 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         
-        /* ========== MODAL DE DETALLES ========== */
+        /* ========== MODAL DE DETALLES - SIN SCROLL DOBLE ========== */
         .detail-modal {
             display: none;
             position: fixed;
@@ -169,7 +193,9 @@
             border: 1px solid #0ea5e9;
             max-height: 85vh;
             overflow-y: auto;
+            overflow-x: hidden;
             animation: modalFadeIn 0.3s ease;
+            scrollbar-width: thin;
         }
         @keyframes modalFadeIn {
             from { opacity: 0; transform: scale(0.95); }
@@ -182,6 +208,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 20;
         }
         .modal-header h3 {
             color: white;
@@ -283,6 +312,8 @@
             border: 1px solid #0ea5e9;
             max-height: 85vh;
             overflow-y: auto;
+            overflow-x: hidden;
+            scrollbar-width: thin;
         }
         body.light-mode .edit-modal .modal-content {
             background: white;
@@ -333,7 +364,11 @@
         }
         
         @media (max-width: 700px) {
-            th, td { font-size: 0.7rem; padding: 0.7rem; }
+            body { padding: 10px; }
+            .dashboard-header { padding: 1rem; }
+            .stats-grid { padding: 1rem; gap: 0.8rem; }
+            .filter-bar { padding: 0.8rem 1rem; }
+            th, td { padding: 0.6rem; font-size: 0.7rem; }
             .modal-buttons { flex-direction: column; }
         }
     </style>
@@ -367,7 +402,9 @@
         </select>
         <button id="refreshBtn" class="btn-refresh">⟳ Actualizar datos</button>
     </div>
-    <div class="table-wrapper">
+    
+    <!-- Tabla con scroll controlado -->
+    <div class="table-wrapper" id="tableWrapper">
         <div id="tableSpinner" style="text-align:center; padding:2rem;"><div class="spinner-circle-sm"></div><p>Cargando reservas...</p></div>
         <table id="reservasTable" style="display:none;">
             <thead>
@@ -378,19 +415,18 @@
         </table>
         <div id="emptyMessage" class="empty-state" style="display:none;">✨ No se encontraron reservas.</div>
     </div>
+    
     <div class="footer-panel"><span>⛵ Angel Tour Brasil · Gestión en tiempo real</span><span>🔐 Datos sincronizados vía Google Sheets</span></div>
 </div>
 
-<!-- MODAL DE DETALLES (popup al hacer clic en la fila) -->
+<!-- MODAL DE DETALLES -->
 <div id="detailModal" class="detail-modal">
     <div class="modal-content">
         <div class="modal-header">
             <h3>📋 Detalles de la Reserva</h3>
             <button class="close-modal" id="closeDetailModalBtn">✕</button>
         </div>
-        <div class="modal-body" id="detailModalBody">
-            <!-- Los detalles se llenan dinámicamente -->
-        </div>
+        <div class="modal-body" id="detailModalBody"></div>
     </div>
 </div>
 
@@ -399,25 +435,25 @@
     <div class="modal-content">
         <h3>✏️ Editar Reserva</h3>
         <input type="hidden" id="editId">
-        <label>Fecha:</label>
+        <label>📅 Fecha:</label>
         <input type="date" id="editFecha">
-        <label>Nombre Completo:</label>
+        <label>👤 Nombre Completo:</label>
         <input type="text" id="editNombre">
-        <label>Empresa:</label>
+        <label>🏢 Empresa:</label>
         <input type="text" id="editEmpresa">
-        <label>Email:</label>
+        <label>✉️ Email:</label>
         <input type="email" id="editEmail">
-        <label>Horario:</label>
+        <label>⏰ Horario:</label>
         <select id="editHorario">
             <option value="Mañana 9:30 Hs">Mañana 9:30 Hs</option>
             <option value="Media Mañana 11:10 Hs">Media Mañana 11:10 Hs</option>
             <option value="Tarde 13:10 Hs">Tarde 13:10 Hs</option>
         </select>
-        <label>Adultos:</label>
+        <label>👥 Adultos (R$ 85,00):</label>
         <input type="number" id="editAdultos" min="0">
-        <label>Menores (6/11):</label>
+        <label>🧒 Menores 6/11 (R$ 42,50):</label>
         <input type="number" id="editMenores" min="0">
-        <label>Cortesía:</label>
+        <label>🎁 Cortesía (menores de 6):</label>
         <input type="number" id="editCortesia" min="0">
         <div class="edit-buttons">
             <button class="btn-cancel" id="closeEditModalBtn">Cancelar</button>
@@ -441,7 +477,6 @@
     const refreshBtn = document.getElementById('refreshBtn');
     const backBtn = document.getElementById('backToFormBtn');
     
-    // Modales
     const detailModal = document.getElementById('detailModal');
     const editModal = document.getElementById('editModal');
     let currentReserva = null;
@@ -519,7 +554,6 @@
         renderTabla();
     }
 
-    // Mostrar modal de detalles
     function showDetailModal(reserva) {
         currentReserva = reserva;
         const modalBody = document.getElementById('detailModalBody');
@@ -549,16 +583,16 @@
                 <span class="detail-value">${escapeHtml(reserva.horario)}</span>
             </div>
             <div class="detail-field">
-                <span class="detail-label">👥 Adultos</span>
-                <span class="detail-value">${reserva.adultos} x R$ 85,00</span>
+                <span class="detail-label">👥 Adultos (R$ 85,00)</span>
+                <span class="detail-value">${reserva.adultos} personas</span>
             </div>
             <div class="detail-field">
-                <span class="detail-label">🧒 Menores (6-11 años)</span>
-                <span class="detail-value">${reserva.menores} x R$ 42,50</span>
+                <span class="detail-label">🧒 Menores 6-11 (R$ 42,50)</span>
+                <span class="detail-value">${reserva.menores} personas</span>
             </div>
             <div class="detail-field">
                 <span class="detail-label">🎁 Cortesía (menores de 6)</span>
-                <span class="detail-value">${reserva.cortesia}</span>
+                <span class="detail-value">${reserva.cortesia} personas</span>
             </div>
             <div class="detail-field">
                 <span class="detail-label">💰 Valor Total</span>
@@ -574,7 +608,6 @@
             </div>
         `;
         
-        // Asignar eventos a los botones del modal
         document.getElementById('modalEditBtn').onclick = () => {
             detailModal.style.display = 'none';
             openEditModal(currentReserva);
@@ -584,9 +617,14 @@
         };
         
         detailModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
     }
 
-    // Compartir por WhatsApp
+    function closeDetailModal() {
+        detailModal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
     function shareWhatsApp(reserva) {
         const mensaje = `🚤 *ANGEL TOUR BRASIL* 🚤\n\n` +
                         `✅ *RESERVA CONFIRMADA*\n` +
@@ -612,7 +650,6 @@
         window.open(url, '_blank');
     }
 
-    // Abrir modal de edición
     function openEditModal(reserva) {
         currentReserva = reserva;
         document.getElementById('editId').value = reserva.id;
@@ -625,6 +662,12 @@
         document.getElementById('editMenores').value = reserva.menores;
         document.getElementById('editCortesia').value = reserva.cortesia;
         editModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeEditModal() {
+        editModal.style.display = 'none';
+        document.body.style.overflow = '';
     }
 
     async function saveEdit() {
@@ -664,7 +707,7 @@
             
             await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
             
-            editModal.style.display = 'none';
+            closeEditModal();
             await cargarReservas();
             mostrarMensajeTemporal('✅ Reserva actualizada correctamente');
         } catch (error) {
@@ -678,13 +721,15 @@
         msgDiv.textContent = mensaje;
         msgDiv.style.position = 'fixed';
         msgDiv.style.bottom = '20px';
-        msgDiv.style.right = '20px';
+        msgDiv.style.left = '50%';
+        msgDiv.style.transform = 'translateX(-50%)';
         msgDiv.style.backgroundColor = '#0ea5e9';
         msgDiv.style.color = 'white';
-        msgDiv.style.padding = '0.8rem 1.2rem';
+        msgDiv.style.padding = '0.8rem 1.5rem';
         msgDiv.style.borderRadius = '2rem';
         msgDiv.style.zIndex = '9999';
         msgDiv.style.fontWeight = '600';
+        msgDiv.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
         document.body.appendChild(msgDiv);
         setTimeout(() => msgDiv.remove(), 3000);
     }
@@ -693,7 +738,7 @@
         if (!filteredData.length) { tableEl.style.display = 'none'; emptyMsg.style.display = 'block'; return; }
         tableEl.style.display = 'table'; emptyMsg.style.display = 'none';
         tableBody.innerHTML = filteredData.map(r => `
-            <tr class="entry-row" data-id="${escapeHtml(r.id)}" onclick='showDetailModal(${JSON.stringify(r).replace(/'/g, "&#39;")})'>
+            <tr class="entry-row" onclick='showDetailModal(${JSON.stringify(r).replace(/'/g, "&#39;")})'>
                 <td><span class="badge">${escapeHtml(r.id)}</span></td>
                 <td>${escapeHtml(r.fechaDisplay)}</td>
                 <td><strong>${escapeHtml(r.nombre)}</strong></td>
@@ -709,7 +754,7 @@
         `).join('');
     }
 
-    function escapeHtml(s) { if(!s) return ''; return s.replace(/[&<>]/g, function(m){ return m=='&'?'&amp;':m=='<'?'&lt;':'&gt;'; }); }
+    function escapeHtml(s) { if(!s) return ''; return s.replace(/[&<>]/g, function(m){ return m=='&'?'&amp;':m=='<'?'&lt;':m=='>'?'&gt;':m; }); }
 
     function actualizarEstadisticas() {
         const total = reservasData.length;
@@ -735,17 +780,15 @@
     refreshBtn.addEventListener('click', cargarReservas);
     backBtn.addEventListener('click', () => window.location.href = 'https://sebagsc2020.github.io/angeltourbrasil/index.html');
     
-    // Cerrar modales
-    document.getElementById('closeDetailModalBtn').onclick = () => detailModal.style.display = 'none';
-    document.getElementById('closeEditModalBtn').onclick = () => editModal.style.display = 'none';
+    document.getElementById('closeDetailModalBtn').onclick = closeDetailModal;
+    document.getElementById('closeEditModalBtn').onclick = closeEditModal;
     document.getElementById('saveEditBtn').onclick = saveEdit;
     
     window.onclick = function(event) {
-        if (event.target == detailModal) detailModal.style.display = 'none';
-        if (event.target == editModal) editModal.style.display = 'none';
+        if (event.target == detailModal) closeDetailModal();
+        if (event.target == editModal) closeEditModal();
     }
     
-    // Tema oscuro/claro
     function toggleTheme() { document.body.classList.toggle('light-mode'); localStorage.setItem('theme', document.body.classList.contains('light-mode')?'light':'dark'); }
     document.getElementById('themeToggleDashboard').addEventListener('click', toggleTheme);
     if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
