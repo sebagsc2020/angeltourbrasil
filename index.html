@@ -27,22 +27,36 @@
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             --radius: 12px;
             --radius-sm: 8px;
+            --summary-bg-start: #d1fae5;
+            --summary-text: #0f172a;
+            --summary-muted: #64748b;
         }
         body.dark-mode {
             --bg-body: #0f172a;
             --bg-surface: #1e293b;
             --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
+            --text-muted: #cbd5e1;
             --border-color: #334155;
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --summary-bg-start: #1e6f5c;
+            --summary-text: #f1f5f9;
+            --summary-muted: #cbd5e1;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Inter', sans-serif; background: var(--bg-body); color: var(--text-main); min-height: 100vh; transition: background-color 0.3s, color 0.3s; }
         
         .container { max-width: 500px; margin: 0 auto; padding: 20px; }
         .logo-area { text-align: center; margin-bottom: 20px; }
-        .logo-area img { height: 80px; width: auto; margin-bottom: 10px; }
+        .logo-area img { 
+            height: 120px; 
+            width: auto; 
+            margin-bottom: 10px;
+            transition: transform 0.3s;
+        }
+        .logo-area img:hover {
+            transform: scale(1.05);
+        }
         .logo-area h1 { font-size: 24px; margin-top: 5px; }
         
         .form-card { background: var(--bg-surface); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); margin-bottom: 28px; }
@@ -121,6 +135,38 @@
             transform: translateY(-1px);
         }
         
+        /* Botones de idioma */
+        .lang-btn {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 4px 10px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .lang-btn:hover {
+            transform: translateY(-1px);
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+        .lang-btn.active {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            box-shadow: 0 0 0 2px var(--primary-light);
+        }
+        .flag-icon {
+            font-size: 22px;
+        }
+        .lang-text {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        
         /* Campo fecha destacada arriba del resumen */
         .fecha-destacada {
             background: var(--bg-body);
@@ -147,7 +193,7 @@
         
         /* Panel de resumen de pasajeros por día */
         .summary-card {
-            background: linear-gradient(135deg, var(--primary-light), var(--bg-surface));
+            background: linear-gradient(135deg, var(--summary-bg-start), var(--bg-surface));
             border-radius: var(--radius);
             padding: 16px 20px;
             margin-bottom: 24px;
@@ -158,7 +204,7 @@
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--text-muted);
+            color: var(--summary-muted);
             margin-bottom: 8px;
         }
         .summary-value {
@@ -168,7 +214,7 @@
         }
         .summary-message {
             font-size: 13px;
-            color: var(--text-muted);
+            color: var(--summary-muted);
             margin-top: 8px;
         }
         .celebrate {
@@ -260,12 +306,22 @@
         
         .toast { position: fixed; bottom: 20px; right: 20px; background: #1f2937; color: white; padding: 12px 24px; border-radius: 40px; z-index: 1000; display: none; }
         
+        /* Precio pequeño debajo de los campos */
+        .price-hint {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: normal;
+        }
+        
         @media (max-width: 768px) { 
             .form-row { grid-template-columns: 1fr; } 
             .container { padding: 16px; } 
             .form-header { flex-direction: column; align-items: flex-start; }
             .horario-option { padding: 10px 12px; }
             .horario-icon { font-size: 20px; min-width: 32px; }
+            .logo-area img { height: 90px; }
+            .header-buttons { flex-wrap: wrap; }
         }
     </style>
 </head>
@@ -274,32 +330,40 @@
         <div class="logo-area">
             <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Angel Tour Brasil">
             <h1>Angel Tour Brasil</h1>
-            <p style="color: var(--text-muted);">Reserve seu passeio de barco · Cupos limitados · Confirmación inmediata</p>
+            <p style="color: var(--text-muted);" id="subtitleText">Reserve seu passeio de barco · Cupos limitados · Confirmación inmediata</p>
         </div>
 
         <div class="form-card">
             <div class="form-header">
-                <h3><i class="ph ph-plus-circle" style="color:var(--primary);"></i> Nueva Reserva</h3>
+                <h3><i class="ph ph-plus-circle" style="color:var(--primary);"></i> <span id="formTitle">Nueva Reserva</span></h3>
                 <div class="header-buttons">
+                    <button class="lang-btn" id="langPtBtn" onclick="cambiarIdioma('pt')">
+                        <span class="flag-icon">🇧🇷</span>
+                        <span class="lang-text">PT</span>
+                    </button>
+                    <button class="lang-btn" id="langEsBtn" onclick="cambiarIdioma('es')">
+                        <span class="flag-icon">🇪🇸</span>
+                        <span class="lang-text">ES</span>
+                    </button>
                     <button class="theme-btn-inline" id="themeBtnInline" onclick="toggleTheme()">
                         <i class="ph ph-moon" id="themeIconInline"></i>
                     </button>
                     <button class="admin-btn-inline" onclick="window.location.href='login.html'">
                         <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Admin" class="admin-logo">
-                        Admin
+                        <span id="adminText">Admin</span>
                     </button>
                 </div>
             </div>
             
             <!-- Campo DIA DE PASEO (arriba del resumen) -->
             <div class="fecha-destacada">
-                <label class="required-asterisk">📅 Dia de Paseo</label>
+                <label class="required-asterisk" id="fechaLabel">📅 Dia de Paseo</label>
                 <input type="date" id="fechaOut" class="form-control" required style="font-weight: 600; font-size: 16px;">
             </div>
             
             <!-- Panel de resumen de pasajeros por día -->
             <div class="summary-card" id="summaryCard">
-                <div class="summary-title">📊 Total de pasajeros para esta fecha</div>
+                <div class="summary-title" id="summaryTitle">📊 Total de pasajeros para esta fecha</div>
                 <div class="summary-value" id="totalPasajerosDia">-</div>
                 <div class="summary-message" id="summaryMessage">Seleccione una fecha</div>
             </div>
@@ -307,18 +371,18 @@
             <form id="reservaForm" onsubmit="event.preventDefault(); guardarReserva();">
                 <!-- Campo Nombre Completo -->
                 <div class="form-group">
-                    <label class="required-asterisk">Nombre Guia</label>
+                    <label class="required-asterisk" id="nombreLabel">Nombre Completo</label>
                     <input type="text" id="nombre" class="form-control" required placeholder="Ej: Juan Pérez">
                 </div>
                 
                 <!-- Fila con Email y Empresa -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="required-asterisk">Email</label>
+                        <label class="required-asterisk" id="emailLabel">Email</label>
                         <input type="email" id="email" class="form-control" required placeholder="juan@empresa.com">
                     </div>
                     <div class="form-group">
-                        <label class="required-asterisk">Empresa</label>
+                        <label class="required-asterisk" id="empresaLabel">Empresa</label>
                         <input type="text" id="empresa" class="form-control" required placeholder="Nombre de la empresa">
                     </div>
                 </div>
@@ -326,64 +390,65 @@
                 <!-- Fila con Adultos y Menores -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="required-asterisk">Adultos </label>
+                        <label class="required-asterisk" id="adultosLabel">Adultos</label>
                         <input type="number" id="adultos" class="form-control" min="0" value="1" required oninput="calcularTotal()">
+                        <div class="price-hint" id="adultosHint">R$ 85,00 por adulto</div>
                     </div>
                     <div class="form-group">
-                        <label>Menores Pagantes| 6-11 </label>
+                        <label id="menoresLabel">Menores | 6-11 años</label>
                         <input type="number" id="menores" class="form-control" min="0" value="0" oninput="calcularTotal()">
-                        <p class="text-xs text-muted" style="margin-top: 4px; color: var(--text-muted);"></p>
+                        <div class="price-hint" id="menoresHint">R$ 42,50 por menor · Menores de 6 años sin cargo</div>
                     </div>
                 </div>
                 
                 <!-- Campo Total a Pagar -->
                 <div class="total-card" id="totalCard">
-                    <div class="total-title">💰 TOTAL A PAGAR</div>
+                    <div class="total-title" id="totalTitle">💰 TOTAL A PAGAR</div>
                     <div class="total-value" id="totalValue">R$ 85,00</div>
                     <div class="total-detail" id="totalDetail">1 Adulto · 0 Menores</div>
                 </div>
                 
                 <div class="form-group">
-                    <label>Hotel / Dirección</label>
+                    <label id="hotelLabel">Hotel / Dirección</label>
                     <input type="text" id="hotel" class="form-control" placeholder="Ej: Resort Costa do Sauípe">
                 </div>
                 
                 <div class="form-group">
-                    <label class="required-asterisk">WhatsApp (código país)</label>
+                    <label class="required-asterisk" id="whatsappLabel">WhatsApp (+código país)</label>
                     <input type="tel" id="whatsapp" class="form-control" required placeholder="+55 11 91234-5678">
                 </div>
                 
                 <div class="form-group">
-                    <label>Selecciona tu horario de preferencia</label>
+                    <label id="horarioLabel">Selecciona tu horario de preferencia</label>
                     <div class="horario-selector" id="horarioSelector">
                         <div class="horario-option" data-horario="morning" onclick="seleccionarHorario(this)">
                             <div class="horario-icon">🌅</div>
                             <div class="horario-info">
-                                <div class="horario-nombre">Tour Mañana</div>
-                                <div class="horario-hora">Salida: 09:30 Hs</div>
+                                <div class="horario-nombre" id="horarioMorningNombre">Tour Mañana</div>
+                                <div class="horario-hora" id="horarioMorningHora">Salida: 09:30 Hs</div>
                             </div>
                             <div class="horario-radio"></div>
                         </div>
                         <div class="horario-option" data-horario="mid" onclick="seleccionarHorario(this)">
                             <div class="horario-icon">🌤️</div>
                             <div class="horario-info">
-                                <div class="horario-nombre">Tour Media Mañana</div>
-                                <div class="horario-hora">Salida: 11:10 Hs</div>
+                                <div class="horario-nombre" id="horarioMidNombre">Tour Media Mañana</div>
+                                <div class="horario-hora" id="horarioMidHora">Salida: 11:10 Hs</div>
                             </div>
                             <div class="horario-radio"></div>
                         </div>
                         <div class="horario-option" data-horario="afternoon" onclick="seleccionarHorario(this)">
                             <div class="horario-icon">🌇</div>
                             <div class="horario-info">
-                                <div class="horario-nombre">Tour Tarde</div>
-                                <div class="horario-hora">Salida: 13:30 Hs</div>
+                                <div class="horario-nombre" id="horarioAfternoonNombre">Tour Tarde</div>
+                                <div class="horario-hora" id="horarioAfternoonHora">Salida: 13:30 Hs</div>
                             </div>
                             <div class="horario-radio"></div>
                         </div>
                     </div>
                 </div>
                 
-                <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:8px; padding:12px;"><i class="ph ph-check-fat"></i> Confirmar Reserva</button>
+                <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:8px; padding:12px;" id="confirmarBtn"><i class="ph ph-check-fat"></i> Confirmar Reserva</button>
             </form>
         </div>
     </div>
@@ -397,7 +462,151 @@
         const SHEETS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTAuEiFi8pDWKqQlsYh5mhMuSZxEojyaM5Vcg-FyBqyCu4FGXFECi5FqhWV4w46oHDcWQSRDxBf4nfm/pubhtml";
         
         let horarioSeleccionado = null;
-        let reservasPorFecha = {}; // { "DD/MM/YYYY": totalPasajeros }
+        let reservasPorFecha = {};
+        let idiomaActual = 'es';
+        
+        // Diccionario de textos
+        const textos = {
+            pt: {
+                subtitle: "Reserve seu passeio de barco · Vagas limitadas · Confirmação imediata",
+                formTitle: "Nova Reserva",
+                adminText: "Admin",
+                fechaLabel: "📅 Dia do Passeio",
+                summaryTitle: "📊 Total de passageiros para esta data",
+                summarySelectDate: "Selecione uma data",
+                summaryFirst: "🎉 Parabéns! Você é o primeiro a reservar neste dia",
+                summaryHas: (total) => `✈️ Já há ${total} passageiro(s) confirmado(s) para este dia`,
+                nombreLabel: "Nome Completo",
+                emailLabel: "E-mail",
+                empresaLabel: "Empresa",
+                adultosLabel: "Adultos",
+                adultosHint: "R$ 85,00 por adulto",
+                menoresLabel: "Menores | 6-11 anos",
+                menoresHint: "R$ 42,50 por menor · Menores de 6 anos grátis",
+                totalTitle: "💰 TOTAL A PAGAR",
+                hotelLabel: "Hotel / Endereço",
+                whatsappLabel: "WhatsApp (+código país)",
+                horarioLabel: "Selecione seu horário de preferência",
+                horarioMorning: "Tour Manhã",
+                horarioMorningHora: "Saída: 09:30 Hs",
+                horarioMid: "Tour Meia Manhã",
+                horarioMidHora: "Saída: 11:10 Hs",
+                horarioAfternoon: "Tour Tarde",
+                horarioAfternoonHora: "Saída: 13:30 Hs",
+                confirmarBtn: "Confirmar Reserva",
+                toastSuccess: "✅ Reserva confirmada",
+                toastErrorNombre: "Complete o campo Nome Completo",
+                toastErrorFecha: "Selecione a data do passeio",
+                toastErrorEmail: "Complete o campo E-mail",
+                toastErrorEmpresa: "Complete o campo Empresa",
+                toastErrorWhatsapp: "Complete o campo WhatsApp",
+                toastErrorHorario: "Selecione um horário",
+                toastErrorPasajeros: "Insira pelo menos um passageiro entre adultos e menores"
+            },
+            es: {
+                subtitle: "Reserve seu passeio de barco · Cupos limitados · Confirmación inmediata",
+                formTitle: "Nueva Reserva",
+                adminText: "Admin",
+                fechaLabel: "📅 Dia de Paseo",
+                summaryTitle: "📊 Total de pasajeros para esta fecha",
+                summarySelectDate: "Seleccione una fecha",
+                summaryFirst: "🎉 ¡Felicitaciones! Sos el primero en reservar este día",
+                summaryHas: (total) => `✈️ Ya hay ${total} pasajero(s) confirmado(s) para este día`,
+                nombreLabel: "Nombre Completo",
+                emailLabel: "Email",
+                empresaLabel: "Empresa",
+                adultosLabel: "Adultos",
+                adultosHint: "R$ 85,00 por adulto",
+                menoresLabel: "Menores | 6-11 años",
+                menoresHint: "R$ 42,50 por menor · Menores de 6 años sin cargo",
+                totalTitle: "💰 TOTAL A PAGAR",
+                hotelLabel: "Hotel / Dirección",
+                whatsappLabel: "WhatsApp (+código país)",
+                horarioLabel: "Selecciona tu horario de preferencia",
+                horarioMorning: "Tour Mañana",
+                horarioMorningHora: "Salida: 09:30 Hs",
+                horarioMid: "Tour Media Mañana",
+                horarioMidHora: "Salida: 11:10 Hs",
+                horarioAfternoon: "Tour Tarde",
+                horarioAfternoonHora: "Salida: 13:30 Hs",
+                confirmarBtn: "Confirmar Reserva",
+                toastSuccess: "✅ Reserva confirmada",
+                toastErrorNombre: "Complete el campo Nombre Completo",
+                toastErrorFecha: "Seleccione la fecha del paseo",
+                toastErrorEmail: "Complete el campo Email",
+                toastErrorEmpresa: "Complete el campo Empresa",
+                toastErrorWhatsapp: "Complete el campo WhatsApp",
+                toastErrorHorario: "Seleccione un horario",
+                toastErrorPasajeros: "Ingrese al menos un pasajero entre adultos y menores"
+            }
+        };
+        
+        function cambiarIdioma(idioma) {
+            idiomaActual = idioma;
+            localStorage.setItem('idioma', idioma);
+            
+            // Actualizar clases activas de los botones
+            document.getElementById('langPtBtn').classList.toggle('active', idioma === 'pt');
+            document.getElementById('langEsBtn').classList.toggle('active', idioma === 'es');
+            
+            const t = textos[idioma];
+            
+            document.getElementById('subtitleText').innerText = t.subtitle;
+            document.getElementById('formTitle').innerText = t.formTitle;
+            document.getElementById('adminText').innerText = t.adminText;
+            document.getElementById('fechaLabel').innerHTML = t.fechaLabel;
+            document.getElementById('summaryTitle').innerHTML = t.summaryTitle;
+            document.getElementById('nombreLabel').innerHTML = t.nombreLabel + ' *';
+            document.getElementById('emailLabel').innerHTML = t.emailLabel + ' *';
+            document.getElementById('empresaLabel').innerHTML = t.empresaLabel + ' *';
+            document.getElementById('adultosLabel').innerHTML = t.adultosLabel + ' *';
+            document.getElementById('adultosHint').innerText = t.adultosHint;
+            document.getElementById('menoresLabel').innerHTML = t.menoresLabel;
+            document.getElementById('menoresHint').innerHTML = t.menoresHint;
+            document.getElementById('totalTitle').innerHTML = t.totalTitle;
+            document.getElementById('hotelLabel').innerHTML = t.hotelLabel;
+            document.getElementById('whatsappLabel').innerHTML = t.whatsappLabel + ' *';
+            document.getElementById('horarioLabel').innerHTML = t.horarioLabel;
+            document.getElementById('horarioMorningNombre').innerText = t.horarioMorning;
+            document.getElementById('horarioMorningHora').innerText = t.horarioMorningHora;
+            document.getElementById('horarioMidNombre').innerText = t.horarioMid;
+            document.getElementById('horarioMidHora').innerText = t.horarioMidHora;
+            document.getElementById('horarioAfternoonNombre').innerText = t.horarioAfternoon;
+            document.getElementById('horarioAfternoonHora').innerText = t.horarioAfternoonHora;
+            document.getElementById('confirmarBtn').innerHTML = `<i class="ph ph-check-fat"></i> ${t.confirmarBtn}`;
+            
+            // Actualizar placeholders
+            document.getElementById('nombre').placeholder = idioma === 'es' ? 'Ej: Juan Pérez' : 'Ex: João Silva';
+            document.getElementById('email').placeholder = idioma === 'es' ? 'juan@empresa.com' : 'joao@empresa.com';
+            document.getElementById('empresa').placeholder = idioma === 'es' ? 'Nombre de la empresa' : 'Nome da empresa';
+            document.getElementById('hotel').placeholder = idioma === 'es' ? 'Ej: Resort Costa do Sauípe' : 'Ex: Resort Costa do Sauípe';
+            document.getElementById('whatsapp').placeholder = idioma === 'es' ? '+55 11 91234-5678' : '+55 11 91234-5678';
+            
+            // Actualizar mensaje del resumen si hay fecha seleccionada
+            actualizarResumenPorFechaConIdioma();
+        }
+        
+        function actualizarResumenPorFechaConIdioma() {
+            const fechaInput = document.getElementById('fechaOut').value;
+            if (!fechaInput) {
+                document.getElementById('totalPasajerosDia').innerHTML = '-';
+                document.getElementById('summaryMessage').innerHTML = textos[idiomaActual].summarySelectDate;
+                return;
+            }
+            
+            const fechaFormateada = formatearFecha(fechaInput);
+            const total = reservasPorFecha[fechaFormateada] || 0;
+            
+            document.getElementById('totalPasajerosDia').innerHTML = total;
+            
+            if (total === 0) {
+                document.getElementById('summaryMessage').innerHTML = textos[idiomaActual].summaryFirst;
+                document.getElementById('summaryMessage').className = 'summary-message celebrate';
+            } else {
+                document.getElementById('summaryMessage').innerHTML = textos[idiomaActual].summaryHas(total);
+                document.getElementById('summaryMessage').className = 'summary-message';
+            }
+        }
         
         function calcularTotal() {
             const adultos = parseInt(document.getElementById('adultos').value) || 0;
@@ -407,10 +616,8 @@
             const totalMenores = menores * PRECIO_MENOR;
             const total = totalAdultos + totalMenores;
             
-            // Formatear el total
             document.getElementById('totalValue').innerHTML = `R$ ${total.toFixed(2).replace('.', ',')}`;
             
-            // Texto de detalle
             let detalle = '';
             if (adultos === 1 && menores === 0) detalle = '1 Adulto · 0 Menores';
             else if (adultos > 0 && menores === 0) detalle = `${adultos} Adultos · 0 Menores`;
@@ -422,7 +629,6 @@
             else detalle = `${adultos} Adultos · ${menores} Menores`;
             
             document.getElementById('totalDetail').innerHTML = detalle;
-            
             return total;
         }
         
@@ -434,34 +640,14 @@
             setTimeout(() => { toast.style.display = 'none'; }, 4000);
         }
         
-        // Formatear fecha de YYYY-MM-DD a DD/MM/YYYY
         function formatearFecha(fechaISO) {
             if (!fechaISO) return '';
             const partes = fechaISO.split('-');
             return `${partes[2]}/${partes[1]}/${partes[0]}`;
         }
         
-        // Actualizar el resumen de pasajeros para la fecha seleccionada
         function actualizarResumenPorFecha() {
-            const fechaInput = document.getElementById('fechaOut').value;
-            if (!fechaInput) {
-                document.getElementById('totalPasajerosDia').innerHTML = '-';
-                document.getElementById('summaryMessage').innerHTML = 'Seleccione una fecha';
-                return;
-            }
-            
-            const fechaFormateada = formatearFecha(fechaInput);
-            const total = reservasPorFecha[fechaFormateada] || 0;
-            
-            document.getElementById('totalPasajerosDia').innerHTML = total;
-            
-            if (total === 0) {
-                document.getElementById('summaryMessage').innerHTML = '🎉 ¡Felicitaciones! Sos el primero en reservar este día';
-                document.getElementById('summaryMessage').className = 'summary-message celebrate';
-            } else {
-                document.getElementById('summaryMessage').innerHTML = `✈️ Ya hay ${total} pasajero(s) confirmado(s) para este día`;
-                document.getElementById('summaryMessage').className = 'summary-message';
-            }
+            actualizarResumenPorFechaConIdioma();
         }
         
         async function cargarReservasParaContador() {
@@ -514,59 +700,49 @@
             const hotel = document.getElementById('hotel').value.trim();
             const whatsapp = document.getElementById('whatsapp').value.trim();
             const montoTotal = calcularTotal();
+            const t = textos[idiomaActual];
             
-            // Validaciones
             if (!nombre) {
-                mostrarToast('Complete el campo Nombre Completo', true);
+                mostrarToast(t.toastErrorNombre, true);
                 return;
             }
             if (!fechaOut) {
-                mostrarToast('Seleccione la fecha del paseo', true);
+                mostrarToast(t.toastErrorFecha, true);
                 return;
             }
             if (!email) {
-                mostrarToast('Complete el campo Email', true);
+                mostrarToast(t.toastErrorEmail, true);
                 return;
             }
             if (!empresa) {
-                mostrarToast('Complete el campo Empresa', true);
+                mostrarToast(t.toastErrorEmpresa, true);
                 return;
             }
             if (!whatsapp) {
-                mostrarToast('Complete el campo WhatsApp', true);
+                mostrarToast(t.toastErrorWhatsapp, true);
                 return;
             }
             if (!horarioSeleccionado) {
-                mostrarToast('Seleccione un horario', true);
+                mostrarToast(t.toastErrorHorario, true);
                 return;
             }
             if (adultos === 0 && menores === 0) {
-                mostrarToast('Ingrese al menos un pasajero entre adultos y menores', true);
+                mostrarToast(t.toastErrorPasajeros, true);
                 return;
             }
             
             let horarioTexto = '';
             if (horarioSeleccionado === 'morning') { 
-                horarioTexto = 'Tour Mañana (09:30)';
+                horarioTexto = idiomaActual === 'es' ? 'Tour Mañana (09:30)' : 'Tour Manhã (09:30)';
             } else if (horarioSeleccionado === 'mid') { 
-                horarioTexto = 'Tour Media Mañana (11:10)';
+                horarioTexto = idiomaActual === 'es' ? 'Tour Media Mañana (11:10)' : 'Tour Meia Manhã (11:10)';
             } else { 
-                horarioTexto = 'Tour Tarde (13:30)';
+                horarioTexto = idiomaActual === 'es' ? 'Tour Tarde (13:30)' : 'Tour Tarde (13:30)';
             }
             
             const id = `ATB-${Date.now()}-${Math.floor(Math.random()*1000)}`;
             const datosReserva = { 
-                id, 
-                fecha_paseo: fechaOut, 
-                nombre, 
-                empresa, 
-                adultos: adultos, 
-                menores: menores, 
-                horario: horarioTexto, 
-                monto_total: montoTotal, 
-                hotel, 
-                email, 
-                whatsapp 
+                id, fecha_paseo: fechaOut, nombre, empresa, adultos, menores, horario: horarioTexto, monto_total: montoTotal, hotel, email, whatsapp 
             };
             
             try {
@@ -574,22 +750,20 @@
                 const resultado = await response.json();
                 
                 if (resultado.success) {
-                    mostrarToast('✅ Reserva confirmada');
+                    mostrarToast(t.toastSuccess);
                     
-                    // Actualizar el contador local de reservas por fecha
                     const fechaFormateada = formatearFecha(fechaOut);
                     const totalActual = reservasPorFecha[fechaFormateada] || 0;
                     reservasPorFecha[fechaFormateada] = totalActual + adultos + menores;
                     actualizarResumenPorFecha();
                     
-                    // Limpiar formulario
                     document.getElementById('reservaForm').reset();
                     document.getElementById('adultos').value = '1';
                     document.getElementById('menores').value = '0';
                     document.querySelectorAll('.horario-option').forEach(opt => opt.classList.remove('selected'));
                     horarioSeleccionado = null;
                     document.getElementById('fechaOut').value = '';
-                    calcularTotal(); // Resetear el total mostrado
+                    calcularTotal();
                     
                     const totalPax = adultos + menores;
                     const mensajeWhatsApp = `🛥️ *ANGEL TOUR BRASIL* - RESERVA CONFIRMADA%0A%0ANombre: ${nombre}%0AHotel: ${hotel}%0AEmail: ${email}%0AWhatsApp: ${whatsapp}%0AEmpresa: ${empresa}%0AFecha: ${fechaOut}%0AHorario: ${horarioTexto}%0AAdultos: ${adultos} (R$ 85,00 c/u)%0AMenores: ${menores} (R$ 42,50 c/u)%0ATotal Pasajeros: ${totalPax}%0ACódigo: ${id}%0ATotal: R$ ${montoTotal.toFixed(2)}`;
@@ -614,20 +788,21 @@
             }
         }
         
+        // Cargar preferencias guardadas
+        const idiomaGuardado = localStorage.getItem('idioma') || 'es';
         if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.body.classList.add('dark-mode');
             const iconInline = document.getElementById('themeIconInline');
             if (iconInline) iconInline.className = 'ph ph-sun';
         }
         
-        // Establecer fecha mínima para que no se puedan elegir fechas pasadas
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('fechaOut').min = today;
         document.getElementById('fechaOut').addEventListener('change', actualizarResumenPorFecha);
         
-        // Inicializar el cálculo del total
         calcularTotal();
         cargarReservasParaContador();
+        cambiarIdioma(idiomaGuardado);
     </script>
 </body>
 </html>
