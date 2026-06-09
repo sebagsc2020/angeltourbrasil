@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Angel Tour Brasil ++| Reservas Náuticas</title>
+    <title>Angel Tour Brasil | Reservas Náuticas</title>
     <meta name="theme-color" content="#1e6f5c">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.15/index.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -19,9 +19,6 @@
             --border-color: #e2e8f0;
             --radius: 12px;
             --radius-sm: 8px;
-            --message-bg: #e8f5e9;
-            --message-border: #4caf50;
-            --message-text: #1b5e20;
         }
         body.dark-mode {
             --bg-body: #0f172a;
@@ -29,9 +26,6 @@
             --text-main: #f1f5f9;
             --text-muted: #cbd5e1;
             --border-color: #334155;
-            --message-bg: #0d2818;
-            --message-border: #2e7d64;
-            --message-text: #a5d6a5;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: var(--bg-body); color: var(--text-main); transition: background-color 0.3s, color 0.3s; }
@@ -44,103 +38,48 @@
         .form-card { background: var(--bg-surface); border-radius: var(--radius); padding: 24px; border: 1px solid var(--border-color); margin-bottom: 28px; }
         .form-group { margin-bottom: 16px; }
         .form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .form-control { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: var(--bg-body); color: var(--text-main); font-family: inherit; font-size: 14px; }
+        .form-control { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-body); color: var(--text-main); font-family: inherit; font-size: 14px; }
         .form-control:focus { border-color: var(--primary); outline: none; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .btn { padding: 10px 20px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
-        .btn-primary { background: var(--primary); color: white; width: 100%; justify-content: center; padding: 12px; margin-top: 8px; }
+        .btn-primary { background: var(--primary); color: white; width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 8px; }
         .btn-primary:hover { background: var(--primary-hover); }
         
         .form-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
-        .form-header h3 { font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 8px; margin: 0; }
         .header-buttons { display: flex; align-items: center; gap: 12px; }
-        
-        .admin-btn-inline { background: var(--primary); color: white; border: none; padding: 6px 16px 6px 12px; border-radius: 40px; cursor: pointer; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 8px; }
-        .admin-btn-inline:hover { background: var(--primary-hover); }
-        .admin-logo { height: 22px; width: auto; border-radius: 50%; }
-        
-        .theme-btn-inline { background: var(--bg-surface); color: var(--text-main); border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 40px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 6px; }
-        
+        .admin-btn-inline { background: var(--primary); color: white; border: none; padding: 6px 16px; border-radius: 40px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .theme-btn-inline { background: var(--bg-surface); border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 40px; cursor: pointer; }
         .lang-btn { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 40px; cursor: pointer; padding: 4px 8px; }
-        .lang-btn.active { border-color: var(--primary); background: var(--primary-light); }
-        .lang-flag-img { height: 28px; width: auto; display: block; }
+        .lang-flag-img { height: 28px; width: auto; }
         
-        .fecha-destacada { background: var(--bg-body); border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 20px; border: 1px solid var(--border-color); }
-        .summary-card { background: var(--bg-surface); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 24px; border: 1px solid var(--border-color); text-align: center; }
-        .summary-title { font-size: 12px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+        .fecha-destacada { background: var(--bg-body); border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; border: 1px solid var(--border-color); }
+        .summary-card { background: var(--bg-surface); border-radius: var(--radius); padding: 16px; margin-bottom: 24px; border: 1px solid var(--border-color); text-align: center; }
         .summary-value { font-size: 28px; font-weight: 700; color: var(--primary); }
-        .summary-message { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
-        .celebrate { color: #f59e0b; font-weight: 600; }
         
-        .total-card { background: linear-gradient(135deg, var(--primary), var(--primary-hover)); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 24px; text-align: center; color: white; }
-        .total-title { font-size: 12px; text-transform: uppercase; opacity: 0.9; margin-bottom: 8px; }
+        .total-card { background: linear-gradient(135deg, var(--primary), var(--primary-hover)); border-radius: var(--radius); padding: 16px; margin-bottom: 24px; text-align: center; color: white; }
         .total-value { font-size: 32px; font-weight: 800; }
-        .total-detail { font-size: 11px; opacity: 0.8; margin-top: 6px; }
         
         .horario-selector { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
-        .horario-option { border: 2px solid var(--border-color); border-radius: var(--radius-sm); padding: 14px 16px; cursor: pointer; background: var(--bg-body); display: flex; align-items: center; gap: 12px; }
+        .horario-option { border: 2px solid var(--border-color); border-radius: 8px; padding: 14px 16px; cursor: pointer; background: var(--bg-body); display: flex; align-items: center; gap: 12px; }
         .horario-option.selected { border-color: var(--primary); background: var(--primary-light); }
-        .horario-icon { font-size: 24px; min-width: 40px; text-align: center; }
-        .horario-info { flex: 1; }
-        .horario-nombre { font-weight: 700; font-size: 15px; }
-        .horario-hora { font-size: 12px; color: var(--text-muted); }
         
         .required-asterisk::after { content: " *"; color: #ef4444; }
         .toast { position: fixed; bottom: 20px; right: 20px; background: #1f2937; color: white; padding: 12px 24px; border-radius: 40px; z-index: 1000; display: none; }
         
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
         .modal-content { background-color: var(--bg-surface); border-radius: var(--radius); width: 90%; max-width: 500px; }
-        .modal-header { background: var(--primary); color: white; padding: 20px; border-radius: var(--radius) var(--radius) 0 0; display: flex; justify-content: space-between; align-items: center; }
-        .modal-header h3 { margin: 0; font-size: 18px; }
-        .modal-close { background: none; border: none; color: white; font-size: 28px; cursor: pointer; }
+        .modal-header { background: var(--primary); color: white; padding: 20px; border-radius: var(--radius) var(--radius) 0 0; display: flex; justify-content: space-between; }
         .modal-body { padding: 24px; max-height: 60vh; overflow-y: auto; }
-        .resumen-datos { background: var(--bg-body); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 20px; }
-        .resumen-datos p { margin: 10px 0; padding: 4px 0; }
-        .resumen-datos strong { color: var(--primary); }
-        .mensaje-confirmacion { background: var(--message-bg); border-left: 4px solid var(--message-border); padding: 16px; border-radius: var(--radius-sm); text-align: center; }
-        .mensaje-confirmacion p { margin: 0; font-weight: 500; color: var(--message-text); }
+        .resumen-datos { background: var(--bg-body); border-radius: 8px; padding: 16px; margin-bottom: 20px; }
+        .mensaje-confirmacion { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 16px; border-radius: 8px; text-align: center; }
         .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; }
-        .modal-btn-primary { background: var(--primary); color: white; padding: 10px 20px; border-radius: var(--radius-sm); border: none; cursor: pointer; font-weight: 600; }
+        .modal-btn-primary { background: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; }
         
         .price-hint { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+        .loader-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 3000; justify-content: center; align-items: center; flex-direction: column; gap: 16px; }
+        .loader-spinner { width: 50px; height: 50px; border: 5px solid var(--border-color); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
         
-        /* Loader */
-        .loader-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 3000;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            gap: 16px;
-        }
-        .loader-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid var(--border-color);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        .loader-text {
-            color: white;
-            font-weight: 600;
-        }
-        
-        @media (max-width: 768px) { 
-            .form-row { grid-template-columns: 1fr; } 
-            .container { padding: 16px; } 
-            .logo-area img { height: 90px; }
-            .lang-flag-img { height: 24px; }
-        }
+        @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } .logo-area img { height: 90px; } }
     </style>
 </head>
 <body>
@@ -155,126 +94,121 @@
             <div class="form-header">
                 <h3><i class="ph ph-plus-circle" style="color:var(--primary);"></i> <span id="formTitle">+ Reserva</span></h3>
                 <div class="header-buttons">
-                    <button class="lang-btn" id="langPtBtn" onclick="cambiarIdioma('pt')" title="Português">
+                    <button class="lang-btn" onclick="cambiarIdioma('pt')">
                         <img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-pt.png" alt="Português" class="lang-flag-img">
                     </button>
-                    <button class="lang-btn" id="langEsBtn" onclick="cambiarIdioma('es')" title="Español">
+                    <button class="lang-btn" onclick="cambiarIdioma('es')">
                         <img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-es.png" alt="Español" class="lang-flag-img">
                     </button>
-                    <button class="theme-btn-inline" onclick="toggleTheme()">
-                        <i class="ph ph-moon" id="themeIconInline"></i>
-                    </button>
+                    <button class="theme-btn-inline" onclick="toggleTheme()"><i class="ph ph-moon"></i></button>
                     <button class="admin-btn-inline" onclick="window.location.href='login.html'">
-                        <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Admin" class="admin-logo">
-                        <span id="adminText">Admin</span>
+                        <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Admin" style="height:22px;border-radius:50%;">
+                        <span>Admin</span>
                     </button>
                 </div>
             </div>
             
             <div class="fecha-destacada">
-                <label class="required-asterisk" id="fechaLabel">📅 Dia de Paseo</label>
+                <label class="required-asterisk">📅 Dia de Paseo</label>
                 <input type="date" id="fechaOut" class="form-control" required>
             </div>
             
             <div class="summary-card">
-                <div class="summary-title" id="summaryTitle">📊 Total de pasajeros para esta fecha</div>
+                <div class="summary-title">📊 Total de pasajeros para esta fecha</div>
                 <div class="summary-value" id="totalPasajerosDia">-</div>
-                <div class="summary-message" id="summaryMessage">Seleccione una fecha</div>
             </div>
             
             <form id="reservaForm">
                 <div class="form-group">
-                    <label class="required-asterisk" id="nombreLabel">Nombre Completo</label>
+                    <label class="required-asterisk">Nombre Completo</label>
                     <input type="text" id="nombre" class="form-control" required placeholder="Ej: Juan Pérez">
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="required-asterisk" id="emailLabel">Email</label>
+                        <label class="required-asterisk">Email</label>
                         <input type="email" id="email" class="form-control" required placeholder="juan@empresa.com">
                     </div>
                     <div class="form-group">
-                        <label class="required-asterisk" id="empresaLabel">Empresa</label>
+                        <label class="required-asterisk">Empresa</label>
                         <input type="text" id="empresa" class="form-control" required placeholder="Nombre de la empresa">
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="required-asterisk" id="adultosLabel">Adultos</label>
+                        <label class="required-asterisk">Adultos</label>
                         <input type="number" id="adultos" class="form-control" min="0" value="1" required oninput="calcularTotal()">
-                        <div class="price-hint" id="adultosHint">R$ 85,00 por adulto</div>
+                        <div class="price-hint">R$ 85,00 por adulto</div>
                     </div>
                     <div class="form-group">
-                        <label id="menoresLabel">Menores | 6-11 años</label>
+                        <label>Menores | 6-11 años</label>
                         <input type="number" id="menores" class="form-control" min="0" value="0" oninput="calcularTotal()">
-                        <div class="price-hint" id="menoresHint">Menores de 6 años sin cargo</div>
+                        <div class="price-hint">Menores de 6 años sin cargo</div>
                     </div>
                 </div>
                 
                 <div class="total-card">
-                    <div class="total-title" id="totalTitle">💰 TOTAL A PAGAR</div>
+                    <div class="total-title">💰 TOTAL A PAGAR</div>
                     <div class="total-value" id="totalValue">R$ 85,00</div>
-                    <div class="total-detail" id="totalDetail">1 Adulto · 0 Menores</div>
                 </div>
                 
                 <div class="form-group">
-                    <label id="hotelLabel">Hotel / Dirección</label>
+                    <label>Hotel / Dirección</label>
                     <input type="text" id="hotel" class="form-control" placeholder="Ej: Resort Costa do Sauípe">
                 </div>
                 
                 <div class="form-group">
-                    <label class="required-asterisk" id="whatsappLabel">WhatsApp (+código país)</label>
+                    <label class="required-asterisk">WhatsApp (+código país)</label>
                     <input type="tel" id="whatsapp" class="form-control" required placeholder="+55 11 91234-5678">
                 </div>
                 
                 <div class="form-group">
-                    <label id="horarioLabel">Selecciona tu horario de preferencia</label>
+                    <label>Selecciona tu horario de preferencia</label>
                     <div class="horario-selector" id="horarioSelector">
                         <div class="horario-option" data-horario="morning" onclick="seleccionarHorario(this)">
                             <div class="horario-icon">🌅</div>
                             <div class="horario-info">
-                                <div class="horario-nombre" id="horarioMorningNombre">Tour Mañana</div>
-                                <div class="horario-hora" id="horarioMorningHora">Salida: 09:30 Hs</div>
+                                <div class="horario-nombre">Tour Mañana</div>
+                                <div class="horario-hora">Salida: 09:30 Hs</div>
                             </div>
                         </div>
                         <div class="horario-option" data-horario="mid" onclick="seleccionarHorario(this)">
                             <div class="horario-icon">🌤️</div>
                             <div class="horario-info">
-                                <div class="horario-nombre" id="horarioMidNombre">Tour Media Mañana</div>
-                                <div class="horario-hora" id="horarioMidHora">Salida: 11:10 Hs</div>
+                                <div class="horario-nombre">Tour Media Mañana</div>
+                                <div class="horario-hora">Salida: 11:10 Hs</div>
                             </div>
                         </div>
                         <div class="horario-option" data-horario="afternoon" onclick="seleccionarHorario(this)">
                             <div class="horario-icon">🌇</div>
                             <div class="horario-info">
-                                <div class="horario-nombre" id="horarioAfternoonNombre">Tour Tarde</div>
-                                <div class="horario-hora" id="horarioAfternoonHora">Salida: 13:30 Hs</div>
+                                <div class="horario-nombre">Tour Tarde</div>
+                                <div class="horario-hora">Salida: 13:30 Hs</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <button type="submit" class="btn btn-primary" id="confirmarBtn"><i class="ph ph-check-fat"></i> Confirmar Reserva</button>
+                <button type="submit" class="btn-primary"><i class="ph ph-check-fat"></i> Confirmar Reserva</button>
             </form>
         </div>
     </div>
 
-    <!-- Loader overlay -->
     <div id="loaderOverlay" class="loader-overlay">
         <div class="loader-spinner"></div>
-        <div class="loader-text" id="loaderText">Guardando reserva...</div>
+        <div class="loader-text">Guardando reserva...</div>
     </div>
 
     <div id="confirmModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="modalTitle">📋 Confirmar Reserva</h3>
-                <button class="modal-close" onclick="cerrarModal()">&times;</button>
+                <h3>📋 Confirmar Reserva</h3>
+                <button class="modal-close" onclick="cerrarModal()" style="background:none;border:none;color:white;font-size:28px;cursor:pointer;">&times;</button>
             </div>
             <div class="modal-body" id="modalBody"></div>
             <div class="modal-footer">
-                <button class="modal-btn-primary" onclick="confirmarYGuardar()" id="confirmarModalBtn">Confirmar Reserva</button>
+                <button class="modal-btn-primary" onclick="confirmarYGuardar()">Confirmar Reserva</button>
             </div>
         </div>
     </div>
@@ -282,88 +216,26 @@
     <div id="toast" class="toast"></div>
 
     <script>
-        // ============================================
-        // CONFIGURACIÓN
-        // ============================================
         const PRECIO_ADULTO = 85.00;
         const PRECIO_MENOR = 42.50;
-        // ⚠️ IMPORTANTE: Reemplazar con la URL CORRECTA de tu Google Apps Script desplegado
-        const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbwe7UMEV5hGj1pzN_Ph9oHzIaRDI7ikJ3gqcr6heSlz2gkTV0DdIOSiux0WmayPosJ57A/exec";
+        // ⚠️ ACTUALIZA ESTA URL CON LA DE TU APPS SCRIPT DESPLEGADO ⚠️
+        const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbz01gkm8y4kGvrLGxQSoOPRmeGynEQeEpvNYsf1AOKwsjJTWKwaNkr0ss8g9uj5Bs3JkA/exec";
         
-        // ============================================
-        // VARIABLES GLOBALES
-        // ============================================
         let horarioSeleccionado = null;
-        let idiomaActual = 'es';
         let datosReservaTemp = null;
         
-        // ============================================
-        // TEXTOS POR IDIOMA
-        // ============================================
-        const textos = {
-            pt: {
-                subtitle: "Reserve seu passeio de barco · Vagas limitadas · Confirmação imediata",
-                formTitle: "+ Reserva", adminText: "Admin", fechaLabel: "📅 Dia do Passeio",
-                summaryTitle: "📊 Total de passageiros para esta data", summarySelectDate: "Selecione uma data",
-                summaryFirst: "🎉 Parabéns! Você é o primeiro a reservar neste dia",
-                summaryHas: (total) => `✈️ Já há ${total} passageiro(s) confirmado(s) para este dia`,
-                nombreLabel: "Nome Completo", emailLabel: "E-mail", empresaLabel: "Empresa",
-                adultosLabel: "Adultos", adultosHint: "R$ 85,00 por adulto",
-                menoresLabel: "Menores | 6-11 anos", menoresHint: "R$ 42,50 por menor · Menores de 6 anos grátis",
-                totalTitle: "💰 TOTAL A PAGAR", hotelLabel: "Hotel / Endereço",
-                whatsappLabel: "WhatsApp (+código país)", horarioLabel: "Selecione seu horário de preferência",
-                horarioMorning: "Tour Manhã", horarioMorningHora: "Saída: 09:30 Hs",
-                horarioMid: "Tour Meia Manhã", horarioMidHora: "Saída: 11:10 Hs",
-                horarioAfternoon: "Tour Tarde", horarioAfternoonHora: "Saída: 13:30 Hs",
-                confirmarBtn: "Confirmar Reserva", modalTitle: "📋 Confirmar Reserva",
-                confirmarModalBtn: "Confirmar Reserva",
-                mensajeConfirmacion: "📞 Em breve entraremos em contato para confirmar o horário de saída do seu barco. Muito obrigado!",
-                toastSuccess: "✅ Reserva confirmada! Em breve entraremos em contato.",
-                toastError: "❌ Erro ao salvar a reserva. Tente novamente.",
-                toastErrorNombre: "Complete o campo Nome Completo", toastErrorFecha: "Selecione a data do passeio",
-                toastErrorEmail: "Complete o campo E-mail", toastErrorEmpresa: "Complete o campo Empresa",
-                toastErrorWhatsapp: "Complete o campo WhatsApp", toastErrorHorario: "Selecione um horário",
-                toastErrorPasajeros: "Insira pelo menos um passageiro entre adultos e menores",
-                loaderText: "Salvando reserva..."
-            },
-            es: {
-                subtitle: "Reserve seu passeio de barco · Cupos limitados · Confirmación inmediata",
-                formTitle: "+ Reserva", adminText: "Admin", fechaLabel: "📅 Dia de Paseo",
-                summaryTitle: "📊 Total de pasajeros para esta fecha", summarySelectDate: "Seleccione una fecha",
-                summaryFirst: "🎉 ¡Felicitaciones! Sos el primero en reservar este día",
-                summaryHas: (total) => `✈️ Ya hay ${total} pasajero(s) confirmado(s) para este día`,
-                nombreLabel: "Nombre Completo", emailLabel: "Email", empresaLabel: "Empresa",
-                adultosLabel: "Adultos", adultosHint: "R$ 85,00 por adulto",
-                menoresLabel: "Menores | 6-11 años", menoresHint: "R$ 42,50 por menor · Menores de 6 años sin cargo",
-                totalTitle: "💰 TOTAL A PAGAR", hotelLabel: "Hotel / Dirección",
-                whatsappLabel: "WhatsApp (+código país)", horarioLabel: "Selecciona tu horario de preferencia",
-                horarioMorning: "Tour Mañana", horarioMorningHora: "Salida: 09:30 Hs",
-                horarioMid: "Tour Media Mañana", horarioMidHora: "Salida: 11:10 Hs",
-                horarioAfternoon: "Tour Tarde", horarioAfternoonHora: "Salida: 13:30 Hs",
-                confirmarBtn: "Confirmar Reserva", modalTitle: "📋 Confirmar Reserva",
-                confirmarModalBtn: "Confirmar Reserva",
-                mensajeConfirmacion: "📞 En breve nos comunicaremos para confirmar el horario de salida de tu barco. ¡Muchas gracias!",
-                toastSuccess: "✅ Reserva confirmada! En breve nos comunicaremos.",
-                toastError: "❌ Error al guardar la reserva. Intenta nuevamente.",
-                toastErrorNombre: "Complete el campo Nombre Completo", toastErrorFecha: "Seleccione la fecha del paseo",
-                toastErrorEmail: "Complete el campo Email", toastErrorEmpresa: "Complete el campo Empresa",
-                toastErrorWhatsapp: "Complete el campo WhatsApp", toastErrorHorario: "Seleccione un horario",
-                toastErrorPasajeros: "Ingrese al menos un pasajero entre adultos y menores",
-                loaderText: "Guardando reserva..."
-            }
-        };
+        function calcularTotal() {
+            const adultos = parseInt(document.getElementById('adultos').value) || 0;
+            const menores = parseInt(document.getElementById('menores').value) || 0;
+            const total = (adultos * PRECIO_ADULTO) + (menores * PRECIO_MENOR);
+            document.getElementById('totalValue').innerHTML = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            return total;
+        }
         
-        // ============================================
-        // FUNCIONES DE UI
-        // ============================================
-        function mostrarLoader(show, texto = null) {
-            const loader = document.getElementById('loaderOverlay');
-            if (show) {
-                if (texto) document.getElementById('loaderText').innerText = texto;
-                loader.style.display = 'flex';
-            } else {
-                loader.style.display = 'none';
-            }
+        function seleccionarHorario(element) {
+            document.querySelectorAll('.horario-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            horarioSeleccionado = element.getAttribute('data-horario');
         }
         
         function mostrarToast(mensaje, error = false) {
@@ -374,121 +246,26 @@
             setTimeout(() => { toast.style.display = 'none'; }, 4000);
         }
         
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-            const icon = document.getElementById('themeIconInline');
-            icon.className = document.body.classList.contains('dark-mode') ? 'ph ph-sun' : 'ph ph-moon';
+        function mostrarLoader(show) {
+            document.getElementById('loaderOverlay').style.display = show ? 'flex' : 'none';
         }
         
-        // ============================================
-        // FUNCIONES DE IDIOMA
-        // ============================================
-        function cambiarIdioma(idioma) {
-            idiomaActual = idioma;
-            localStorage.setItem('idioma', idioma);
-            
-            document.getElementById('langPtBtn').classList.toggle('active', idioma === 'pt');
-            document.getElementById('langEsBtn').classList.toggle('active', idioma === 'es');
-            
-            const t = textos[idioma];
-            
-            document.getElementById('subtitleText').innerText = t.subtitle;
-            document.getElementById('formTitle').innerText = t.formTitle;
-            document.getElementById('adminText').innerText = t.adminText;
-            document.getElementById('fechaLabel').innerHTML = t.fechaLabel;
-            document.getElementById('summaryTitle').innerHTML = t.summaryTitle;
-            document.getElementById('nombreLabel').innerHTML = t.nombreLabel + ' *';
-            document.getElementById('emailLabel').innerHTML = t.emailLabel + ' *';
-            document.getElementById('empresaLabel').innerHTML = t.empresaLabel + ' *';
-            document.getElementById('adultosLabel').innerHTML = t.adultosLabel + ' *';
-            document.getElementById('adultosHint').innerText = t.adultosHint;
-            document.getElementById('menoresLabel').innerHTML = t.menoresLabel;
-            document.getElementById('menoresHint').innerHTML = t.menoresHint;
-            document.getElementById('totalTitle').innerHTML = t.totalTitle;
-            document.getElementById('hotelLabel').innerHTML = t.hotelLabel;
-            document.getElementById('whatsappLabel').innerHTML = t.whatsappLabel + ' *';
-            document.getElementById('horarioLabel').innerHTML = t.horarioLabel;
-            document.getElementById('horarioMorningNombre').innerText = t.horarioMorning;
-            document.getElementById('horarioMorningHora').innerText = t.horarioMorningHora;
-            document.getElementById('horarioMidNombre').innerText = t.horarioMid;
-            document.getElementById('horarioMidHora').innerText = t.horarioMidHora;
-            document.getElementById('horarioAfternoonNombre').innerText = t.horarioAfternoon;
-            document.getElementById('horarioAfternoonHora').innerText = t.horarioAfternoonHora;
-            document.getElementById('confirmarBtn').innerHTML = `<i class="ph ph-check-fat"></i> ${t.confirmarBtn}`;
-            document.getElementById('modalTitle').innerHTML = t.modalTitle;
-            document.getElementById('confirmarModalBtn').innerHTML = t.confirmarModalBtn;
-            document.getElementById('loaderText').innerText = t.loaderText;
-            
-            if (document.getElementById('confirmModal').style.display === 'flex' && datosReservaTemp) {
-                actualizarModalConIdioma();
-            }
-        }
-        
-        function actualizarModalConIdioma() {
-            if (!datosReservaTemp) return;
-            const t = textos[idiomaActual];
-            document.getElementById('modalBody').innerHTML = `
-                <div class="resumen-datos">
-                    <p><strong>👤 ${idiomaActual === 'es' ? 'Nombre:' : 'Nome:'}</strong> ${datosReservaTemp.nombre}</p>
-                    <p><strong>📧 ${idiomaActual === 'es' ? 'Email:' : 'E-mail:'}</strong> ${datosReservaTemp.email}</p>
-                    <p><strong>🏢 ${idiomaActual === 'es' ? 'Empresa:' : 'Empresa:'}</strong> ${datosReservaTemp.empresa}</p>
-                    <p><strong>📅 ${idiomaActual === 'es' ? 'Fecha:' : 'Data:'}</strong> ${datosReservaTemp.fechaOut}</p>
-                    <p><strong>⏰ ${idiomaActual === 'es' ? 'Horario:' : 'Horário:'}</strong> ${datosReservaTemp.horarioTexto}</p>
-                    <p><strong>👨 ${idiomaActual === 'es' ? 'Adultos:' : 'Adultos:'}</strong> ${datosReservaTemp.adultos}</p>
-                    <p><strong>👧 ${idiomaActual === 'es' ? 'Menores:' : 'Menores:'}</strong> ${datosReservaTemp.menores}</p>
-                    <p><strong>🏨 ${idiomaActual === 'es' ? 'Hotel:' : 'Hotel:'}</strong> ${datosReservaTemp.hotel || '-'}</p>
-                    <p><strong>💰 ${idiomaActual === 'es' ? 'Total:' : 'Total:'}</strong> <strong style="color:var(--primary);">R$ ${datosReservaTemp.montoTotal.toFixed(2).replace('.', ',')}</strong></p>
-                </div>
-                <div class="mensaje-confirmacion">
-                    <i class="ph ph-check-circle"></i>
-                    <p>${t.mensajeConfirmacion}</p>
-                </div>
-            `;
-        }
-        
-        // ============================================
-        // FUNCIONES DE CÁLCULO
-        // ============================================
-        function calcularTotal() {
-            const adultos = parseInt(document.getElementById('adultos').value) || 0;
-            const menores = parseInt(document.getElementById('menores').value) || 0;
-            const total = (adultos * PRECIO_ADULTO) + (menores * PRECIO_MENOR);
-            
-            document.getElementById('totalValue').innerHTML = `R$ ${total.toFixed(2).replace('.', ',')}`;
-            
-            let adultosTexto = adultos === 1 ? '1 Adulto' : `${adultos} Adultos`;
-            let menoresTexto = menores === 1 ? '1 Menor' : (menores > 0 ? `${menores} Menores` : '0 Menores');
-            document.getElementById('totalDetail').innerHTML = `${adultosTexto} · ${menoresTexto}`;
-            return total;
-        }
-        
-        function seleccionarHorario(element) {
-            document.querySelectorAll('.horario-option').forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
-            horarioSeleccionado = element.getAttribute('data-horario');
-        }
-        
-        // ============================================
-        // FUNCIONES MODAL
-        // ============================================
         function abrirModal(datos) {
-            const t = textos[idiomaActual];
             document.getElementById('modalBody').innerHTML = `
                 <div class="resumen-datos">
-                    <p><strong>👤 ${idiomaActual === 'es' ? 'Nombre:' : 'Nome:'}</strong> ${datos.nombre}</p>
-                    <p><strong>📧 ${idiomaActual === 'es' ? 'Email:' : 'E-mail:'}</strong> ${datos.email}</p>
-                    <p><strong>🏢 ${idiomaActual === 'es' ? 'Empresa:' : 'Empresa:'}</strong> ${datos.empresa}</p>
-                    <p><strong>📅 ${idiomaActual === 'es' ? 'Fecha:' : 'Data:'}</strong> ${datos.fechaOut}</p>
-                    <p><strong>⏰ ${idiomaActual === 'es' ? 'Horario:' : 'Horário:'}</strong> ${datos.horarioTexto}</p>
-                    <p><strong>👨 ${idiomaActual === 'es' ? 'Adultos:' : 'Adultos:'}</strong> ${datos.adultos}</p>
-                    <p><strong>👧 ${idiomaActual === 'es' ? 'Menores:' : 'Menores:'}</strong> ${datos.menores}</p>
-                    <p><strong>🏨 ${idiomaActual === 'es' ? 'Hotel:' : 'Hotel:'}</strong> ${datos.hotel || '-'}</p>
-                    <p><strong>💰 ${idiomaActual === 'es' ? 'Total:' : 'Total:'}</strong> <strong style="color:var(--primary);">R$ ${datos.montoTotal.toFixed(2).replace('.', ',')}</strong></p>
+                    <p><strong>👤 Nombre:</strong> ${datos.nombre}</p>
+                    <p><strong>📧 Email:</strong> ${datos.email}</p>
+                    <p><strong>🏢 Empresa:</strong> ${datos.empresa}</p>
+                    <p><strong>📅 Fecha:</strong> ${datos.fechaOut}</p>
+                    <p><strong>⏰ Horario:</strong> ${datos.horarioTexto}</p>
+                    <p><strong>👨 Adultos:</strong> ${datos.adultos}</p>
+                    <p><strong>👧 Menores:</strong> ${datos.menores}</p>
+                    <p><strong>🏨 Hotel:</strong> ${datos.hotel || '-'}</p>
+                    <p><strong>💰 Total:</strong> <strong style="color:var(--primary);">R$ ${datos.montoTotal.toFixed(2).replace('.', ',')}</strong></p>
                 </div>
                 <div class="mensaje-confirmacion">
                     <i class="ph ph-check-circle"></i>
-                    <p>${t.mensajeConfirmacion}</p>
+                    <p>📞 En breve nos comunicaremos para confirmar el horario de salida de tu barco. ¡Muchas gracias!</p>
                 </div>
             `;
             document.getElementById('confirmModal').style.display = 'flex';
@@ -499,50 +276,31 @@
             datosReservaTemp = null;
         }
         
-        // ============================================
-        // FUNCIONES DE GOOGLE SHEETS
-        // ============================================
         async function guardarEnGoogleSheets(datosReserva) {
             try {
-                console.log("Enviando datos a Google Sheets:", datosReserva);
-                
                 const response = await fetch(GOOGLE_URL, { 
                     method: 'POST', 
-                    mode: 'no-cors', // Importante para evitar problemas de CORS
-                    headers: { 
-                        'Content-Type': 'application/json'
-                    }, 
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' }, 
                     body: JSON.stringify(datosReserva) 
                 });
-                
-                // Con no-cors, no podemos leer la respuesta directamente
-                // Asumimos éxito si no hay error de red
-                console.log("Respuesta recibida (no-cors mode)");
                 return true;
-                
             } catch(e) { 
-                console.error("Error detallado:", e);
+                console.error("Error:", e);
                 return false;
             }
         }
         
         async function confirmarYGuardar() {
             if (!datosReservaTemp) return;
-            
-            const t = textos[idiomaActual];
-            
-            // Cerrar modal y mostrar loader
             cerrarModal();
-            mostrarLoader(true, t.loaderText);
+            mostrarLoader(true);
             
-            // Guardar en Google Sheets
             const saved = await guardarEnGoogleSheets(datosReservaTemp);
-            
             mostrarLoader(false);
             
             if (saved) {
-                mostrarToast(t.toastSuccess);
-                // Limpiar formulario
+                mostrarToast("✅ Reserva confirmada! En breve nos comunicaremos.");
                 document.getElementById('reservaForm').reset();
                 document.getElementById('adultos').value = '1';
                 document.getElementById('menores').value = '0';
@@ -551,7 +309,7 @@
                 document.getElementById('fechaOut').value = '';
                 calcularTotal();
             } else {
-                mostrarToast(t.toastError, true);
+                mostrarToast("❌ Error al guardar la reserva", true);
             }
             datosReservaTemp = null;
         }
@@ -566,64 +324,48 @@
             const hotel = document.getElementById('hotel').value.trim();
             const whatsapp = document.getElementById('whatsapp').value.trim();
             const montoTotal = calcularTotal();
-            const t = textos[idiomaActual];
             
-            // Validaciones
-            if (!nombre) { mostrarToast(t.toastErrorNombre, true); return; }
-            if (!fechaOut) { mostrarToast(t.toastErrorFecha, true); return; }
-            if (!email) { mostrarToast(t.toastErrorEmail, true); return; }
-            if (!empresa) { mostrarToast(t.toastErrorEmpresa, true); return; }
-            if (!whatsapp) { mostrarToast(t.toastErrorWhatsapp, true); return; }
-            if (!horarioSeleccionado) { mostrarToast(t.toastErrorHorario, true); return; }
-            if (adultos === 0 && menores === 0) { mostrarToast(t.toastErrorPasajeros, true); return; }
+            if (!nombre) { mostrarToast("Complete el campo Nombre Completo", true); return; }
+            if (!fechaOut) { mostrarToast("Seleccione la fecha del paseo", true); return; }
+            if (!email) { mostrarToast("Complete el campo Email", true); return; }
+            if (!empresa) { mostrarToast("Complete el campo Empresa", true); return; }
+            if (!whatsapp) { mostrarToast("Complete el campo WhatsApp", true); return; }
+            if (!horarioSeleccionado) { mostrarToast("Seleccione un horario", true); return; }
+            if (adultos === 0 && menores === 0) { mostrarToast("Ingrese al menos un pasajero", true); return; }
             
             let horarioTexto = '';
-            if (horarioSeleccionado === 'morning') { 
-                horarioTexto = idiomaActual === 'es' ? 'Tour Mañana (09:30)' : 'Tour Manhã (09:30)';
-            } else if (horarioSeleccionado === 'mid') { 
-                horarioTexto = idiomaActual === 'es' ? 'Tour Media Mañana (11:10)' : 'Tour Meia Manhã (11:10)';
-            } else { 
-                horarioTexto = idiomaActual === 'es' ? 'Tour Tarde (13:30)' : 'Tour Tarde (13:30)';
-            }
+            if (horarioSeleccionado === 'morning') horarioTexto = 'Tour Mañana (09:30)';
+            else if (horarioSeleccionado === 'mid') horarioTexto = 'Tour Media Mañana (11:10)';
+            else horarioTexto = 'Tour Tarde (13:30)';
             
             const id = `ATB-${Date.now()}-${Math.floor(Math.random()*1000)}`;
             
-            datosReservaTemp = { 
-                id, 
-                fecha_paseo: fechaOut, 
-                nombre, 
-                empresa, 
-                adultos, 
-                menores, 
-                horario: horarioTexto,
-                monto_total: montoTotal,
-                hotel, 
-                email, 
-                whatsapp 
-            };
-            
+            datosReservaTemp = { id, fecha_paseo: fechaOut, nombre, empresa, adultos, menores, horario: horarioTexto, monto_total: montoTotal, hotel, email, whatsapp };
             abrirModal(datosReservaTemp);
         }
         
-        // ============================================
-        // INICIALIZACIÓN
-        // ============================================
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+        
+        function cambiarIdioma(idioma) {
+            // Función simplificada - puedes expandir según necesites
+            localStorage.setItem('idioma', idioma);
+        }
+        
         document.getElementById('reservaForm').addEventListener('submit', (e) => {
             e.preventDefault();
             guardarReserva();
         });
         
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('fechaOut').min = today;
+        document.getElementById('fechaOut').min = new Date().toISOString().split('T')[0];
         
-        const idiomaGuardado = localStorage.getItem('idioma') || 'es';
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
-            document.getElementById('themeIconInline').className = 'ph ph-sun';
         }
         
         calcularTotal();
-        cambiarIdioma(idiomaGuardado);
     </script>
 </body>
 </html>
