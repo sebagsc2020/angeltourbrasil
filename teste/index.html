@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>+Angel Tour Brasil | Booking Form</title>
+    <title>Angel Tour Brasil | Booking Form</title>
     <style>
-        /* ===== RESET Y ESTILOS BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -75,11 +74,6 @@
             background: #0EA5E9;
             border-color: #0EA5E9;
             color: white;
-        }
-
-        body.light-mode .total-display {
-            background: rgba(0, 0, 0, 0.03);
-            border-color: #CBD5E1;
         }
 
         .container {
@@ -337,17 +331,12 @@
             font-size: 0.9rem;
         }
 
-        /* Campo de solo lectura (Valor Total) */
         .total-display {
             background: rgba(14, 165, 233, 0.1);
             border: 1.5px solid #0EA5E9;
             font-weight: 700;
             font-size: 1.1rem;
             color: #0EA5E9;
-        }
-
-        .total-display:focus {
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
         }
 
         .btn-submit {
@@ -460,13 +449,6 @@
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
-        }
-
-        .price-info {
-            font-size: 0.7rem;
-            color: #64748B;
-            margin-top: 0.3rem;
-            text-align: right;
         }
 
         @media (max-width: 500px) {
@@ -608,7 +590,9 @@
                     <span class="input-icon">👥</span>
                     <input type="number" id="adultos" name="adultos" required placeholder="Ex: 2" step="1" min="0" value="0">
                 </div>
-                <div class="price-info">R$ 85,00 cada adulto</div>
+                <div style="font-size: 0.65rem; color: #64748B; margin-top: 0.3rem; margin-left: 2rem;">
+                    R$ 85,00 cada adulto
+                </div>
             </div>
 
             <div class="form-group">
@@ -620,7 +604,9 @@
                     <span class="input-icon">🧒</span>
                     <input type="number" id="menores" name="menores" placeholder="Ex: 1" step="1" min="0" value="0">
                 </div>
-                <div class="price-info">R$ 42,50 cada menor (6 a 11 años)</div>
+                <div style="font-size: 0.65rem; color: #64748B; margin-top: 0.3rem; margin-left: 2rem;">
+                    R$ 42,50 cada menor (6 a 11 años)
+                </div>
             </div>
 
             <div class="form-group">
@@ -632,10 +618,11 @@
                     <span class="input-icon">🎁</span>
                     <input type="number" id="cortesia" name="cortesia" placeholder="Ex: 0" step="1" min="0" value="0">
                 </div>
-                <div class="price-info">Menores de 6 años (sin cargo)</div>
+                <div style="font-size: 0.65rem; color: #64748B; margin-top: 0.3rem; margin-left: 2rem;">
+                    Menores de 6 años (sin cargo)
+                </div>
             </div>
 
-            <!-- NUEVO CAMPO: VALOR TOTAL -->
             <div class="form-group">
                 <label id="labelTotal">
                     <span class="label-icon">💰</span>
@@ -643,7 +630,7 @@
                 </label>
                 <div class="input-wrapper">
                     <span class="input-icon">💰</span>
-                    <input type="text" id="valorTotal" name="valorTotal" class="total-display" readonly value="R$ 0,00" style="cursor: default;">
+                    <input type="text" id="valorTotal" name="valorTotal" class="total-display" readonly value="R$ 0,00">
                 </div>
             </div>
 
@@ -670,15 +657,13 @@
 
 <script>
     // ============================================================
-    // ⚠️ IMPORTANTE: Reemplaza con la URL de tu Google Apps Script
+    // URL DE GOOGLE APPS SCRIPT - REEMPLAZA CON TU URL
     // ============================================================
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwLN8DUfwT6lcKdOX8u5JtR4BKKiqP3ph66LvSH46YuzbML5VNLeJr-fO0KY-qk3tCM5g/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxwSgzHlAwfOWGd9yWqJORZX-P83RPjI31ZMQXoKAs4iP5fOErrUYH6kc9nmtKeYsJs0Q/exec';
 
-    // Precios fijos
     const PRECIO_ADULTO = 85.00;
     const PRECIO_MENOR = 42.50;
 
-    // ===== TRADUCCIONES =====
     const translations = {
         es: {
             subtitle: "Reserve seu passeio de barco · Cupos limitados · Confirmación inmediata",
@@ -771,7 +756,6 @@
 
     let currentLang = 'en';
 
-    // Elementos del DOM
     const form = document.getElementById('dataForm');
     const messageDiv = document.getElementById('message');
     const spinner = document.getElementById('spinner');
@@ -784,28 +768,20 @@
     const cortesiaInput = document.getElementById('cortesia');
     const valorTotalInput = document.getElementById('valorTotal');
 
-    // Configurar fecha mínima (hoy)
     const today = new Date().toISOString().split('T')[0];
     fechaInput.setAttribute('min', today);
 
-    // Función para calcular el valor total en tiempo real
     function calcularValorTotal() {
         const adultos = parseInt(adultosInput.value) || 0;
         const menores = parseInt(menoresInput.value) || 0;
-        
         const total = (adultos * PRECIO_ADULTO) + (menores * PRECIO_MENOR);
-        const totalFormateado = `R$ ${total.toFixed(2).replace('.', ',')}`;
-        valorTotalInput.value = totalFormateado;
+        valorTotalInput.value = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }
 
-    // Eventos para recalcular el total cuando cambien Adultos o Menores
     adultosInput.addEventListener('input', calcularValorTotal);
     menoresInput.addEventListener('input', calcularValorTotal);
-
-    // Calcular al cargar la página
     calcularValorTotal();
 
-    // ===== FUNCIÓN PARA CAMBIAR IDIOMA =====
     function changeLanguage(lang) {
         currentLang = lang;
         const t = translations[lang];
@@ -841,7 +817,6 @@
         localStorage.setItem('preferred_language', lang);
     }
 
-    // ===== EVENTOS DE LOS BOTONES DE IDIOMA =====
     document.querySelectorAll('.btn-language').forEach(btn => {
         btn.addEventListener('click', () => {
             const lang = btn.getAttribute('data-lang');
@@ -849,12 +824,10 @@
         });
     });
 
-    // ===== BOTÓN ADMIN =====
     document.getElementById('adminBtn').addEventListener('click', () => {
         window.open('https://docs.google.com/spreadsheets/d/TU_ID_DE_SHEET/edit', '_blank');
     });
 
-    // ===== MODO OSCURO/CLARO =====
     function initTheme() {
         const savedTheme = localStorage.getItem('theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -888,7 +861,6 @@
     
     document.getElementById('themeToggleCard').addEventListener('click', toggleTheme);
     
-    // ===== CARGAR IDIOMA GUARDADO =====
     const savedLang = localStorage.getItem('preferred_language');
     if (savedLang && translations[savedLang]) {
         changeLanguage(savedLang);
@@ -898,7 +870,6 @@
     
     initTheme();
 
-    // ===== FUNCIONALIDAD DEL FORMULARIO =====
     function showMessage(msg, type) {
         messageDiv.textContent = msg;
         messageDiv.className = `message ${type}`;
@@ -967,8 +938,6 @@
         formData.append('menores', menores);
         formData.append('cortesia', cortesia);
         formData.append('valorTotal', valorTotal);
-
-        console.log('Enviando:', { fecha, nombre, empresa, email, adultos, menores, cortesia, valorTotal });
 
         try {
             await fetch(scriptURL, {
