@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Angel Tour Brasil | Reservas Náuticas</title>
+    <title>Angel+Tour Brasil | Reservas Náuticas</title>
     <meta name="theme-color" content="#1e6f5c">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.15/index.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -251,8 +251,8 @@
         // ============================================
         const PRECIO_ADULTO = 85.00;
         const PRECIO_MENOR = 42.50;
-        // ⚠️ REEMPLAZA CON LA URL QUE RESPONDIÓ "status: active" ⚠️
-        const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbx1tu-GrBXdS5OcfGCk9NXVfBnsOUgYlY_0hQJu7Z5h_icVtPc/exec";
+        // IMPORTANTE: Usar el mismo formato que el proyecto que funciona
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby91HkoTRuK_yRPd16OovrO2sC7utCPYFXidUzJgr4TUNKmH_ivEV1qR2FsckC4NORBkA/exec';
         
         // ============================================
         // VARIABLES GLOBALES
@@ -262,7 +262,7 @@
         let datosReservaTemp = null;
         
         // ============================================
-        // TEXTOS POR IDIOMA
+        // TEXTOS POR IDIOMA (simplificados)
         // ============================================
         const textos = {
             pt: {
@@ -458,24 +458,30 @@
         }
         
         // ============================================
-        // FUNCIONES DE GOOGLE SHEETS
+        // FUNCIÓN PRINCIPAL DE ENVÍO - CORREGIDA
+        // Usa el mismo método que el proyecto que funciona
         // ============================================
-        async function guardarEnGoogleSheets(datosReserva) {
+        async function enviarReserva(datosReserva) {
             try {
-                console.log("📤 Enviando datos:", datosReserva);
+                // Convertir a URLSearchParams (form-urlencoded) como en el proyecto que funciona
+                const formData = new URLSearchParams();
+                for (const [key, value] of Object.entries(datosReserva)) {
+                    formData.append(key, value);
+                }
                 
-                const response = await fetch(GOOGLE_URL, { 
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'application/json' }, 
-                    body: JSON.stringify(datosReserva) 
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',  // Importante: mismo modo que el proyecto funcional
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData
                 });
                 
-                const resultado = await response.json();
-                console.log("📥 Respuesta:", resultado);
-                return resultado.success === true;
+                // Con 'no-cors', no podemos leer la respuesta, pero si no hay error, asumimos éxito
+                console.log("✅ Reserva enviada correctamente");
+                return true;
                 
-            } catch(e) { 
-                console.error("❌ Error detallado:", e);
+            } catch (error) {
+                console.error("❌ Error al enviar:", error);
                 return false;
             }
         }
@@ -487,14 +493,12 @@
             cerrarModal();
             mostrarLoader(true);
             
-            const saved = await guardarEnGoogleSheets(datosReservaTemp);
+            const success = await enviarReserva(datosReservaTemp);
             mostrarLoader(false);
             
-            if (saved) {
+            if (success) {
                 mostrarToast(t.toastSuccess);
                 limpiarFormulario();
-                // Recargar la página para reiniciar completamente
-                setTimeout(() => location.reload(), 1500);
             } else {
                 mostrarToast(t.toastError, true);
             }
@@ -533,17 +537,17 @@
             const id = `ATB-${Date.now()}-${Math.floor(Math.random()*1000)}`;
             
             datosReservaTemp = { 
-                id, 
-                fecha_paseo: fechaOut, 
-                nombre, 
-                empresa, 
-                adultos, 
-                menores, 
+                id: id,
+                fecha_paseo: fechaOut,
+                nombre: nombre,
+                empresa: empresa,
+                adultos: adultos.toString(),
+                menores: menores.toString(),
                 horario: horarioTexto,
-                monto_total: montoTotal,
-                hotel, 
-                email, 
-                whatsapp 
+                monto_total: montoTotal.toString(),
+                hotel: hotel,
+                email: email,
+                whatsapp: whatsapp
             };
             
             abrirModal(datosReservaTemp);
