@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+adultos<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -307,7 +307,7 @@
             <form id="reservaForm" onsubmit="event.preventDefault(); guardarReserva();">
                 <!-- Campo Nombre Completo -->
                 <div class="form-group">
-                    <label class="required-asterisk">Nombre Completo</label>
+                    <label class="required-asterisk">Nombre Guia</label>
                     <input type="text" id="nombre" class="form-control" required placeholder="Ej: Juan Pérez">
                 </div>
                 
@@ -326,11 +326,11 @@
                 <!-- Fila con Adultos y Menores -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="required-asterisk">Adultos (R$ 85,00 c/u)</label>
+                        <label class="required-asterisk">Adultos </label>
                         <input type="number" id="adultos" class="form-control" min="0" value="1" required oninput="calcularTotal()">
                     </div>
                     <div class="form-group">
-                        <label>Menores (R$ 42,50 c/u) | 2-11 años</label>
+                        <label>Menores Pagantes| 6-11 </label>
                         <input type="number" id="menores" class="form-control" min="0" value="0" oninput="calcularTotal()">
                         <p class="text-xs text-muted" style="margin-top: 4px; color: var(--text-muted);">Menores de 2 años sin cargo</p>
                     </div>
