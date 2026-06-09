@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Angel+Tour Brasil | Reservas Náuticas</title>
+    <title>Angel Tour Brasil | Reservas Náuticas</title>
     <meta name="theme-color" content="#1e6f5c">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.15/index.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -47,8 +47,7 @@
         .form-control { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: var(--bg-body); color: var(--text-main); font-family: inherit; font-size: 14px; }
         .form-control:focus { border-color: var(--primary); outline: none; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .btn { padding: 10px 20px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
-        .btn-primary { background: var(--primary); color: white; width: 100%; justify-content: center; padding: 12px; margin-top: 8px; }
+        .btn-primary { background: var(--primary); color: white; width: 100%; justify-content: center; padding: 12px; margin-top: 8px; border: none; border-radius: var(--radius-sm); cursor: pointer; font-weight: 600; }
         .btn-primary:hover { background: var(--primary-hover); }
         
         .form-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
@@ -66,11 +65,6 @@
         .lang-flag-img { height: 28px; width: auto; display: block; }
         
         .fecha-destacada { background: var(--bg-body); border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 20px; border: 1px solid var(--border-color); }
-        .summary-card { background: var(--bg-surface); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 24px; border: 1px solid var(--border-color); text-align: center; }
-        .summary-title { font-size: 12px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
-        .summary-value { font-size: 28px; font-weight: 700; color: var(--primary); }
-        .summary-message { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
-        .celebrate { color: #f59e0b; font-weight: 600; }
         
         .total-card { background: linear-gradient(135deg, var(--primary), var(--primary-hover)); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 24px; text-align: center; color: white; }
         .total-title { font-size: 12px; text-transform: uppercase; opacity: 0.9; margin-bottom: 8px; }
@@ -150,13 +144,7 @@
             
             <div class="fecha-destacada">
                 <label class="required-asterisk" id="fechaLabel">📅 Dia de Paseo</label>
-                <input type="date" id="fechaOut" class="form-control" required onchange="cargarTotalPasajerosPorFecha()">
-            </div>
-            
-            <div class="summary-card" id="summaryCard">
-                <div class="summary-title" id="summaryTitle">📊 Total de pasajeros para esta fecha</div>
-                <div class="summary-value" id="totalPasajerosDia">-</div>
-                <div class="summary-message" id="summaryMessage">Seleccione una fecha</div>
+                <input type="date" id="fechaOut" class="form-control" required>
             </div>
             
             <form id="reservaForm">
@@ -187,12 +175,6 @@
                         <input type="number" id="menores" class="form-control" min="0" value="0" oninput="calcularTotal()">
                         <div class="price-hint" id="menoresHint">Menores de 6 años sin cargo</div>
                     </div>
-                </div>
-                
-                <div class="total-card" id="totalCard">
-                    <div class="total-title" id="totalTitle">💰 TOTAL A PAGAR</div>
-                    <div class="total-value" id="totalValue">R$ 85,00</div>
-                    <div class="total-detail" id="totalDetail">1 Adulto · 0 Menores</div>
                 </div>
                 
                 <div class="form-group">
@@ -232,7 +214,13 @@
                     </div>
                 </div>
                 
-                <button type="submit" class="btn btn-primary" id="confirmarBtn"><i class="ph ph-check-fat"></i> Confirmar Reserva</button>
+                <div class="total-card" id="totalCard">
+                    <div class="total-title" id="totalTitle">💰 TOTAL A PAGAR</div>
+                    <div class="total-value" id="totalValue">R$ 85,00</div>
+                    <div class="total-detail" id="totalDetail">1 Adulto · 0 Menores</div>
+                </div>
+                
+                <button type="submit" class="btn-primary" id="confirmarBtn"><i class="ph ph-check-fat"></i> Confirmar Reserva</button>
             </form>
         </div>
     </div>
@@ -263,9 +251,8 @@
         // ============================================
         const PRECIO_ADULTO = 85.00;
         const PRECIO_MENOR = 42.50;
-        // ⚠️ IMPORTANTE: Reemplazar con la URL de tu Google Apps Script desplegado ⚠️
-        const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbz01gkm8y4kGvrLGxQSoOPRmeGynEQeEpvNYsf1AOKwsjJTWKwaNkr0ss8g9uj5Bs3JkA/exec";
-        const SHEETS_PUBLIC_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTAuEiFi8pDWKqQlsYh5mhMuSZxEojyaM5Vcg-FyBqyCu4FGXFECi5FqhWV4w46oHDcWQSRDxBf4nfm/pubhtml";
+        // ⚠️ ACTUALIZA CON LA URL DE TU APPS SCRIPT DESPLEGADO ⚠️
+        const GOOGLE_URL = "https://script.google.com/macros/s/AKfycby91HkoTRuK_yRPd16OovrO2sC7utCPYFXidUzJgr4TUNKmH_ivEV1qR2FsckC4NORBkA/exec";
         
         // ============================================
         // VARIABLES GLOBALES
@@ -273,7 +260,6 @@
         let horarioSeleccionado = null;
         let idiomaActual = 'es';
         let datosReservaTemp = null;
-        let totalPasajerosPorFecha = {};
         
         // ============================================
         // TEXTOS POR IDIOMA
@@ -282,9 +268,6 @@
             pt: {
                 subtitle: "Reserve seu passeio de barco · Vagas limitadas · Confirmação imediata",
                 formTitle: "+ Reserva", adminText: "Admin", fechaLabel: "📅 Dia do Passeio",
-                summaryTitle: "📊 Total de passageiros para esta data", summarySelectDate: "Selecione uma data",
-                summaryFirst: "🎉 Parabéns! Você é o primeiro a reservar neste dia",
-                summaryHas: (total) => `✈️ Já há ${total} passageiro(s) confirmado(s) para este dia`,
                 nombreLabel: "Nome Completo", emailLabel: "E-mail", empresaLabel: "Empresa",
                 adultosLabel: "Adultos", adultosHint: "R$ 85,00 por adulto",
                 menoresLabel: "Menores | 6-11 anos", menoresHint: "R$ 42,50 por menor · Menores de 6 anos grátis",
@@ -307,9 +290,6 @@
             es: {
                 subtitle: "Reserve seu passeio de barco · Cupos limitados · Confirmación inmediata",
                 formTitle: "+ Reserva", adminText: "Admin", fechaLabel: "📅 Dia de Paseo",
-                summaryTitle: "📊 Total de pasajeros para esta fecha", summarySelectDate: "Seleccione una fecha",
-                summaryFirst: "🎉 ¡Felicitaciones! Sos el primero en reservar este día",
-                summaryHas: (total) => `✈️ Ya hay ${total} pasajero(s) confirmado(s) para este día`,
                 nombreLabel: "Nombre Completo", emailLabel: "Email", empresaLabel: "Empresa",
                 adultosLabel: "Adultos", adultosHint: "R$ 85,00 por adulto",
                 menoresLabel: "Menores | 6-11 años", menoresHint: "R$ 42,50 por menor · Menores de 6 años sin cargo",
@@ -332,74 +312,6 @@
         };
         
         // ============================================
-        // FUNCIONES PARA CARGAR TOTAL DE PASAJEROS DESDE LA COLUMNA N
-        // ============================================
-        async function cargarTotalPasajerosPorFecha() {
-            const fechaSeleccionada = document.getElementById('fechaOut').value;
-            if (!fechaSeleccionada) {
-                document.getElementById('totalPasajerosDia').innerHTML = '-';
-                document.getElementById('summaryMessage').innerHTML = textos[idiomaActual].summarySelectDate;
-                return;
-            }
-            
-            try {
-                const proxyUrl = 'https://api.allorigins.win/raw?url=';
-                const response = await fetch(proxyUrl + encodeURIComponent(SHEETS_PUBLIC_URL));
-                const html = await response.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const tables = doc.getElementsByTagName('table');
-                
-                if (tables.length === 0) {
-                    document.getElementById('totalPasajerosDia').innerHTML = '0';
-                    document.getElementById('summaryMessage').innerHTML = textos[idiomaActual].summaryFirst;
-                    return;
-                }
-                
-                const rows = tables[0].getElementsByTagName('tr');
-                let totalEncontrado = null;
-                
-                // Formatear fecha seleccionada (YYYY-MM-DD a DD/MM/YYYY)
-                const fechaParts = fechaSeleccionada.split('-');
-                const fechaFormateada = `${fechaParts[2]}/${fechaParts[1]}/${fechaParts[0]}`;
-                
-                // Buscar en la columna N (índice 13) el total para esa fecha
-                for (let i = 1; i < rows.length; i++) {
-                    const cells = rows[i].getElementsByTagName('td');
-                    if (cells.length >= 14) {
-                        const fechaCelda = cells[1]?.textContent?.trim() || '';
-                        const fechaCeldaParts = fechaCelda.split('/');
-                        const fechaCeldaFormateada = fechaCeldaParts.length === 3 ? `${fechaCeldaParts[2]}/${fechaCeldaParts[1]}/${fechaCeldaParts[0]}` : fechaCelda;
-                        
-                        if (fechaCeldaFormateada === fechaSeleccionada || fechaCelda === fechaFormateada) {
-                            const totalCelda = cells[13]?.textContent?.trim() || '';
-                            const match = totalCelda.match(/Total:\s*(\d+)/);
-                            if (match) {
-                                totalEncontrado = parseInt(match[1]);
-                                break;
-                            }
-                        }
-                    }
-                }
-                
-                if (totalEncontrado !== null && totalEncontrado > 0) {
-                    document.getElementById('totalPasajerosDia').innerHTML = totalEncontrado;
-                    document.getElementById('summaryMessage').innerHTML = textos[idiomaActual].summaryHas(totalEncontrado);
-                    document.getElementById('summaryMessage').className = 'summary-message';
-                } else {
-                    document.getElementById('totalPasajerosDia').innerHTML = '0';
-                    document.getElementById('summaryMessage').innerHTML = textos[idiomaActual].summaryFirst;
-                    document.getElementById('summaryMessage').className = 'summary-message celebrate';
-                }
-                
-            } catch(e) {
-                console.error("Error cargando total:", e);
-                document.getElementById('totalPasajerosDia').innerHTML = '?';
-                document.getElementById('summaryMessage').innerHTML = textos[idiomaActual].summarySelectDate;
-            }
-        }
-        
-        // ============================================
         // FUNCIONES DE IDIOMA
         // ============================================
         function cambiarIdioma(idioma) {
@@ -415,7 +327,6 @@
             document.getElementById('formTitle').innerText = t.formTitle;
             document.getElementById('adminText').innerText = t.adminText;
             document.getElementById('fechaLabel').innerHTML = t.fechaLabel;
-            document.getElementById('summaryTitle').innerHTML = t.summaryTitle;
             document.getElementById('nombreLabel').innerHTML = t.nombreLabel + ' *';
             document.getElementById('emailLabel').innerHTML = t.emailLabel + ' *';
             document.getElementById('empresaLabel').innerHTML = t.empresaLabel + ' *';
@@ -437,13 +348,6 @@
             document.getElementById('modalTitle').innerHTML = t.modalTitle;
             document.getElementById('confirmarModalBtn').innerHTML = t.confirmarModalBtn;
             document.getElementById('loaderText').innerText = t.loaderText;
-            
-            // Actualizar mensaje del resumen si hay fecha seleccionada
-            if (document.getElementById('fechaOut').value) {
-                cargarTotalPasajerosPorFecha();
-            } else {
-                document.getElementById('summaryMessage').innerHTML = t.summarySelectDate;
-            }
             
             if (document.getElementById('confirmModal').style.display === 'flex' && datosReservaTemp) {
                 actualizarModalConIdioma();
@@ -473,7 +377,8 @@
         }
         
         // ============================================
-        // FUNCIONES DE CÁLCULO        // ============================================
+        // FUNCIONES DE CÁLCULO
+        // ============================================
         function calcularTotal() {
             const adultos = parseInt(document.getElementById('adultos').value) || 0;
             const menores = parseInt(document.getElementById('menores').value) || 0;
@@ -515,8 +420,6 @@
             document.querySelectorAll('.horario-option').forEach(opt => opt.classList.remove('selected'));
             horarioSeleccionado = null;
             document.getElementById('fechaOut').value = '';
-            document.getElementById('totalPasajerosDia').innerHTML = '-';
-            document.getElementById('summaryMessage').innerHTML = textos[idiomaActual].summarySelectDate;
             calcularTotal();
         }
         
@@ -608,7 +511,6 @@
             const montoTotal = calcularTotal();
             const t = textos[idiomaActual];
             
-            // Validaciones
             if (!nombre) { mostrarToast(t.toastErrorNombre, true); return; }
             if (!fechaOut) { mostrarToast(t.toastErrorFecha, true); return; }
             if (!email) { mostrarToast(t.toastErrorEmail, true); return; }
