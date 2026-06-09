@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Angel+Tour Brasil | Reservas Náuticas</title>
+    <title>Angel Tour Brasil | Reservas Náuticas</title>
     <meta name="theme-color" content="#1e6f5c">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.15/index.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -251,8 +251,8 @@
         // ============================================
         const PRECIO_ADULTO = 85.00;
         const PRECIO_MENOR = 42.50;
-        // IMPORTANTE: Usar el mismo formato que el proyecto que funciona
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby91HkoTRuK_yRPd16OovrO2sC7utCPYFXidUzJgr4TUNKmH_ivEV1qR2FsckC4NORBkA/exec';
+        // ⚠️ IMPORTANTE: Reemplazar con la URL de tu Google Apps Script desplegado ⚠️
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz01gkm8y4kGvrLGxQSoOPRmeGynEQeEpvNYsf1AOKwsjJTWKwaNkr0ss8g9uj5Bs3JkA/exec";
         
         // ============================================
         // VARIABLES GLOBALES
@@ -458,26 +458,21 @@
         }
         
         // ============================================
-        // FUNCIÓN PRINCIPAL DE ENVÍO - CORREGIDA
-        // Usa el mismo método que el proyecto que funciona
+        // FUNCIÓN PRINCIPAL DE ENVÍO - EN JSON (como espera tu script)
         // ============================================
         async function enviarReserva(datosReserva) {
             try {
-                // Convertir a URLSearchParams (form-urlencoded) como en el proyecto que funciona
-                const formData = new URLSearchParams();
-                for (const [key, value] of Object.entries(datosReserva)) {
-                    formData.append(key, value);
-                }
+                console.log("📤 Enviando datos (JSON):", datosReserva);
                 
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors',  // Importante: mismo modo que el proyecto funcional
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: formData
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(datosReserva)
                 });
                 
-                // Con 'no-cors', no podemos leer la respuesta, pero si no hay error, asumimos éxito
-                console.log("✅ Reserva enviada correctamente");
+                // Con 'no-cors' no podemos leer la respuesta, pero si no hay error de red, asumimos éxito
+                console.log("✅ Reserva enviada (modo no-cors)");
                 return true;
                 
             } catch (error) {
@@ -541,10 +536,10 @@
                 fecha_paseo: fechaOut,
                 nombre: nombre,
                 empresa: empresa,
-                adultos: adultos.toString(),
-                menores: menores.toString(),
+                adultos: adultos,
+                menores: menores,
                 horario: horarioTexto,
-                monto_total: montoTotal.toString(),
+                monto_total: montoTotal,
                 hotel: hotel,
                 email: email,
                 whatsapp: whatsapp
