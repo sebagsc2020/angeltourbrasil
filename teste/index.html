@@ -197,6 +197,7 @@
             font-size: 1.2rem;
             pointer-events: none;
             transition: color 0.2s;
+            z-index: 1;
         }
 
         input {
@@ -211,6 +212,26 @@
             transition: all 0.2s ease;
         }
 
+        input[type="date"] {
+            cursor: pointer;
+            color-scheme: dark;
+        }
+
+        body.light-mode input[type="date"] {
+            color-scheme: light;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            filter: invert(0.8);
+            position: absolute;
+            right: 1rem;
+        }
+
+        body.light-mode input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(0.2);
+        }
+
         input:focus {
             outline: none;
             border-color: #0EA5E9;
@@ -223,7 +244,7 @@
             font-weight: 400;
         }
 
-        /* Botón principal - TEXTO ACTUALIZADO */
+        /* Botón principal */
         .btn-submit {
             width: 100%;
             background: linear-gradient(95deg, #0EA5E9, #3B82F6);
@@ -390,6 +411,18 @@
 
     <div class="form-wrapper">
         <form id="dataForm">
+            <!-- NUEVO CAMPO: FECHA -->
+            <div class="form-group">
+                <label>
+                    <span class="label-icon">📅</span>
+                    FECHA DEL PASEO
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon">📅</span>
+                    <input type="date" id="fecha" name="fecha" required>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label>
                     <span class="label-icon">👤</span>
@@ -443,8 +476,13 @@
     const form = document.getElementById('dataForm');
     const messageDiv = document.getElementById('message');
     const spinner = document.getElementById('spinner');
+    const fechaInput = document.getElementById('fecha');
     const nombreInput = document.getElementById('nombre');
     const numeroInput = document.getElementById('numero');
+
+    // Configurar fecha mínima (hoy) para que no se puedan seleccionar fechas pasadas
+    const today = new Date().toISOString().split('T')[0];
+    fechaInput.setAttribute('min', today);
 
     // ===== MODO OSCURO/CLARO (dentro de la tarjeta) =====
     function initTheme() {
@@ -481,7 +519,7 @@
     document.getElementById('themeToggleCard').addEventListener('click', toggleTheme);
     initTheme();
 
-    // ===== FUNCIONALIDAD DEL FORMULARIO (sin cambios) =====
+    // ===== FUNCIONALIDAD DEL FORMULARIO ACTUALIZADA =====
     function showMessage(msg, type) {
         messageDiv.textContent = msg;
         messageDiv.className = `message ${type}`;
@@ -501,14 +539,20 @@
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
+        const fecha = fechaInput.value;
         const nombre = nombreInput.value.trim();
         const numero = numeroInput.value;
 
-        if (!nombre || numero === '') {
-            showMessage('❌ Por favor completa ambos campos', 'error');
+        // Validaciones
+        if (!fecha) {
+            showMessage('❌ Por favor selecciona una fecha para el paseo', 'error');
             return;
         }
-        if (isNaN(numero) || numero === '') {
+        if (!nombre) {
+            showMessage('❌ Por favor completa el nombre', 'error');
+            return;
+        }
+        if (numero === '' || isNaN(numero)) {
             showMessage('❌ Ingresa un número válido', 'error');
             return;
         }
@@ -517,6 +561,7 @@
         spinner.classList.add('active');
 
         const formData = new FormData();
+        formData.append('fecha', fecha);
         formData.append('nombre', nombre);
         formData.append('numero', numero);
 
