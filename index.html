@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Angel+ Tour+ Brasil | Reservas Náuticas</title>
+    <title>Angel Tour Brasil | Reservas Náuticas</title>
     <meta name="theme-color" content="#1e6f5c">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.15/index.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -259,10 +259,11 @@
 
     <script>
         // ============================================
-        // CONFIGURACIÓN - ACTUALIZAR CON TU URL DE APPS SCRIPT
+        // CONFIGURACIÓN
         // ============================================
         const PRECIO_ADULTO = 85.00;
         const PRECIO_MENOR = 42.50;
+        // ⚠️ IMPORTANTE: Reemplazar con la URL de tu Google Apps Script desplegado ⚠️
         const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbz01gkm8y4kGvrLGxQSoOPRmeGynEQeEpvNYsf1AOKwsjJTWKwaNkr0ss8g9uj5Bs3JkA/exec";
         
         // ============================================
@@ -410,12 +411,6 @@
             return total;
         }
         
-        function formatearFecha(fechaISO) {
-            if (!fechaISO) return '';
-            const partes = fechaISO.split('-');
-            return `${partes[2]}/${partes[1]}/${partes[0]}`;
-        }
-        
         function seleccionarHorario(element) {
             document.querySelectorAll('.horario-option').forEach(opt => opt.classList.remove('selected'));
             element.classList.add('selected');
@@ -435,6 +430,16 @@
         
         function mostrarLoader(show) {
             document.getElementById('loaderOverlay').style.display = show ? 'flex' : 'none';
+        }
+        
+        function limpiarFormulario() {
+            document.getElementById('reservaForm').reset();
+            document.getElementById('adultos').value = '1';
+            document.getElementById('menores').value = '0';
+            document.querySelectorAll('.horario-option').forEach(opt => opt.classList.remove('selected'));
+            horarioSeleccionado = null;
+            document.getElementById('fechaOut').value = '';
+            calcularTotal();
         }
         
         function abrirModal(datos) {
@@ -476,7 +481,7 @@
         // ============================================
         async function guardarEnGoogleSheets(datosReserva) {
             try {
-                console.log("Enviando datos:", datosReserva);
+                console.log("📤 Enviando datos:", datosReserva);
                 
                 const response = await fetch(GOOGLE_URL, { 
                     method: 'POST', 
@@ -485,11 +490,11 @@
                 });
                 
                 const resultado = await response.json();
-                console.log("Respuesta:", resultado);
+                console.log("📥 Respuesta:", resultado);
                 return resultado.success === true;
                 
             } catch(e) { 
-                console.error("Error detallado:", e);
+                console.error("❌ Error detallado:", e);
                 return false;
             }
         }
@@ -506,14 +511,7 @@
             
             if (saved) {
                 mostrarToast(t.toastSuccess);
-                // Limpiar formulario
-                document.getElementById('reservaForm').reset();
-                document.getElementById('adultos').value = '1';
-                document.getElementById('menores').value = '0';
-                document.querySelectorAll('.horario-option').forEach(opt => opt.classList.remove('selected'));
-                horarioSeleccionado = null;
-                document.getElementById('fechaOut').value = '';
-                calcularTotal();
+                limpiarFormulario();
             } else {
                 mostrarToast(t.toastError, true);
             }
