@@ -40,40 +40,12 @@
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Inter', sans-serif; background: var(--bg-body); color: var(--text-main); min-height: 100vh; transition: background-color 0.3s, color 0.3s; }
         
-        /* Header público */
-        .public-header {
-            background: linear-gradient(105deg, #0e4b5e 0%, #1b7a7a 100%);
-            padding: 20px 24px;
-            color: white;
-            text-align: center;
-            border-radius: var(--radius) var(--radius) 0 0;
-        }
         .container { max-width: 1200px; margin: 0 auto; padding: 32px; }
         .logo-area { text-align: center; margin-bottom: 20px; }
         .logo-area img { height: 80px; width: auto; margin-bottom: 10px; }
         .logo-area h1 { font-size: 24px; margin-top: 5px; }
         
-        .theme-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: var(--bg-surface);
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-            padding: 12px 20px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: 600;
-            z-index: 100;
-            box-shadow: var(--shadow-md);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .theme-btn:hover { background: var(--bg-body); }
-        
-        .form-card { background: var(--bg-surface); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); margin-bottom: 28px; position: relative; }
-        .form-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        .form-card { background: var(--bg-surface); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); margin-bottom: 28px; }
         .form-group { margin-bottom: 16px; }
         .form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
         .form-control { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: var(--bg-body); color: var(--text-main); font-family: inherit; font-size: 14px; transition: border-color 0.2s; }
@@ -85,15 +57,33 @@
         .btn-secondary { background: var(--bg-surface); color: var(--text-main); border: 1px solid var(--border-color); }
         .btn-sm { padding: 6px 12px; font-size: 12px; }
         
-        /* Botón administrador dentro del formulario */
+        /* Header del formulario con título y botones en la misma línea */
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .form-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+        .header-buttons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
         .admin-btn-inline {
-            position: absolute;
-            top: 20px;
-            right: 24px;
             background: var(--primary);
             color: white;
             border: none;
-            padding: 8px 16px;
+            padding: 6px 16px 6px 12px;
             border-radius: 40px;
             cursor: pointer;
             font-weight: 600;
@@ -102,10 +92,32 @@
             align-items: center;
             gap: 8px;
             transition: all 0.2s;
-            z-index: 10;
         }
         .admin-btn-inline:hover {
             background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+        .admin-logo {
+            height: 22px;
+            width: auto;
+            border-radius: 50%;
+        }
+        .theme-btn-inline {
+            background: var(--bg-surface);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .theme-btn-inline:hover {
+            background: var(--bg-body);
             transform: translateY(-1px);
         }
         
@@ -136,15 +148,14 @@
         .toast { position: fixed; bottom: 20px; right: 20px; background: #1f2937; color: white; padding: 12px 24px; border-radius: 40px; z-index: 1000; display: none; }
         .reservations-layout { display: grid; grid-template-columns: 380px 1fr; gap: 28px; align-items: start; }
         @media (max-width: 1024px) { .reservations-layout { grid-template-columns: 1fr; } }
-        @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } .container { padding: 20px; } .admin-btn-inline { position: static; margin-bottom: 15px; width: fit-content; } }
+        @media (max-width: 768px) { 
+            .form-row { grid-template-columns: 1fr; } 
+            .container { padding: 20px; } 
+            .form-header { flex-direction: column; align-items: flex-start; }
+        }
     </style>
 </head>
 <body>
-    <!-- Botón modo oscuro -->
-    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">
-        <i class="ph ph-moon" id="themeIcon"></i> Modo Oscuro
-    </button>
-
     <div class="container">
         <div class="logo-area">
             <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Angel Tour Brasil">
@@ -154,10 +165,18 @@
 
         <div class="reservations-layout">
             <div class="form-card">
-                <button class="admin-btn-inline" onclick="window.location.href='login.html'">
-                    <i class="ph ph-lock-simple"></i> Admin
-                </button>
-                <h3><i class="ph ph-plus-circle" style="color:var(--primary);"></i> Nueva Reserva</h3>
+                <div class="form-header">
+                    <h3><i class="ph ph-plus-circle" style="color:var(--primary);"></i> Nueva Reserva</h3>
+                    <div class="header-buttons">
+                        <button class="theme-btn-inline" id="themeBtnInline" onclick="toggleTheme()">
+                            <i class="ph ph-moon" id="themeIconInline"></i>
+                        </button>
+                        <button class="admin-btn-inline" onclick="window.location.href='login.html'">
+                            <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Admin" class="admin-logo">
+                            Admin
+                        </button>
+                    </div>
+                </div>
                 <form id="reservaForm" onsubmit="event.preventDefault(); guardarReserva();">
                     <div class="form-group">
                         <label>Nombre Completo</label>
@@ -224,7 +243,7 @@
                 <div class="table-responsive">
                     <table id="reservasRecientesTable">
                         <thead><tr><th>ID</th><th>Cliente</th><th>Empresa</th><th>Fecha OUT</th><th>Horario</th><th>Pax</th><th>Estado</th></tr></thead>
-                        <tbody id="reservasRecientesBody"><td><td colspan="7" style="text-align:center;">Cargando...</td></tr></tbody>
+                        <tbody id="reservasRecientesBody"><td><td colspan="7" style="text-align:center;">Cargando...<\/td></tr></tbody>
                     </table>
                 </div>
             </div>
@@ -295,13 +314,13 @@
                 const tbody = document.getElementById('reservasRecientesBody');
                 tbody.innerHTML = reservasRecientes.slice(0, 5).map(r => `
                     <tr>
-                        <td style="font-family:monospace;">${r.id}</td>
-                        <td><div style="display:flex; align-items:center;"><div class="client-avatar-sm">${r.nombre.charAt(0)}</div>${r.nombre}</div></td>
-                        <td>${r.empresa || 'N/A'}</td>
-                        <td>${r.fecha}</td>
-                        <td>${r.horario}</td>
-                        <td>${r.pax}</td>
-                        <td><span class="badge badge-confirmado">${r.estado}</span></td>
+                        <td style="font-family:monospace;">${r.id}<\/td>
+                        <td><div style="display:flex; align-items:center;"><div class="client-avatar-sm">${r.nombre.charAt(0)}</div>${r.nombre}<\/div><\/td>
+                        <td>${r.empresa || 'N/A'}<\/td>
+                        <td>${r.fecha}<\/td>
+                        <td>${r.horario}<\/td>
+                        <td>${r.pax}<\/td>
+                        <td><span class="badge badge-confirmado">${r.estado}<\/span><\/td>
                     </tr>
                 `).join('');
                 
@@ -411,24 +430,18 @@
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
             localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-            const icon = document.getElementById('themeIcon');
-            const btnText = document.getElementById('themeBtn');
+            const iconInline = document.getElementById('themeIconInline');
             if (document.body.classList.contains('dark-mode')) {
-                icon.className = 'ph ph-sun';
-                btnText.innerHTML = '<i class="ph ph-sun"></i> Modo Claro';
+                iconInline.className = 'ph ph-sun';
             } else {
-                icon.className = 'ph ph-moon';
-                btnText.innerHTML = '<i class="ph ph-moon"></i> Modo Oscuro';
+                iconInline.className = 'ph ph-moon';
             }
         }
         
-        // Cargar tema guardado
         if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.body.classList.add('dark-mode');
-            const icon = document.getElementById('themeIcon');
-            const btnText = document.getElementById('themeBtn');
-            if (icon) icon.className = 'ph ph-sun';
-            if (btnText) btnText.innerHTML = '<i class="ph ph-sun"></i> Modo Claro';
+            const iconInline = document.getElementById('themeIconInline');
+            if (iconInline) iconInline.className = 'ph ph-sun';
         }
         
         document.getElementById('fechaOut').min = new Date().toISOString().split('T')[0];
