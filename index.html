@@ -150,7 +150,7 @@
             
             <div class="fecha-destacada">
                 <label class="required-asterisk" id="fechaLabel">📅 Dia de Paseo</label>
-                <input type="date" id="fechaOut" class="form-control" required>
+                <input type="date" id="fechaOut" class="form-control" required onchange="cargarTotalPasajerosPorFecha()">
             </div>
             
             <div class="summary-card" id="summaryCard">
@@ -265,6 +265,7 @@
         const PRECIO_MENOR = 42.50;
         // ⚠️ IMPORTANTE: Reemplazar con la URL de tu Google Apps Script desplegado ⚠️
         const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbz01gkm8y4kGvrLGxQSoOPRmeGynEQeEpvNYsf1AOKwsjJTWKwaNkr0ss8g9uj5Bs3JkA/exec";
+        const SHEETS_PUBLIC_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTAuEiFi8pDWKqQlsYh5mhMuSZxEojyaM5Vcg-FyBqyCu4FGXFECi5FqhWV4w46oHDcWQSRDxBf4nfm/pubhtml";
         
         // ============================================
         // VARIABLES GLOBALES
@@ -272,6 +273,7 @@
         let horarioSeleccionado = null;
         let idiomaActual = 'es';
         let datosReservaTemp = null;
+        let totalPasajerosPorFecha = {};
         
         // ============================================
         // TEXTOS POR IDIOMA
@@ -330,6 +332,74 @@
         };
         
         // ============================================
+        // FUNCIONES PARA CARGAR TOTAL DE PASAJEROS DESDE LA COLUMNA N
+        // ============================================
+        async function cargarTotalPasajerosPorFecha() {
+            const fechaSeleccionada = document.getElementById('fechaOut').value;
+            if (!fechaSeleccionada) {
+                document.getElementById('totalPasajerosDia').innerHTML = '-';
+                document.getElementById('summaryMessage').innerHTML = textos[idiomaActual].summarySelectDate;
+                return;
+            }
+            
+            try {
+                const proxyUrl = 'https://api.allorigins.win/raw?url=';
+                const response = await fetch(proxyUrl + encodeURIComponent(SHEETS_PUBLIC_URL));
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const tables = doc.getElementsByTagName('table');
+                
+                if (tables.length === 0) {
+                    document.getElementById('totalPasajerosDia').innerHTML = '0';
+                    document.getElementById('summaryMessage').innerHTML = textos[idiomaActual].summaryFirst;
+                    return;
+                }
+                
+                const rows = tables[0].getElementsByTagName('tr');
+                let totalEncontrado = null;
+                
+                // Formatear fecha seleccionada (YYYY-MM-DD a DD/MM/YYYY)
+                const fechaParts = fechaSeleccionada.split('-');
+                const fechaFormateada = `${fechaParts[2]}/${fechaParts[1]}/${fechaParts[0]}`;
+                
+                // Buscar en la columna N (índice 13) el total para esa fecha
+                for (let i = 1; i < rows.length; i++) {
+                    const cells = rows[i].getElementsByTagName('td');
+                    if (cells.length >= 14) {
+                        const fechaCelda = cells[1]?.textContent?.trim() || '';
+                        const fechaCeldaParts = fechaCelda.split('/');
+                        const fechaCeldaFormateada = fechaCeldaParts.length === 3 ? `${fechaCeldaParts[2]}/${fechaCeldaParts[1]}/${fechaCeldaParts[0]}` : fechaCelda;
+                        
+                        if (fechaCeldaFormateada === fechaSeleccionada || fechaCelda === fechaFormateada) {
+                            const totalCelda = cells[13]?.textContent?.trim() || '';
+                            const match = totalCelda.match(/Total:\s*(\d+)/);
+                            if (match) {
+                                totalEncontrado = parseInt(match[1]);
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+                if (totalEncontrado !== null && totalEncontrado > 0) {
+                    document.getElementById('totalPasajerosDia').innerHTML = totalEncontrado;
+                    document.getElementById('summaryMessage').innerHTML = textos[idiomaActual].summaryHas(totalEncontrado);
+                    document.getElementById('summaryMessage').className = 'summary-message';
+                } else {
+                    document.getElementById('totalPasajerosDia').innerHTML = '0';
+                    document.getElementById('summaryMessage').innerHTML = textos[idiomaActual].summaryFirst;
+                    document.getElementById('summaryMessage').className = 'summary-message celebrate';
+                }
+                
+            } catch(e) {
+                console.error("Error cargando total:", e);
+                document.getElementById('totalPasajerosDia').innerHTML = '?';
+                document.getElementById('summaryMessage').innerHTML = textos[idiomaActual].summarySelectDate;
+            }
+        }
+        
+        // ============================================
         // FUNCIONES DE IDIOMA
         // ============================================
         function cambiarIdioma(idioma) {
@@ -368,6 +438,13 @@
             document.getElementById('confirmarModalBtn').innerHTML = t.confirmarModalBtn;
             document.getElementById('loaderText').innerText = t.loaderText;
             
+            // Actualizar mensaje del resumen si hay fecha seleccionada
+            if (document.getElementById('fechaOut').value) {
+                cargarTotalPasajerosPorFecha();
+            } else {
+                document.getElementById('summaryMessage').innerHTML = t.summarySelectDate;
+            }
+            
             if (document.getElementById('confirmModal').style.display === 'flex' && datosReservaTemp) {
                 actualizarModalConIdioma();
             }
@@ -396,8 +473,7 @@
         }
         
         // ============================================
-        // FUNCIONES DE CÁLCULO
-        // ============================================
+        // FUNCIONES DE CÁLCULO        // ============================================
         function calcularTotal() {
             const adultos = parseInt(document.getElementById('adultos').value) || 0;
             const menores = parseInt(document.getElementById('menores').value) || 0;
@@ -439,6 +515,8 @@
             document.querySelectorAll('.horario-option').forEach(opt => opt.classList.remove('selected'));
             horarioSeleccionado = null;
             document.getElementById('fechaOut').value = '';
+            document.getElementById('totalPasajerosDia').innerHTML = '-';
+            document.getElementById('summaryMessage').innerHTML = textos[idiomaActual].summarySelectDate;
             calcularTotal();
         }
         
