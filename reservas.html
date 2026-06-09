@@ -155,7 +155,7 @@
         .search-input:focus { outline: none; border-color: var(--primary); }
         
         .table-container { background: var(--bg-surface); border-radius: var(--radius); border: 1px solid var(--border-color); overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+        table { width: 100%; border-collapse: collapse; min-width: 1100px; }
         th { text-align: left; padding: 16px 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); background: var(--bg-body); border-bottom: 1px solid var(--border-color); }
         td { padding: 16px 20px; border-bottom: 1px solid var(--border-color); font-size: 14px; vertical-align: middle; }
         tr:last-child td { border-bottom: none; }
@@ -282,12 +282,13 @@
                         <th>Menores</th>
                         <th>Horario</th>
                         <th>Total Pagantes</th>
+                        <th>R$ Total</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="reservasTableBody">
-                    <tr><td colspan="10" style="text-align:center;">Cargando reservas...<\/td></tr>
+                    <tr><td colspan="11" style="text-align:center;">Cargando reservas...<\/td></tr>
                 </tbody>
             </table>
         </div>
@@ -348,7 +349,6 @@
         }
 
         const SPREADSHEET_ID = "1uOAcy1X8yMHDK03CUKLix4cUm_l4m3E4vaZHgSk33as";
-        // Usamos CORS Anywhere como proxy para evitar el error CORS
         const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
         const SHEETS_API = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json`;
         
@@ -374,15 +374,22 @@
             setTimeout(() => { toast.style.display = 'none'; }, 3000);
         }
         
+        function parseMoneda(valor) {
+            if (!valor) return 0;
+            if (typeof valor === 'number') return valor;
+            // Limpiar string: eliminar R$, espacios, cambiar coma por punto
+            const limpio = String(valor).replace('R$', '').replace(/\./g, '').replace(',', '.').trim();
+            const num = parseFloat(limpio);
+            return isNaN(num) ? 0 : num;
+        }
+        
         async function cargarReservas() {
             try {
                 mostrarToast('Cargando reservas...');
                 
-                // Usar CORS Anywhere para evitar el bloqueo
-                const response = await fetch(PROXY_URL + SHEETS_API);
+                const response = await fetch(PROXY_URL + SHEETS_API + '&t=' + Date.now());
                 const text = await response.text();
                 
-                // Limpiar respuesta JSONP
                 let jsonStr = text.replace("/*O_o*/", "").replace("google.visualization.Query.setResponse(", "").slice(0, -2);
                 const data = JSON.parse(jsonStr);
                 const rows = data.table.rows;
@@ -397,16 +404,21 @@
                 
                 for (let i = startIndex; i < rows.length; i++) {
                     const cells = rows[i].c;
-                    if (!cells || cells.length < 8) continue;
+                    if (!cells || cells.length < 10) continue;
                     
+                    // Mapeo según tus columnas:
+                    // 0: ID, 1: Fecha, 2: Nombre, 3: Empresa, 4: Email, 
+                    // 5: H_Ref, 6: Adultos, 7: Menores, 8: Cortesía, 9: R$ Total, 10: Total Pagantes
                     const id = cells[0]?.v || '';
                     const fecha = cells[1]?.v || '';
                     const cliente = cells[2]?.v || '';
                     const empresa = cells[3]?.v || '';
-                    const adultos = parseInt(cells[4]?.v) || 0;
-                    const menores = parseInt(cells[5]?.v) || 0;
-                    const horario = cells[6]?.v || '';
-                    const totalPagantes = cells[7]?.v || (adultos + menores + " pagantes");
+                    const adultos = parseInt(cells[6]?.v) || 0;
+                    const menores = parseInt(cells[7]?.v) || 0;
+                    const horario = cells[5]?.v || '';
+                    const totalPagantes = cells[10]?.v || (adultos + menores + " pagantes");
+                    const montoRaw = cells[9]?.v || 0;
+                    const monto = parseMoneda(montoRaw);
                     
                     if (!id && !cliente) continue;
                     
@@ -419,6 +431,7 @@
                         menores: menores,
                         horario: horario,
                         totalPagantes: totalPagantes,
+                        monto: monto,
                         estado: 'Confirmado',
                         whatsapp: ''
                     });
@@ -430,18 +443,20 @@
                 
             } catch(e) { 
                 console.error("Error:", e);
-                mostrarToast("Error al cargar reservas. Verifica tu conexión.", true);
+                mostrarToast("Error al cargar reservas: " + e.message, true);
             }
         }
         
         function actualizarEstadisticas() {
             let totalPasajeros = 0;
+            let totalIngresos = 0;
             reservasData.forEach(r => {
                 totalPasajeros += (r.adultos || 0) + (r.menores || 0);
+                totalIngresos += r.monto || 0;
             });
             document.getElementById('totalReservas').innerHTML = reservasData.length;
             document.getElementById('totalPasajeros').innerHTML = totalPasajeros;
-            document.getElementById('totalIngresos').innerHTML = `R$ ${(totalPasajeros * 85).toFixed(2)}`;
+            document.getElementById('totalIngresos').innerHTML = `R$ ${totalIngresos.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             let ocupacion = reservasData.length > 0 ? Math.min(100, Math.round((totalPasajeros / (reservasData.length * 4)) * 100)) : 0;
             document.getElementById('ocupacionMedia').innerHTML = `${ocupacion}%`;
         }
@@ -462,10 +477,14 @@
             });
         }
         
+        function formatMoney(value) {
+            return `R$ ${(value || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+        }
+        
         function renderizarTabla() {
             const tbody = document.getElementById('reservasTableBody');
             if (reservasData.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;">No hay reservas para mostrar<\/td></tr>';
+                tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;">No hay reservas para mostrar<\/td></tr>';
                 return;
             }
             
@@ -479,6 +498,7 @@
                     <td>${r.menores}<\/td>
                     <td>${escapeHtml(r.horario)}<\/td>
                     <td>${escapeHtml(r.totalPagantes)}<\/td>
+                    <td style="font-weight:600; color:var(--primary);">${formatMoney(r.monto)}<\/td>
                     <td><span class="badge ${getBadgeClass(r.estado)}">${r.estado}<\/span><\/td>
                     <td class="action-buttons">
                         <button class="btn-sm btn-edit" onclick="editarReserva('${escapeHtml(r.id)}')" title="Editar"><i class="ph ph-pencil-simple"></i><\/button>
@@ -501,7 +521,7 @@
             
             const tbody = document.getElementById('reservasTableBody');
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;">No se encontraron resultados<\/td></tr>';
+                tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;">No se encontraron resultados<\/td></tr>';
                 return;
             }
             
@@ -515,6 +535,7 @@
                     <td>${r.menores}<\/td>
                     <td>${escapeHtml(r.horario)}<\/td>
                     <td>${escapeHtml(r.totalPagantes)}<\/td>
+                    <td style="font-weight:600; color:var(--primary);">${formatMoney(r.monto)}<\/td>
                     <td><span class="badge ${getBadgeClass(r.estado)}">${r.estado}<\/span><\/td>
                     <td class="action-buttons">
                         <button class="btn-sm btn-edit" onclick="editarReserva('${escapeHtml(r.id)}')" title="Editar"><i class="ph ph-pencil-simple"></i><\/button>
@@ -593,6 +614,7 @@
                 `👥 *Adultos:* ${reserva.adultos}\n` +
                 `🧒 *Menores:* ${reserva.menores}\n` +
                 `👥 *Total Personas:* ${reserva.adultos + reserva.menores}\n` +
+                `💰 *Monto Total:* ${formatMoney(reserva.monto)}\n` +
                 `🆔 *ID:* ${reserva.id}\n\n` +
                 `¡Gracias por confiar en nosotros! 🌊`;
             
@@ -617,6 +639,7 @@
                     <p><strong>🧒 Menores:</strong> ${reserva.menores}</p>
                     <p><strong>⏰ Horario:</strong> ${escapeHtml(reserva.horario)}</p>
                     <p><strong>👥 Total Pagantes:</strong> ${escapeHtml(reserva.totalPagantes)}</p>
+                    <p><strong>💰 Monto Total:</strong> ${formatMoney(reserva.monto)}</p>
                     <p><strong>📱 WhatsApp:</strong> ${reserva.whatsapp || 'No registrado'}</p>
                     <p><strong>🏷️ Estado:</strong> <span class="badge ${getBadgeClass(reserva.estado)}">${reserva.estado}</span></p>
                 </div>
@@ -638,9 +661,9 @@
         }
         
         function exportarExcel() {
-            let csv = "ID,Fecha Paseo,Cliente,Empresa,Adultos,Menores,Horario,Total Pagantes,Estado,WhatsApp\n";
+            let csv = "ID,Fecha Paseo,Cliente,Empresa,Adultos,Menores,Horario,Total Pagantes,R$ Total,Estado,WhatsApp\n";
             reservasData.forEach(r => {
-                csv += `"${r.id}","${r.fecha}","${r.cliente}","${r.empresa || ''}",${r.adultos},${r.menores},"${r.horario}","${r.totalPagantes}","${r.estado}","${r.whatsapp || ''}"\n`;
+                csv += `"${r.id}","${r.fecha}","${r.cliente}","${r.empresa || ''}",${r.adultos},${r.menores},"${r.horario}","${r.totalPagantes}","${formatMoney(r.monto)}","${r.estado}","${r.whatsapp || ''}"\n`;
             });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
