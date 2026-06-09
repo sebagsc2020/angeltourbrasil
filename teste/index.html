@@ -25,7 +25,6 @@
             transition: background 0.3s ease;
         }
 
-        /* ===== MODO OSCURO / CLARO ===== */
         body.light-mode {
             background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
             color: #0F172A;
@@ -78,7 +77,6 @@
             color: white;
         }
 
-        /* Contenedor principal */
         .container {
             max-width: 520px;
             width: 100%;
@@ -97,7 +95,6 @@
             box-shadow: 0 30px 50px -12px rgba(0, 0, 0, 0.6);
         }
 
-        /* Botón de modo oscuro */
         .theme-toggle-card {
             position: absolute;
             top: 20px;
@@ -129,7 +126,6 @@
             transform: scale(1.02);
         }
 
-        /* Header con logo */
         .header {
             padding: 2rem 2rem 1rem 2rem;
             text-align: center;
@@ -172,7 +168,6 @@
             line-height: 1.4;
         }
 
-        /* ===== BARRA DE BOTONES ===== */
         .actions-bar {
             padding: 0.8rem 1.5rem;
             display: flex;
@@ -253,7 +248,6 @@
             color: white;
         }
 
-        /* ===== FORMULARIO ===== */
         .form-wrapper {
             padding: 1.5rem 2rem 2rem 2rem;
         }
@@ -338,7 +332,6 @@
             font-size: 0.9rem;
         }
 
-        /* Botón principal */
         .btn-submit {
             width: 100%;
             background: linear-gradient(95deg, #0EA5E9, #3B82F6);
@@ -369,7 +362,6 @@
             transform: translateY(1px);
         }
 
-        /* Mensajes */
         .message {
             margin-top: 1.5rem;
             padding: 0.9rem;
@@ -405,7 +397,6 @@
             border: 1px solid rgba(239, 68, 68, 0.3);
         }
 
-        /* Spinner */
         .spinner {
             display: none;
             text-align: center;
@@ -430,7 +421,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Footer */
         .footer {
             padding: 1rem 2rem;
             text-align: center;
@@ -454,7 +444,6 @@
             gap: 0.3rem;
         }
 
-        /* Responsive */
         @media (max-width: 500px) {
             .container {
                 border-radius: 1.5rem;
@@ -505,7 +494,6 @@
 <body>
 
 <div class="container">
-    <!-- Botón de modo oscuro -->
     <div class="theme-toggle-card" id="themeToggleCard">
         <span id="themeIcon">🌙</span>
         <span id="themeText">Modo oscuro</span>
@@ -521,7 +509,6 @@
         </div>
     </div>
 
-    <!-- BARRA DE ACCIONES -->
     <div class="actions-bar">
         <div class="language-bar">
             <button class="btn-language" data-lang="es" title="Español">
@@ -541,7 +528,6 @@
         </button>
     </div>
 
-    <!-- FORMULARIO -->
     <div class="form-wrapper">
         <form id="dataForm">
             <div class="form-group">
@@ -563,6 +549,30 @@
                 <div class="input-wrapper">
                     <span class="input-icon">👤</span>
                     <input type="text" id="nombre" name="nombre" required placeholder="Ex: Carlos Silva" autocomplete="name">
+                </div>
+            </div>
+
+            <!-- NUEVO CAMPO: EMPRESA -->
+            <div class="form-group">
+                <label id="labelEmpresa">
+                    <span class="label-icon">🏢</span>
+                    <span id="textEmpresa">EMPRESA</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🏢</span>
+                    <input type="text" id="empresa" name="empresa" placeholder="Ex: Turismo Brasil" autocomplete="organization">
+                </div>
+            </div>
+
+            <!-- NUEVO CAMPO: EMAIL -->
+            <div class="form-group">
+                <label id="labelEmail">
+                    <span class="label-icon">✉️</span>
+                    <span id="textEmail">EMAIL</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon">✉️</span>
+                    <input type="email" id="email" name="email" required placeholder="Ex: cliente@email.com" autocomplete="email">
                 </div>
             </div>
 
@@ -632,17 +642,20 @@
     // ============================================================
     const scriptURL = 'https://script.google.com/macros/s/AKfycbw6XLSNqMfEfc5XaBV3X53Ono8oUuQVOynk0UcaAGsxWvyjQDYB31sWicMIFCTnOHblJA/exec';
 
-    // ===== TRADUCCIONES =====
     const translations = {
         es: {
             subtitle: "Reserve seu passeio de barco · Cupos limitados · Confirmación inmediata",
             fecha: "FECHA DEL PASEO",
             nombre: "NOMBRE COMPLETO",
+            empresa: "EMPRESA",
+            email: "EMAIL",
             adultos: "ADULTOS",
             menores: "MENORES 6/11",
             cortesia: "CORTESÍA",
             btn: "ENVIANDO TU RESERVA",
             placeholder_nombre: "Ej: Carlos Silva",
+            placeholder_empresa: "Ej: Turismo Brasil",
+            placeholder_email: "Ej: cliente@email.com",
             placeholder_adultos: "Ej: 2",
             placeholder_menores: "Ej: 1",
             placeholder_cortesia: "Ej: 0",
@@ -650,8 +663,9 @@
             footer_secure: "Datos seguros",
             footer_confirm: "Confirmación inmediata",
             success: "✅ ¡Reserva enviada exitosamente! Los datos han sido guardados.",
-            error_fields: "❌ Por favor completa todos los campos",
+            error_fields: "❌ Por favor completa todos los campos requeridos",
             error_date: "❌ Por favor selecciona una fecha para el paseo",
+            error_email: "❌ Por favor ingresa un email válido",
             error_adultos: "❌ Ingresa un número válido de adultos",
             error_menores: "❌ Ingresa un número válido de menores",
             error_cortesia: "❌ Ingresa un número válido para cortesía",
@@ -661,11 +675,15 @@
             subtitle: "Reserve seu passeio de barco · Vagas limitadas · Confirmação imediata",
             fecha: "DATA DO PASSEIO",
             nombre: "NOME COMPLETO",
+            empresa: "EMPRESA",
+            email: "EMAIL",
             adultos: "ADULTOS",
             menores: "MENORES 6/11",
             cortesia: "CORTESIA",
             btn: "ENVIANDO SUA RESERVA",
             placeholder_nombre: "Ex: Carlos Silva",
+            placeholder_empresa: "Ex: Turismo Brasil",
+            placeholder_email: "Ex: cliente@email.com",
             placeholder_adultos: "Ex: 2",
             placeholder_menores: "Ex: 1",
             placeholder_cortesia: "Ex: 0",
@@ -673,8 +691,9 @@
             footer_secure: "Dados seguros",
             footer_confirm: "Confirmação imediata",
             success: "✅ Reserva enviada com sucesso! Os dados foram salvos.",
-            error_fields: "❌ Por favor, preencha todos os campos",
+            error_fields: "❌ Por favor, preencha todos os campos obrigatórios",
             error_date: "❌ Por favor, selecione uma data para o passeio",
+            error_email: "❌ Por favor, insira um email válido",
             error_adultos: "❌ Digite um número válido de adultos",
             error_menores: "❌ Digite um número válido de menores",
             error_cortesia: "❌ Digite um número válido para cortesia",
@@ -684,11 +703,15 @@
             subtitle: "Book your boat tour · Limited spots · Instant confirmation",
             fecha: "TOUR DATE",
             nombre: "FULL NAME",
+            empresa: "COMPANY",
+            email: "EMAIL",
             adultos: "ADULTS",
             menores: "CHILDREN 6/11",
             cortesia: "COMPLIMENTARY",
             btn: "SEND YOUR RESERVATION",
             placeholder_nombre: "Ex: Carlos Silva",
+            placeholder_empresa: "Ex: Turismo Brasil",
+            placeholder_email: "Ex: cliente@email.com",
             placeholder_adultos: "Ex: 2",
             placeholder_menores: "Ex: 1",
             placeholder_cortesia: "Ex: 0",
@@ -696,8 +719,9 @@
             footer_secure: "Secure data",
             footer_confirm: "Instant confirmation",
             success: "✅ Reservation successfully sent! Data has been saved.",
-            error_fields: "❌ Please complete all fields",
+            error_fields: "❌ Please complete all required fields",
             error_date: "❌ Please select a date for the tour",
+            error_email: "❌ Please enter a valid email",
             error_adultos: "❌ Enter a valid number of adults",
             error_menores: "❌ Enter a valid number of children",
             error_cortesia: "❌ Enter a valid number for complimentary",
@@ -707,21 +731,20 @@
 
     let currentLang = 'en';
 
-    // Elementos del DOM
     const form = document.getElementById('dataForm');
     const messageDiv = document.getElementById('message');
     const spinner = document.getElementById('spinner');
     const fechaInput = document.getElementById('fecha');
     const nombreInput = document.getElementById('nombre');
+    const empresaInput = document.getElementById('empresa');
+    const emailInput = document.getElementById('email');
     const adultosInput = document.getElementById('adultos');
     const menoresInput = document.getElementById('menores');
     const cortesiaInput = document.getElementById('cortesia');
 
-    // Configurar fecha mínima (hoy)
     const today = new Date().toISOString().split('T')[0];
     fechaInput.setAttribute('min', today);
 
-    // ===== FUNCIÓN PARA CAMBIAR IDIOMA =====
     function changeLanguage(lang) {
         currentLang = lang;
         const t = translations[lang];
@@ -729,6 +752,8 @@
         document.getElementById('subtitleText').textContent = t.subtitle;
         document.getElementById('textFecha').textContent = t.fecha;
         document.getElementById('textNombre').textContent = t.nombre;
+        document.getElementById('textEmpresa').textContent = t.empresa;
+        document.getElementById('textEmail').textContent = t.email;
         document.getElementById('textAdultos').textContent = t.adultos;
         document.getElementById('textMenores').textContent = t.menores;
         document.getElementById('textCortesia').textContent = t.cortesia;
@@ -738,6 +763,8 @@
         document.getElementById('footerConfirm').textContent = t.footer_confirm;
         
         nombreInput.placeholder = t.placeholder_nombre;
+        empresaInput.placeholder = t.placeholder_empresa;
+        emailInput.placeholder = t.placeholder_email;
         adultosInput.placeholder = t.placeholder_adultos;
         menoresInput.placeholder = t.placeholder_menores;
         cortesiaInput.placeholder = t.placeholder_cortesia;
@@ -752,7 +779,6 @@
         localStorage.setItem('preferred_language', lang);
     }
 
-    // ===== EVENTOS DE LOS BOTONES DE IDIOMA =====
     document.querySelectorAll('.btn-language').forEach(btn => {
         btn.addEventListener('click', () => {
             const lang = btn.getAttribute('data-lang');
@@ -760,12 +786,10 @@
         });
     });
 
-    // ===== BOTÓN ADMIN =====
     document.getElementById('adminBtn').addEventListener('click', () => {
         window.open('https://docs.google.com/spreadsheets/d/TU_ID_DE_SHEET/edit', '_blank');
     });
 
-    // ===== MODO OSCURO/CLARO =====
     function initTheme() {
         const savedTheme = localStorage.getItem('theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -799,7 +823,6 @@
     
     document.getElementById('themeToggleCard').addEventListener('click', toggleTheme);
     
-    // ===== CARGAR IDIOMA GUARDADO =====
     const savedLang = localStorage.getItem('preferred_language');
     if (savedLang && translations[savedLang]) {
         changeLanguage(savedLang);
@@ -809,7 +832,6 @@
     
     initTheme();
 
-    // ===== FUNCIONALIDAD DEL FORMULARIO =====
     function showMessage(msg, type) {
         messageDiv.textContent = msg;
         messageDiv.className = `message ${type}`;
@@ -831,17 +853,26 @@
 
         const fecha = fechaInput.value;
         const nombre = nombreInput.value.trim();
+        const empresa = empresaInput.value.trim();
+        const email = emailInput.value.trim();
         const adultos = adultosInput.value;
         const menores = menoresInput.value;
         const cortesia = cortesiaInput.value;
         const t = translations[currentLang];
 
+        // Validación de email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
         if (!fecha) {
             showMessage(t.error_date, 'error');
             return;
         }
         if (!nombre) {
             showMessage(t.error_fields, 'error');
+            return;
+        }
+        if (!email || !emailRegex.test(email)) {
+            showMessage(t.error_email, 'error');
             return;
         }
         if (adultos === '' || isNaN(adultos) || parseInt(adultos) < 0) {
@@ -863,11 +894,13 @@
         const formData = new FormData();
         formData.append('fecha', fecha);
         formData.append('nombre', nombre);
+        formData.append('empresa', empresa);
+        formData.append('email', email);
         formData.append('adultos', adultos);
         formData.append('menores', menores);
         formData.append('cortesia', cortesia);
 
-        console.log('Enviando:', { fecha, nombre, adultos, menores, cortesia });
+        console.log('Enviando:', { fecha, nombre, empresa, email, adultos, menores, cortesia });
 
         try {
             await fetch(scriptURL, {
