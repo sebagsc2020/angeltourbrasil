@@ -185,7 +185,30 @@
             gap: 0.4rem;
         }
 
-        /* Contenedor de tabla - UN SOLO SCROLL */
+        .btn-pdf {
+            background: #ef4444;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-pdf:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .btn-export:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
         .table-wrapper {
             overflow-x: auto;
             overflow-y: auto;
@@ -508,7 +531,8 @@
             .search-input,
             .filter-select,
             .btn-refresh,
-            .btn-export {
+            .btn-export,
+            .btn-pdf {
                 font-size: 0.7rem;
                 padding: 0.4rem 0.8rem;
             }
@@ -543,7 +567,8 @@
             .search-input,
             .filter-select,
             .btn-refresh,
-            .btn-export {
+            .btn-export,
+            .btn-pdf {
                 width: 100%;
             }
 
@@ -564,6 +589,7 @@
             </div>
             <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
                 <button class="btn-export" id="exportBtn">📥 Exportar CSV</button>
+                <button class="btn-pdf" id="pdfBtn">📄 Generar PDF</button>
                 <div class="theme-toggle" id="themeToggleDashboard">🌙 Modo oscuro</div>
                 <button class="btn-back" id="backToFormBtn">← Volver</button>
             </div>
@@ -694,6 +720,7 @@
         const refreshBtn = document.getElementById('refreshBtn');
         const backBtn = document.getElementById('backToFormBtn');
         const exportBtn = document.getElementById('exportBtn');
+        const pdfBtn = document.getElementById('pdfBtn');
         const detailModal = document.getElementById('detailModal');
         const editModal = document.getElementById('editModal');
         let currentReserva = null;
@@ -886,6 +913,49 @@
             showToast('📥 Exportado');
         }
 
+        // Función para generar PDF con el generador externo
+        function generarPDFExterno() {
+            // Usar datos filtrados (lo que se ve en pantalla) o todos si no hay filtro
+            const datosParaExportar = filteredData.length > 0 ? filteredData : reservasData;
+            
+            if (datosParaExportar.length === 0) {
+                showToast('⚠️ No hay datos para generar PDF');
+                return;
+            }
+            
+            // Transformar los datos al formato que espera generar-pdf.html
+            const reservasAdaptadas = datosParaExportar.map(reserva => ({
+                id: reserva.id,
+                nombre: reserva.nombre,
+                telefono: '',  // No tenemos teléfono en las reservas actuales
+                personas: reserva.adultos + reserva.menores,
+                estado: 'confirmado',
+                lugar: reserva.horario || 'No especificado',
+                excursionesLista: ['Paseo en Barco - Angel Tour Brasil'],
+                empresa: reserva.empresa,
+                email: reserva.email,
+                fecha: reserva.fechaDisplay,
+                totalPagantes: reserva.totalPagantesRaw,
+                valorTotal: reserva.valorTotalRaw
+            }));
+            
+            // Guardar en localStorage para que el otro HTML los lea
+            localStorage.setItem('reservasFiltradasPDF', JSON.stringify(reservasAdaptadas));
+            
+            // Guardar el título/filtro
+            const titulo = 'ANGEL TOUR BRASIL - RESERVAS';
+            localStorage.setItem('filtroExcursionPDF', titulo);
+            
+            // Abrir el generador PDF en una nueva ventana
+            const pdfWindow = window.open('https://sebagsc2020.github.io/angeltourbrasil/generar-pdf.html', '_blank');
+            
+            if (!pdfWindow) {
+                showToast('❌ Pop-up bloqueado. Permite ventanas emergentes.');
+            } else {
+                showToast('📄 Abriendo generador de PDF...');
+            }
+        }
+
         function showToast(msg) {
             const div = document.createElement('div');
             div.textContent = msg;
@@ -952,6 +1022,7 @@
         refreshBtn.addEventListener('click', loadReservas);
         backBtn.addEventListener('click', () => window.location.href = 'https://sebagsc2020.github.io/angeltourbrasil/index.html');
         exportBtn.addEventListener('click', exportToCSV);
+        pdfBtn.addEventListener('click', generarPDFExterno);
         document.getElementById('closeDetailModalBtn').onclick = closeDetailModal;
         document.getElementById('closeEditModalBtn').onclick = closeEditModal;
         document.getElementById('saveEditBtn').onclick = saveEdit;
