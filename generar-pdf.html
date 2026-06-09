@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Generador PDF - Angel Tour Brasil</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Angel Tour Brasil | Panel de Control - Reservas</title>
     <style>
         * {
             margin: 0;
@@ -12,542 +12,969 @@
         }
 
         body {
-            font-family: 'Inter', 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(145deg, #f0f4f8 0%, #d9e2ec 100%);
+            font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0B1120 0%, #192132 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            padding: 16px;
+            color: #E2E8F0;
+            transition: background 0.3s ease;
+            overflow-x: hidden;
         }
 
-        .pdf-generator {
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: 32px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            width: 100%;
-            max-width: 520px;
+        body.light-mode {
+            background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
+            color: #0F172A;
+        }
+
+        body.light-mode .dashboard-container {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+
+        body.light-mode .stats-card,
+        body.light-mode .filter-bar,
+        body.light-mode table th,
+        body.light-mode .entry-row,
+        body.light-mode .search-input,
+        body.light-mode .filter-select {
+            background: #FFFFFF;
+            border-color: #E2E8F0;
+            color: #1E293B;
+        }
+
+        body.light-mode .detail-modal .modal-content {
+            background: white;
+            color: #0f172a;
+        }
+
+        body.light-mode .detail-field {
+            background: #f1f5f9;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(56, 189, 248, 0.2);
             overflow: hidden;
-            backdrop-filter: blur(2px);
-            transition: all 0.3s ease;
         }
 
-        .generator-header {
-            background: linear-gradient(135deg, #0b2b3d 0%, #1a4a6f 100%);
-            padding: 28px 32px;
+        .dashboard-header {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .title-section {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .logo-small {
+            width: 42px;
+            height: auto;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFFFFF, #60A5FA);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .theme-toggle,
+        .btn-back {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 40px;
+            padding: 6px 14px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            font-size: 0.8rem;
+        }
+
+        .btn-back {
+            color: #0EA5E9;
+            background: transparent;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+            padding: 1.2rem 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .stats-card {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 1rem;
+            padding: 0.8rem;
             text-align: center;
+            border: 1px solid rgba(56, 189, 248, 0.2);
         }
 
-        .logo-icon {
-            font-size: 48px;
-            margin-bottom: 12px;
-            display: inline-block;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        .stats-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0EA5E9;
         }
 
-        .generator-header h1 {
-            color: white;
-            font-size: 22px;
+        .stats-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94A3B8;
+        }
+
+        .filter-bar {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            align-items: center;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+        }
+
+        .search-input,
+        .filter-select {
+            background: #0F172A;
+            border: 1.5px solid #1E293B;
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            color: #F1F5F9;
+            outline: none;
+            font-size: 0.8rem;
+        }
+
+        .btn-refresh {
+            background: linear-gradient(95deg, #0EA5E9, #3B82F6);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
             font-weight: 600;
-            letter-spacing: -0.3px;
-            margin-bottom: 6px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.8rem;
         }
 
-        .generator-header p {
-            color: rgba(255,255,255,0.8);
-            font-size: 13px;
-            font-weight: 400;
+        .btn-export {
+            background: #10b981;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
         }
 
-        .generator-content {
-            padding: 32px;
+        .btn-pdf {
+            background: #ef4444;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
         }
 
-        .status-card {
+        .btn-pdf:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .btn-export:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 55vh;
+            margin: 0;
+            scrollbar-width: thin;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            min-width: 750px;
+        }
+
+        th {
+            text-align: left;
+            padding: 0.8rem 0.5rem;
+            background: rgba(14, 165, 233, 0.15);
+            position: sticky;
+            top: 0;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            backdrop-filter: blur(8px);
+            z-index: 10;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 0.7rem 0.5rem;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+            vertical-align: middle;
+        }
+
+        .email-cell {
+            max-width: 85px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .entry-row {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .entry-row:hover {
+            background: rgba(14, 165, 233, 0.1);
+        }
+
+        .badge {
+            background: #1E293B;
+            border-radius: 20px;
+            padding: 0.15rem 0.45rem;
+            font-size: 0.7rem;
+            display: inline-block;
+            font-family: monospace;
+        }
+
+        .empty-state {
             text-align: center;
+            padding: 2rem;
+            color: #64748B;
         }
 
-        .spinner-container {
-            margin-bottom: 24px;
+        .footer-panel {
+            padding: 0.8rem 1.5rem;
+            border-top: 1px solid rgba(56, 189, 248, 0.15);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.65rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
-        .spinner {
-            width: 56px;
-            height: 56px;
-            border: 4px solid #e2e8f0;
-            border-top-color: #1a4a6f;
-            border-right-color: #2c7da0;
+        .spinner-circle-sm {
+            width: 36px;
+            height: 36px;
+            border: 3px solid #1E293B;
+            border-top-color: #0EA5E9;
             border-radius: 50%;
-            animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            animation: spin 0.7s linear infinite;
             margin: 0 auto;
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
-        .status-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #0f172a;
-            margin-bottom: 12px;
+        .detail-modal,
+        .edit-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
         }
 
-        .status-subtitle {
-            font-size: 14px;
-            color: #475569;
-            line-height: 1.5;
+        .detail-modal .modal-content,
+        .edit-modal .modal-content {
+            background: #1e293b;
+            border-radius: 1.2rem;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid #0ea5e9;
+            max-height: 80vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
         }
 
-        .info-card {
-            background: #f8fafc;
-            border-radius: 20px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 1px solid #e2e8f0;
+        .detail-modal .modal-content {
+            padding: 0;
         }
 
-        .info-row {
+        .edit-modal .modal-content {
+            padding: 1.2rem;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+            padding: 1rem 1.2rem;
+            border-radius: 1.2rem 1.2rem 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 20;
         }
 
-        .info-row:last-child {
-            border-bottom: none;
+        .modal-header h3 {
+            color: white;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .info-label {
-            font-size: 13px;
-            font-weight: 500;
-            color: #64748b;
+        .close-modal {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            padding: 1.2rem;
+        }
+
+        .detail-field {
+            background: #0f172a;
+            border-radius: 0.7rem;
+            padding: 0.7rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .detail-label {
+            font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            color: #94a3b8;
+            display: block;
         }
 
-        .info-value {
-            font-size: 16px;
-            font-weight: 700;
+        .detail-value {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-top: 0.2rem;
+            word-break: break-word;
+        }
+
+        body.light-mode .detail-value {
             color: #0f172a;
         }
 
-        .titulo-destacado {
-            background: linear-gradient(135deg, #1a4a6f, #2c7da0);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            font-weight: 800;
+        .detail-value.id-value {
+            color: #0ea5e9;
+            font-family: monospace;
         }
 
-        .btn-cerrar {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            color: white;
+        .modal-buttons {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-modal-edit,
+        .btn-modal-whatsapp {
+            flex: 1;
+            padding: 0.7rem;
+            border-radius: 2rem;
             border: none;
-            padding: 12px 28px;
-            border-radius: 40px;
-            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-modal-edit {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-modal-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+
+        .edit-modal input,
+        .edit-modal select {
             width: 100%;
-            max-width: 200px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 0.6rem;
+            margin-bottom: 0.8rem;
+            border-radius: 0.7rem;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: #f1f5f9;
         }
 
-        .btn-cerrar:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-            background: linear-gradient(135deg, #0f172a, #020617);
+        body.light-mode .edit-modal input,
+        body.light-mode .edit-modal select {
+            background: #f1f5f9;
+            color: #0f172a;
+            border-color: #cbd5e1;
         }
 
-        .success-icon {
-            font-size: 56px;
-            margin-bottom: 16px;
+        .edit-buttons {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: flex-end;
+            margin-top: 1rem;
         }
 
-        .error-icon {
-            font-size: 56px;
-            margin-bottom: 16px;
+        .btn-save {
+            background: #0ea5e9;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: none;
+            cursor: pointer;
         }
 
-        .badge {
-            display: inline-block;
-            background: #e2e8f0;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 12px;
-            color: #475569;
-            margin-top: 8px;
+        .btn-cancel {
+            background: #475569;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: none;
+            cursor: pointer;
         }
 
-        .progress-bar {
-            width: 100%;
-            height: 4px;
-            background: #e2e8f0;
-            border-radius: 4px;
-            margin-top: 20px;
-            overflow: hidden;
+        td:nth-child(7),
+        td:nth-child(8),
+        td:nth-child(9),
+        td:nth-child(10) {
+            text-align: center;
         }
 
-        .progress-fill {
-            width: 60%;
-            height: 100%;
-            background: linear-gradient(90deg, #1a4a6f, #2c7da0);
-            border-radius: 4px;
-            animation: pulse 1s ease infinite;
+        th:nth-child(7),
+        th:nth-child(8),
+        th:nth-child(9),
+        th:nth-child(10) {
+            text-align: center;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; padding: 1rem; }
+            .stats-number { font-size: 1.2rem; }
+            .dashboard-header { padding: 1rem; }
+            h1 { font-size: 1.2rem; }
+            .logo-small { width: 32px; }
+            .filter-bar { padding: 0.8rem 1rem; }
+            .search-input, .filter-select, .btn-refresh, .btn-export, .btn-pdf { font-size: 0.7rem; padding: 0.4rem 0.8rem; }
+            th, td { padding: 0.5rem 0.4rem; font-size: 0.7rem; }
+            .badge { font-size: 0.6rem; }
+            .footer-panel { flex-direction: column; text-align: center; padding: 0.8rem 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .filter-bar { flex-direction: column; align-items: stretch; }
+            .search-input, .filter-select, .btn-refresh, .btn-export, .btn-pdf { width: 100%; }
+            .theme-toggle, .btn-back { padding: 5px 10px; font-size: 0.7rem; }
         }
     </style>
 </head>
 <body>
-    <div class="pdf-generator" id="pdfGenerator">
-        <div class="generator-header">
-            <div class="logo-icon">⛵</div>
-            <h1>Angel Tour Brasil</h1>
-            <p>Generador de reportes profesionales</p>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <div class="title-section">
+                <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Logo" class="logo-small">
+                <h1>📋 Control de Entradas · Reservas</h1>
+            </div>
+            <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                <button class="btn-export" id="exportBtn">📥 Exportar CSV</button>
+                <button class="btn-pdf" id="pdfBtn">📄 Generar PDF</button>
+                <div class="theme-toggle" id="themeToggleDashboard">🌙 Modo oscuro</div>
+                <button class="btn-back" id="backToFormBtn">← Volver</button>
+            </div>
         </div>
-        
-        <div class="generator-content" id="statusContainer">
-            <div class="status-card">
-                <div class="spinner-container">
-                    <div class="spinner"></div>
-                </div>
-                <div class="status-title">Preparando documento</div>
-                <div class="status-subtitle">Estamos procesando la información de tus reservas</div>
-                <div class="progress-bar">
-                    <div class="progress-fill"></div>
-                </div>
+
+        <div class="stats-grid">
+            <div class="stats-card">
+                <div class="stats-number" id="totalReservas">0</div>
+                <div class="stats-label">Total reservas</div>
+            </div>
+            <div class="stats-card">
+                <div class="stats-number" id="totalPasajeros">0</div>
+                <div class="stats-label">Total Pasajeros</div>
+            </div>
+            <div class="stats-card">
+                <div class="stats-number" id="ingresoTotal">R$ 0</div>
+                <div class="stats-label">Ingreso bruto</div>
+            </div>
+            <div class="stats-card">
+                <div class="stats-number" id="promedioPorDia">-</div>
+                <div class="stats-label">Promedio/día</div>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar...">
+            <select id="dateFilter" class="filter-select">
+                <option value="">📅 Todas las fechas</option>
+            </select>
+            <select id="horarioFilter" class="filter-select">
+                <option value="">⏰ Todos</option>
+                <option value="Mañana 9:30 Hs">Mañana 9:30</option>
+                <option value="Media Mañana 11:10 Hs">Media 11:10</option>
+                <option value="Tarde 13:10 Hs">Tarde 13:10</option>
+            </select>
+            <button id="refreshBtn" class="btn-refresh">⟳ Actualizar</button>
+        </div>
+
+        <div class="table-wrapper">
+            <div id="tableSpinner" style="text-align:center; padding:2rem;">
+                <div class="spinner-circle-sm"></div>
+                <p style="margin-top: 8px;">Cargando reservas...</p>
+            </div>
+            <table id="reservasTable" style="display:none;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Nombre</th>
+                        <th>Empresa</th>
+                        <th>Email</th>
+                        <th>Hora</th>
+                        <th>Ad.</th>
+                        <th>Men.</th>
+                        <th>Cort.</th>
+                        <th>Total</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+            <div id="emptyMessage" class="empty-state" style="display:none;">✨ No se encontraron reservas.</div>
+        </div>
+
+        <div class="footer-panel">
+            <span>⛵ Angel Tour Brasil · Gestión en tiempo real</span>
+            <span>🔐 Datos sincronizados vía Google Sheets</span>
+            <span>📱 Haz clic en fila para ver detalles</span>
+        </div>
+    </div>
+
+    <div id="detailModal" class="detail-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📋 Detalles de la Reserva</h3>
+                <button class="close-modal" id="closeDetailModalBtn">✕</button>
+            </div>
+            <div class="modal-body" id="detailModalBody"></div>
+        </div>
+    </div>
+
+    <div id="editModal" class="edit-modal">
+        <div class="modal-content">
+            <h3>✏️ Editar Reserva</h3>
+            <input type="hidden" id="editId">
+            <label>📅 Fecha:</label>
+            <input type="date" id="editFecha">
+            <label>👤 Nombre Completo:</label>
+            <input type="text" id="editNombre">
+            <label>🏢 Empresa:</label>
+            <input type="text" id="editEmpresa">
+            <label>✉️ Email:</label>
+            <input type="email" id="editEmail">
+            <label>⏰ Horario:</label>
+            <select id="editHorario">
+                <option value="Mañana 9:30 Hs">Mañana 9:30</option>
+                <option value="Media Mañana 11:10 Hs">Media 11:10</option>
+                <option value="Tarde 13:10 Hs">Tarde 13:10</option>
+            </select>
+            <label>👥 Adultos (R$ 85,00):</label>
+            <input type="number" id="editAdultos" min="0">
+            <label>🧒 Menores (R$ 42,50):</label>
+            <input type="number" id="editMenores" min="0">
+            <label>🎁 Cortesía:</label>
+            <input type="number" id="editCortesia" min="0">
+            <div class="edit-buttons">
+                <button class="btn-cancel" id="closeEditModalBtn">Cancelar</button>
+                <button class="btn-save" id="saveEditBtn">Guardar</button>
             </div>
         </div>
     </div>
 
     <script>
-        (function() {
-            const container = document.getElementById('statusContainer');
-            
-            // Leer datos desde localStorage
-            let filtroExcursion = '';
-            let reservasFiltradas = [];
-            
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzIuHlt70U_4ShGAhah5Y23wCGVX8F8s611iZVjY2eV6zV4BJ_9CUJsivoexQzQ2JaZgA/exec';
+        let reservasData = [];
+        let filteredData = [];
+
+        const tableBody = document.getElementById('tableBody');
+        const tableEl = document.getElementById('reservasTable');
+        const tableSpinner = document.getElementById('tableSpinner');
+        const emptyMsg = document.getElementById('emptyMessage');
+        const searchInput = document.getElementById('searchInput');
+        const dateFilter = document.getElementById('dateFilter');
+        const horarioFilter = document.getElementById('horarioFilter');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const backBtn = document.getElementById('backToFormBtn');
+        const exportBtn = document.getElementById('exportBtn');
+        const pdfBtn = document.getElementById('pdfBtn');
+        const detailModal = document.getElementById('detailModal');
+        const editModal = document.getElementById('editModal');
+        let currentReserva = null;
+
+        function truncateEmail(email) {
+            if (!email) return '—';
+            if (email.length <= 5) return email;
+            return email.substring(0, 5) + '...';
+        }
+
+        function formatDisplayDate(fechaValue) {
+            if (!fechaValue) return '';
             try {
-                filtroExcursion = localStorage.getItem('filtroExcursionPDF') || '';
-                const reservasJson = localStorage.getItem('reservasFiltradasPDF');
-                
-                if (!reservasJson) {
-                    throw new Error('No se encontraron datos de reservas');
-                }
-                
-                reservasFiltradas = JSON.parse(reservasJson);
-                console.log('✅ Datos recibidos:', { filtro: filtroExcursion, total: reservasFiltradas.length });
-                
-            } catch(e) {
-                container.innerHTML = `
-                    <div class="status-card">
-                        <div class="error-icon">⚠️</div>
-                        <div class="status-title" style="color: #dc2626;">Error de datos</div>
-                        <div class="status-subtitle">${e.message}</div>
-                        <div class="info-card" style="background: #fef2f2; border-color: #fecaca;">
-                            <div style="font-size: 13px; color: #991b1b;">
-                                📌 Asegurate de usar el botón "Generar PDF" desde el panel de reservas
-                            </div>
-                        </div>
-                        <button class="btn-cerrar" onclick="window.close()">Cerrar ventana</button>
-                    </div>
-                `;
+                const date = new Date(fechaValue);
+                if (!isNaN(date.getTime())) return date.toLocaleDateString('es-AR');
+            } catch (e) { }
+            return fechaValue.split('T')[0] || fechaValue;
+        }
+
+        function extractHour(horario) {
+            if (!horario) return '—';
+            const match = horario.match(/(\d{1,2}:\d{2})/);
+            return match ? match[1] : '—';
+        }
+
+        async function loadReservas() {
+            tableSpinner.style.display = 'block';
+            tableEl.style.display = 'none';
+            emptyMsg.style.display = 'none';
+            try {
+                const response = await fetch(SCRIPT_URL, { method: 'GET', mode: 'cors' });
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const result = await response.json();
+                if (result && result.success && Array.isArray(result.data)) {
+                    reservasData = result.data.map(row => ({
+                        id: row.ID || '',
+                        fechaDisplay: formatDisplayDate(row["Fecha del Paseo"]),
+                        nombre: row["Nombre Completo"] || '',
+                        empresa: row.Empresa || '',
+                        email: row.Email || '',
+                        horario: row.H_Ref || '',
+                        hora: extractHour(row.H_Ref),
+                        adultos: parseInt(row.Adultos) || 0,
+                        menores: parseInt(row["Menores 6/11"]) || 0,
+                        cortesia: parseInt(row.Cortesía) || 0,
+                        totalPasajeros: (parseInt(row.Adultos) || 0) + (parseInt(row["Menores 6/11"]) || 0) + (parseInt(row.Cortesía) || 0),
+                        totalPagantesRaw: row["Total Pagantes"] || '0 pagantes',
+                        valorTotalRaw: row["R$ Total"] || 'R$ 0,00',
+                        fechaRaw: row["Fecha del Paseo"] || ''
+                    }));
+                    reservasData.sort((a, b) => (b.fechaRaw || '').localeCompare(a.fechaRaw || ''));
+                    updateDateFilter();
+                    applyFilters();
+                    updateStats();
+                } else throw new Error('Invalid format');
+            } catch (err) {
+                console.error(err);
+                tableSpinner.innerHTML = `<div class="empty-state">⚠️ Error al cargar.<br><button class="btn-refresh" id="retryLoad">Reintentar</button></div>`;
+                document.getElementById('retryLoad')?.addEventListener('click', loadReservas);
                 return;
+            } finally {
+                tableSpinner.style.display = 'none';
             }
-            
-            // Limpiar localStorage después de leer
-            localStorage.removeItem('filtroExcursionPDF');
-            localStorage.removeItem('reservasFiltradasPDF');
-            
-            if (reservasFiltradas.length === 0) {
-                container.innerHTML = `
-                    <div class="status-card">
-                        <div class="error-icon">📭</div>
-                        <div class="status-title" style="color: #dc2626;">Sin reservas</div>
-                        <div class="status-subtitle">No hay reservas para exportar con el filtro actual</div>
-                        <div class="badge">Filtro: ${filtroExcursion || 'ninguno'}</div>
-                        <button class="btn-cerrar" onclick="window.close()">Cerrar ventana</button>
-                    </div>
-                `;
-                return;
-            }
-            
-            const totalPasajeros = reservasFiltradas.reduce((sum, r) => sum + (parseInt(r.personas) || 0), 0);
-            const titulo = (filtroExcursion && filtroExcursion !== '') ? filtroExcursion : 'ANGEL TOUR BRASIL - RESERVAS';
-            
-            // Actualizar UI con información
-            container.innerHTML = `
-                <div class="status-card">
-                    <div class="spinner-container">
-                        <div class="spinner"></div>
-                    </div>
-                    <div class="status-title">Generando reporte</div>
-                    <div class="status-subtitle">Creando documento PDF en formato A4 horizontal (landscape)</div>
-                    <div class="info-card">
-                        <div class="info-row">
-                            <span class="info-label">📄 Título</span>
-                            <span class="info-value titulo-destacado">${escapeHtml(titulo)}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">📋 Reservas</span>
-                            <span class="info-value">${reservasFiltradas.length}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">👥 Pasajeros totales</span>
-                            <span class="info-value">${totalPasajeros}</span>
-                        </div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill"></div>
-                    </div>
+        }
+
+        function updateDateFilter() {
+            const fechas = [...new Set(reservasData.map(r => r.fechaDisplay).filter(f => f))];
+            dateFilter.innerHTML = '<option value="">📅 Todas las fechas</option>';
+            fechas.sort().reverse().forEach(f => {
+                const opt = document.createElement('option');
+                opt.value = f;
+                opt.textContent = f;
+                dateFilter.appendChild(opt);
+            });
+        }
+
+        function applyFilters() {
+            const texto = searchInput.value.toLowerCase();
+            const fechaSel = dateFilter.value;
+            const horarioSel = horarioFilter.value;
+            filteredData = reservasData.filter(r =>
+                (!fechaSel || r.fechaDisplay === fechaSel) &&
+                (!horarioSel || r.horario === horarioSel) &&
+                (!texto || r.nombre.toLowerCase().includes(texto) || r.email.toLowerCase().includes(texto) || r.empresa.toLowerCase().includes(texto))
+            );
+            renderTable();
+        }
+
+        function showDetailModal(reserva) {
+            currentReserva = reserva;
+            const modalBody = document.getElementById('detailModalBody');
+            modalBody.innerHTML = `
+                <div class="detail-field"><span class="detail-label">🎫 ID</span><span class="detail-value id-value">${escapeHtml(reserva.id)}</span></div>
+                <div class="detail-field"><span class="detail-label">📅 Fecha</span><span class="detail-value">${escapeHtml(reserva.fechaDisplay)}</span></div>
+                <div class="detail-field"><span class="detail-label">👤 Nombre</span><span class="detail-value">${escapeHtml(reserva.nombre)}</span></div>
+                <div class="detail-field"><span class="detail-label">🏢 Empresa</span><span class="detail-value">${escapeHtml(reserva.empresa) || '—'}</span></div>
+                <div class="detail-field"><span class="detail-label">✉️ Email</span><span class="detail-value">${escapeHtml(reserva.email)}</span></div>
+                <div class="detail-field"><span class="detail-label">⏰ Horario</span><span class="detail-value">${escapeHtml(reserva.horario)}</span></div>
+                <div class="detail-field"><span class="detail-label">👥 Adultos</span><span class="detail-value">${reserva.adultos} x R$ 85,00</span></div>
+                <div class="detail-field"><span class="detail-label">🧒 Menores</span><span class="detail-value">${reserva.menores} x R$ 42,50</span></div>
+                <div class="detail-field"><span class="detail-label">🎁 Cortesía</span><span class="detail-value">${reserva.cortesia}</span></div>
+                <div class="detail-field"><span class="detail-label">💰 Valor Total</span><span class="detail-value" style="color:#0ea5e9; font-size:1.2rem;">${escapeHtml(reserva.valorTotalRaw)}</span></div>
+                <div class="detail-field"><span class="detail-label">👥 Total Pasajeros</span><span class="detail-value">${reserva.totalPasajeros}</span></div>
+                <div class="modal-buttons">
+                    <button class="btn-modal-edit" id="modalEditBtn">✏️ Editar</button>
+                    <button class="btn-modal-whatsapp" id="modalWhatsappBtn">📱 WhatsApp</button>
                 </div>
             `;
-            
-            try {
-                const { jsPDF } = window.jspdf;
-                // FORMATO A4 LANDSCAPE (horizontal)
-                const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
-                const pageWidth = doc.internal.pageSize.getWidth();  // 297mm (horizontal)
-                const pageHeight = doc.internal.pageSize.getHeight(); // 210mm
-                const margin = 12;
-                let y = margin + 8;
-                
-                // ============================================
-                // HEADER PROFESIONAL
-                // ============================================
-                // Línea superior decorativa
-                doc.setDrawColor(42, 82, 110);
-                doc.setLineWidth(0.5);
-                doc.line(margin, margin, pageWidth - margin, margin);
-                
-                // Título principal
-                doc.setFontSize(20);
-                doc.setFont('helvetica', 'bold');
-                doc.setTextColor(26, 74, 111);
-                doc.text(titulo, pageWidth / 2, y, { align: 'center' });
-                y += 8;
-                
-                // Subtítulo / fecha
-                doc.setFontSize(8);
-                doc.setFont('helvetica', 'normal');
-                doc.setTextColor(100, 116, 139);
-                const fechaStr = `Generado: ${new Date().toLocaleString('es-AR', { 
-                    day: '2-digit', 
-                    month: '2-digit', 
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                })}`;
-                doc.text(fechaStr, margin, y);
-                doc.text(`Total de reservas: ${reservasFiltradas.length}`, pageWidth - margin, y, { align: 'right' });
-                y += 6;
-                
-                // Línea divisoria
-                doc.setDrawColor(203, 213, 225);
-                doc.line(margin, y, pageWidth - margin, y);
-                y += 6;
-                
-                // ============================================
-                // TABLA DE DATOS - Columnas: 1.ID, 2.Cliente, 3.Empresa, 4.Pax, 5.Fecha, 6.Horario, 7.Valor Total, 8.Estado
-                // (Eliminadas columna 4 Email y columna 7 Excursión)
-                // ============================================
-                const colWidths = [22, 48, 42, 18, 28, 28, 32, 22];
-                const headers = ['ID', 'Cliente', 'Empresa', 'Pax', 'Fecha', 'Horario', 'Valor Total', 'Estado'];
-                
-                let x = margin;
-                doc.setFillColor(240, 248, 255);
-                doc.setDrawColor(100, 116, 139);
-                doc.setLineWidth(0.2);
-                doc.setFont('helvetica', 'bold');
-                doc.setFontSize(7.5);
-                doc.setTextColor(30, 41, 59);
-                
-                // Encabezados con fondo
-                for (let i = 0; i < headers.length; i++) {
-                    doc.rect(x, y, colWidths[i], 8, 'FD');
-                    doc.text(headers[i], x + 1.5, y + 5.5);
-                    x += colWidths[i];
-                }
-                y += 8;
-                
-                // Datos
-                doc.setFont('helvetica', 'normal');
-                doc.setFontSize(7);
-                doc.setTextColor(51, 65, 85);
-                doc.setDrawColor(203, 213, 225);
-                
-                for (const reserva of reservasFiltradas) {
-                    // Verificar espacio en página
-                    if (y > pageHeight - 25) {
-                        doc.addPage();
-                        y = margin + 8;
-                        x = margin;
-                        
-                        // Re-dibujar encabezados en nueva página
-                        doc.setFillColor(240, 248, 255);
-                        doc.setDrawColor(100, 116, 139);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setFontSize(7.5);
-                        for (let i = 0; i < headers.length; i++) {
-                            doc.rect(x, y, colWidths[i], 8, 'FD');
-                            doc.text(headers[i], x + 1.5, y + 5.5);
-                            x += colWidths[i];
-                        }
-                        y += 8;
-                        doc.setFont('helvetica', 'normal');
-                        doc.setFontSize(7);
-                        doc.setDrawColor(203, 213, 225);
-                    }
-                    
-                    const alturaFila = 9;
-                    x = margin;
-                    
-                    // 1. ID
-                    doc.rect(x, y, colWidths[0], alturaFila);
-                    doc.text(String(reserva.id || '').substring(0, 8), x + 1.5, y + 5);
-                    x += colWidths[0];
-                    
-                    // 2. Cliente
-                    doc.rect(x, y, colWidths[1], alturaFila);
-                    const nombreCliente = (reserva.nombre || 'No especificado').substring(0, 28);
-                    doc.text(nombreCliente, x + 1.5, y + 5);
-                    x += colWidths[1];
-                    
-                    // 3. Empresa
-                    doc.rect(x, y, colWidths[2], alturaFila);
-                    const empresaTexto = (reserva.empresa || '').substring(0, 24);
-                    doc.text(empresaTexto || '—', x + 1.5, y + 5);
-                    x += colWidths[2];
-                    
-                    // 4. Pax (personas)
-                    doc.rect(x, y, colWidths[3], alturaFila);
-                    doc.text(String(reserva.personas || 0), x + 1.5, y + 5);
-                    x += colWidths[3];
-                    
-                    // 5. Fecha
-                    doc.rect(x, y, colWidths[4], alturaFila);
-                    doc.text(reserva.fecha || '', x + 1.5, y + 5);
-                    x += colWidths[4];
-                    
-                    // 6. Horario
-                    doc.rect(x, y, colWidths[5], alturaFila);
-                    const horarioTexto = (reserva.horario || '').replace(' Hs', '').substring(0, 18);
-                    doc.text(horarioTexto || '—', x + 1.5, y + 5);
-                    x += colWidths[5];
-                    
-                    // 7. Valor Total
-                    doc.rect(x, y, colWidths[6], alturaFila);
-                    doc.text(reserva.valorTotal || '', x + 1.5, y + 5);
-                    x += colWidths[6];
-                    
-                    // 8. Estado
-                    doc.rect(x, y, colWidths[7], alturaFila);
-                    const estadoTexto = reserva.estado === 'pendiente' ? 'Pendiente' : (reserva.estado === 'pagado' ? 'Pagado' : 'Confirmado');
-                    doc.text(estadoTexto, x + 1.5, y + 5);
-                    
-                    y += alturaFila;
-                }
-                
-                // ============================================
-                // TOTAL GENERAL
-                // ============================================
-                y += 4;
-                // Calcular posición para el total (centrado en las columnas de Pax + Fecha + Horario)
-                const totalX = margin + colWidths[0] + colWidths[1] + colWidths[2];
-                const anchoTotalGrupo = colWidths[3] + colWidths[4] + colWidths[5];
-                
-                doc.setFillColor(248, 250, 252);
-                doc.setDrawColor(71, 85, 105);
-                doc.setLineWidth(0.3);
-                doc.setFont('helvetica', 'bold');
-                doc.setFontSize(8);
-                doc.setTextColor(15, 23, 42);
-                
-                doc.rect(totalX, y, anchoTotalGrupo, 8);
-                doc.text('TOTAL PASAJEROS', totalX + 3, y + 5.5);
-                doc.rect(totalX + anchoTotalGrupo, y, colWidths[6] + colWidths[7], 8);
-                doc.text(String(totalPasajeros), totalX + anchoTotalGrupo + 3, y + 5.5);
-                
-                y += 12;
-                
-                // ============================================
-                // FOOTER PROFESIONAL
-                // ============================================
-                doc.setDrawColor(203, 213, 225);
-                doc.line(margin, pageHeight - 12, pageWidth - margin, pageHeight - 12);
-                doc.setFontSize(7);
-                doc.setFont('helvetica', 'italic');
-                doc.setTextColor(148, 163, 184);
-                doc.text('Angel Tour Brasil - Sistema de Gestión de Reservas', pageWidth / 2, pageHeight - 6, { align: 'center' });
-                
-                // Guardar PDF
-                const nombreArchivo = (filtroExcursion && filtroExcursion !== '') 
-                    ? `reporte_${filtroExcursion.replace(/[^a-z0-9]/gi, '_').toLowerCase().substring(0, 35)}.pdf`
-                    : `angeltour_reservas_${new Date().toISOString().split('T')[0]}.pdf`;
-                
-                doc.save(nombreArchivo);
-                
-                // Mostrar éxito
-                container.innerHTML = `
-                    <div class="status-card">
-                        <div class="success-icon">✅</div>
-                        <div class="status-title" style="color: #059669;">¡Reporte generado!</div>
-                        <div class="status-subtitle">El PDF se ha descargado correctamente en formato A4 horizontal</div>
-                        <div class="info-card">
-                            <div class="info-row">
-                                <span class="info-label">📄 Título</span>
-                                <span class="info-value titulo-destacado">${escapeHtml(titulo)}</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label">📋 Reservas</span>
-                                <span class="info-value">${reservasFiltradas.length}</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label">👥 Pasajeros</span>
-                                <span class="info-value">${totalPasajeros}</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label">📁 Archivo</span>
-                                <span class="info-value" style="font-size: 11px;">${nombreArchivo}</span>
-                            </div>
-                        </div>
-                        <button class="btn-cerrar" onclick="window.close()">Cerrar ventana</button>
-                    </div>
-                `;
-                
-            } catch (error) {
-                console.error('Error:', error);
-                container.innerHTML = `
-                    <div class="status-card">
-                        <div class="error-icon">❌</div>
-                        <div class="status-title" style="color: #dc2626;">Error al generar PDF</div>
-                        <div class="status-subtitle">${error.message}</div>
-                        <div class="info-card" style="background: #fef2f2;">
-                            <div style="font-size: 13px; color: #991b1b;">
-                                Verificá la conexión y volvé a intentar
-                            </div>
-                        </div>
-                        <button class="btn-cerrar" onclick="window.close()">Cerrar ventana</button>
-                    </div>
-                `;
-            }
-        })();
-        
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+            document.getElementById('modalEditBtn').onclick = () => {
+                detailModal.style.display = 'none';
+                openEditModal(currentReserva);
+            };
+            document.getElementById('modalWhatsappBtn').onclick = () => shareWhatsApp(currentReserva);
+            detailModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
         }
+
+        function closeDetailModal() {
+            detailModal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        function shareWhatsApp(reserva) {
+            const msg = `🚤 ANGEL TOUR BRASIL 🚤\n\n✅ RESERVA CONFIRMADA\n🎫 ID: ${reserva.id}\n📅 Fecha: ${reserva.fechaDisplay}\n👤 ${reserva.nombre}\n🏢 ${reserva.empresa || '—'}\n✉️ ${reserva.email}\n⏰ ${reserva.horario}\n👥 Adultos: ${reserva.adultos}\n🧒 Menores: ${reserva.menores}\n🎁 Cortesía: ${reserva.cortesia}\n💰 Total: ${reserva.valorTotalRaw}\n👥 Pasajeros: ${reserva.totalPasajeros}\n\n¡Gracias por confiar en Angel Tour Brasil! ⛵`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function openEditModal(reserva) {
+            currentReserva = reserva;
+            document.getElementById('editId').value = reserva.id;
+            document.getElementById('editFecha').value = reserva.fechaRaw ? reserva.fechaRaw.split('T')[0] : '';
+            document.getElementById('editNombre').value = reserva.nombre;
+            document.getElementById('editEmpresa').value = reserva.empresa;
+            document.getElementById('editEmail').value = reserva.email;
+            document.getElementById('editHorario').value = reserva.horario;
+            document.getElementById('editAdultos').value = reserva.adultos;
+            document.getElementById('editMenores').value = reserva.menores;
+            document.getElementById('editCortesia').value = reserva.cortesia;
+            editModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeEditModal() {
+            editModal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        async function saveEdit() {
+            if (!currentReserva) return;
+            const updated = {
+                id: document.getElementById('editId').value,
+                fecha: document.getElementById('editFecha').value,
+                nombre: document.getElementById('editNombre').value,
+                empresa: document.getElementById('editEmpresa').value,
+                email: document.getElementById('editEmail').value,
+                horario: document.getElementById('editHorario').value,
+                adultos: parseInt(document.getElementById('editAdultos').value) || 0,
+                menores: parseInt(document.getElementById('editMenores').value) || 0,
+                cortesia: parseInt(document.getElementById('editCortesia').value) || 0
+            };
+            const total = (updated.adultos * 85) + (updated.menores * 42.5);
+            const totalPasajeros = updated.adultos + updated.menores + updated.cortesia;
+            updated.valorTotal = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            updated.totalPagantes = `${totalPasajeros} pasajero${totalPasajeros !== 1 ? 's' : ''}`;
+            try {
+                const formData = new FormData();
+                formData.append('action', 'update');
+                formData.append('id', updated.id);
+                formData.append('fecha', updated.fecha);
+                formData.append('nombre', updated.nombre);
+                formData.append('empresa', updated.empresa);
+                formData.append('email', updated.email);
+                formData.append('horario', updated.horario);
+                formData.append('adultos', updated.adultos);
+                formData.append('menores', updated.menores);
+                formData.append('cortesia', updated.cortesia);
+                formData.append('valorTotal', updated.valorTotal);
+                formData.append('totalPagantes', updated.totalPagantes);
+                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
+                closeEditModal();
+                await loadReservas();
+                showToast('✅ Reserva actualizada');
+            } catch (error) {
+                alert('Error al guardar');
+            }
+        }
+
+        function exportToCSV() {
+            if (!reservasData.length) return showToast('⚠️ Sin datos');
+            const headers = ['ID', 'Fecha', 'Nombre', 'Empresa', 'Email', 'Horario', 'Adultos', 'Menores', 'Cortesía', 'Total Pasajeros', 'Valor Total'];
+            const rows = reservasData.map(r => [r.id, r.fechaDisplay, r.nombre, r.empresa, r.email, r.horario, r.adultos, r.menores, r.cortesia, r.totalPasajeros, r.valorTotalRaw]);
+            const csv = [headers, ...rows].map(row => row.map(c => typeof c === 'string' && (c.includes(',') || c.includes('"')) ? `"${c.replace(/"/g, '""')}"` : c).join(',')).join('\n');
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(new Blob(['\uFEFF' + csv], { type: 'text/csv' }));
+            link.download = `angeltour_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+            showToast('📥 Exportado');
+        }
+
+        function generarPDFExterno() {
+            const datosParaExportar = filteredData.length > 0 ? filteredData : reservasData;
+            if (datosParaExportar.length === 0) {
+                showToast('⚠️ No hay datos para generar PDF');
+                return;
+            }
+            const reservasAdaptadas = datosParaExportar.map(reserva => ({
+                id: reserva.id,
+                nombre: reserva.nombre,
+                telefono: '',
+                personas: reserva.totalPasajeros,
+                estado: 'confirmado',
+                lugar: reserva.horario || 'No especificado',
+                excursionesLista: ['Paseo en Barco - Angel Tour Brasil'],
+                empresa: reserva.empresa,
+                email: reserva.email,
+                fecha: reserva.fechaDisplay,
+                horario: reserva.horario,
+                valorTotal: reserva.valorTotalRaw
+            }));
+            localStorage.setItem('reservasFiltradasPDF', JSON.stringify(reservasAdaptadas));
+            const titulo = 'ANGEL TOUR BRASIL - RESERVAS';
+            localStorage.setItem('filtroExcursionPDF', titulo);
+            const pdfWindow = window.open('https://sebagsc2020.github.io/angeltourbrasil/generar-pdf.html', '_blank');
+            if (!pdfWindow) {
+                showToast('❌ Pop-up bloqueado. Permite ventanas emergentes.');
+            } else {
+                showToast('📄 Abriendo generador de PDF...');
+            }
+        }
+
+        function showToast(msg) {
+            const div = document.createElement('div');
+            div.textContent = msg;
+            div.style.cssText = 'position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#0ea5e9; color:white; padding:0.6rem 1.2rem; border-radius:2rem; z-index:9999; font-weight:600; font-size:0.8rem';
+            document.body.appendChild(div);
+            setTimeout(() => div.remove(), 2500);
+        }
+
+        function renderTable() {
+            if (!filteredData.length) {
+                tableEl.style.display = 'none';
+                emptyMsg.style.display = 'block';
+                return;
+            }
+            tableEl.style.display = 'table';
+            emptyMsg.style.display = 'none';
+            tableBody.innerHTML = filteredData.map(r => `
+                <tr class="entry-row" onclick='window.showDetailModalFromGlobal(${JSON.stringify(r).replace(/'/g, "&#39;")})'>
+                    <td><span class="badge">${escapeHtml(r.id)}</span></td>
+                    <td>${escapeHtml(r.fechaDisplay)}</td>
+                    <td><strong>${escapeHtml(r.nombre)}</strong></td>
+                    <td>${escapeHtml(r.empresa)}</td>
+                    <td class="email-cell" title="${escapeHtml(r.email)}">${escapeHtml(truncateEmail(r.email))}</td>
+                    <td>${escapeHtml(r.hora)}</td>
+                    <td style="text-align:center">${r.adultos}</td>
+                    <td style="text-align:center">${r.menores}</td>
+                    <td style="text-align:center">${r.cortesia}</td>
+                    <td style="text-align:center">${r.totalPasajeros}</td>
+                    <td style="color:#0EA5E9;">${escapeHtml(r.valorTotalRaw)}</td>
+                </table>
+            `).join('');
+        }
+
+        window.showDetailModalFromGlobal = function(reserva) {
+            showDetailModal(reserva);
+        };
+
+        function escapeHtml(s) {
+            if (!s) return '';
+            return s.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
+        }
+
+        function updateStats() {
+            const totalReservas = reservasData.length;
+            let totalPasajeros = 0;
+            let totalIngreso = 0;
+            
+            reservasData.forEach(r => {
+                // Sumar Adultos + Menores + Cortesía
+                totalPasajeros += (r.adultos + r.menores + r.cortesia);
+                
+                // Calcular ingreso
+                let valor = parseFloat((r.valorTotalRaw || '').replace('R$', '').replace(/\./g, '').replace(',', '.').trim());
+                if (isNaN(valor)) valor = (r.adultos * 85) + (r.menores * 42.5);
+                totalIngreso += valor;
+            });
+            
+            document.getElementById('totalReservas').innerText = totalReservas;
+            document.getElementById('totalPasajeros').innerText = totalPasajeros;
+            document.getElementById('ingresoTotal').innerText = totalIngreso.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            
+            const dias = [...new Set(reservasData.map(r => r.fechaDisplay).filter(f => f))].length;
+            const promedio = dias > 0 ? totalIngreso / dias : 0;
+            document.getElementById('promedioPorDia').innerText = promedio.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        searchInput.addEventListener('input', applyFilters);
+        dateFilter.addEventListener('change', applyFilters);
+        horarioFilter.addEventListener('change', applyFilters);
+        refreshBtn.addEventListener('click', loadReservas);
+        backBtn.addEventListener('click', () => window.location.href = 'https://sebagsc2020.github.io/angeltourbrasil/index.html');
+        exportBtn.addEventListener('click', exportToCSV);
+        pdfBtn.addEventListener('click', generarPDFExterno);
+        document.getElementById('closeDetailModalBtn').onclick = closeDetailModal;
+        document.getElementById('closeEditModalBtn').onclick = closeEditModal;
+        document.getElementById('saveEditBtn').onclick = saveEdit;
+        
+        window.onclick = (e) => {
+            if (e.target === detailModal) closeDetailModal();
+            if (e.target === editModal) closeEditModal();
+        };
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+        }
+        document.getElementById('themeToggleDashboard').addEventListener('click', toggleTheme);
+        if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
+
+        loadReservas();
     </script>
 </body>
 </html>
