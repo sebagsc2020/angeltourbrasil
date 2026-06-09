@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Acceso Administrador | Angel Tour Brasil</title>
     <meta name="theme-color" content="#1e6f5c">
-    <!-- Prevenir que el navegador guarde la contraseña en caché -->ANGEL
+    <!-- Prevenir que el navegador guarde la contraseña en caché -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -66,31 +66,6 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .logo-area {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .logo-area img {
-            height: 100px;
-            width: auto;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
-            pointer-events: none;
-        }
-        .logo-area h1 {
-            font-size: 28px;
-            font-weight: 700;
-            color: white;
-            letter-spacing: -0.5px;
-        }
-        .logo-area h1 span {
-            color: #a7f3d0;
-        }
-        .logo-area p {
-            color: rgba(255,255,255,0.7);
-            font-size: 13px;
-            margin-top: 8px;
-        }
         .login-card {
             background: var(--bg-surface);
             border-radius: 32px;
@@ -103,21 +78,36 @@
             padding: 35px;
             text-align: center;
             color: white;
-        }
-        .login-header img {
-            height: 85px;
-            width: auto;
-            margin-bottom: 20px;
-            pointer-events: none;
+            position: relative;
         }
         .login-header h2 {
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
         }
         .login-header p {
             font-size: 14px;
             opacity: 0.85;
+        }
+        .header-theme-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .header-theme-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.02);
         }
         .login-body {
             padding: 35px;
@@ -233,27 +223,6 @@
         .back-link a:hover {
             text-decoration: underline;
         }
-        .theme-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--bg-surface);
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-            padding: 12px 20px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: 600;
-            z-index: 100;
-            box-shadow: var(--shadow-md);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-        }
-        .theme-btn:hover {
-            background: var(--bg-body);
-        }
         .footer-text {
             text-align: center;
             margin-top: 20px;
@@ -288,22 +257,16 @@
             return false;
         });
     </script>
-    
-    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">
-        <i class="ph ph-moon" id="themeIcon"></i> Modo Oscuro
-    </button>
 
     <div class="login-container">
-        <div class="logo-area">
-            <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Angel Tour Brasil">
-            <h1>Angel Tour <span>Brasil</span></h1>
-            <p>PASSEIO DE BARCO ✦ DESDE 1999</p>
-        </div>
-
         <div class="login-card">
             <div class="login-header">
-                <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Angel Tour Brasil">
-                <h2><i class="ph ph-lock-simple"></i> Acceso Administrador</h2>
+                <h2>
+                    <i class="ph ph-lock-simple"></i> Acceso Administrador
+                    <button class="header-theme-btn" id="headerThemeBtn" onclick="toggleTheme()">
+                        <i class="ph ph-moon" id="themeIcon"></i>
+                    </button>
+                </h2>
                 <p>Sistema seguro · Acceso restringido</p>
             </div>
             <div class="login-body">
@@ -367,9 +330,8 @@
             regenerarCaptcha();
         });
         
-        // Contraseña de administrador (ofuscada)
-        const _0x5e8f = ['angel2026'];
-        const ADMIN_PASSWORD = _0x5e8f[0];
+        // Contraseña de administrador
+        const ADMIN_PASSWORD = "angel2026";
         
         function login() {
             const loginBtn = document.getElementById('loginBtn');
@@ -461,13 +423,13 @@
             document.body.classList.toggle('dark-mode');
             localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
             const icon = document.getElementById('themeIcon');
-            const btnText = document.getElementById('themeBtn');
+            const headerBtn = document.getElementById('headerThemeBtn');
             if (document.body.classList.contains('dark-mode')) {
                 icon.className = 'ph ph-sun';
-                btnText.innerHTML = '<i class="ph ph-sun"></i> Modo Claro';
+                headerBtn.innerHTML = '<i class="ph ph-sun"></i>';
             } else {
                 icon.className = 'ph ph-moon';
-                btnText.innerHTML = '<i class="ph ph-moon"></i> Modo Oscuro';
+                headerBtn.innerHTML = '<i class="ph ph-moon"></i>';
             }
         }
         
@@ -475,9 +437,9 @@
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
             const icon = document.getElementById('themeIcon');
-            const btnText = document.getElementById('themeBtn');
+            const headerBtn = document.getElementById('headerThemeBtn');
             if (icon) icon.className = 'ph ph-sun';
-            if (btnText) btnText.innerHTML = '<i class="ph ph-sun"></i> Modo Claro';
+            if (headerBtn) headerBtn.innerHTML = '<i class="ph ph-sun"></i>';
         }
         
         // Limpiar campos al cargar
