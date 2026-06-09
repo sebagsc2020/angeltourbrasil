@@ -32,6 +32,13 @@
             border-color: #E2E8F0;
             color: #1E293B;
         }
+        body.light-mode .detail-modal .modal-content {
+            background: white;
+            color: #0f172a;
+        }
+        body.light-mode .detail-modal .detail-field {
+            background: #f1f5f9;
+        }
         .dashboard-container {
             max-width: 1400px;
             margin: 0 auto;
@@ -116,9 +123,10 @@
             font-size: 0.7rem;
             text-transform: uppercase;
         }
-        td { padding: 0.9rem 1rem; border-bottom: 1px solid rgba(56,189,248,0.1); }
-        .entry-row:hover { background: rgba(14,165,233,0.05); cursor: pointer; }
-        .badge { background: #1E293B; border-radius: 30px; padding: 0.2rem 0.6rem; font-size: 0.7rem; }
+        td { padding: 0.9rem 1rem; border-bottom: 1px solid rgba(56,189,248,0.1); vertical-align: middle; }
+        .entry-row { cursor: pointer; transition: background 0.2s; }
+        .entry-row:hover { background: rgba(14,165,233,0.15); }
+        .badge { background: #1E293B; border-radius: 30px; padding: 0.2rem 0.6rem; font-size: 0.7rem; display: inline-block; }
         .empty-state { text-align: center; padding: 3rem; color: #64748B; }
         .footer-panel {
             padding: 1rem 2rem;
@@ -137,7 +145,197 @@
             margin: 0 auto;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-        @media (max-width: 700px) { th, td { font-size: 0.7rem; padding: 0.7rem; } }
+        
+        /* ========== MODAL DE DETALLES ========== */
+        .detail-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+        .detail-modal .modal-content {
+            background: #1e293b;
+            border-radius: 1.5rem;
+            padding: 0;
+            max-width: 550px;
+            width: 90%;
+            border: 1px solid #0ea5e9;
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: modalFadeIn 0.3s ease;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-header {
+            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+            padding: 1.2rem 1.5rem;
+            border-radius: 1.5rem 1.5rem 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 {
+            color: white;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .close-modal {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .close-modal:hover { background: rgba(255,255,255,0.4); }
+        .modal-body { padding: 1.5rem; }
+        .detail-field {
+            background: #0f172a;
+            border-radius: 0.8rem;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.8rem;
+        }
+        body.light-mode .detail-field { background: #f1f5f9; }
+        .detail-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            display: block;
+        }
+        .detail-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-top: 0.2rem;
+            word-break: break-word;
+        }
+        body.light-mode .detail-value { color: #0f172a; }
+        .detail-value.id-value { color: #0ea5e9; font-family: monospace; font-size: 1.1rem; }
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .btn-modal-edit, .btn-modal-whatsapp {
+            flex: 1;
+            padding: 0.8rem;
+            border-radius: 2rem;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .btn-modal-edit {
+            background: #f59e0b;
+            color: white;
+        }
+        .btn-modal-edit:hover { background: #d97706; transform: translateY(-2px); }
+        .btn-modal-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        .btn-modal-whatsapp:hover { background: #128C7E; transform: translateY(-2px); }
+        
+        /* Modal de edición */
+        .edit-modal {
+            display: none;
+            position: fixed;
+            z-index: 1100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+        .edit-modal .modal-content {
+            background: #1e293b;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid #0ea5e9;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        body.light-mode .edit-modal .modal-content {
+            background: white;
+            color: #0f172a;
+        }
+        .edit-modal h3 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .edit-modal input, .edit-modal select {
+            width: 100%;
+            padding: 0.7rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: #f1f5f9;
+        }
+        body.light-mode .edit-modal input,
+        body.light-mode .edit-modal select {
+            background: #f1f5f9;
+            color: #0f172a;
+            border-color: #cbd5e1;
+        }
+        .edit-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1rem;
+        }
+        .btn-save {
+            background: #0ea5e9;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-cancel {
+            background: #475569;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            border: none;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 700px) {
+            th, td { font-size: 0.7rem; padding: 0.7rem; }
+            .modal-buttons { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
@@ -172,15 +370,64 @@
     <div class="table-wrapper">
         <div id="tableSpinner" style="text-align:center; padding:2rem;"><div class="spinner-circle-sm"></div><p>Cargando reservas...</p></div>
         <table id="reservasTable" style="display:none;">
-            <thead><tr><th>ID</th><th>Fecha</th><th>Nombre</th><th>Empresa</th><th>Email</th><th>Horario</th><th>Adultos</th><th>Menores</th><th>Cortesía</th><th>Total pagantes</th><th>Valor Total</th></tr></thead>
+            <thead>
+                <tr><th>ID</th><th>Fecha</th><th>Nombre</th><th>Empresa</th><th>Email</th><th>Horario</th><th>Adultos</th><th>Menores</th><th>Cortesía</th><th>Total pagantes</th><th>Valor Total</th>
+                </tr>
+            </thead>
             <tbody id="tableBody"></tbody>
         </table>
         <div id="emptyMessage" class="empty-state" style="display:none;">✨ No se encontraron reservas.</div>
     </div>
     <div class="footer-panel"><span>⛵ Angel Tour Brasil · Gestión en tiempo real</span><span>🔐 Datos sincronizados vía Google Sheets</span></div>
 </div>
+
+<!-- MODAL DE DETALLES (popup al hacer clic en la fila) -->
+<div id="detailModal" class="detail-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>📋 Detalles de la Reserva</h3>
+            <button class="close-modal" id="closeDetailModalBtn">✕</button>
+        </div>
+        <div class="modal-body" id="detailModalBody">
+            <!-- Los detalles se llenan dinámicamente -->
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DE EDICIÓN -->
+<div id="editModal" class="edit-modal">
+    <div class="modal-content">
+        <h3>✏️ Editar Reserva</h3>
+        <input type="hidden" id="editId">
+        <label>Fecha:</label>
+        <input type="date" id="editFecha">
+        <label>Nombre Completo:</label>
+        <input type="text" id="editNombre">
+        <label>Empresa:</label>
+        <input type="text" id="editEmpresa">
+        <label>Email:</label>
+        <input type="email" id="editEmail">
+        <label>Horario:</label>
+        <select id="editHorario">
+            <option value="Mañana 9:30 Hs">Mañana 9:30 Hs</option>
+            <option value="Media Mañana 11:10 Hs">Media Mañana 11:10 Hs</option>
+            <option value="Tarde 13:10 Hs">Tarde 13:10 Hs</option>
+        </select>
+        <label>Adultos:</label>
+        <input type="number" id="editAdultos" min="0">
+        <label>Menores (6/11):</label>
+        <input type="number" id="editMenores" min="0">
+        <label>Cortesía:</label>
+        <input type="number" id="editCortesia" min="0">
+        <div class="edit-buttons">
+            <button class="btn-cancel" id="closeEditModalBtn">Cancelar</button>
+            <button class="btn-save" id="saveEditBtn">Guardar cambios</button>
+        </div>
+    </div>
+</div>
+
 <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxydf8_ciI_nbXZz-EDrag--a1QC8g6iX3UPehWGwxqFeeUB-NUaYVusDQZIUeAC1N4Og/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzIuHlt70U_4ShGAhah5Y23wCGVX8F8s611iZVjY2eV6zV4BJ_9CUJsivoexQzQ2JaZgA/exec';
     let reservasData = [];
     let filteredData = [];
 
@@ -193,14 +440,28 @@
     const horarioFilter = document.getElementById('horarioFilter');
     const refreshBtn = document.getElementById('refreshBtn');
     const backBtn = document.getElementById('backToFormBtn');
+    
+    // Modales
+    const detailModal = document.getElementById('detailModal');
+    const editModal = document.getElementById('editModal');
+    let currentReserva = null;
 
     function parseFecha(fechaValue) {
         if (!fechaValue) return '';
         try {
             const date = new Date(fechaValue);
-            if (!isNaN(date.getTime())) return date.toLocaleDateString('es-AR');
+            if (!isNaN(date.getTime())) return date.toISOString().split('T')[0];
         } catch(e) {}
         return fechaValue.split('T')[0] || fechaValue;
+    }
+
+    function formatDisplayFecha(fechaValue) {
+        if (!fechaValue) return '';
+        try {
+            const date = new Date(fechaValue);
+            if (!isNaN(date.getTime())) return date.toLocaleDateString('es-AR');
+        } catch(e) {}
+        return fechaValue;
     }
 
     async function cargarReservas() {
@@ -214,7 +475,9 @@
             if (result && result.success && Array.isArray(result.data)) {
                 reservasData = result.data.map(row => ({
                     id: row.ID || '',
+                    fechaRaw: row["Fecha del Paseo"] || '',
                     fecha: parseFecha(row["Fecha del Paseo"]),
+                    fechaDisplay: formatDisplayFecha(row["Fecha del Paseo"]),
                     nombre: row["Nombre Completo"] || '',
                     empresa: row.Empresa || '',
                     email: row.Email || '',
@@ -239,7 +502,7 @@
     }
 
     function actualizarFiltrosFecha() {
-        const fechas = [...new Set(reservasData.map(r => r.fecha).filter(f => f))];
+        const fechas = [...new Set(reservasData.map(r => r.fechaDisplay).filter(f => f))];
         dateFilter.innerHTML = '<option value="">📅 Todas las fechas</option>';
         fechas.sort().reverse().forEach(f => { let opt = document.createElement('option'); opt.value = f; opt.textContent = f; dateFilter.appendChild(opt); });
     }
@@ -249,27 +512,201 @@
         const fechaSel = dateFilter.value;
         const horarioSel = horarioFilter.value;
         filteredData = reservasData.filter(r => 
-            (!fechaSel || r.fecha === fechaSel) &&
+            (!fechaSel || r.fechaDisplay === fechaSel) &&
             (!horarioSel || r.horario === horarioSel) &&
             (!texto || (r.nombre+'').toLowerCase().includes(texto) || (r.email+'').toLowerCase().includes(texto) || (r.empresa+'').toLowerCase().includes(texto))
         );
         renderTabla();
     }
 
+    // Mostrar modal de detalles
+    function showDetailModal(reserva) {
+        currentReserva = reserva;
+        const modalBody = document.getElementById('detailModalBody');
+        modalBody.innerHTML = `
+            <div class="detail-field">
+                <span class="detail-label">🎫 ID de Reserva</span>
+                <span class="detail-value id-value">${escapeHtml(reserva.id)}</span>
+            </div>
+            <div class="detail-field">
+                <span class="detail-label">📅 Fecha del Paseo</span>
+                <span class="detail-value">${escapeHtml(reserva.fechaDisplay)}</span>
+            </div>
+            <div class="detail-field">
+                <span class="detail-label">👤 Nombre Completo</span>
+                <span class="detail-value">${escapeHtml(reserva.nombre)}</span>
+            </div>
+            <div class="detail-field">
+                <span class="detail-label">🏢 Empresa</span>
+                <span class="detail-value">${escapeHtml(reserva.empresa) || '—'}</span>
+            </div>
+            <div class="detail-field">
+                <span class="detail-label">✉️ Email</span>
+                <span class="detail-value">${escapeHtml(reserva.email)}</span>
+            </div>
+            <div class="detail-field">
+                <span class="detail-label">⏰ Horario</span>
+                <span class="detail-value">${escapeHtml(reserva.horario)}</span>
+            </div>
+            <div class="detail-field">
+                <span class="detail-label">👥 Adultos</span>
+                <span class="detail-value">${reserva.adultos} x R$ 85,00</span>
+            </div>
+            <div class="detail-field">
+                <span class="detail-label">🧒 Menores (6-11 años)</span>
+                <span class="detail-value">${reserva.menores} x R$ 42,50</span>
+            </div>
+            <div class="detail-field">
+                <span class="detail-label">🎁 Cortesía (menores de 6)</span>
+                <span class="detail-value">${reserva.cortesia}</span>
+            </div>
+            <div class="detail-field">
+                <span class="detail-label">💰 Valor Total</span>
+                <span class="detail-value" style="color:#0ea5e9; font-size:1.3rem;">${escapeHtml(reserva.valorTotalRaw)}</span>
+            </div>
+            <div class="detail-field">
+                <span class="detail-label">👥 Total Pagantes</span>
+                <span class="detail-value">${escapeHtml(reserva.totalPagantesRaw)}</span>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-modal-edit" id="modalEditBtn">✏️ Editar Reserva</button>
+                <button class="btn-modal-whatsapp" id="modalWhatsappBtn">📱 Compartir por WhatsApp</button>
+            </div>
+        `;
+        
+        // Asignar eventos a los botones del modal
+        document.getElementById('modalEditBtn').onclick = () => {
+            detailModal.style.display = 'none';
+            openEditModal(currentReserva);
+        };
+        document.getElementById('modalWhatsappBtn').onclick = () => {
+            shareWhatsApp(currentReserva);
+        };
+        
+        detailModal.style.display = 'flex';
+    }
+
+    // Compartir por WhatsApp
+    function shareWhatsApp(reserva) {
+        const mensaje = `🚤 *ANGEL TOUR BRASIL* 🚤\n\n` +
+                        `✅ *RESERVA CONFIRMADA*\n` +
+                        `┌─────────────────┐\n` +
+                        `│ 🎫 ID: ${reserva.id}\n` +
+                        `│ 📅 Fecha: ${reserva.fechaDisplay}\n` +
+                        `│ 👤 Nombre: ${reserva.nombre}\n` +
+                        `│ 🏢 Empresa: ${reserva.empresa || 'No especificada'}\n` +
+                        `│ ✉️ Email: ${reserva.email}\n` +
+                        `│ ⏰ Horario: ${reserva.horario}\n` +
+                        `├─────────────────┤\n` +
+                        `│ 👥 Adultos: ${reserva.adultos}\n` +
+                        `│ 🧒 Menores (6-11): ${reserva.menores}\n` +
+                        `│ 🎁 Cortesía: ${reserva.cortesia}\n` +
+                        `├─────────────────┤\n` +
+                        `│ 💰 Total: ${reserva.valorTotalRaw}\n` +
+                        `│ 👥 Pagantes: ${reserva.totalPagantesRaw}\n` +
+                        `└─────────────────┘\n\n` +
+                        `¡Gracias por confiar en Angel Tour Brasil! ⛵\n` +
+                        `🌊 www.angeltourbrasil.com`;
+        
+        const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+        window.open(url, '_blank');
+    }
+
+    // Abrir modal de edición
+    function openEditModal(reserva) {
+        currentReserva = reserva;
+        document.getElementById('editId').value = reserva.id;
+        document.getElementById('editFecha').value = reserva.fecha;
+        document.getElementById('editNombre').value = reserva.nombre;
+        document.getElementById('editEmpresa').value = reserva.empresa;
+        document.getElementById('editEmail').value = reserva.email;
+        document.getElementById('editHorario').value = reserva.horario;
+        document.getElementById('editAdultos').value = reserva.adultos;
+        document.getElementById('editMenores').value = reserva.menores;
+        document.getElementById('editCortesia').value = reserva.cortesia;
+        editModal.style.display = 'flex';
+    }
+
+    async function saveEdit() {
+        if (!currentReserva) return;
+        
+        const updatedData = {
+            id: document.getElementById('editId').value,
+            fecha: document.getElementById('editFecha').value,
+            nombre: document.getElementById('editNombre').value,
+            empresa: document.getElementById('editEmpresa').value,
+            email: document.getElementById('editEmail').value,
+            horario: document.getElementById('editHorario').value,
+            adultos: parseInt(document.getElementById('editAdultos').value) || 0,
+            menores: parseInt(document.getElementById('editMenores').value) || 0,
+            cortesia: parseInt(document.getElementById('editCortesia').value) || 0
+        };
+        
+        const total = (updatedData.adultos * 85) + (updatedData.menores * 42.5);
+        const totalPagantes = updatedData.adultos + updatedData.menores;
+        updatedData.valorTotalRaw = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        updatedData.totalPagantesRaw = `${totalPagantes} pagante${totalPagantes !== 1 ? 's' : ''}`;
+        
+        try {
+            const formData = new FormData();
+            formData.append('action', 'update');
+            formData.append('id', updatedData.id);
+            formData.append('fecha', updatedData.fecha);
+            formData.append('nombre', updatedData.nombre);
+            formData.append('empresa', updatedData.empresa);
+            formData.append('email', updatedData.email);
+            formData.append('horario', updatedData.horario);
+            formData.append('adultos', updatedData.adultos);
+            formData.append('menores', updatedData.menores);
+            formData.append('cortesia', updatedData.cortesia);
+            formData.append('valorTotal', updatedData.valorTotalRaw);
+            formData.append('totalPagantes', updatedData.totalPagantesRaw);
+            
+            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
+            
+            editModal.style.display = 'none';
+            await cargarReservas();
+            mostrarMensajeTemporal('✅ Reserva actualizada correctamente');
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error al guardar los cambios');
+        }
+    }
+
+    function mostrarMensajeTemporal(mensaje) {
+        const msgDiv = document.createElement('div');
+        msgDiv.textContent = mensaje;
+        msgDiv.style.position = 'fixed';
+        msgDiv.style.bottom = '20px';
+        msgDiv.style.right = '20px';
+        msgDiv.style.backgroundColor = '#0ea5e9';
+        msgDiv.style.color = 'white';
+        msgDiv.style.padding = '0.8rem 1.2rem';
+        msgDiv.style.borderRadius = '2rem';
+        msgDiv.style.zIndex = '9999';
+        msgDiv.style.fontWeight = '600';
+        document.body.appendChild(msgDiv);
+        setTimeout(() => msgDiv.remove(), 3000);
+    }
+
     function renderTabla() {
         if (!filteredData.length) { tableEl.style.display = 'none'; emptyMsg.style.display = 'block'; return; }
         tableEl.style.display = 'table'; emptyMsg.style.display = 'none';
-        tableBody.innerHTML = filteredData.map(r => `<tr class="entry-row">
-            <td><span class="badge">${escapeHtml(r.id)}</span></td>
-            <td>${escapeHtml(r.fecha)}</td>
-            <td><strong>${escapeHtml(r.nombre)}</strong></td>
-            <td>${escapeHtml(r.empresa)}</td>
-            <td>${escapeHtml(r.email)}</td>
-            <td>${escapeHtml(r.horario)}</td>
-            <td>${r.adultos}</td><td>${r.menores}</td><td>${r.cortesia}</td>
-            <td>${escapeHtml(r.totalPagantesRaw)}</td>
-            <td style="color:#0EA5E9;">${escapeHtml(r.valorTotalRaw)}</td>
-        </tr>`).join('');
+        tableBody.innerHTML = filteredData.map(r => `
+            <tr class="entry-row" data-id="${escapeHtml(r.id)}" onclick='showDetailModal(${JSON.stringify(r).replace(/'/g, "&#39;")})'>
+                <td><span class="badge">${escapeHtml(r.id)}</span></td>
+                <td>${escapeHtml(r.fechaDisplay)}</td>
+                <td><strong>${escapeHtml(r.nombre)}</strong></td>
+                <td>${escapeHtml(r.empresa)}</td>
+                <td>${escapeHtml(r.email)}</td>
+                <td>${escapeHtml(r.horario)}</td>
+                <td>${r.adultos}</td>
+                <td>${r.menores}</td>
+                <td>${r.cortesia}</td>
+                <td>${escapeHtml(r.totalPagantesRaw)}</td>
+                <td style="color:#0EA5E9;">${escapeHtml(r.valorTotalRaw)}</td>
+            </tr>
+        `).join('');
     }
 
     function escapeHtml(s) { if(!s) return ''; return s.replace(/[&<>]/g, function(m){ return m=='&'?'&amp;':m=='<'?'&lt;':'&gt;'; }); }
@@ -287,18 +724,32 @@
         document.getElementById('totalReservas').innerText = total;
         document.getElementById('totalPagantesSum').innerText = totalPag;
         document.getElementById('ingresoTotal').innerText = ingreso.toLocaleString('pt-BR', {style:'currency',currency:'BRL'});
-        const dias = [...new Set(reservasData.map(r=>r.fecha).filter(f=>f))].length;
+        const dias = [...new Set(reservasData.map(r=>r.fechaDisplay).filter(f=>f))].length;
         document.getElementById('promedioPorDia').innerText = dias ? (ingreso/dias).toLocaleString('pt-BR', {style:'currency',currency:'BRL'}) : 'R$ 0';
     }
 
+    // Event Listeners
     searchInput.addEventListener('input', aplicarFiltros);
     dateFilter.addEventListener('change', aplicarFiltros);
     horarioFilter.addEventListener('change', aplicarFiltros);
     refreshBtn.addEventListener('click', cargarReservas);
     backBtn.addEventListener('click', () => window.location.href = 'https://sebagsc2020.github.io/angeltourbrasil/index.html');
+    
+    // Cerrar modales
+    document.getElementById('closeDetailModalBtn').onclick = () => detailModal.style.display = 'none';
+    document.getElementById('closeEditModalBtn').onclick = () => editModal.style.display = 'none';
+    document.getElementById('saveEditBtn').onclick = saveEdit;
+    
+    window.onclick = function(event) {
+        if (event.target == detailModal) detailModal.style.display = 'none';
+        if (event.target == editModal) editModal.style.display = 'none';
+    }
+    
+    // Tema oscuro/claro
     function toggleTheme() { document.body.classList.toggle('light-mode'); localStorage.setItem('theme', document.body.classList.contains('light-mode')?'light':'dark'); }
     document.getElementById('themeToggleDashboard').addEventListener('click', toggleTheme);
     if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
+    
     cargarReservas();
 </script>
 </body>
