@@ -30,6 +30,9 @@
             --summary-bg-start: #d1fae5;
             --summary-text: #0f172a;
             --summary-muted: #64748b;
+            --message-bg: #e8f5e9;
+            --message-border: #4caf50;
+            --message-text: #1b5e20;
         }
         body.dark-mode {
             --bg-body: #0f172a;
@@ -42,6 +45,9 @@
             --summary-bg-start: #1e6f5c;
             --summary-text: #f1f5f9;
             --summary-muted: #cbd5e1;
+            --message-bg: #0d2818;
+            --message-border: #2e7d64;
+            --message-text: #a5d6a5;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Inter', sans-serif; background: var(--bg-body); color: var(--text-main); min-height: 100vh; transition: background-color 0.3s, color 0.3s; }
@@ -369,8 +375,8 @@
             color: var(--primary);
         }
         .mensaje-confirmacion {
-            background: var(--primary-light);
-            border-left: 4px solid var(--primary);
+            background: var(--message-bg);
+            border-left: 4px solid var(--message-border);
             padding: 16px;
             border-radius: var(--radius-sm);
             margin-top: 16px;
@@ -378,14 +384,15 @@
         }
         .mensaje-confirmacion i {
             font-size: 24px;
-            color: var(--primary);
+            color: var(--message-border);
             margin-bottom: 8px;
             display: inline-block;
         }
         .mensaje-confirmacion p {
             margin: 0;
             font-weight: 500;
-            color: var(--text-main);
+            color: var(--message-text);
+            line-height: 1.5;
         }
         .modal-footer {
             padding: 16px 24px;
@@ -605,8 +612,8 @@
                 confirmarBtn: "Confirmar Reserva",
                 modalTitle: "📋 Confirmar Reserva",
                 confirmarModalBtn: "Confirmar Reserva",
-                mensajeConfirmacion: "📞 En breve nos comunicaremos para confirmar el horario de salida de tu barco, muchas gracias",
-                toastSuccess: "✅ Reserva confirmada! En breve nos comunicaremos.",
+                mensajeConfirmacion: "📞 Em breve entraremos em contato para confirmar o horário de saída do seu barco. Muito obrigado!",
+                toastSuccess: "✅ Reserva confirmada! Em breve entraremos em contato.",
                 toastErrorNombre: "Complete o campo Nome Completo",
                 toastErrorFecha: "Selecione a data do passeio",
                 toastErrorEmail: "Complete o campo E-mail",
@@ -644,7 +651,7 @@
                 confirmarBtn: "Confirmar Reserva",
                 modalTitle: "📋 Confirmar Reserva",
                 confirmarModalBtn: "Confirmar Reserva",
-                mensajeConfirmacion: "📞 En breve nos comunicaremos para confirmar el horario de salida de tu barco, muchas gracias",
+                mensajeConfirmacion: "📞 En breve nos comunicaremos para confirmar el horario de salida de tu barco. ¡Muchas gracias!",
                 toastSuccess: "✅ Reserva confirmada! En breve nos comunicaremos.",
                 toastErrorNombre: "Complete el campo Nombre Completo",
                 toastErrorFecha: "Seleccione la fecha del paseo",
@@ -698,6 +705,36 @@
             document.getElementById('whatsapp').placeholder = idioma === 'es' ? '+55 11 91234-5678' : '+55 11 91234-5678';
             
             actualizarResumenPorFechaConIdioma();
+            
+            // Si el modal está abierto, actualizar su contenido
+            if (document.getElementById('confirmModal').style.display === 'flex' && datosReservaTemp) {
+                actualizarModalConIdioma();
+            }
+        }
+        
+        function actualizarModalConIdioma() {
+            if (!datosReservaTemp) return;
+            
+            const modalBody = document.getElementById('modalBody');
+            const t = textos[idiomaActual];
+            
+            modalBody.innerHTML = `
+                <div class="resumen-datos">
+                    <p><strong>👤 ${idiomaActual === 'es' ? 'Nombre:' : 'Nome:'}</strong> ${datosReservaTemp.nombre}</p>
+                    <p><strong>📧 ${idiomaActual === 'es' ? 'Email:' : 'E-mail:'}</strong> ${datosReservaTemp.email}</p>
+                    <p><strong>🏢 ${idiomaActual === 'es' ? 'Empresa:' : 'Empresa:'}</strong> ${datosReservaTemp.empresa}</p>
+                    <p><strong>📅 ${idiomaActual === 'es' ? 'Fecha:' : 'Data:'}</strong> ${datosReservaTemp.fechaOut}</p>
+                    <p><strong>⏰ ${idiomaActual === 'es' ? 'Horario:' : 'Horário:'}</strong> ${datosReservaTemp.horarioTexto}</p>
+                    <p><strong>👨 ${idiomaActual === 'es' ? 'Adultos:' : 'Adultos:'}</strong> ${datosReservaTemp.adultos}</p>
+                    <p><strong>👧 ${idiomaActual === 'es' ? 'Menores:' : 'Menores:'}</strong> ${datosReservaTemp.menores}</p>
+                    <p><strong>🏨 ${idiomaActual === 'es' ? 'Hotel:' : 'Hotel:'}</strong> ${datosReservaTemp.hotel || (idiomaActual === 'es' ? 'No especificado' : 'Não especificado')}</p>
+                    <p><strong>💰 ${idiomaActual === 'es' ? 'Total:' : 'Total:'}</strong> <strong style="color:var(--primary);">R$ ${datosReservaTemp.montoTotal.toFixed(2).replace('.', ',')}</strong></p>
+                </div>
+                <div class="mensaje-confirmacion">
+                    <i class="ph ph-check-circle"></i>
+                    <p>${t.mensajeConfirmacion}</p>
+                </div>
+            `;
         }
         
         function actualizarResumenPorFechaConIdioma() {
@@ -806,21 +843,19 @@
         
         function abrirModal(datos) {
             const modal = document.getElementById('confirmModal');
-            const modalBody = document.getElementById('modalBody');
             const t = textos[idiomaActual];
             
-            // Construir el HTML del modal con resumen de datos y mensaje de confirmación
-            modalBody.innerHTML = `
+            document.getElementById('modalBody').innerHTML = `
                 <div class="resumen-datos">
-                    <p><strong>👤 Nombre:</strong> ${datos.nombre}</p>
-                    <p><strong>📧 Email:</strong> ${datos.email}</p>
-                    <p><strong>🏢 Empresa:</strong> ${datos.empresa}</p>
-                    <p><strong>📅 Fecha:</strong> ${datos.fechaOut}</p>
-                    <p><strong>⏰ Horario:</strong> ${datos.horarioTexto}</p>
-                    <p><strong>👨 Adultos:</strong> ${datos.adultos}</p>
-                    <p><strong>👧 Menores:</strong> ${datos.menores}</p>
-                    <p><strong>🏨 Hotel:</strong> ${datos.hotel || 'No especificado'}</p>
-                    <p><strong>💰 Total:</strong> <strong style="color:var(--primary);">R$ ${datos.montoTotal.toFixed(2).replace('.', ',')}</strong></p>
+                    <p><strong>👤 ${idiomaActual === 'es' ? 'Nombre:' : 'Nome:'}</strong> ${datos.nombre}</p>
+                    <p><strong>📧 ${idiomaActual === 'es' ? 'Email:' : 'E-mail:'}</strong> ${datos.email}</p>
+                    <p><strong>🏢 ${idiomaActual === 'es' ? 'Empresa:' : 'Empresa:'}</strong> ${datos.empresa}</p>
+                    <p><strong>📅 ${idiomaActual === 'es' ? 'Fecha:' : 'Data:'}</strong> ${datos.fechaOut}</p>
+                    <p><strong>⏰ ${idiomaActual === 'es' ? 'Horario:' : 'Horário:'}</strong> ${datos.horarioTexto}</p>
+                    <p><strong>👨 ${idiomaActual === 'es' ? 'Adultos:' : 'Adultos:'}</strong> ${datos.adultos}</p>
+                    <p><strong>👧 ${idiomaActual === 'es' ? 'Menores:' : 'Menores:'}</strong> ${datos.menores}</p>
+                    <p><strong>🏨 ${idiomaActual === 'es' ? 'Hotel:' : 'Hotel:'}</strong> ${datos.hotel || (idiomaActual === 'es' ? 'No especificado' : 'Não especificado')}</p>
+                    <p><strong>💰 ${idiomaActual === 'es' ? 'Total:' : 'Total:'}</strong> <strong style="color:var(--primary);">R$ ${datos.montoTotal.toFixed(2).replace('.', ',')}</strong></p>
                 </div>
                 <div class="mensaje-confirmacion">
                     <i class="ph ph-check-circle"></i>
@@ -857,19 +892,16 @@
             
             const t = textos[idiomaActual];
             
-            // Guardar en Google Sheets
             const saved = await guardarEnGoogleSheets(datosReservaTemp);
             
             if (saved) {
                 mostrarToast(t.toastSuccess);
                 
-                // Actualizar contador local
                 const fechaFormateada = formatearFecha(datosReservaTemp.fechaOut);
                 const totalActual = reservasPorFecha[fechaFormateada] || 0;
                 reservasPorFecha[fechaFormateada] = totalActual + datosReservaTemp.adultos + datosReservaTemp.menores;
                 actualizarResumenPorFecha();
                 
-                // Limpiar formulario
                 document.getElementById('reservaForm').reset();
                 document.getElementById('adultos').value = '1';
                 document.getElementById('menores').value = '0';
@@ -878,7 +910,6 @@
                 document.getElementById('fechaOut').value = '';
                 calcularTotal();
                 
-                // Cerrar modal
                 cerrarModal();
             } else {
                 mostrarToast("❌ Error al guardar la reserva", true);
@@ -899,7 +930,6 @@
             const montoTotal = calcularTotal();
             const t = textos[idiomaActual];
             
-            // Validaciones
             if (!nombre) { mostrarToast(t.toastErrorNombre, true); return; }
             if (!fechaOut) { mostrarToast(t.toastErrorFecha, true); return; }
             if (!email) { mostrarToast(t.toastErrorEmail, true); return; }
@@ -936,7 +966,6 @@
                 whatsapp 
             };
             
-            // Abrir modal de confirmación
             abrirModal(datosReservaTemp);
         }
         
@@ -951,7 +980,6 @@
             }
         }
         
-        // Cargar preferencias guardadas
         const idiomaGuardado = localStorage.getItem('idioma') || 'es';
         if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.body.classList.add('dark-mode');
