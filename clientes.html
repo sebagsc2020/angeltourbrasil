@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,66 +10,32 @@
     <style>
         :root {
             --primary: #1e6f5c; --primary-hover: #155a4a; --primary-light: #d1fae5;
+            --danger: #ef4444; --danger-light: #fee2e2;
             --bg-body: #f8fafc; --bg-surface: #ffffff; --text-main: #0f172a; --text-muted: #64748b;
-            --border-color: #e2e8f0; --sidebar-bg: #ffffff; --sidebar-text: #475569;
-            --sidebar-active-bg: #d1fae5; --sidebar-active-text: #1e6f5c; --radius: 12px; --radius-sm: 8px;
+            --border-color: #e2e8f0; --radius: 12px; --radius-sm: 8px;
         }
         body.dark-mode {
             --bg-body: #0f172a; --bg-surface: #1e293b; --text-main: #f1f5f9; --text-muted: #94a3b8;
-            --border-color: #334155; --sidebar-bg: #1e293b; --sidebar-text: #cbd5e1;
-            --sidebar-active-bg: #1e6f5c; --sidebar-active-text: #ffffff;
+            --border-color: #334155;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: var(--bg-body); color: var(--text-main); transition: background-color 0.3s; }
-        .app-container { display: flex; min-height: 100vh; }
-        .sidebar { width: 260px; background: var(--sidebar-bg); border-right: 1px solid var(--border-color); position: fixed; height: 100vh; z-index: 1001; transition: transform 0.3s; display: flex; flex-direction: column; }
-        .sidebar-header { padding: 20px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border-color); }
-        .brand-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), #0e4b5e); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; }
-        .brand-text { font-weight: 700; font-size: 18px; color: var(--text-main); }
-        .brand-text span { color: var(--primary); }
-        .nav-menu { list-style: none; padding: 16px 12px; flex: 1; }
-        .nav-link { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: var(--sidebar-text); text-decoration: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; transition: all 0.2s; }
-        .nav-link i { font-size: 20px; }
-        .nav-link:hover { background: var(--bg-body); color: var(--primary); }
-        .nav-link.active { background: var(--sidebar-active-bg); color: var(--sidebar-active-text); font-weight: 600; }
-        .sidebar-footer { padding: 16px; border-top: 1px solid var(--border-color); }
-        .user-profile { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: var(--radius-sm); background: var(--bg-body); cursor: pointer; }
-        .avatar { width: 36px; height: 36px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; }
-        .main-content { margin-left: 260px; flex: 1; padding: 32px; transition: margin-left 0.3s; }
-        .menu-toggle { display: none; position: fixed; top: 16px; left: 16px; z-index: 1002; background: var(--bg-surface); border: 1px solid var(--border-color); width: 44px; height: 44px; border-radius: var(--radius-sm); align-items: center; justify-content: center; cursor: pointer; }
-        .overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(4px); }
-        .overlay.active { opacity: 1; pointer-events: auto; }
-        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 16px; }
-        .page-title h1 { font-size: 24px; font-weight: 700; }
-        .page-title p { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
         
-        /* Botón flotante superior para móvil */
-        .mobile-menu-header {
-            display: none;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        .mobile-menu-btn {
-            background: var(--primary);
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: white;
-            font-size: 22px;
-        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
         
-        /* Menú flotante superior izquierdo (escritorio) */
+        /* Header con logo y menú flotante */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 16px; }
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        .logo-area img { height: 50px; width: auto; }
+        .logo-area h1 { font-size: 20px; font-weight: 700; color: var(--text-main); }
+        .logo-area h1 span { color: var(--primary); }
+        .header-actions { display: flex; gap: 12px; align-items: center; }
+        
+        /* Menú flotante superior */
         .floating-menu-top {
             position: relative;
             display: inline-flex;
             align-items: center;
-            margin-left: 15px;
         }
         .menu-toggle-top {
             width: 40px;
@@ -92,7 +57,7 @@
         .menu-dropdown {
             position: absolute;
             top: 48px;
-            left: 0;
+            right: 0;
             background: var(--bg-surface);
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -136,8 +101,8 @@
             cursor: pointer;
         }
         .menu-item.logout:hover {
-            background: #fee2e2;
-            color: #dc2626;
+            background: var(--danger-light);
+            color: var(--danger);
         }
         
         .btn { padding: 10px 20px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
@@ -162,97 +127,74 @@
         .client-avatar-sm { width: 32px; height: 32px; border-radius: 50%; background: var(--primary-light); color: var(--primary); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; margin-right: 10px; vertical-align: middle; }
         
         .toast { position: fixed; bottom: 20px; right: 20px; background: #1f2937; color: white; padding: 12px 24px; border-radius: 40px; z-index: 1000; display: none; }
+        .theme-btn { position: fixed; bottom: 20px; right: 20px; background: var(--bg-surface); color: var(--text-main); border: 1px solid var(--border-color); padding: 12px 20px; border-radius: 40px; cursor: pointer; font-weight: 600; z-index: 100; box-shadow: var(--shadow-md); display: flex; align-items: center; gap: 8px; }
         
         @media (max-width: 768px) {
-            .sidebar { transform: translateX(-100%); width: 280px; }
-            .sidebar.open { transform: translateX(0); }
-            .main-content { margin-left: 0; padding: 20px; padding-top: 76px; }
-            .menu-toggle { display: flex; }
+            .container { padding: 16px; }
+            .header { flex-direction: column; align-items: flex-start; }
             .search-box input { width: 100%; }
-            .floating-menu-top { margin-left: 0; }
         }
     </style>
 </head>
 <body>
-    <!-- Botón menú móvil (sidebar) -->
-    <button class="menu-toggle" id="menuBtn"><i class="ph ph-list" style="font-size: 24px;"></i></button>
-    <div class="overlay" id="menuOverlay"></div>
-    
-    <div class="app-container">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div class="brand-icon"><i class="ph-bold ph-ship"></i></div>
-                <div class="brand-text">Angel Tour <span>Brasil</span></div>
+    <!-- Botón de modo oscuro -->
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">
+        <i class="ph ph-moon" id="themeIcon"></i> Modo Oscuro
+    </button>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo-area">
+                <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Angel Tour Brasil">
+                <h1>Angel Tour <span>Brasil</span></h1>
             </div>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="dashboard.html" class="nav-link"><i class="ph ph-squares-four"></i> Dashboard</a></li>
-                <li class="nav-item"><a href="clientes.html" class="nav-link active"><i class="ph ph-users"></i> Clientes</a></li>
-                <li class="nav-item"><a href="reservas.html" class="nav-link"><i class="ph ph-calendar-check"></i> Reservas</a></li>
-                <li class="nav-item"><a href="seguimiento.html" class="nav-link"><i class="ph ph-chart-line-up"></i> Seguimiento</a></li>
-            </ul>
-            <div class="sidebar-footer">
-                <div class="user-profile" onclick="logout()">
-                    <div class="avatar">AT</div>
-                    <div><h4 style="font-size:13px; font-weight:600;">Administrador</h4><p style="font-size:11px; color:var(--text-muted);">Cerrar Sesión</p></div>
-                    <i class="ph ph-sign-out" style="margin-left:auto;"></i>
-                </div>
-            </div>
-        </aside>
-        
-        <main class="main-content">
-            <header class="page-header">
-                <div class="page-title">
-                    <h1>Gestión de Clientes</h1>
-                    <p>Base de datos completa de tus clientes y empresas.</p>
-                </div>
-                <div style="display:flex; gap:12px; align-items:center;">
-                    <!-- Menú flotante superior izquierdo (junto al título) -->
-                    <div class="floating-menu-top" id="floatingMenuTop">
-                        <div class="menu-toggle-top" onclick="toggleMenuTop()">
-                            <i class="ph ph-list"></i>
-                        </div>
-                        <div class="menu-dropdown">
-                            <a href="reservas.html" class="menu-item">
-                                <i class="ph ph-calendar-check"></i> Reservas Públicas
-                            </a>
-                            <a href="clientes.html" class="menu-item">
-                                <i class="ph ph-users"></i> Gestión Clientes
-                            </a>
-                            <a href="seguimiento.html" class="menu-item">
-                                <i class="ph ph-chart-line-up"></i> Seguimiento
-                            </a>
-                            <div class="menu-item logout" onclick="logout()">
-                                <i class="ph ph-sign-out"></i> Cerrar Sesión
-                            </div>
+            <div class="header-actions">
+                <!-- Menú flotante superior -->
+                <div class="floating-menu-top" id="floatingMenuTop">
+                    <div class="menu-toggle-top" onclick="toggleMenuTop()">
+                        <i class="ph ph-list"></i>
+                    </div>
+                    <div class="menu-dropdown">
+                        <a href="reservas.html" class="menu-item">
+                            <i class="ph ph-calendar-check"></i> Reservas Públicas
+                        </a>
+                        <a href="clientes.html" class="menu-item">
+                            <i class="ph ph-users"></i> Gestión Clientes
+                        </a>
+                        <a href="seguimiento.html" class="menu-item">
+                            <i class="ph ph-chart-line-up"></i> Seguimiento
+                        </a>
+                        <div class="menu-item logout" onclick="logout()">
+                            <i class="ph ph-sign-out"></i> Cerrar Sesión
                         </div>
                     </div>
-                    <button class="btn-icon" onclick="toggleTheme()"><i class="ph ph-moon" id="themeIcon"></i></button>
-                    <button class="btn btn-primary" onclick="alert('Nuevo cliente')"><i class="ph ph-plus"></i> Nuevo Cliente</button>
                 </div>
-            </header>
-            
-            <div class="table-section">
-                <div class="section-header">
-                    <div class="search-box">
-                        <i class="ph ph-magnifying-glass"></i>
-                        <input type="text" id="searchInput" placeholder="Buscar por nombre, email o empresa..." onkeyup="filterClients(this.value)">
-                    </div>
-                    <button class="btn btn-secondary btn-sm" onclick="exportarClientes()"><i class="ph ph-download-simple"></i> Exportar</button>
-                </div>
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr><th>Cliente</th><th>Empresa</th><th>Contacto</th><th>Total Reservas</th><th>Total Gastado</th><th>Última Actividad</th><th>Acciones</th></tr>
-                        </thead>
-                        <tbody id="clientesTableBody">
-                            <tr><td colspan="7" style="text-align:center;">Cargando...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+                <button class="btn-icon" onclick="toggleTheme()"><i class="ph ph-moon" id="themeIcon2"></i></button>
+                <button class="btn btn-primary" onclick="alert('Nuevo cliente')"><i class="ph ph-plus"></i> Nuevo Cliente</button>
             </div>
-        </main>
+        </div>
+
+        <div class="table-section">
+            <div class="section-header">
+                <div class="search-box">
+                    <i class="ph ph-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar por nombre, email o empresa..." onkeyup="filterClients(this.value)">
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="exportarClientes()"><i class="ph ph-download-simple"></i> Exportar</button>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr><th>Cliente</th><th>Empresa</th><th>Contacto</th><th>Total Reservas</th><th>Total Gastado</th><th>Última Actividad</th><th>Acciones</th></tr>
+                    </thead>
+                    <tbody id="clientesTableBody">
+                        <tr><td colspan="7" style="text-align:center;">Cargando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    
+
     <div id="toast" class="toast"></div>
 
     <script>
@@ -381,26 +323,31 @@
             mostrarToast('Exportación completada');
         }
         
-        document.getElementById('menuBtn').addEventListener('click', () => { 
-            document.getElementById('sidebar').classList.toggle('open'); 
-            document.getElementById('menuOverlay').classList.toggle('active'); 
-        });
-        document.getElementById('menuOverlay').addEventListener('click', () => { 
-            document.getElementById('sidebar').classList.remove('open'); 
-            document.getElementById('menuOverlay').classList.remove('active'); 
-        });
-        
         function toggleTheme() { 
             document.body.classList.toggle('dark-mode'); 
             localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
             const icon = document.getElementById('themeIcon');
-            if (icon) icon.className = document.body.classList.contains('dark-mode') ? 'ph ph-sun' : 'ph ph-moon';
+            const icon2 = document.getElementById('themeIcon2');
+            const btnText = document.getElementById('themeBtn');
+            if (document.body.classList.contains('dark-mode')) {
+                if (icon) icon.className = 'ph ph-sun';
+                if (icon2) icon2.className = 'ph ph-sun';
+                if (btnText) btnText.innerHTML = '<i class="ph ph-sun"></i> Modo Claro';
+            } else {
+                if (icon) icon.className = 'ph ph-moon';
+                if (icon2) icon2.className = 'ph ph-moon';
+                if (btnText) btnText.innerHTML = '<i class="ph ph-moon"></i> Modo Oscuro';
+            }
         }
         
         if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.body.classList.add('dark-mode');
             const icon = document.getElementById('themeIcon');
+            const icon2 = document.getElementById('themeIcon2');
+            const btnText = document.getElementById('themeBtn');
             if (icon) icon.className = 'ph ph-sun';
+            if (icon2) icon2.className = 'ph ph-sun';
+            if (btnText) btnText.innerHTML = '<i class="ph ph-sun"></i> Modo Claro';
         }
         
         function logout() { 
