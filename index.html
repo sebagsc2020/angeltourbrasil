@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Angel+Tour Brasil | Booking Form</title>
+    <title>Angel Tour Brasil | Booking Form</title>
     <style>
         * {
             margin: 0;
@@ -83,7 +83,7 @@
         }
 
         .container {
-            max-width: 520px;
+            max-width: 550px;
             width: 100%;
             background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(12px);
@@ -341,7 +341,7 @@
             background: rgba(14, 165, 233, 0.1);
             border: 1.5px solid #0EA5E9;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #0EA5E9;
         }
 
@@ -464,6 +464,15 @@
             margin-left: 2rem;
         }
 
+        .two-columns {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .two-columns > div {
+            flex: 1;
+        }
+
         @media (max-width: 500px) {
             .container {
                 border-radius: 1.5rem;
@@ -507,6 +516,10 @@
             }
             .actions-bar {
                 padding: 0.6rem 1.2rem;
+            }
+            .two-columns {
+                flex-direction: column;
+                gap: 1rem;
             }
         }
     </style>
@@ -630,15 +643,27 @@
                 <div class="price-info">Menores de 6 años (sin cargo)</div>
             </div>
 
-            <!-- CAMPO VALOR TOTAL -->
-            <div class="form-group">
-                <label id="labelTotal">
-                    <span class="label-icon">💰</span>
-                    <span id="textTotal">VALOR TOTAL</span>
-                </label>
-                <div class="input-wrapper">
-                    <span class="input-icon">💰</span>
-                    <input type="text" id="valorTotal" name="valorTotal" class="total-display" readonly value="R$ 0,00">
+            <!-- DOS COLUMNAS: VALOR TOTAL y TOTAL PAGANTES -->
+            <div class="two-columns">
+                <div>
+                    <label id="labelTotal">
+                        <span class="label-icon">💰</span>
+                        <span id="textTotal">VALOR TOTAL</span>
+                    </label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">💰</span>
+                        <input type="text" id="valorTotal" name="valorTotal" class="total-display" readonly value="R$ 0,00">
+                    </div>
+                </div>
+                <div>
+                    <label id="labelPagantes">
+                        <span class="label-icon">👥</span>
+                        <span id="textPagantes">TOTAL PAGANTES</span>
+                    </label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">👥</span>
+                        <input type="text" id="totalPagantes" name="totalPagantes" class="total-display" readonly value="0 pagantes">
+                    </div>
                 </div>
             </div>
 
@@ -665,7 +690,7 @@
 
 <script>
     // ============================================================
-    // ⚠️ IMPORTANTE: Reemplaza con la URL de tu Google Apps Script
+    // URL DE GOOGLE APPS SCRIPT - REEMPLAZA CON TU URL
     // ============================================================
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwL2vHYiGnEE-DrNyFOlNDt4rLr6Q4OTZVdnBdgGd9EwcN0tAO8X627maPkVm4lZQNpTQ/exec';
 
@@ -683,6 +708,7 @@
             menores: "MENORES 6/11",
             cortesia: "CORTESÍA",
             total: "VALOR TOTAL",
+            pagantes: "TOTAL PAGANTES",
             btn: "ENVIANDO TU RESERVA",
             placeholder_nombre: "Ej: Carlos Silva",
             placeholder_empresa: "Ej: Turismo Brasil",
@@ -712,6 +738,7 @@
             menores: "MENORES 6/11",
             cortesia: "CORTESIA",
             total: "VALOR TOTAL",
+            pagantes: "TOTAL PAGANTES",
             btn: "ENVIANDO SUA RESERVA",
             placeholder_nombre: "Ex: Carlos Silva",
             placeholder_empresa: "Ex: Turismo Brasil",
@@ -741,6 +768,7 @@
             menores: "CHILDREN 6/11",
             cortesia: "COMPLIMENTARY",
             total: "TOTAL VALUE",
+            pagantes: "TOTAL GUESTS",
             btn: "SEND YOUR RESERVATION",
             placeholder_nombre: "Ex: Carlos Silva",
             placeholder_empresa: "Ex: Turismo Brasil",
@@ -775,20 +803,26 @@
     const menoresInput = document.getElementById('menores');
     const cortesiaInput = document.getElementById('cortesia');
     const valorTotalInput = document.getElementById('valorTotal');
+    const totalPagantesInput = document.getElementById('totalPagantes');
 
     const today = new Date().toISOString().split('T')[0];
     fechaInput.setAttribute('min', today);
 
-    function calcularValorTotal() {
+    function calcularTotalYPagantes() {
         const adultos = parseInt(adultosInput.value) || 0;
         const menores = parseInt(menoresInput.value) || 0;
+        
         const total = (adultos * PRECIO_ADULTO) + (menores * PRECIO_MENOR);
         valorTotalInput.value = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        
+        const totalPagantes = adultos + menores;
+        const pagantesText = `${totalPagantes} pagante${totalPagantes !== 1 ? 's' : ''}`;
+        totalPagantesInput.value = pagantesText;
     }
 
-    adultosInput.addEventListener('input', calcularValorTotal);
-    menoresInput.addEventListener('input', calcularValorTotal);
-    calcularValorTotal();
+    adultosInput.addEventListener('input', calcularTotalYPagantes);
+    menoresInput.addEventListener('input', calcularTotalYPagantes);
+    calcularTotalYPagantes();
 
     function changeLanguage(lang) {
         currentLang = lang;
@@ -803,6 +837,7 @@
         document.getElementById('textMenores').textContent = t.menores;
         document.getElementById('textCortesia').textContent = t.cortesia;
         document.getElementById('textTotal').textContent = t.total;
+        document.getElementById('textPagantes').textContent = t.pagantes;
         document.getElementById('btnText').textContent = t.btn;
         document.getElementById('footerBoat').textContent = t.footer_boat;
         document.getElementById('footerSecure').textContent = t.footer_secure;
@@ -832,8 +867,9 @@
         });
     });
 
+    // ===== BOTÓN ADMIN - REDIRIGE A login.html =====
     document.getElementById('adminBtn').addEventListener('click', () => {
-        window.open('https://docs.google.com/spreadsheets/d/TU_ID_DE_SHEET/edit', '_blank');
+        window.location.href = 'https://sebagsc2020.github.io/angeltourbrasil/login.html';
     });
 
     function initTheme() {
@@ -905,6 +941,7 @@
         const menores = menoresInput.value;
         const cortesia = cortesiaInput.value;
         const valorTotal = valorTotalInput.value;
+        const totalPagantes = totalPagantesInput.value;
         const t = translations[currentLang];
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -946,6 +983,7 @@
         formData.append('menores', menores);
         formData.append('cortesia', cortesia);
         formData.append('valorTotal', valorTotal);
+        formData.append('totalPagantes', totalPagantes);
 
         try {
             await fetch(scriptURL, {
@@ -956,7 +994,7 @@
 
             showMessage(t.success, 'success');
             form.reset();
-            calcularValorTotal();
+            calcularTotalYPagantes();
 
             const btn = document.querySelector('.btn-submit');
             const originalHTML = btn.innerHTML;
