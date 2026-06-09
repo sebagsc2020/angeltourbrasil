@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Angel Tour Brasil | Panel de Control - Reservas</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0B1120 0%, #192132 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #E2E8F0;
+            transition: background 0.3s ease;
+        }
+        body.light-mode {
+            background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
+            color: #0F172A;
+        }
+        body.light-mode .dashboard-container {
+            background: rgba(255,255,255,0.95);
+            border: 1px solid rgba(14,165,233,0.3);
+        }
+        body.light-mode .stats-card,
+        body.light-mode .filter-bar,
+        body.light-mode table th,
+        body.light-mode .entry-row,
+        body.light-mode .search-input,
+        body.light-mode .filter-select {
+            background: #FFFFFF;
+            border-color: #E2E8F0;
+            color: #1E293B;
+        }
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(15,23,42,0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            border: 1px solid rgba(56,189,248,0.2);
+            overflow: hidden;
+        }
+        .dashboard-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(56,189,248,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .title-section { display: flex; align-items: center; gap: 1rem; }
+        .logo-small { width: 48px; height: auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2)); }
+        h1 { font-size: 1.8rem; font-weight: 700; background: linear-gradient(135deg,#FFFFFF,#60A5FA); background-clip: text; -webkit-background-clip: text; color: transparent; }
+        .theme-toggle, .btn-back {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(56,189,248,0.3);
+            border-radius: 40px;
+            padding: 8px 16px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .btn-back { color: #0EA5E9; background: transparent; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+            gap: 1rem;
+            padding: 1.5rem 2rem;
+            background: rgba(0,0,0,0.2);
+        }
+        .stats-card {
+            background: rgba(15,23,42,0.6);
+            border-radius: 1.2rem;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid rgba(56,189,248,0.2);
+        }
+        .stats-number { font-size: 2rem; font-weight: 800; color: #0EA5E9; }
+        .stats-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #94A3B8; }
+        .filter-bar {
+            padding: 1rem 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+            border-bottom: 1px solid rgba(56,189,248,0.15);
+        }
+        .search-input, .filter-select {
+            background: #0F172A;
+            border: 1.5px solid #1E293B;
+            border-radius: 2rem;
+            padding: 0.6rem 1rem;
+            color: #F1F5F9;
+            outline: none;
+        }
+        .btn-refresh {
+            background: linear-gradient(95deg, #0EA5E9, #3B82F6);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+        }
+        .table-wrapper { overflow-x: auto; max-height: 65vh; overflow-y: auto; padding: 0 0 1rem 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th {
+            text-align: left;
+            padding: 1rem;
+            background: rgba(14,165,233,0.1);
+            position: sticky;
+            top: 0;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        td { padding: 0.9rem 1rem; border-bottom: 1px solid rgba(56,189,248,0.1); }
+        .entry-row:hover { background: rgba(14,165,233,0.05); cursor: pointer; }
+        .badge { background: #1E293B; border-radius: 30px; padding: 0.2rem 0.6rem; font-size: 0.7rem; }
+        .empty-state { text-align: center; padding: 3rem; color: #64748B; }
+        .footer-panel {
+            padding: 1rem 2rem;
+            border-top: 1px solid rgba(56,189,248,0.15);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+        }
+        .spinner-circle-sm {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #1E293B;
+            border-top-color: #0EA5E9;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 700px) { th, td { font-size: 0.7rem; padding: 0.7rem; } }
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <div class="title-section">
+            <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Logo" class="logo-small">
+            <h1>📋 Control de Entradas · Reservas</h1>
+        </div>
+        <div style="display: flex; gap: 0.8rem;">
+            <div class="theme-toggle" id="themeToggleDashboard">🌙 Modo oscuro</div>
+            <button class="btn-back" id="backToFormBtn">← Volver al formulario</button>
+        </div>
+    </div>
+    <div class="stats-grid" id="statsGrid">
+        <div class="stats-card"><div class="stats-number" id="totalReservas">0</div><div class="stats-label">Total reservas</div></div>
+        <div class="stats-card"><div class="stats-number" id="totalPagantesSum">0</div><div class="stats-label">Pasajeros totales</div></div>
+        <div class="stats-card"><div class="stats-number" id="ingresoTotal">R$ 0</div><div class="stats-label">Ingreso bruto</div></div>
+        <div class="stats-card"><div class="stats-number" id="promedioPorDia">-</div><div class="stats-label">Promedio/día</div></div>
+    </div>
+    <div class="filter-bar">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar por nombre, email...">
+        <select id="dateFilter" class="filter-select"><option value="">📅 Todas las fechas</option></select>
+        <select id="horarioFilter" class="filter-select">
+            <option value="">⏰ Todos los horarios</option>
+            <option value="Mañana 9:30 Hs">Mañana 9:30 Hs</option>
+            <option value="Media Mañana 11:10 Hs">Media Mañana 11:10 Hs</option>
+            <option value="Tarde 13:10 Hs">Tarde 13:10 Hs</option>
+        </select>
+        <button id="refreshBtn" class="btn-refresh">⟳ Actualizar datos</button>
+    </div>
+    <div class="table-wrapper">
+        <div id="tableSpinner" style="text-align:center; padding:2rem;"><div class="spinner-circle-sm"></div><p>Cargando reservas...</p></div>
+        <table id="reservasTable" style="display:none;">
+            <thead><tr><th>ID</th><th>Fecha</th><th>Nombre</th><th>Empresa</th><th>Email</th><th>Horario</th><th>Adultos</th><th>Menores</th><th>Cortesía</th><th>Total pagantes</th><th>Valor Total</th></tr></thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+        <div id="emptyMessage" class="empty-state" style="display:none;">✨ No se encontraron reservas.</div>
+    </div>
+    <div class="footer-panel"><span>⛵ Angel Tour Brasil · Gestión en tiempo real</span><span>🔐 Datos sincronizados vía Google Sheets</span></div>
+</div>
+<script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzIuHlt70U_4ShGAhah5Y23wCGVX8F8s611iZVjY2eV6zV4BJ_9CUJsivoexQzQ2JaZgA/exec';
+    let reservasData = [];
+    let filteredData = [];
+
+    const tableBody = document.getElementById('tableBody');
+    const tableEl = document.getElementById('reservasTable');
+    const tableSpinner = document.getElementById('tableSpinner');
+    const emptyMsg = document.getElementById('emptyMessage');
+    const searchInput = document.getElementById('searchInput');
+    const dateFilter = document.getElementById('dateFilter');
+    const horarioFilter = document.getElementById('horarioFilter');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const backBtn = document.getElementById('backToFormBtn');
+
+    function parseFecha(fechaValue) {
+        if (!fechaValue) return '';
+        try {
+            const date = new Date(fechaValue);
+            if (!isNaN(date.getTime())) return date.toLocaleDateString('es-AR');
+        } catch(e) {}
+        return fechaValue.split('T')[0] || fechaValue;
+    }
+
+    async function cargarReservas() {
+        tableSpinner.style.display = 'block';
+        tableEl.style.display = 'none';
+        emptyMsg.style.display = 'none';
+        try {
+            const response = await fetch(SCRIPT_URL, { method: 'GET', mode: 'cors' });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const result = await response.json();
+            if (result && result.success && Array.isArray(result.data)) {
+                reservasData = result.data.map(row => ({
+                    id: row.ID || '',
+                    fecha: parseFecha(row["Fecha del Paseo"]),
+                    nombre: row["Nombre Completo"] || '',
+                    empresa: row.Empresa || '',
+                    email: row.Email || '',
+                    horario: row.H_Ref || '',
+                    adultos: parseInt(row.Adultos) || 0,
+                    menores: parseInt(row["Menores 6/11"]) || 0,
+                    cortesia: parseInt(row.Cortesía) || 0,
+                    totalPagantesRaw: row["Total Pagantes"] || '0 pagantes',
+                    valorTotalRaw: row["R$ Total"] || 'R$ 0,00'
+                }));
+                reservasData.sort((a,b) => (b.fecha || '').localeCompare(a.fecha || ''));
+                actualizarFiltrosFecha();
+                aplicarFiltros();
+                actualizarEstadisticas();
+            } else throw new Error('Formato inválido');
+        } catch (err) {
+            console.error(err);
+            tableSpinner.innerHTML = `<div class="empty-state">⚠️ Error al cargar.<br><button class="btn-refresh" id="retryLoad">Reintentar</button></div>`;
+            document.getElementById('retryLoad')?.addEventListener('click', cargarReservas);
+            return;
+        } finally { tableSpinner.style.display = 'none'; }
+    }
+
+    function actualizarFiltrosFecha() {
+        const fechas = [...new Set(reservasData.map(r => r.fecha).filter(f => f))];
+        dateFilter.innerHTML = '<option value="">📅 Todas las fechas</option>';
+        fechas.sort().reverse().forEach(f => { let opt = document.createElement('option'); opt.value = f; opt.textContent = f; dateFilter.appendChild(opt); });
+    }
+
+    function aplicarFiltros() {
+        const texto = searchInput.value.toLowerCase();
+        const fechaSel = dateFilter.value;
+        const horarioSel = horarioFilter.value;
+        filteredData = reservasData.filter(r => 
+            (!fechaSel || r.fecha === fechaSel) &&
+            (!horarioSel || r.horario === horarioSel) &&
+            (!texto || (r.nombre+'').toLowerCase().includes(texto) || (r.email+'').toLowerCase().includes(texto) || (r.empresa+'').toLowerCase().includes(texto))
+        );
+        renderTabla();
+    }
+
+    function renderTabla() {
+        if (!filteredData.length) { tableEl.style.display = 'none'; emptyMsg.style.display = 'block'; return; }
+        tableEl.style.display = 'table'; emptyMsg.style.display = 'none';
+        tableBody.innerHTML = filteredData.map(r => `<tr class="entry-row">
+            <td><span class="badge">${escapeHtml(r.id)}</span></td>
+            <td>${escapeHtml(r.fecha)}</td>
+            <td><strong>${escapeHtml(r.nombre)}</strong></td>
+            <td>${escapeHtml(r.empresa)}</td>
+            <td>${escapeHtml(r.email)}</td>
+            <td>${escapeHtml(r.horario)}</td>
+            <td>${r.adultos}</td><td>${r.menores}</td><td>${r.cortesia}</td>
+            <td>${escapeHtml(r.totalPagantesRaw)}</td>
+            <td style="color:#0EA5E9;">${escapeHtml(r.valorTotalRaw)}</td>
+        </tr>`).join('');
+    }
+
+    function escapeHtml(s) { if(!s) return ''; return s.replace(/[&<>]/g, function(m){ return m=='&'?'&amp;':m=='<'?'&lt;':'&gt;'; }); }
+
+    function actualizarEstadisticas() {
+        const total = reservasData.length;
+        let totalPag = 0, ingreso = 0;
+        reservasData.forEach(r => {
+            let pag = parseInt(r.totalPagantesRaw) || (r.adultos + r.menores);
+            totalPag += pag;
+            let valor = parseFloat((r.valorTotalRaw || '').replace('R$','').replace(/\./g,'').replace(',','.').trim());
+            if (isNaN(valor)) valor = (r.adultos * 85) + (r.menores * 42.5);
+            ingreso += valor;
+        });
+        document.getElementById('totalReservas').innerText = total;
+        document.getElementById('totalPagantesSum').innerText = totalPag;
+        document.getElementById('ingresoTotal').innerText = ingreso.toLocaleString('pt-BR', {style:'currency',currency:'BRL'});
+        const dias = [...new Set(reservasData.map(r=>r.fecha).filter(f=>f))].length;
+        document.getElementById('promedioPorDia').innerText = dias ? (ingreso/dias).toLocaleString('pt-BR', {style:'currency',currency:'BRL'}) : 'R$ 0';
+    }
+
+    searchInput.addEventListener('input', aplicarFiltros);
+    dateFilter.addEventListener('change', aplicarFiltros);
+    horarioFilter.addEventListener('change', aplicarFiltros);
+    refreshBtn.addEventListener('click', cargarReservas);
+    backBtn.addEventListener('click', () => window.location.href = 'https://sebagsc2020.github.io/angeltourbrasil/index.html');
+    function toggleTheme() { document.body.classList.toggle('light-mode'); localStorage.setItem('theme', document.body.classList.contains('light-mode')?'light':'dark'); }
+    document.getElementById('themeToggleDashboard').addEventListener('click', toggleTheme);
+    if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
+    cargarReservas();
+</script>
+</body>
+</html>
