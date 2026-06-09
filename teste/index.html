@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Angel + Tour Brasil | Booking Form</title>
+    <title>Angel Tour Brasil | Booking Form</title>
     <style>
         /* ===== RESET Y ESTILOS BASE ===== */
         * {
@@ -172,7 +172,7 @@
             line-height: 1.4;
         }
 
-        /* ===== BARRA DE BOTONES: IDIOMA IZQUIERDA + ADMIN DERECHA ===== */
+        /* ===== BARRA DE BOTONES ===== */
         .actions-bar {
             padding: 0.8rem 1.5rem;
             display: flex;
@@ -181,7 +181,6 @@
             border-bottom: 1px solid rgba(56, 189, 248, 0.15);
         }
 
-        /* Botones de idioma (izquierda) */
         .language-bar {
             display: flex;
             gap: 0.6rem;
@@ -223,7 +222,6 @@
             transform: scale(1.02);
         }
 
-        /* Botón Admin (derecha) */
         .btn-admin {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(56, 189, 248, 0.25);
@@ -261,7 +259,7 @@
         }
 
         .form-group {
-            margin-bottom: 1.8rem;
+            margin-bottom: 1.5rem;
         }
 
         label {
@@ -310,7 +308,6 @@
         input[type="date"] {
             cursor: pointer;
             color-scheme: dark;
-            text-transform: uppercase;
         }
 
         body.light-mode input[type="date"] {
@@ -580,6 +577,35 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label id="labelMenores">
+                    <span class="label-icon">🧒</span>
+                    <span id="textMenores">MENORES 6/11</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🧒</span>
+                    <input type="number" id="menores" name="menores" placeholder="Ex: 1" step="1" min="0" value="0">
+                </div>
+                <div style="font-size: 0.65rem; color: #64748B; margin-top: 0.3rem; margin-left: 2rem;">
+                    Niños de 6 a 11 años
+                </div>
+            </div>
+
+            <!-- NUEVO CAMPO: CORTESÍA -->
+            <div class="form-group">
+                <label id="labelCortesia">
+                    <span class="label-icon">🎁</span>
+                    <span id="textCortesia">CORTESÍA</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🎁</span>
+                    <input type="number" id="cortesia" name="cortesia" placeholder="Ex: 0" step="1" min="0" value="0">
+                </div>
+                <div style="font-size: 0.65rem; color: #64748B; margin-top: 0.3rem; margin-left: 2rem;">
+                    Menores de 6 años (sin cargo)
+                </div>
+            </div>
+
             <button type="submit" class="btn-submit" id="btnSubmit">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round"/>
@@ -605,7 +631,7 @@
     // ============================================================
     // ⚠️ IMPORTANTE: Reemplaza con la URL de tu Google Apps Script
     // ============================================================
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzz0ajWO5zVSVWhZzVIgUwhfV8QYOEkjTN0M3NR29ITCeQ6ua4_zhUZX189GEwDmvytbA/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbw6XLSNqMfEfc5XaBV3X53Ono8oUuQVOynk0UcaAGsxWvyjQDYB31sWicMIFCTnOHblJA/exec';
 
     // ===== DICCIONARIO DE IDIOMAS =====
     const translations = {
@@ -614,9 +640,13 @@
             fecha: "FECHA DEL PASEO",
             nombre: "NOMBRE COMPLETO",
             adultos: "ADULTOS",
+            menores: "MENORES 6/11",
+            cortesia: "CORTESÍA",
             btn: "ENVIANDO TU RESERVA",
             placeholder_nombre: "Ej: Carlos Silva",
             placeholder_adultos: "Ej: 2",
+            placeholder_menores: "Ej: 1",
+            placeholder_cortesia: "Ej: 0",
             footer_boat: "Paseos en barco",
             footer_secure: "Datos seguros",
             footer_confirm: "Confirmación inmediata",
@@ -624,6 +654,8 @@
             error_fields: "❌ Por favor completa todos los campos",
             error_date: "❌ Por favor selecciona una fecha para el paseo",
             error_adultos: "❌ Ingresa un número válido de adultos",
+            error_menores: "❌ Ingresa un número válido de menores",
+            error_cortesia: "❌ Ingresa un número válido para cortesía",
             btn_success: "✓ RESERVA ENVIADA"
         },
         pt: {
@@ -631,9 +663,13 @@
             fecha: "DATA DO PASSEIO",
             nombre: "NOME COMPLETO",
             adultos: "ADULTOS",
+            menores: "MENORES 6/11",
+            cortesia: "CORTESIA",
             btn: "ENVIANDO SUA RESERVA",
             placeholder_nombre: "Ex: Carlos Silva",
             placeholder_adultos: "Ex: 2",
+            placeholder_menores: "Ex: 1",
+            placeholder_cortesia: "Ex: 0",
             footer_boat: "Passeios de barco",
             footer_secure: "Dados seguros",
             footer_confirm: "Confirmação imediata",
@@ -641,6 +677,8 @@
             error_fields: "❌ Por favor, preencha todos os campos",
             error_date: "❌ Por favor, selecione uma data para o passeio",
             error_adultos: "❌ Digite um número válido de adultos",
+            error_menores: "❌ Digite um número válido de menores",
+            error_cortesia: "❌ Digite um número válido para cortesia",
             btn_success: "✓ RESERVA ENVIADA"
         },
         en: {
@@ -648,9 +686,13 @@
             fecha: "TOUR DATE",
             nombre: "FULL NAME",
             adultos: "ADULTS",
+            menores: "CHILDREN 6/11",
+            cortesia: "COMPLIMENTARY",
             btn: "SEND YOUR RESERVATION",
             placeholder_nombre: "Ex: Carlos Silva",
             placeholder_adultos: "Ex: 2",
+            placeholder_menores: "Ex: 1",
+            placeholder_cortesia: "Ex: 0",
             footer_boat: "Boat tours",
             footer_secure: "Secure data",
             footer_confirm: "Instant confirmation",
@@ -658,6 +700,8 @@
             error_fields: "❌ Please complete all fields",
             error_date: "❌ Please select a date for the tour",
             error_adultos: "❌ Enter a valid number of adults",
+            error_menores: "❌ Enter a valid number of children",
+            error_cortesia: "❌ Enter a valid number for complimentary",
             btn_success: "✓ RESERVATION SENT"
         }
     };
@@ -671,6 +715,8 @@
     const fechaInput = document.getElementById('fecha');
     const nombreInput = document.getElementById('nombre');
     const adultosInput = document.getElementById('adultos');
+    const menoresInput = document.getElementById('menores');
+    const cortesiaInput = document.getElementById('cortesia');  // ← NUEVO CAMPO
 
     // Configurar fecha mínima (hoy)
     const today = new Date().toISOString().split('T')[0];
@@ -685,6 +731,8 @@
         document.getElementById('textFecha').textContent = t.fecha;
         document.getElementById('textNombre').textContent = t.nombre;
         document.getElementById('textAdultos').textContent = t.adultos;
+        document.getElementById('textMenores').textContent = t.menores;
+        document.getElementById('textCortesia').textContent = t.cortesia;
         document.getElementById('btnText').textContent = t.btn;
         document.getElementById('footerBoat').textContent = t.footer_boat;
         document.getElementById('footerSecure').textContent = t.footer_secure;
@@ -692,6 +740,8 @@
         
         nombreInput.placeholder = t.placeholder_nombre;
         adultosInput.placeholder = t.placeholder_adultos;
+        menoresInput.placeholder = t.placeholder_menores;
+        cortesiaInput.placeholder = t.placeholder_cortesia;
         
         document.querySelectorAll('.btn-language').forEach(btn => {
             btn.classList.remove('active');
@@ -783,6 +833,8 @@
         const fecha = fechaInput.value;
         const nombre = nombreInput.value.trim();
         const adultos = adultosInput.value;
+        const menores = menoresInput.value;
+        const cortesia = cortesiaInput.value;  // ← NUEVO CAMPO
         const t = translations[currentLang];
 
         if (!fecha) {
@@ -797,6 +849,14 @@
             showMessage(t.error_adultos, 'error');
             return;
         }
+        if (menores === '' || isNaN(menores) || parseInt(menores) < 0) {
+            showMessage(t.error_menores, 'error');
+            return;
+        }
+        if (cortesia === '' || isNaN(cortesia) || parseInt(cortesia) < 0) {
+            showMessage(t.error_cortesia, 'error');
+            return;
+        }
 
         messageDiv.style.display = 'none';
         spinner.classList.add('active');
@@ -805,8 +865,10 @@
         formData.append('fecha', fecha);
         formData.append('nombre', nombre);
         formData.append('adultos', adultos);
+        formData.append('menores', menores);
+        formData.append('cortesia', cortesia);  // ← NUEVO CAMPO
 
-        console.log('Enviando:', { fecha, nombre, adultos });
+        console.log('Enviando:', { fecha, nombre, adultos, menores, cortesia });
 
         try {
             await fetch(scriptURL, {
