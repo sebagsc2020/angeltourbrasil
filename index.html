@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>++Angel Tour Brasil | Reservas Náuticas</title>
+    <title>Angel Tour Brasil | Reservas Náuticas</title>
     <meta name="theme-color" content="#1e6f5c">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.15/index.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -251,8 +251,8 @@
         // ============================================
         const PRECIO_ADULTO = 85.00;
         const PRECIO_MENOR = 42.50;
-        // ⚠️ ACTUALIZA CON LA URL DE TU APPS SCRIPT DESPLEGADO ⚠️
-        const GOOGLE_URL = "https://script.google.com/macros/s/AKfycby91HkoTRuK_yRPd16OovrO2sC7utCPYFXidUzJgr4TUNKmH_ivEV1qR2FsckC4NORBkA/exec";
+        // ⚠️ REEMPLAZA CON LA URL QUE RESPONDIÓ "status: active" ⚠️
+        const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbx1tu-GrBXdS5OcfGCk9NXVfBnsOUgYlY_0hQJu7Z5h_icVtPc/exec";
         
         // ============================================
         // VARIABLES GLOBALES
@@ -493,6 +493,8 @@
             if (saved) {
                 mostrarToast(t.toastSuccess);
                 limpiarFormulario();
+                // Recargar la página para reiniciar completamente
+                setTimeout(() => location.reload(), 1500);
             } else {
                 mostrarToast(t.toastError, true);
             }
