@@ -5,23 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Angel Tour Brasil | Panel de Control - Reservas</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #0B1120 0%, #192132 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 16px;
             color: #E2E8F0;
             transition: background 0.3s ease;
+            overflow-x: hidden;
         }
+
         body.light-mode {
             background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
             color: #0F172A;
         }
+
         body.light-mode .dashboard-container {
-            background: rgba(255,255,255,0.95);
-            border: 1px solid rgba(14,165,233,0.3);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(14, 165, 233, 0.3);
         }
+
         body.light-mode .stats-card,
         body.light-mode .filter-bar,
         body.light-mode table th,
@@ -32,192 +41,245 @@
             border-color: #E2E8F0;
             color: #1E293B;
         }
+
         body.light-mode .detail-modal .modal-content {
             background: white;
             color: #0f172a;
         }
-        body.light-mode .detail-modal .detail-field {
+
+        body.light-mode .detail-field {
             background: #f1f5f9;
         }
+
         .dashboard-container {
             max-width: 1400px;
             margin: 0 auto;
-            background: rgba(15,23,42,0.85);
+            background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(12px);
-            border-radius: 2rem;
-            border: 1px solid rgba(56,189,248,0.2);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(56, 189, 248, 0.2);
             overflow: hidden;
         }
+
         .dashboard-header {
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid rgba(56,189,248,0.2);
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
         }
-        .title-section { display: flex; align-items: center; gap: 1rem; }
-        .logo-small { width: 48px; height: auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2)); }
-        h1 { font-size: 1.8rem; font-weight: 700; background: linear-gradient(135deg,#FFFFFF,#60A5FA); background-clip: text; -webkit-background-clip: text; color: transparent; }
-        .theme-toggle, .btn-back {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(56,189,248,0.3);
+
+        .title-section {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .logo-small {
+            width: 42px;
+            height: auto;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFFFFF, #60A5FA);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .theme-toggle,
+        .btn-back {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
             border-radius: 40px;
-            padding: 8px 16px;
+            padding: 6px 14px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             transition: all 0.2s;
+            font-size: 0.8rem;
         }
-        .btn-back { color: #0EA5E9; background: transparent; }
+
+        .btn-back {
+            color: #0EA5E9;
+            background: transparent;
+        }
+
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px,1fr));
-            gap: 1rem;
-            padding: 1.5rem 2rem;
-            background: rgba(0,0,0,0.2);
-        }
-        .stats-card {
-            background: rgba(15,23,42,0.6);
-            border-radius: 1.2rem;
-            padding: 1rem;
-            text-align: center;
-            border: 1px solid rgba(56,189,248,0.2);
-        }
-        .stats-number { font-size: 1.8rem; font-weight: 800; color: #0EA5E9; }
-        .stats-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: #94A3B8; }
-        .filter-bar {
-            padding: 1rem 2rem;
-            display: flex;
+            grid-template-columns: repeat(4, 1fr);
             gap: 0.8rem;
+            padding: 1.2rem 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .stats-card {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 1rem;
+            padding: 0.8rem;
+            text-align: center;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .stats-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0EA5E9;
+        }
+
+        .stats-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94A3B8;
+        }
+
+        .filter-bar {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            gap: 0.6rem;
             flex-wrap: wrap;
             align-items: center;
-            border-bottom: 1px solid rgba(56,189,248,0.15);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
         }
-        .search-input, .filter-select {
+
+        .search-input,
+        .filter-select {
             background: #0F172A;
             border: 1.5px solid #1E293B;
             border-radius: 2rem;
-            padding: 0.6rem 1rem;
+            padding: 0.5rem 1rem;
             color: #F1F5F9;
             outline: none;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
+
         .btn-refresh {
             background: linear-gradient(95deg, #0EA5E9, #3B82F6);
             border: none;
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 1rem;
             border-radius: 2rem;
             font-weight: 600;
             color: white;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
-        
+
+        .btn-export {
+            background: #10b981;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* Contenedor de tabla - UN SOLO SCROLL */
         .table-wrapper {
             overflow-x: auto;
             overflow-y: auto;
             max-height: 55vh;
             margin: 0;
             scrollbar-width: thin;
-            -webkit-overflow-scrolling: touch;
         }
-        
+
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.85rem;
-            min-width: 800px;
+            font-size: 0.8rem;
+            min-width: 750px;
         }
-        
+
         th {
             text-align: left;
-            padding: 1rem 0.6rem;
-            background: rgba(14,165,233,0.15);
+            padding: 0.8rem 0.5rem;
+            background: rgba(14, 165, 233, 0.15);
             position: sticky;
             top: 0;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             backdrop-filter: blur(8px);
             z-index: 10;
             white-space: nowrap;
         }
-        
+
         td {
-            padding: 0.9rem 0.6rem;
-            border-bottom: 1px solid rgba(56,189,248,0.1);
+            padding: 0.7rem 0.5rem;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.1);
             vertical-align: middle;
         }
-        
-        /* Ajustes para columnas compactas */
-        .col-id { min-width: 70px; }
-        .col-fecha { min-width: 85px; }
-        .col-nombre { min-width: 120px; }
-        .col-empresa { min-width: 90px; }
-        .col-email { min-width: 80px; }
-        .col-hora { min-width: 60px; }
-        .col-numero { text-align: center; min-width: 45px; }
-        
+
         .email-cell {
-            max-width: 90px;
+            max-width: 85px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        
-        .entry-row { cursor: pointer; transition: background 0.2s; }
-        .entry-row:hover { background: rgba(14,165,233,0.15); }
-        .badge { 
-            background: #1E293B; 
-            border-radius: 30px; 
-            padding: 0.2rem 0.5rem; 
-            font-size: 0.7rem; 
+
+        .entry-row {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .entry-row:hover {
+            background: rgba(14, 165, 233, 0.1);
+        }
+
+        .badge {
+            background: #1E293B;
+            border-radius: 20px;
+            padding: 0.15rem 0.45rem;
+            font-size: 0.7rem;
             display: inline-block;
             font-family: monospace;
-            letter-spacing: 0.5px;
         }
-        .empty-state { text-align: center; padding: 3rem; color: #64748B; }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #64748B;
+        }
+
         .footer-panel {
-            padding: 1rem 2rem;
-            border-top: 1px solid rgba(56,189,248,0.15);
+            padding: 0.8rem 1.5rem;
+            border-top: 1px solid rgba(56, 189, 248, 0.15);
             display: flex;
             justify-content: space-between;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             flex-wrap: wrap;
             gap: 0.5rem;
         }
+
         .spinner-circle-sm {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border: 3px solid #1E293B;
             border-top-color: #0EA5E9;
             border-radius: 50%;
             animation: spin 0.7s linear infinite;
             margin: 0 auto;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        
-        .btn-export {
-            background: #10b981;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 2rem;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            font-size: 0.85rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
-        .btn-export:hover {
-            background: #059669;
-            transform: translateY(-2px);
-        }
-        
-        .detail-modal, .edit-modal {
+
+        /* MODALES */
+        .detail-modal,
+        .edit-modal {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -225,33 +287,36 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.8);
+            background-color: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(5px);
             align-items: center;
             justify-content: center;
         }
-        .detail-modal .modal-content, .edit-modal .modal-content {
+
+        .detail-modal .modal-content,
+        .edit-modal .modal-content {
             background: #1e293b;
-            border-radius: 1.5rem;
-            padding: 0;
-            max-width: 550px;
+            border-radius: 1.2rem;
+            max-width: 500px;
             width: 90%;
             border: 1px solid #0ea5e9;
-            max-height: 85vh;
+            max-height: 80vh;
             overflow-y: auto;
-            overflow-x: hidden;
-            animation: modalFadeIn 0.3s ease;
             scrollbar-width: thin;
         }
-        .edit-modal .modal-content { padding: 1.5rem; }
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+
+        .detail-modal .modal-content {
+            padding: 0;
         }
+
+        .edit-modal .modal-content {
+            padding: 1.2rem;
+        }
+
         .modal-header {
             background: linear-gradient(135deg, #0ea5e9, #3b82f6);
-            padding: 1.2rem 1.5rem;
-            border-radius: 1.5rem 1.5rem 0 0;
+            padding: 1rem 1.2rem;
+            border-radius: 1.2rem 1.2rem 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -259,61 +324,76 @@
             top: 0;
             z-index: 20;
         }
+
         .modal-header h3 {
             color: white;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
+
         .close-modal {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             border: none;
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             cursor: pointer;
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
         }
-        .close-modal:hover { background: rgba(255,255,255,0.4); }
-        .modal-body { padding: 1.5rem; }
+
+        .modal-body {
+            padding: 1.2rem;
+        }
+
         .detail-field {
             background: #0f172a;
-            border-radius: 0.8rem;
-            padding: 0.8rem 1rem;
-            margin-bottom: 0.8rem;
+            border-radius: 0.7rem;
+            padding: 0.7rem;
+            margin-bottom: 0.7rem;
         }
-        body.light-mode .detail-field { background: #f1f5f9; }
+
         .detail-label {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             color: #94a3b8;
             display: block;
         }
+
         .detail-value {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: #f1f5f9;
             margin-top: 0.2rem;
             word-break: break-word;
         }
-        body.light-mode .detail-value { color: #0f172a; }
-        .detail-value.id-value { color: #0ea5e9; font-family: monospace; font-size: 1.1rem; }
+
+        body.light-mode .detail-value {
+            color: #0f172a;
+        }
+
+        .detail-value.id-value {
+            color: #0ea5e9;
+            font-family: monospace;
+        }
+
         .modal-buttons {
             display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
+            gap: 0.8rem;
+            margin-top: 1.2rem;
             flex-wrap: wrap;
         }
-        .btn-modal-edit, .btn-modal-whatsapp {
+
+        .btn-modal-edit,
+        .btn-modal-whatsapp {
             flex: 1;
-            padding: 0.8rem;
+            padding: 0.7rem;
             border-radius: 2rem;
             border: none;
             font-weight: 600;
@@ -322,442 +402,573 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            font-size: 0.9rem;
-            transition: all 0.2s;
+            font-size: 0.85rem;
         }
+
         .btn-modal-edit {
             background: #f59e0b;
             color: white;
         }
-        .btn-modal-edit:hover { background: #d97706; transform: translateY(-2px); }
+
         .btn-modal-whatsapp {
             background: #25D366;
             color: white;
         }
-        .btn-modal-whatsapp:hover { background: #128C7E; transform: translateY(-2px); }
-        
-        .edit-modal input, .edit-modal select {
+
+        .edit-modal input,
+        .edit-modal select {
             width: 100%;
-            padding: 0.7rem;
-            margin-bottom: 1rem;
-            border-radius: 0.8rem;
+            padding: 0.6rem;
+            margin-bottom: 0.8rem;
+            border-radius: 0.7rem;
             border: 1px solid #334155;
             background: #0f172a;
             color: #f1f5f9;
         }
+
         body.light-mode .edit-modal input,
         body.light-mode .edit-modal select {
             background: #f1f5f9;
             color: #0f172a;
             border-color: #cbd5e1;
         }
+
         .edit-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             justify-content: flex-end;
             margin-top: 1rem;
         }
+
         .btn-save {
             background: #0ea5e9;
             color: white;
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 1rem;
             border-radius: 2rem;
             border: none;
             cursor: pointer;
         }
+
         .btn-cancel {
             background: #475569;
             color: white;
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 1rem;
             border-radius: 2rem;
             border: none;
             cursor: pointer;
         }
-        
-        @media (max-width: 768px) {
-            body { padding: 12px; }
-            .dashboard-header { padding: 1rem; }
-            h1 { font-size: 1.3rem; }
-            .logo-small { width: 38px; }
-            .stats-number { font-size: 1.4rem; }
-            .stats-card { padding: 0.7rem; }
-            .stats-grid { padding: 1rem; gap: 0.7rem; }
-            .filter-bar { padding: 0.8rem 1rem; gap: 0.6rem; }
-            th, td { padding: 0.5rem; font-size: 0.7rem; }
-            .badge { font-size: 0.65rem; }
-            .footer-panel { flex-direction: column; text-align: center; }
-        }
-        
-        @media (max-width: 480px) {
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        
+
         /* Centrar números */
-        td:nth-child(7), td:nth-child(8), td:nth-child(9), td:nth-child(10) {
+        td:nth-child(7),
+        td:nth-child(8),
+        td:nth-child(9),
+        td:nth-child(10) {
             text-align: center;
         }
-        th:nth-child(7), th:nth-child(8), th:nth-child(9), th:nth-child(10) {
+
+        th:nth-child(7),
+        th:nth-child(8),
+        th:nth-child(9),
+        th:nth-child(10) {
             text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.6rem;
+                padding: 1rem;
+            }
+
+            .stats-number {
+                font-size: 1.2rem;
+            }
+
+            .dashboard-header {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            .logo-small {
+                width: 32px;
+            }
+
+            .filter-bar {
+                padding: 0.8rem 1rem;
+            }
+
+            .search-input,
+            .filter-select,
+            .btn-refresh,
+            .btn-export {
+                font-size: 0.7rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            th,
+            td {
+                padding: 0.5rem 0.4rem;
+                font-size: 0.7rem;
+            }
+
+            .badge {
+                font-size: 0.6rem;
+            }
+
+            .footer-panel {
+                flex-direction: column;
+                text-align: center;
+                padding: 0.8rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-input,
+            .filter-select,
+            .btn-refresh,
+            .btn-export {
+                width: 100%;
+            }
+
+            .theme-toggle,
+            .btn-back {
+                padding: 5px 10px;
+                font-size: 0.7rem;
+            }
         }
     </style>
 </head>
 <body>
-<div class="dashboard-container">
-    <div class="dashboard-header">
-        <div class="title-section">
-            <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Logo" class="logo-small">
-            <h1>📋 Control de Entradas · Reservas</h1>
-        </div>
-        <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
-            <button class="btn-export" id="exportBtn">📥 Exportar CSV</button>
-            <div class="theme-toggle" id="themeToggleDashboard">🌙 Modo oscuro</div>
-            <button class="btn-back" id="backToFormBtn">← Volver</button>
-        </div>
-    </div>
-    <div class="stats-grid" id="statsGrid">
-        <div class="stats-card"><div class="stats-number" id="totalReservas">0</div><div class="stats-label">Total reservas</div></div>
-        <div class="stats-card"><div class="stats-number" id="totalPagantesSum">0</div><div class="stats-label">Pasajeros</div></div>
-        <div class="stats-card"><div class="stats-number" id="ingresoTotal">R$ 0</div><div class="stats-label">Ingreso bruto</div></div>
-        <div class="stats-card"><div class="stats-number" id="promedioPorDia">-</div><div class="stats-label">Promedio/día</div></div>
-    </div>
-    <div class="filter-bar">
-        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar...">
-        <select id="dateFilter" class="filter-select"><option value="">📅 Todas las fechas</option></select>
-        <select id="horarioFilter" class="filter-select">
-            <option value="">⏰ Todos</option>
-            <option value="Mañana 9:30 Hs">Mañana 9:30</option>
-            <option value="Media Mañana 11:10 Hs">Media 11:10</option>
-            <option value="Tarde 13:10 Hs">Tarde 13:10</option>
-        </select>
-        <button id="refreshBtn" class="btn-refresh">⟳ Actualizar</button>
-    </div>
-    
-    <div class="table-wrapper" id="tableWrapper">
-        <div id="tableSpinner" style="text-align:center; padding:2rem;"><div class="spinner-circle-sm"></div><p>Cargando reservas...</p></div>
-        <table id="reservasTable" style="display:none;">
-            <thead>
-                <tr>
-                    <th class="col-id">ID</th>
-                    <th class="col-fecha">Fecha</th>
-                    <th class="col-nombre">Nombre</th>
-                    <th class="col-empresa">Empresa</th>
-                    <th class="col-email">Email</th>
-                    <th class="col-hora">Hora</th>
-                    <th>Ad.</th>
-                    <th>Men.</th>
-                    <th>Cort.</th>
-                    <th>Total</th>
-                    <th>Valor</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-        </table>
-        <div id="emptyMessage" class="empty-state" style="display:none;">✨ No se encontraron reservas.</div>
-    </div>
-    
-    <div class="footer-panel">
-        <span>⛵ Angel Tour Brasil · Gestión en tiempo real</span>
-        <span>🔐 Datos sincronizados vía Google Sheets</span>
-        <span>📱 Haz clic en fila para ver detalles</span>
-    </div>
-</div>
-
-<div id="detailModal" class="detail-modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>📋 Detalles de la Reserva</h3>
-            <button class="close-modal" id="closeDetailModalBtn">✕</button>
-        </div>
-        <div class="modal-body" id="detailModalBody"></div>
-    </div>
-</div>
-
-<div id="editModal" class="edit-modal">
-    <div class="modal-content">
-        <h3>✏️ Editar Reserva</h3>
-        <input type="hidden" id="editId">
-        <label>📅 Fecha:</label>
-        <input type="date" id="editFecha">
-        <label>👤 Nombre Completo:</label>
-        <input type="text" id="editNombre">
-        <label>🏢 Empresa:</label>
-        <input type="text" id="editEmpresa">
-        <label>✉️ Email:</label>
-        <input type="email" id="editEmail">
-        <label>⏰ Horario:</label>
-        <select id="editHorario">
-            <option value="Mañana 9:30 Hs">Mañana 9:30 Hs</option>
-            <option value="Media Mañana 11:10 Hs">Media Mañana 11:10 Hs</option>
-            <option value="Tarde 13:10 Hs">Tarde 13:10 Hs</option>
-        </select>
-        <label>👥 Adultos (R$ 85,00):</label>
-        <input type="number" id="editAdultos" min="0">
-        <label>🧒 Menores 6/11 (R$ 42,50):</label>
-        <input type="number" id="editMenores" min="0">
-        <label>🎁 Cortesía:</label>
-        <input type="number" id="editCortesia" min="0">
-        <div class="edit-buttons">
-            <button class="btn-cancel" id="closeEditModalBtn">Cancelar</button>
-            <button class="btn-save" id="saveEditBtn">Guardar</button>
-        </div>
-    </div>
-</div>
-
-<script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzIuHlt70U_4ShGAhah5Y23wCGVX8F8s611iZVjY2eV6zV4BJ_9CUJsivoexQzQ2JaZgA/exec';
-    let reservasData = [];
-    let filteredData = [];
-
-    const tableBody = document.getElementById('tableBody');
-    const tableEl = document.getElementById('reservasTable');
-    const tableSpinner = document.getElementById('tableSpinner');
-    const emptyMsg = document.getElementById('emptyMessage');
-    const searchInput = document.getElementById('searchInput');
-    const dateFilter = document.getElementById('dateFilter');
-    const horarioFilter = document.getElementById('horarioFilter');
-    const refreshBtn = document.getElementById('refreshBtn');
-    const backBtn = document.getElementById('backToFormBtn');
-    const exportBtn = document.getElementById('exportBtn');
-    
-    const detailModal = document.getElementById('detailModal');
-    const editModal = document.getElementById('editModal');
-    let currentReserva = null;
-
-    function truncateEmail(email) {
-        if (!email) return '—';
-        if (email.length <= 5) return email;
-        return email.substring(0, 5) + '...';
-    }
-
-    function parseFecha(fechaValue) {
-        if (!fechaValue) return '';
-        try {
-            const date = new Date(fechaValue);
-            if (!isNaN(date.getTime())) return date.toISOString().split('T')[0];
-        } catch(e) {}
-        return fechaValue.split('T')[0] || fechaValue;
-    }
-
-    function formatDisplayFecha(fechaValue) {
-        if (!fechaValue) return '';
-        try {
-            const date = new Date(fechaValue);
-            if (!isNaN(date.getTime())) return date.toLocaleDateString('es-AR');
-        } catch(e) {}
-        return fechaValue;
-    }
-
-    async function cargarReservas() {
-        tableSpinner.style.display = 'block';
-        tableEl.style.display = 'none';
-        emptyMsg.style.display = 'none';
-        try {
-            const response = await fetch(SCRIPT_URL, { method: 'GET', mode: 'cors' });
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const result = await response.json();
-            if (result && result.success && Array.isArray(result.data)) {
-                reservasData = result.data.map(row => ({
-                    id: row.ID || '',
-                    fechaRaw: row["Fecha del Paseo"] || '',
-                    fecha: parseFecha(row["Fecha del Paseo"]),
-                    fechaDisplay: formatDisplayFecha(row["Fecha del Paseo"]),
-                    nombre: row["Nombre Completo"] || '',
-                    empresa: row.Empresa || '',
-                    email: row.Email || '',
-                    emailFull: row.Email || '',
-                    horario: row.H_Ref || '',
-                    adultos: parseInt(row.Adultos) || 0,
-                    menores: parseInt(row["Menores 6/11"]) || 0,
-                    cortesia: parseInt(row.Cortesía) || 0,
-                    totalPagantesRaw: row["Total Pagantes"] || '0 pagantes',
-                    valorTotalRaw: row["R$ Total"] || 'R$ 0,00'
-                }));
-                reservasData.sort((a,b) => (b.fecha || '').localeCompare(a.fecha || ''));
-                actualizarFiltrosFecha();
-                aplicarFiltros();
-                actualizarEstadisticas();
-            } else throw new Error('Formato inválido');
-        } catch (err) {
-            console.error(err);
-            tableSpinner.innerHTML = `<div class="empty-state">⚠️ Error al cargar.<br><button class="btn-refresh" id="retryLoad">Reintentar</button></div>`;
-            document.getElementById('retryLoad')?.addEventListener('click', cargarReservas);
-            return;
-        } finally { tableSpinner.style.display = 'none'; }
-    }
-
-    function actualizarFiltrosFecha() {
-        const fechas = [...new Set(reservasData.map(r => r.fechaDisplay).filter(f => f))];
-        dateFilter.innerHTML = '<option value="">📅 Todas las fechas</option>';
-        fechas.sort().reverse().forEach(f => { let opt = document.createElement('option'); opt.value = f; opt.textContent = f; dateFilter.appendChild(opt); });
-    }
-
-    function aplicarFiltros() {
-        const texto = searchInput.value.toLowerCase();
-        const fechaSel = dateFilter.value;
-        const horarioSel = horarioFilter.value;
-        filteredData = reservasData.filter(r => 
-            (!fechaSel || r.fechaDisplay === fechaSel) &&
-            (!horarioSel || r.horario === horarioSel) &&
-            (!texto || (r.nombre+'').toLowerCase().includes(texto) || (r.email+'').toLowerCase().includes(texto) || (r.empresa+'').toLowerCase().includes(texto))
-        );
-        renderTabla();
-    }
-
-    function showDetailModal(reserva) {
-        currentReserva = reserva;
-        const modalBody = document.getElementById('detailModalBody');
-        modalBody.innerHTML = `
-            <div class="detail-field"><span class="detail-label">🎫 ID</span><span class="detail-value id-value">${escapeHtml(reserva.id)}</span></div>
-            <div class="detail-field"><span class="detail-label">📅 Fecha</span><span class="detail-value">${escapeHtml(reserva.fechaDisplay)}</span></div>
-            <div class="detail-field"><span class="detail-label">👤 Nombre</span><span class="detail-value">${escapeHtml(reserva.nombre)}</span></div>
-            <div class="detail-field"><span class="detail-label">🏢 Empresa</span><span class="detail-value">${escapeHtml(reserva.empresa) || '—'}</span></div>
-            <div class="detail-field"><span class="detail-label">✉️ Email</span><span class="detail-value">${escapeHtml(reserva.email)}</span></div>
-            <div class="detail-field"><span class="detail-label">⏰ Horario</span><span class="detail-value">${escapeHtml(reserva.horario)}</span></div>
-            <div class="detail-field"><span class="detail-label">👥 Adultos</span><span class="detail-value">${reserva.adultos} x R$ 85,00</span></div>
-            <div class="detail-field"><span class="detail-label">🧒 Menores</span><span class="detail-value">${reserva.menores} x R$ 42,50</span></div>
-            <div class="detail-field"><span class="detail-label">🎁 Cortesía</span><span class="detail-value">${reserva.cortesia}</span></div>
-            <div class="detail-field"><span class="detail-label">💰 Valor Total</span><span class="detail-value" style="color:#0ea5e9; font-size:1.3rem;">${escapeHtml(reserva.valorTotalRaw)}</span></div>
-            <div class="detail-field"><span class="detail-label">👥 Total Pagantes</span><span class="detail-value">${escapeHtml(reserva.totalPagantesRaw)}</span></div>
-            <div class="modal-buttons">
-                <button class="btn-modal-edit" id="modalEditBtn">✏️ Editar</button>
-                <button class="btn-modal-whatsapp" id="modalWhatsappBtn">📱 WhatsApp</button>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <div class="title-section">
+                <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Logo" class="logo-small">
+                <h1>📋 Control de Entradas · Reservas</h1>
             </div>
-        `;
-        document.getElementById('modalEditBtn').onclick = () => { detailModal.style.display = 'none'; openEditModal(currentReserva); };
-        document.getElementById('modalWhatsappBtn').onclick = () => { shareWhatsApp(currentReserva); };
-        detailModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-    }
+            <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                <button class="btn-export" id="exportBtn">📥 Exportar CSV</button>
+                <div class="theme-toggle" id="themeToggleDashboard">🌙 Modo oscuro</div>
+                <button class="btn-back" id="backToFormBtn">← Volver</button>
+            </div>
+        </div>
 
-    function closeDetailModal() { detailModal.style.display = 'none'; document.body.style.overflow = ''; }
-    
-    function shareWhatsApp(reserva) {
-        const mensaje = `🚤 ANGEL TOUR BRASIL 🚤\n\n✅ RESERVA\n🎫 ID: ${reserva.id}\n📅 Fecha: ${reserva.fechaDisplay}\n👤 ${reserva.nombre}\n🏢 ${reserva.empresa || '—'}\n✉️ ${reserva.email}\n⏰ ${reserva.horario}\n👥 Adultos: ${reserva.adultos}\n🧒 Menores: ${reserva.menores}\n🎁 Cortesía: ${reserva.cortesia}\n💰 Total: ${reserva.valorTotalRaw}\n👥 Pagantes: ${reserva.totalPagantesRaw}\n\n¡Gracias! ⛵`;
-        window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
-    }
+        <div class="stats-grid">
+            <div class="stats-card">
+                <div class="stats-number" id="totalReservas">0</div>
+                <div class="stats-label">Total reservas</div>
+            </div>
+            <div class="stats-card">
+                <div class="stats-number" id="totalPagantesSum">0</div>
+                <div class="stats-label">Pasajeros</div>
+            </div>
+            <div class="stats-card">
+                <div class="stats-number" id="ingresoTotal">R$ 0</div>
+                <div class="stats-label">Ingreso bruto</div>
+            </div>
+            <div class="stats-card">
+                <div class="stats-number" id="promedioPorDia">-</div>
+                <div class="stats-label">Promedio/día</div>
+            </div>
+        </div>
 
-    function openEditModal(reserva) {
-        currentReserva = reserva;
-        document.getElementById('editId').value = reserva.id;
-        document.getElementById('editFecha').value = reserva.fecha;
-        document.getElementById('editNombre').value = reserva.nombre;
-        document.getElementById('editEmpresa').value = reserva.empresa;
-        document.getElementById('editEmail').value = reserva.email;
-        document.getElementById('editHorario').value = reserva.horario;
-        document.getElementById('editAdultos').value = reserva.adultos;
-        document.getElementById('editMenores').value = reserva.menores;
-        document.getElementById('editCortesia').value = reserva.cortesia;
-        editModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-    }
+        <div class="filter-bar">
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar...">
+            <select id="dateFilter" class="filter-select">
+                <option value="">📅 Todas las fechas</option>
+            </select>
+            <select id="horarioFilter" class="filter-select">
+                <option value="">⏰ Todos</option>
+                <option value="Mañana 9:30 Hs">Mañana 9:30</option>
+                <option value="Media Mañana 11:10 Hs">Media 11:10</option>
+                <option value="Tarde 13:10 Hs">Tarde 13:10</option>
+            </select>
+            <button id="refreshBtn" class="btn-refresh">⟳ Actualizar</button>
+        </div>
 
-    function closeEditModal() { editModal.style.display = 'none'; document.body.style.overflow = ''; }
+        <div class="table-wrapper">
+            <div id="tableSpinner" style="text-align:center; padding:2rem;">
+                <div class="spinner-circle-sm"></div>
+                <p style="margin-top: 8px;">Cargando reservas...</p>
+            </div>
+            <table id="reservasTable" style="display:none;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Nombre</th>
+                        <th>Empresa</th>
+                        <th>Email</th>
+                        <th>Hora</th>
+                        <th>Ad.</th>
+                        <th>Men.</th>
+                        <th>Cort.</th>
+                        <th>Total</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+            <div id="emptyMessage" class="empty-state" style="display:none;">✨ No se encontraron reservas.</div>
+        </div>
 
-    async function saveEdit() {
-        if (!currentReserva) return;
-        const updatedData = {
-            id: document.getElementById('editId').value,
-            fecha: document.getElementById('editFecha').value,
-            nombre: document.getElementById('editNombre').value,
-            empresa: document.getElementById('editEmpresa').value,
-            email: document.getElementById('editEmail').value,
-            horario: document.getElementById('editHorario').value,
-            adultos: parseInt(document.getElementById('editAdultos').value) || 0,
-            menores: parseInt(document.getElementById('editMenores').value) || 0,
-            cortesia: parseInt(document.getElementById('editCortesia').value) || 0
+        <div class="footer-panel">
+            <span>⛵ Angel Tour Brasil · Gestión en tiempo real</span>
+            <span>🔐 Datos sincronizados vía Google Sheets</span>
+            <span>📱 Haz clic en fila para ver detalles</span>
+        </div>
+    </div>
+
+    <!-- Modal Detalles -->
+    <div id="detailModal" class="detail-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📋 Detalles de la Reserva</h3>
+                <button class="close-modal" id="closeDetailModalBtn">✕</button>
+            </div>
+            <div class="modal-body" id="detailModalBody"></div>
+        </div>
+    </div>
+
+    <!-- Modal Edición -->
+    <div id="editModal" class="edit-modal">
+        <div class="modal-content">
+            <h3>✏️ Editar Reserva</h3>
+            <input type="hidden" id="editId">
+            <label>📅 Fecha:</label>
+            <input type="date" id="editFecha">
+            <label>👤 Nombre Completo:</label>
+            <input type="text" id="editNombre">
+            <label>🏢 Empresa:</label>
+            <input type="text" id="editEmpresa">
+            <label>✉️ Email:</label>
+            <input type="email" id="editEmail">
+            <label>⏰ Horario:</label>
+            <select id="editHorario">
+                <option value="Mañana 9:30 Hs">Mañana 9:30</option>
+                <option value="Media Mañana 11:10 Hs">Media 11:10</option>
+                <option value="Tarde 13:10 Hs">Tarde 13:10</option>
+            </select>
+            <label>👥 Adultos (R$ 85,00):</label>
+            <input type="number" id="editAdultos" min="0">
+            <label>🧒 Menores (R$ 42,50):</label>
+            <input type="number" id="editMenores" min="0">
+            <label>🎁 Cortesía:</label>
+            <input type="number" id="editCortesia" min="0">
+            <div class="edit-buttons">
+                <button class="btn-cancel" id="closeEditModalBtn">Cancelar</button>
+                <button class="btn-save" id="saveEditBtn">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzIuHlt70U_4ShGAhah5Y23wCGVX8F8s611iZVjY2eV6zV4BJ_9CUJsivoexQzQ2JaZgA/exec';
+        let reservasData = [];
+        let filteredData = [];
+
+        // DOM elements
+        const tableBody = document.getElementById('tableBody');
+        const tableEl = document.getElementById('reservasTable');
+        const tableSpinner = document.getElementById('tableSpinner');
+        const emptyMsg = document.getElementById('emptyMessage');
+        const searchInput = document.getElementById('searchInput');
+        const dateFilter = document.getElementById('dateFilter');
+        const horarioFilter = document.getElementById('horarioFilter');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const backBtn = document.getElementById('backToFormBtn');
+        const exportBtn = document.getElementById('exportBtn');
+        const detailModal = document.getElementById('detailModal');
+        const editModal = document.getElementById('editModal');
+        let currentReserva = null;
+
+        function truncateEmail(email) {
+            if (!email) return '—';
+            if (email.length <= 5) return email;
+            return email.substring(0, 5) + '...';
+        }
+
+        function formatDisplayDate(fechaValue) {
+            if (!fechaValue) return '';
+            try {
+                const date = new Date(fechaValue);
+                if (!isNaN(date.getTime())) return date.toLocaleDateString('es-AR');
+            } catch (e) { }
+            return fechaValue.split('T')[0] || fechaValue;
+        }
+
+        async function loadReservas() {
+            tableSpinner.style.display = 'block';
+            tableEl.style.display = 'none';
+            emptyMsg.style.display = 'none';
+            try {
+                const response = await fetch(SCRIPT_URL, { method: 'GET', mode: 'cors' });
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const result = await response.json();
+                if (result && result.success && Array.isArray(result.data)) {
+                    reservasData = result.data.map(row => ({
+                        id: row.ID || '',
+                        fechaDisplay: formatDisplayDate(row["Fecha del Paseo"]),
+                        nombre: row["Nombre Completo"] || '',
+                        empresa: row.Empresa || '',
+                        email: row.Email || '',
+                        horario: row.H_Ref || '',
+                        adultos: parseInt(row.Adultos) || 0,
+                        menores: parseInt(row["Menores 6/11"]) || 0,
+                        cortesia: parseInt(row.Cortesía) || 0,
+                        totalPagantesRaw: row["Total Pagantes"] || '0 pagantes',
+                        valorTotalRaw: row["R$ Total"] || 'R$ 0,00',
+                        fechaRaw: row["Fecha del Paseo"] || ''
+                    }));
+                    reservasData.sort((a, b) => (b.fechaRaw || '').localeCompare(a.fechaRaw || ''));
+                    updateDateFilter();
+                    applyFilters();
+                    updateStats();
+                } else throw new Error('Invalid format');
+            } catch (err) {
+                console.error(err);
+                tableSpinner.innerHTML = `<div class="empty-state">⚠️ Error al cargar.<br><button class="btn-refresh" id="retryLoad">Reintentar</button></div>`;
+                document.getElementById('retryLoad')?.addEventListener('click', loadReservas);
+                return;
+            } finally {
+                tableSpinner.style.display = 'none';
+            }
+        }
+
+        function updateDateFilter() {
+            const fechas = [...new Set(reservasData.map(r => r.fechaDisplay).filter(f => f))];
+            dateFilter.innerHTML = '<option value="">📅 Todas las fechas</option>';
+            fechas.sort().reverse().forEach(f => {
+                const opt = document.createElement('option');
+                opt.value = f;
+                opt.textContent = f;
+                dateFilter.appendChild(opt);
+            });
+        }
+
+        function applyFilters() {
+            const texto = searchInput.value.toLowerCase();
+            const fechaSel = dateFilter.value;
+            const horarioSel = horarioFilter.value;
+            filteredData = reservasData.filter(r =>
+                (!fechaSel || r.fechaDisplay === fechaSel) &&
+                (!horarioSel || r.horario === horarioSel) &&
+                (!texto || r.nombre.toLowerCase().includes(texto) || r.email.toLowerCase().includes(texto) || r.empresa.toLowerCase().includes(texto))
+            );
+            renderTable();
+        }
+
+        function showDetailModal(reserva) {
+            currentReserva = reserva;
+            const modalBody = document.getElementById('detailModalBody');
+            modalBody.innerHTML = `
+                <div class="detail-field"><span class="detail-label">🎫 ID</span><span class="detail-value id-value">${escapeHtml(reserva.id)}</span></div>
+                <div class="detail-field"><span class="detail-label">📅 Fecha</span><span class="detail-value">${escapeHtml(reserva.fechaDisplay)}</span></div>
+                <div class="detail-field"><span class="detail-label">👤 Nombre</span><span class="detail-value">${escapeHtml(reserva.nombre)}</span></div>
+                <div class="detail-field"><span class="detail-label">🏢 Empresa</span><span class="detail-value">${escapeHtml(reserva.empresa) || '—'}</span></div>
+                <div class="detail-field"><span class="detail-label">✉️ Email</span><span class="detail-value">${escapeHtml(reserva.email)}</span></div>
+                <div class="detail-field"><span class="detail-label">⏰ Horario</span><span class="detail-value">${escapeHtml(reserva.horario)}</span></div>
+                <div class="detail-field"><span class="detail-label">👥 Adultos</span><span class="detail-value">${reserva.adultos} x R$ 85,00</span></div>
+                <div class="detail-field"><span class="detail-label">🧒 Menores</span><span class="detail-value">${reserva.menores} x R$ 42,50</span></div>
+                <div class="detail-field"><span class="detail-label">🎁 Cortesía</span><span class="detail-value">${reserva.cortesia}</span></div>
+                <div class="detail-field"><span class="detail-label">💰 Valor Total</span><span class="detail-value" style="color:#0ea5e9; font-size:1.2rem;">${escapeHtml(reserva.valorTotalRaw)}</span></div>
+                <div class="detail-field"><span class="detail-label">👥 Total Pagantes</span><span class="detail-value">${escapeHtml(reserva.totalPagantesRaw)}</span></div>
+                <div class="modal-buttons">
+                    <button class="btn-modal-edit" id="modalEditBtn">✏️ Editar</button>
+                    <button class="btn-modal-whatsapp" id="modalWhatsappBtn">📱 WhatsApp</button>
+                </div>
+            `;
+            document.getElementById('modalEditBtn').onclick = () => {
+                detailModal.style.display = 'none';
+                openEditModal(currentReserva);
+            };
+            document.getElementById('modalWhatsappBtn').onclick = () => shareWhatsApp(currentReserva);
+            detailModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDetailModal() {
+            detailModal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        function shareWhatsApp(reserva) {
+            const msg = `🚤 ANGEL TOUR BRASIL 🚤\n\n✅ RESERVA CONFIRMADA\n🎫 ID: ${reserva.id}\n📅 Fecha: ${reserva.fechaDisplay}\n👤 ${reserva.nombre}\n🏢 ${reserva.empresa || '—'}\n✉️ ${reserva.email}\n⏰ ${reserva.horario}\n👥 Adultos: ${reserva.adultos}\n🧒 Menores: ${reserva.menores}\n🎁 Cortesía: ${reserva.cortesia}\n💰 Total: ${reserva.valorTotalRaw}\n👥 Pagantes: ${reserva.totalPagantesRaw}\n\n¡Gracias por confiar en Angel Tour Brasil! ⛵`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function openEditModal(reserva) {
+            currentReserva = reserva;
+            document.getElementById('editId').value = reserva.id;
+            document.getElementById('editFecha').value = reserva.fechaRaw ? reserva.fechaRaw.split('T')[0] : '';
+            document.getElementById('editNombre').value = reserva.nombre;
+            document.getElementById('editEmpresa').value = reserva.empresa;
+            document.getElementById('editEmail').value = reserva.email;
+            document.getElementById('editHorario').value = reserva.horario;
+            document.getElementById('editAdultos').value = reserva.adultos;
+            document.getElementById('editMenores').value = reserva.menores;
+            document.getElementById('editCortesia').value = reserva.cortesia;
+            editModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeEditModal() {
+            editModal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        async function saveEdit() {
+            if (!currentReserva) return;
+            const updated = {
+                id: document.getElementById('editId').value,
+                fecha: document.getElementById('editFecha').value,
+                nombre: document.getElementById('editNombre').value,
+                empresa: document.getElementById('editEmpresa').value,
+                email: document.getElementById('editEmail').value,
+                horario: document.getElementById('editHorario').value,
+                adultos: parseInt(document.getElementById('editAdultos').value) || 0,
+                menores: parseInt(document.getElementById('editMenores').value) || 0,
+                cortesia: parseInt(document.getElementById('editCortesia').value) || 0
+            };
+            const total = (updated.adultos * 85) + (updated.menores * 42.5);
+            const totalPag = updated.adultos + updated.menores;
+            updated.valorTotal = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            updated.totalPagantes = `${totalPag} pagante${totalPag !== 1 ? 's' : ''}`;
+            try {
+                const formData = new FormData();
+                formData.append('action', 'update');
+                formData.append('id', updated.id);
+                formData.append('fecha', updated.fecha);
+                formData.append('nombre', updated.nombre);
+                formData.append('empresa', updated.empresa);
+                formData.append('email', updated.email);
+                formData.append('horario', updated.horario);
+                formData.append('adultos', updated.adultos);
+                formData.append('menores', updated.menores);
+                formData.append('cortesia', updated.cortesia);
+                formData.append('valorTotal', updated.valorTotal);
+                formData.append('totalPagantes', updated.totalPagantes);
+                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
+                closeEditModal();
+                await loadReservas();
+                showToast('✅ Reserva actualizada');
+            } catch (error) {
+                alert('Error al guardar');
+            }
+        }
+
+        function exportToCSV() {
+            if (!reservasData.length) return showToast('⚠️ Sin datos');
+            const headers = ['ID', 'Fecha', 'Nombre', 'Empresa', 'Email', 'Horario', 'Adultos', 'Menores', 'Cortesía', 'Total Pagantes', 'Valor Total'];
+            const rows = reservasData.map(r => [r.id, r.fechaDisplay, r.nombre, r.empresa, r.email, r.horario, r.adultos, r.menores, r.cortesia, r.totalPagantesRaw, r.valorTotalRaw]);
+            const csv = [headers, ...rows].map(row => row.map(c => typeof c === 'string' && (c.includes(',') || c.includes('"')) ? `"${c.replace(/"/g, '""')}"` : c).join(',')).join('\n');
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(new Blob(['\uFEFF' + csv], { type: 'text/csv' }));
+            link.download = `angeltour_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+            showToast('📥 Exportado');
+        }
+
+        function showToast(msg) {
+            const div = document.createElement('div');
+            div.textContent = msg;
+            div.style.cssText = 'position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#0ea5e9; color:white; padding:0.6rem 1.2rem; border-radius:2rem; z-index:9999; font-weight:600; font-size:0.8rem';
+            document.body.appendChild(div);
+            setTimeout(() => div.remove(), 2500);
+        }
+
+        function renderTable() {
+            if (!filteredData.length) {
+                tableEl.style.display = 'none';
+                emptyMsg.style.display = 'block';
+                return;
+            }
+            tableEl.style.display = 'table';
+            emptyMsg.style.display = 'none';
+            tableBody.innerHTML = filteredData.map(r => `
+                <tr class="entry-row" onclick='window.showDetailModalFromGlobal(${JSON.stringify(r).replace(/'/g, "&#39;")})'>
+                    <td><span class="badge">${escapeHtml(r.id)}</span></td>
+                    <td>${escapeHtml(r.fechaDisplay)}</td>
+                    <td><strong>${escapeHtml(r.nombre)}</strong></td>
+                    <td>${escapeHtml(r.empresa)}</td>
+                    <td class="email-cell" title="${escapeHtml(r.email)}">${escapeHtml(truncateEmail(r.email))}</td>
+                    <td>${escapeHtml(r.horario).replace(' Hs', '')}</td>
+                    <td style="text-align:center">${r.adultos}</td>
+                    <td style="text-align:center">${r.menores}</td>
+                    <td style="text-align:center">${r.cortesia}</td>
+                    <td style="text-align:center">${escapeHtml(r.totalPagantesRaw).replace(' pagantes', '')}</td>
+                    <td style="color:#0EA5E9;">${escapeHtml(r.valorTotalRaw)}</td>
+                </table>
+            `).join('');
+        }
+
+        window.showDetailModalFromGlobal = function(reserva) {
+            showDetailModal(reserva);
         };
-        const total = (updatedData.adultos * 85) + (updatedData.menores * 42.5);
-        const totalPagantes = updatedData.adultos + updatedData.menores;
-        updatedData.valorTotalRaw = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        updatedData.totalPagantesRaw = `${totalPagantes} pagante${totalPagantes !== 1 ? 's' : ''}`;
-        
-        try {
-            const formData = new FormData();
-            formData.append('action', 'update');
-            Object.keys(updatedData).forEach(k => formData.append(k === 'valorTotalRaw' ? 'valorTotal' : k === 'totalPagantesRaw' ? 'totalPagantes' : k, updatedData[k]));
-            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
-            closeEditModal();
-            await cargarReservas();
-            mostrarMensajeTemporal('✅ Actualizada');
-        } catch (error) { alert('Error al guardar'); }
-    }
 
-    function exportToCSV() {
-        if (!reservasData.length) return mostrarMensajeTemporal('⚠️ Sin datos');
-        const headers = ['ID', 'Fecha', 'Nombre', 'Empresa', 'Email', 'Horario', 'Adultos', 'Menores', 'Cortesía', 'Total Pagantes', 'Valor Total'];
-        const rows = reservasData.map(r => [r.id, r.fechaDisplay, r.nombre, r.empresa, r.email, r.horario, r.adultos, r.menores, r.cortesia, r.totalPagantesRaw, r.valorTotalRaw]);
-        const csv = [headers, ...rows].map(row => row.map(c => typeof c === 'string' && (c.includes(',')||c.includes('"')) ? `"${c.replace(/"/g,'""')}"` : c).join(',')).join('\n');
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(new Blob(['\uFEFF' + csv], { type: 'text/csv' }));
-        link.download = `angeltour_${new Date().toISOString().split('T')[0]}.csv`;
-        link.click();
-        URL.revokeObjectURL(link.href);
-        mostrarMensajeTemporal('📥 Exportado');
-    }
+        function escapeHtml(s) {
+            if (!s) return '';
+            return s.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
+        }
 
-    function mostrarMensajeTemporal(msg) {
-        const div = document.createElement('div');
-        div.textContent = msg;
-        div.style.cssText = 'position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#0ea5e9; color:white; padding:0.8rem 1.5rem; border-radius:2rem; z-index:9999; font-weight:600';
-        document.body.appendChild(div);
-        setTimeout(() => div.remove(), 3000);
-    }
+        function updateStats() {
+            const total = reservasData.length;
+            let totalPag = 0, ingreso = 0;
+            reservasData.forEach(r => {
+                let pag = parseInt(r.totalPagantesRaw) || (r.adultos + r.menores);
+                totalPag += pag;
+                let valor = parseFloat((r.valorTotalRaw || '').replace('R$', '').replace(/\./g, '').replace(',', '.').trim());
+                if (isNaN(valor)) valor = (r.adultos * 85) + (r.menores * 42.5);
+                ingreso += valor;
+            });
+            document.getElementById('totalReservas').innerText = total;
+            document.getElementById('totalPagantesSum').innerText = totalPag;
+            document.getElementById('ingresoTotal').innerText = ingreso.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            const dias = [...new Set(reservasData.map(r => r.fechaDisplay).filter(f => f))].length;
+            document.getElementById('promedioPorDia').innerText = dias ? (ingreso / dias).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : 'R$ 0';
+        }
 
-    function renderTabla() {
-        if (!filteredData.length) { tableEl.style.display = 'none'; emptyMsg.style.display = 'block'; return; }
-        tableEl.style.display = 'table'; emptyMsg.style.display = 'none';
-        tableBody.innerHTML = filteredData.map(r => `
-            <tr class="entry-row" onclick='showDetailModal(${JSON.stringify(r).replace(/'/g, "&#39;")})'>
-                <td><span class="badge">${escapeHtml(r.id)}</span></td>
-                <td>${escapeHtml(r.fechaDisplay)}</td>
-                <td><strong>${escapeHtml(r.nombre)}</strong></td>
-                <td>${escapeHtml(r.empresa)}</td>
-                <td class="email-cell" title="${escapeHtml(r.email)}">${escapeHtml(truncateEmail(r.email))}</td>
-                <td>${escapeHtml(r.horario).replace(' Hs','')}</td>
-                <td style="text-align:center">${r.adultos}</td>
-                <td style="text-align:center">${r.menores}</td>
-                <td style="text-align:center">${r.cortesia}</td>
-                <td style="text-align:center">${escapeHtml(r.totalPagantesRaw).replace(' pagantes','')}</td>
-                <td style="color:#0EA5E9;">${escapeHtml(r.valorTotalRaw)}</td>
-            推出
-        `).join('');
-    }
+        // Event listeners
+        searchInput.addEventListener('input', applyFilters);
+        dateFilter.addEventListener('change', applyFilters);
+        horarioFilter.addEventListener('change', applyFilters);
+        refreshBtn.addEventListener('click', loadReservas);
+        backBtn.addEventListener('click', () => window.location.href = 'https://sebagsc2020.github.io/angeltourbrasil/index.html');
+        exportBtn.addEventListener('click', exportToCSV);
+        document.getElementById('closeDetailModalBtn').onclick = closeDetailModal;
+        document.getElementById('closeEditModalBtn').onclick = closeEditModal;
+        document.getElementById('saveEditBtn').onclick = saveEdit;
+        window.onclick = (e) => {
+            if (e.target === detailModal) closeDetailModal();
+            if (e.target === editModal) closeEditModal();
+        };
 
-    function escapeHtml(s) { if(!s) return ''; return s.replace(/[&<>]/g, m => m=='&'?'&amp;':m=='<'?'&lt;':'&gt;'); }
+        // Theme
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+        }
+        document.getElementById('themeToggleDashboard').addEventListener('click', toggleTheme);
+        if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
 
-    function actualizarEstadisticas() {
-        const total = reservasData.length;
-        let totalPag = 0, ingreso = 0;
-        reservasData.forEach(r => {
-            let pag = parseInt(r.totalPagantesRaw) || (r.adultos + r.menores);
-            totalPag += pag;
-            let valor = parseFloat((r.valorTotalRaw || '').replace('R$','').replace(/\./g,'').replace(',','.').trim());
-            if (isNaN(valor)) valor = (r.adultos * 85) + (r.menores * 42.5);
-            ingreso += valor;
-        });
-        document.getElementById('totalReservas').innerText = total;
-        document.getElementById('totalPagantesSum').innerText = totalPag;
-        document.getElementById('ingresoTotal').innerText = ingreso.toLocaleString('pt-BR', {style:'currency',currency:'BRL'});
-        const dias = [...new Set(reservasData.map(r=>r.fechaDisplay).filter(f=>f))].length;
-        document.getElementById('promedioPorDia').innerText = dias ? (ingreso/dias).toLocaleString('pt-BR', {style:'currency',currency:'BRL'}) : 'R$ 0';
-    }
-
-    searchInput.addEventListener('input', aplicarFiltros);
-    dateFilter.addEventListener('change', aplicarFiltros);
-    horarioFilter.addEventListener('change', aplicarFiltros);
-    refreshBtn.addEventListener('click', cargarReservas);
-    backBtn.addEventListener('click', () => window.location.href = 'https://sebagsc2020.github.io/angeltourbrasil/index.html');
-    exportBtn.addEventListener('click', exportToCSV);
-    document.getElementById('closeDetailModalBtn').onclick = closeDetailModal;
-    document.getElementById('closeEditModalBtn').onclick = closeEditModal;
-    document.getElementById('saveEditBtn').onclick = saveEdit;
-    window.onclick = (e) => { if(e.target == detailModal) closeDetailModal(); if(e.target == editModal) closeEditModal(); };
-    
-    function toggleTheme() { document.body.classList.toggle('light-mode'); localStorage.setItem('theme', document.body.classList.contains('light-mode')?'light':'dark'); }
-    document.getElementById('themeToggleDashboard').addEventListener('click', toggleTheme);
-    if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
-    
-    cargarReservas();
-</script>
+        loadReservas();
+    </script>
 </body>
 </html>
