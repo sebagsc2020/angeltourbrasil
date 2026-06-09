@@ -349,7 +349,8 @@
         }
 
         const SPREADSHEET_ID = "1uOAcy1X8yMHDK03CUKLix4cUm_l4m3E4vaZHgSk33as";
-        const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
+        // Usar corsproxy.io que es más estable
+        const PROXY_URL = "https://corsproxy.io/?url=";
         const SHEETS_API = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json`;
         
         let reservasData = [];
@@ -377,7 +378,6 @@
         function parseMoneda(valor) {
             if (!valor) return 0;
             if (typeof valor === 'number') return valor;
-            // Limpiar string: eliminar R$, espacios, cambiar coma por punto
             const limpio = String(valor).replace('R$', '').replace(/\./g, '').replace(',', '.').trim();
             const num = parseFloat(limpio);
             return isNaN(num) ? 0 : num;
@@ -387,9 +387,11 @@
             try {
                 mostrarToast('Cargando reservas...');
                 
-                const response = await fetch(PROXY_URL + SHEETS_API + '&t=' + Date.now());
+                const url = PROXY_URL + encodeURIComponent(SHEETS_API + '&t=' + Date.now());
+                const response = await fetch(url);
                 const text = await response.text();
                 
+                // Limpiar respuesta JSONP
                 let jsonStr = text.replace("/*O_o*/", "").replace("google.visualization.Query.setResponse(", "").slice(0, -2);
                 const data = JSON.parse(jsonStr);
                 const rows = data.table.rows;
@@ -406,9 +408,6 @@
                     const cells = rows[i].c;
                     if (!cells || cells.length < 10) continue;
                     
-                    // Mapeo según tus columnas:
-                    // 0: ID, 1: Fecha, 2: Nombre, 3: Empresa, 4: Email, 
-                    // 5: H_Ref, 6: Adultos, 7: Menores, 8: Cortesía, 9: R$ Total, 10: Total Pagantes
                     const id = cells[0]?.v || '';
                     const fecha = cells[1]?.v || '';
                     const cliente = cells[2]?.v || '';
@@ -521,7 +520,7 @@
             
             const tbody = document.getElementById('reservasTableBody');
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;">No se encontraron resultados<\/td></tr>';
+                tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;">No se encontraron resultados<\/td></td>';
                 return;
             }
             
