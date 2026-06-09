@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>+Angel Tour Brasil | Booking Form</title>
+    <title>Angel+ Tour Brasil | Booking Form</title>
     <style>
         * {
             margin: 0;
@@ -74,6 +74,12 @@
             background: #0EA5E9;
             border-color: #0EA5E9;
             color: white;
+        }
+
+        body.light-mode .total-display {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: #CBD5E1;
+            color: #0F172A;
         }
 
         .container {
@@ -451,6 +457,13 @@
             gap: 0.3rem;
         }
 
+        .price-info {
+            font-size: 0.65rem;
+            color: #64748B;
+            margin-top: 0.3rem;
+            margin-left: 2rem;
+        }
+
         @media (max-width: 500px) {
             .container {
                 border-radius: 1.5rem;
@@ -590,9 +603,7 @@
                     <span class="input-icon">👥</span>
                     <input type="number" id="adultos" name="adultos" required placeholder="Ex: 2" step="1" min="0" value="0">
                 </div>
-                <div style="font-size: 0.65rem; color: #64748B; margin-top: 0.3rem; margin-left: 2rem;">
-                    R$ 85,00 cada adulto
-                </div>
+                <div class="price-info">R$ 85,00 cada adulto</div>
             </div>
 
             <div class="form-group">
@@ -604,9 +615,7 @@
                     <span class="input-icon">🧒</span>
                     <input type="number" id="menores" name="menores" placeholder="Ex: 1" step="1" min="0" value="0">
                 </div>
-                <div style="font-size: 0.65rem; color: #64748B; margin-top: 0.3rem; margin-left: 2rem;">
-                    R$ 42,50 cada menor (6 a 11 años)
-                </div>
+                <div class="price-info">R$ 42,50 cada menor (6 a 11 años)</div>
             </div>
 
             <div class="form-group">
@@ -618,11 +627,10 @@
                     <span class="input-icon">🎁</span>
                     <input type="number" id="cortesia" name="cortesia" placeholder="Ex: 0" step="1" min="0" value="0">
                 </div>
-                <div style="font-size: 0.65rem; color: #64748B; margin-top: 0.3rem; margin-left: 2rem;">
-                    Menores de 6 años (sin cargo)
-                </div>
+                <div class="price-info">Menores de 6 años (sin cargo)</div>
             </div>
 
+            <!-- CAMPO VALOR TOTAL -->
             <div class="form-group">
                 <label id="labelTotal">
                     <span class="label-icon">💰</span>
@@ -657,9 +665,9 @@
 
 <script>
     // ============================================================
-    // URL DE GOOGLE APPS SCRIPT - REEMPLAZA CON TU URL
+    // ⚠️ IMPORTANTE: Reemplaza con la URL de tu Google Apps Script
     // ============================================================
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxwSgzHlAwfOWGd9yWqJORZX-P83RPjI31ZMQXoKAs4iP5fOErrUYH6kc9nmtKeYsJs0Q/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyfhyuFRCcMK4ijWxu3IqbZRDVigSHhlq1ZckRO5b3u03uZmCdVKYzk9H-WJ1XWF4PLLQ/exec';
 
     const PRECIO_ADULTO = 85.00;
     const PRECIO_MENOR = 42.50;
