@@ -546,7 +546,7 @@
         const empresaCliente = pendingFormData.empresa || "No especificada";
         const langText = getLanguageText(currentLang);
         
-        const message = `🔹 *NUEVA RESERVA ANGEL TOUR* 🔹\n    ${langText} - ${userLocationFormatted}\n\n📅 *Fecha:* ${fechaWhatsApp}\n⏰ *Horario preferido:* ${horarioWhatsApp}\n👤 *Nombre:* ${nombreCliente}\n🏢 *Empresa:* ${empresaCliente}\n👥 *Adultos:* ${pendingFormData.adultos}\n🧒 *Menores:* ${pendingFormData.menores}\n💰 *Total:* ${totalFormatted}\n\n✅ Reserva via formulario web.`;
+        const message = `🔹 *NUEVA RESERVA ANGEL TOUR* 🔹\n    ${langText} - ${userLocationFormatted}\n\n📅 *Fecha:* ${fechaWhatsApp}\n⏰ *Horario:* ${horarioWhatsApp}\n👤 *Nombre:* ${nombreCliente}\n🏢 *Empresa:* ${empresaCliente}\n👥 *Adultos:* ${pendingFormData.adultos}\n🧒 *Menores:* ${pendingFormData.menores}\n💰 *Total:* ${totalFormatted}\n\n✅ Reserva via formulario web.`;
         
         const encodedMessage = encodeURIComponent(message);
         window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
