@@ -391,7 +391,6 @@
             stroke-width: 1.8;
         }
 
-        /* MODAL POPUP */
         .modal {
             display: none;
             position: fixed;
@@ -659,7 +658,7 @@
             <button class="btn-language" data-lang="es" title="Español">
                 <img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-es.png" alt="Español">
             </button>
-            <button class="btn-language active" data-lang="pt" title="Português">
+            <button class="btn-language" data-lang="pt" title="Português">
                 <img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-pt.png" alt="Português">
             </button>
             <button class="btn-language" data-lang="en" title="English">
@@ -670,7 +669,7 @@
 
     <div class="weather-widget-container" id="weatherWidgetContainer">
         <div id="weatherWidgetPlaceholder" style="width:100%;">
-            <div class="weather-loading">🌤️ Carregando clima de Porto Belo...</div>
+            <div class="weather-loading">🌤️ Cargando clima de Porto Belo...</div>
         </div>
     </div>
 
@@ -709,7 +708,7 @@
                             <polyline points="12 6 12 12 16 14"/>
                         </svg>
                     </span>
-                    <span id="textHorario">PREFERÊNCIA DE HORÁRIO</span>
+                    <span id="textHorario">PREFERENCIA DE HORARIO</span>
                 </label>
                 <div class="input-wrapper">
                     <span class="input-icon">
@@ -719,13 +718,13 @@
                         </svg>
                     </span>
                     <select id="horario" name="horario" required autocomplete="off">
-                        <option value="">Selecione um horário</option>
-                        <option value="09:30">09:30 AM</option>
-                        <option value="11:10">11:10 AM</option>
-                        <option value="13:00">13:00 PM</option>
+                        <option value="">Seleccione un horario</option>
+                        <option value="09:30">Mañana 9:30 Hs.</option>
+                        <option value="11:10">Media Mañana 11:10 Hs.</option>
+                        <option value="13:00">Tarde 13:00 Hs.</option>
                     </select>
                 </div>
-                <div class="price-info" id="horarioNote">⏱️ Sujeito a disponibilidade, pode variar conforme reservas prévias, o horário será confirmado via WhatsApp.</div>
+                <div class="price-info" id="horarioNote">⏱️ Sujeto a disponibilidad, puede variar conforme reservas previas, el horario será confirmado via WhatsApp.</div>
             </div>
 
             <div class="form-group">
@@ -736,7 +735,7 @@
                             <circle cx="12" cy="7" r="4"/>
                         </svg>
                     </span>
-                    <span id="textNombre">NOME</span>
+                    <span id="textNombre">NOMBRE</span>
                 </label>
                 <div class="input-wrapper">
                     <span class="input-icon">
@@ -774,7 +773,7 @@
                     </span>
                     <input type="text" id="empresa" name="empresa" placeholder="Ex: Turismo Brasil" autocomplete="off">
                 </div>
-                <div class="optional-note" id="empresaNote">*Opcional para reservas individuais</div>
+                <div class="optional-note" id="empresaNote">*Opcional para reservas individuales</div>
             </div>
 
             <div class="form-group">
@@ -812,7 +811,7 @@
                             <line x1="8" y1="12" x2="16" y2="12"/>
                         </svg>
                     </span>
-                    <span id="textMenores">MENORES de 6 a 11 anos</span>
+                    <span id="textMenores">MENORES de 6 a 11 años</span>
                 </label>
                 <div class="input-wrapper">
                     <span class="input-icon">
@@ -825,31 +824,19 @@
                     <input type="number" id="menores" name="menores" placeholder="Ex: 1" step="1" min="0" value="0" autocomplete="off">
                 </div>
                 <div class="price-info">
-                    <span class="discount-badge">🎯 50% de desconto</span>
+                    <span class="discount-badge">🎯 50% de descuento</span>
                 </div>
             </div>
 
             <div class="form-group">
                 <label id="labelTotal">
-                    <span class="label-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <line x1="12" y1="1" x2="12" y2="23"/>
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                        </svg>
-                    </span>
                     <span id="textTotal">VALOR TOTAL</span>
                 </label>
                 <div class="input-wrapper">
-                    <span class="input-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <line x1="12" y1="1" x2="12" y2="23"/>
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                        </svg>
-                    </span>
                     <input type="text" id="valorTotal" name="valorTotal" class="total-display" readonly value="R$ 0,00" autocomplete="off">
                 </div>
                 <div class="info-note" id="infoNoteText">
-                    💡 O valor mencionado é para grupos fechados ou agências, em viagens individuais o valor pode sofrer variações, em caso de dúvida não deixe de nos consultar.
+                    💡 El valor mencionado es para grupos cerrados o agencias, en viajes individuales el valor puede sufrir variaciones, ante cualquier duda no deje de consultarnos.
                 </div>
             </div>
 
@@ -900,91 +887,19 @@
                     <line x1="18" y1="6" x2="6" y2="18"/>
                     <line x1="6" y1="6" x2="18" y2="18"/>
                 </svg>
-                <span>Cancelar</span>
+                Cancelar
             </button>
             <button class="btn-confirm" id="confirmSendBtn">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
                 </svg>
-                <span>Enviar via WhatsApp</span>
+                Enviar via WhatsApp
             </button>
         </div>
     </div>
 </div>
 
 <script>
-    // Variables de configuración de precios
-    const PRICE_ADULT = 85.00;
-    const PRICE_MINOR = 42.50;
-    const WHATSAPP_NUMBER = "5493518692251"; // <-- NÚMERO ACTUALIZADO AQUÍ
-
-    const translations = {
-        es: {
-            subtitleText: "Reserva tu paseo · Confirma los datos · Envío vía WhatsApp",
-            textFecha: "FECHA DEL PASEO",
-            textHorario: "PREFERENCIA DE HORARIO",
-            horarioNote: "⏱️ Sujeto a disponibilidad, puede variar conforme reservas previas, el horario será confirmado via WhatsApp.",
-            textNombre: "NOMBRE",
-            textEmpresa: "EMPRESA",
-            empresaNote: "*Opcional para reservas individuales",
-            textAdultos: "ADULTOS",
-            textMenores: "MENORES de 6 a 11 años",
-            textTotal: "VALOR TOTAL",
-            infoNoteText: "💡 El valor mencionado es para grupos cerrados o agencias, en viajes individuales el valor puede sufrir variaciones, ante cualquier duda no deje de consultarnos.",
-            btnText: "ENVIAR RESERVA",
-            footerBoat: "Paseos en barco",
-            footerSecure: "Confirmación segura",
-            footerConfirm: "Envío por WhatsApp",
-            modalTitle: "📋 Confirmar reserva",
-            cancelText: "Cancelar",
-            confirmText: "Enviar via WhatsApp"
-        },
-        pt: {
-            subtitleText: "Reserve seu passeio · Confirme os dados · Envio via WhatsApp",
-            textFecha: "DATA DO PASSEIO",
-            textHorario: "PREFERÊNCIA DE HORÁRIO",
-            horarioNote: "⏱️ Sujeito a disponibilidade, pode variar conforme reservas prévias, o horário será confirmado via WhatsApp.",
-            textNombre: "NOME",
-            textEmpresa: "EMPRESA",
-            empresaNote: "*Opcional para reservas individuais",
-            textAdultos: "ADULTOS",
-            textMenores: "MENORES de 6 a 11 anos",
-            textTotal: "VALOR TOTAL",
-            infoNoteText: "💡 O valor mencionado é para grupos fechados ou agências, em viagens individuais o valor pode sofrer variações, em caso de dúvida não deixe de nos consultar.",
-            btnText: "ENVIAR RESERVA",
-            footerBoat: "Passeios de barco",
-            footerSecure: "Confirmação segura",
-            footerConfirm: "Envio por WhatsApp",
-            modalTitle: "📋 Confirmar reserva",
-            cancelText: "Cancelar",
-            confirmText: "Enviar via WhatsApp"
-        },
-        en: {
-            subtitleText: "Book your tour · Confirm details · Send via WhatsApp",
-            textFecha: "TOUR DATE",
-            textHorario: "PREFERRED TIME",
-            horarioNote: "⏱️ Subject to availability, may vary according to previous reservations, the schedule will be confirmed via WhatsApp.",
-            textNombre: "NAME",
-            textEmpresa: "COMPANY",
-            empresaNote: "*Optional for individual bookings",
-            textAdultos: "ADULTS",
-            textMenores: "CHILDREN 6 to 11 years",
-            textTotal: "TOTAL VALUE",
-            infoNoteText: "💡 The mentioned value is for closed groups or agencies, in individual trips the value may vary, if in doubt please contact us.",
-            btnText: "SEND RESERVATION",
-            footerBoat: "Boat tours",
-            footerSecure: "Secure confirmation",
-            footerConfirm: "Send via WhatsApp",
-            modalTitle: "📋 Confirm reservation",
-            cancelText: "Cancel",
-            confirmText: "Send via WhatsApp"
-        }
-    };
-
-    let currentLang = 'pt';
-    let currentReservation = {};
-
-    // --- Helpers de Fecha y Precios ---
     function formatDateToDDMMYYYY(dateString) {
         if (!dateString) return '';
         const parts = dateString.split('-');
@@ -992,14 +907,99 @@
         return `${parts[2]}/${parts[1]}/${parts[0]}`;
     }
 
-    function calculateTotal() {
-        const adults = parseInt(document.getElementById('adultos').value) || 0;
-        const minors = parseInt(document.getElementById('menores').value) || 0;
-        const total = (adults * PRICE_ADULT) + (minors * PRICE_MINOR);
-        document.getElementById('valorTotal').value = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    // Función para obtener el texto del horario en español (siempre en español para el mensaje de WhatsApp)
+    function getHorarioEspanol(horarioValue) {
+        const horarioMap = {
+            '09:30': 'Mañana 9:30 Hs.',
+            '11:10': 'Media Mañana 11:10 Hs.',
+            '13:00': 'Tarde 13:00 Hs.'
+        };
+        return horarioMap[horarioValue] || horarioValue;
     }
 
-    // --- Carga del Widget del Clima ---
+    // Función para obtener el texto del horario traducido para la interfaz (popup)
+    function getHorarioDisplay(horarioValue, lang) {
+        const horarioMap = {
+            'es': {
+                '09:30': 'Mañana 9:30 Hs.',
+                '11:10': 'Media Mañana 11:10 Hs.',
+                '13:00': 'Tarde 13:00 Hs.'
+            },
+            'pt': {
+                '09:30': 'Manhã 9:30 Hs.',
+                '11:10': 'Meia Manhã 11:10 Hs.',
+                '13:00': 'Tarde 13:00 Hs.'
+            },
+            'en': {
+                '09:30': 'Morning 9:30 AM',
+                '11:10': 'Late Morning 11:10 AM',
+                '13:00': 'Afternoon 1:00 PM'
+            }
+        };
+        return horarioMap[lang]?.[horarioValue] || horarioValue;
+    }
+
+    function getHorarioOptions(lang) {
+        const options = {
+            'es': [
+                { value: '09:30', text: 'Mañana 9:30 Hs.' },
+                { value: '11:10', text: 'Media Mañana 11:10 Hs.' },
+                { value: '13:00', text: 'Tarde 13:00 Hs.' }
+            ],
+            'pt': [
+                { value: '09:30', text: 'Manhã 9:30 Hs.' },
+                { value: '11:10', text: 'Meia Manhã 11:10 Hs.' },
+                { value: '13:00', text: 'Tarde 13:00 Hs.' }
+            ],
+            'en': [
+                { value: '09:30', text: 'Morning 9:30 AM' },
+                { value: '11:10', text: 'Late Morning 11:10 AM' },
+                { value: '13:00', text: 'Afternoon 1:00 PM' }
+            ]
+        };
+        return options[lang] || options['es'];
+    }
+
+    function updateHorarioSelect(lang) {
+        const horarioSelect = document.getElementById('horario');
+        const currentValue = horarioSelect.value;
+        const options = getHorarioOptions(lang);
+        
+        const selectedValue = currentValue;
+        
+        horarioSelect.innerHTML = '';
+        
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        const placeholders = {
+            'es': 'Seleccione un horario',
+            'pt': 'Selecione um horário',
+            'en': 'Select a time'
+        };
+        defaultOption.textContent = placeholders[lang] || 'Seleccione un horario';
+        horarioSelect.appendChild(defaultOption);
+        
+        options.forEach(opt => {
+            const option = document.createElement('option');
+            option.value = opt.value;
+            option.textContent = opt.text;
+            horarioSelect.appendChild(option);
+        });
+        
+        if (selectedValue) {
+            horarioSelect.value = selectedValue;
+        }
+    }
+
+    function getLanguageName(langCode) {
+        const langNames = {
+            'es': 'Español',
+            'pt': 'Português',
+            'en': 'English'
+        };
+        return langNames[langCode] || 'Español';
+    }
+
     function loadWeatherWidget(lang) {
         const container = document.getElementById('weatherWidgetPlaceholder');
         if (!container) return;
@@ -1023,152 +1023,375 @@
         widgetLink.setAttribute('data-theme', 'original');
         widgetLink.style.pointerEvents = 'none';
         widgetLink.style.cursor = 'default';
-        widgetLink.textContent = title.label1;
+        widgetLink.style.width = '100%';
+        widgetLink.style.display = 'block';
+        widgetLink.textContent = `${title.label1} ${title.label2}`;
         
         container.innerHTML = '';
         container.appendChild(widgetLink);
-
-        if (!document.getElementById('weatherwidget-script')) {
-            const script = document.createElement('script');
-            script.id = 'weatherwidget-script';
-            script.src = 'https://weatherwidget.io/js/widget.min.js';
-            document.body.appendChild(script);
-        } else {
-            if (typeof __weatherwidget_init === 'function') {
-                __weatherwidget_init();
-            }
-        }
-    }
-
-    // --- Cambio de Idioma ---
-    function updateLanguage(lang) {
-        currentLang = lang;
-        const t = translations[lang];
-
-        // Activar botón correspondiente
-        document.querySelectorAll('.btn-language').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.lang === lang);
-        });
-
-        // Actualizar textos del DOM
-        document.getElementById('subtitleText').textContent = t.subtitleText;
-        document.getElementById('textFecha').textContent = t.textFecha;
-        document.getElementById('textHorario').textContent = t.textHorario;
-        document.getElementById('horarioNote').textContent = t.horarioNote;
-        document.getElementById('textNombre').textContent = t.textNombre;
-        document.getElementById('textEmpresa').textContent = t.textEmpresa;
-        document.getElementById('empresaNote').textContent = t.empresaNote;
-        document.getElementById('textAdultos').textContent = t.textAdultos;
-        document.getElementById('textMenores').textContent = t.textMenores;
-        document.getElementById('textTotal').textContent = t.textTotal;
-        document.getElementById('infoNoteText').textContent = t.infoNoteText;
-        document.getElementById('btnText').textContent = t.btnText;
-        document.getElementById('footerBoat').textContent = t.footerBoat;
-        document.getElementById('footerSecure').textContent = t.footerSecure;
-        document.getElementById('footerConfirm').textContent = t.footerConfirm;
-        document.getElementById('modalTitle').textContent = t.modalTitle;
         
-        document.querySelector('#cancelModalBtn span').textContent = t.cancelText;
-        document.querySelector('#confirmSendBtn span').textContent = t.confirmText;
-
-        loadWeatherWidget(lang);
+        const existingScript = document.getElementById('weatherwidget-io-js');
+        if (existingScript) existingScript.remove();
+        
+        const script = document.createElement('script');
+        script.id = 'weatherwidget-io-js';
+        script.src = 'https://weatherwidget.io/js/widget.min.js';
+        document.head.appendChild(script);
     }
 
-    // --- Lógica del Modal y Envío a WhatsApp ---
-    const form = document.getElementById('dataForm');
+    const PRECIO_ADULTO = 85.00;
+    const PRECIO_MENOR = 42.50;
+    const WHATSAPP_NUMBER = '5493518692251';
+
+    const translations = {
+        es: {
+            subtitle: "Reserve su paseo · Confirme los datos · Envío por WhatsApp",
+            fecha: "FECHA DEL PASEO",
+            horario: "PREFERENCIA DE HORARIO",
+            nombre: "NOMBRE",
+            empresa: "EMPRESA",
+            empresa_note: "*Opcional para reservas individuales",
+            adultos: "ADULTOS",
+            menores: "MENORES de 6 a 11 años",
+            total: "VALOR TOTAL",
+            total_popup: "VALOR DE SU RESERVA",
+            btn: "ENVIAR RESERVA",
+            footer_boat: "Paseos en barco",
+            footer_secure: "Confirmación segura",
+            footer_confirm: "Envío por WhatsApp",
+            modal_title: "Confirmar reserva",
+            modal_cancel: "Cancelar",
+            modal_confirm: "Enviar via WhatsApp",
+            info_text: "💡 El valor mencionado es para grupos cerrados o agencias, en viajes individuales el valor puede sufrir variaciones, ante cualquier duda no deje de consultarnos.",
+            discount_text: "🎯 50% de descuento",
+            horario_placeholder: "Seleccione un horario",
+            horario_note: "⏱️ Sujeto a disponibilidad, puede variar conforme reservas previas, el horario será confirmado via WhatsApp.",
+            idioma: "Español"
+        },
+        pt: {
+            subtitle: "Reserve seu passeio · Confirme os dados · Envio via WhatsApp",
+            fecha: "DATA DO PASSEIO",
+            horario: "PREFERÊNCIA DE HORÁRIO",
+            nombre: "NOME",
+            empresa: "EMPRESA",
+            empresa_note: "*Opcional para reservas individuais",
+            adultos: "ADULTOS",
+            menores: "MENORES de 6 a 11 anos",
+            total: "VALOR TOTAL",
+            total_popup: "VALOR DA SUA RESERVA",
+            btn: "ENVIAR RESERVA",
+            footer_boat: "Passeios de barco",
+            footer_secure: "Confirmação segura",
+            footer_confirm: "Envio via WhatsApp",
+            modal_title: "Confirmar reserva",
+            modal_cancel: "Cancelar",
+            modal_confirm: "Enviar via WhatsApp",
+            info_text: "💡 O valor mencionado é para grupos fechados ou agências, em viagens individuais o valor pode sofrer variações, em caso de dúvida não deixe de nos consultar.",
+            discount_text: "🎯 50% de desconto",
+            horario_placeholder: "Selecione um horário",
+            horario_note: "⏱️ Sujeito à disponibilidade, pode variar conforme reservas prévias, o horário será confirmado via WhatsApp.",
+            idioma: "Português"
+        },
+        en: {
+            subtitle: "Book your tour · Confirm details · Send via WhatsApp",
+            fecha: "TOUR DATE",
+            horario: "TIME PREFERENCE",
+            nombre: "NAME",
+            empresa: "COMPANY",
+            empresa_note: "*Optional for individual reservations",
+            adultos: "ADULTS",
+            menores: "CHILDREN 6 to 11 years",
+            total: "TOTAL VALUE",
+            total_popup: "YOUR RESERVATION VALUE",
+            btn: "SEND RESERVATION",
+            footer_boat: "Boat tours",
+            footer_secure: "Secure confirmation",
+            footer_confirm: "WhatsApp delivery",
+            modal_title: "Confirm reservation",
+            modal_cancel: "Cancel",
+            modal_confirm: "Send via WhatsApp",
+            info_text: "💡 The mentioned price is for closed groups or agencies; for individual trips, the price may vary. If you have any questions, please do not hesitate to contact us.",
+            discount_text: "🎯 50% discount",
+            horario_placeholder: "Select a time",
+            horario_note: "⏱️ Subject to availability, may vary based on previous bookings. The final schedule will be confirmed via WhatsApp.",
+            idioma: "English"
+        }
+    };
+
+    let currentLang = 'pt';
+    let pendingFormData = null;
+
+    const fechaInput = document.getElementById('fecha');
+    const horarioSelect = document.getElementById('horario');
+    const nombreInput = document.getElementById('nombre');
+    const empresaInput = document.getElementById('empresa');
+    const adultosInput = document.getElementById('adultos');
+    const menoresInput = document.getElementById('menores');
+    const valorTotalInput = document.getElementById('valorTotal');
     const modal = document.getElementById('confirmModal');
     const modalDetails = document.getElementById('modalDetails');
-    
-    function closeModal() {
-        modal.classList.remove('active');
+    const infoNoteDiv = document.getElementById('infoNoteText');
+    const horarioNoteDiv = document.getElementById('horarioNote');
+    const empresaNoteDiv = document.getElementById('empresaNote');
+
+    function setupNumberInputClearing(inputElement) {
+        if (!inputElement) return;
+        inputElement.addEventListener('focus', function() {
+            if (this.value === '0') this.value = '';
+        });
+        inputElement.addEventListener('blur', function() {
+            if (this.value === '' || this.value === null) {
+                this.value = '0';
+                calcularValorTotal();
+            }
+        });
     }
 
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const t = translations[currentLang];
-        
-        currentReservation = {
-            fecha: formatDateToDDMMYYYY(document.getElementById('fecha').value),
-            horario: document.getElementById('horario').value,
-            nombre: document.getElementById('nombre').value,
-            empresa: document.getElementById('empresa').value || '-',
-            adultos: document.getElementById('adultos').value,
-            menores: document.getElementById('menores').value || '0',
-            total: document.getElementById('valorTotal').value
-        };
+    window.addEventListener('load', function() {
+        document.getElementById('dataForm').reset();
+        adultosInput.value = '0';
+        menoresInput.value = '0';
+        fechaInput.value = '';
+        horarioSelect.value = '';
+        nombreInput.value = '';
+        empresaInput.value = '';
+        calcularValorTotal();
+        setTimeout(() => loadWeatherWidget(currentLang), 100);
+    });
 
+    const today = new Date().toISOString().split('T')[0];
+    fechaInput.setAttribute('min', today);
+
+    function calcularValorTotal() {
+        const adultos = parseInt(adultosInput.value) || 0;
+        const menores = parseInt(menoresInput.value) || 0;
+        const total = (adultos * PRECIO_ADULTO) + (menores * PRECIO_MENOR);
+        valorTotalInput.value = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        return total;
+    }
+
+    adultosInput.addEventListener('input', calcularValorTotal);
+    menoresInput.addEventListener('input', calcularValorTotal);
+    setupNumberInputClearing(adultosInput);
+    setupNumberInputClearing(menoresInput);
+    calcularValorTotal();
+
+    function changeLanguage(lang) {
+        currentLang = lang;
+        const t = translations[lang];
+        document.getElementById('subtitleText').textContent = t.subtitle;
+        document.getElementById('textFecha').textContent = t.fecha;
+        document.getElementById('textHorario').textContent = t.horario;
+        document.getElementById('textNombre').textContent = t.nombre;
+        document.getElementById('textEmpresa').textContent = t.empresa;
+        document.getElementById('textAdultos').textContent = t.adultos;
+        document.getElementById('textMenores').textContent = t.menores;
+        document.getElementById('textTotal').textContent = t.total;
+        document.getElementById('btnText').textContent = t.btn;
+        document.getElementById('footerBoat').textContent = t.footer_boat;
+        document.getElementById('footerSecure').textContent = t.footer_secure;
+        document.getElementById('footerConfirm').textContent = t.footer_confirm;
+        if (infoNoteDiv) infoNoteDiv.textContent = t.info_text;
+        if (horarioNoteDiv) horarioNoteDiv.textContent = t.horario_note;
+        if (empresaNoteDiv) empresaNoteDiv.textContent = t.empresa_note;
+        
+        const discountBadge = document.querySelector('.discount-badge');
+        if (discountBadge) discountBadge.textContent = t.discount_text;
+        
+        updateHorarioSelect(lang);
+        
+        document.querySelectorAll('.btn-language').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+        });
+        
+        loadWeatherWidget(lang);
+        localStorage.setItem('preferred_language', lang);
+    }
+
+    document.querySelectorAll('.btn-language').forEach(btn => {
+        btn.addEventListener('click', () => changeLanguage(btn.getAttribute('data-lang')));
+    });
+
+    const savedLang = localStorage.getItem('preferred_language');
+    changeLanguage(savedLang && translations[savedLang] ? savedLang : 'pt');
+
+    function showModalWithData(formDataObj) {
+        const t = translations[currentLang];
+        const adultosNum = parseInt(formDataObj.adultos) || 0;
+        const menoresNum = parseInt(formDataObj.menores) || 0;
+        const totalValue = (adultosNum * PRECIO_ADULTO) + (menoresNum * PRECIO_MENOR);
+        const totalFormatted = totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        
+        const fechaFormateada = formatDateToDDMMYYYY(formDataObj.fecha);
+        // Para el popup, usar el horario traducido según el idioma actual
+        const horarioDisplay = getHorarioDisplay(formDataObj.horario, currentLang);
+        
         modalDetails.innerHTML = `
             <div class="modal-detail-item">
-                <span class="modal-detail-label">${t.textFecha}:</span>
-                <span class="modal-detail-value">${currentReservation.fecha}</span>
+                <span class="modal-detail-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    ${t.fecha}:
+                </span>
+                <span class="modal-detail-value">${fechaFormateada}</span>
             </div>
             <div class="modal-detail-item">
-                <span class="modal-detail-label">${t.textHorario}:</span>
-                <span class="modal-detail-value">${currentReservation.horario}</span>
+                <span class="modal-detail-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    ${t.horario}:
+                </span>
+                <span class="modal-detail-value">${horarioDisplay}</span>
             </div>
             <div class="modal-detail-item">
-                <span class="modal-detail-label">${t.textNombre}:</span>
-                <span class="modal-detail-value">${currentReservation.nombre}</span>
+                <span class="modal-detail-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    ${t.nombre}:
+                </span>
+                <span class="modal-detail-value">${escapeHtml(formDataObj.nombre)}</span>
             </div>
             <div class="modal-detail-item">
-                <span class="modal-detail-label">${t.textEmpresa}:</span>
-                <span class="modal-detail-value">${currentReservation.empresa}</span>
+                <span class="modal-detail-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                        <line x1="16" y1="3" x2="16" y2="7"/>
+                        <line x1="8" y1="3" x2="8" y2="7"/>
+                        <line x1="12" y1="11" x2="12" y2="15"/>
+                        <line x1="9" y1="13" x2="15" y2="13"/>
+                    </svg>
+                    ${t.empresa}:
+                </span>
+                <span class="modal-detail-value">${escapeHtml(formDataObj.empresa || '—')}</span>
             </div>
             <div class="modal-detail-item">
-                <span class="modal-detail-label">${t.textAdultos}:</span>
-                <span class="modal-detail-value">${currentReservation.adultos}</span>
+                <span class="modal-detail-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    ${t.adultos}:
+                </span>
+                <span class="modal-detail-value">${formDataObj.adultos}</span>
             </div>
             <div class="modal-detail-item">
-                <span class="modal-detail-label">${t.textMenores}:</span>
-                <span class="modal-detail-value">${currentReservation.menores}</span>
+                <span class="modal-detail-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="16"/>
+                        <line x1="8" y1="12" x2="16" y2="12"/>
+                    </svg>
+                    ${t.menores}:
+                </span>
+                <span class="modal-detail-value">${formDataObj.menores} <span style="font-size:0.7rem; color:#059669;">(50% off)</span></span>
             </div>
             <div class="total-highlight">
                 <div class="modal-detail-item">
-                    <span class="modal-detail-label">${t.textTotal}:</span>
-                    <span class="modal-detail-value">${currentReservation.total}</span>
+                    <span class="modal-detail-label">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                        ${t.total_popup}:
+                    </span>
+                    <span class="modal-detail-value" style="color: #0EA5E9; font-weight: 700;">${totalFormatted}</span>
                 </div>
             </div>
         `;
+        document.querySelector('#confirmModal .modal-header h3').textContent = `📋 ${t.modal_title}`;
+        document.getElementById('cancelModalBtn').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:14px;height:14px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> ${t.modal_cancel}`;
+        document.getElementById('confirmSendBtn').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:16px;height:16px"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg> ${t.modal_confirm}`;
         
+        pendingFormData = { ...formDataObj, totalFormatted, fechaFormateada, horarioDisplay, horarioRaw: formDataObj.horario };
         modal.classList.add('active');
-    });
+    }
 
-    document.getElementById('confirmSendBtn').addEventListener('click', function() {
-        let msg = `*RESERVA ANGEL TOUR BRASIL*\n\n`;
-        msg += `📅 *Data/Fecha:* ${currentReservation.fecha}\n`;
-        msg += `⏰ *Horário:* ${currentReservation.horario}\n`;
-        msg += `👤 *Nome/Nombre:* ${currentReservation.nombre}\n`;
-        
-        if (currentReservation.empresa !== '-') {
-            msg += `🏢 *Empresa:* ${currentReservation.empresa}\n`;
-        }
-        
-        msg += `👨 *Adultos:* ${currentReservation.adultos}\n`;
-        msg += `🧒 *Menores:* ${currentReservation.menores}\n\n`;
-        msg += `💰 *TOTAL:* ${currentReservation.total}`;
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
 
-        const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`;
-        window.open(url, '_blank');
+    function closeModal() {
+        modal.classList.remove('active');
+        pendingFormData = null;
+    }
+
+    function sendToWhatsApp() {
+        if (!pendingFormData) return;
+        const t = translations[currentLang];
+        const adultosNum = parseInt(pendingFormData.adultos) || 0;
+        const menoresNum = parseInt(pendingFormData.menores) || 0;
+        const totalValue = (adultosNum * PRECIO_ADULTO) + (menoresNum * PRECIO_MENOR);
+        const totalFormatted = totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        
+        const fechaWhatsApp = pendingFormData.fechaFormateada || formatDateToDDMMYYYY(pendingFormData.fecha);
+        // IMPORTANTE: Para el mensaje de WhatsApp, usar SIEMPRE el horario en ESPAÑOL (sin traducir)
+        const horarioWhatsApp = getHorarioEspanol(pendingFormData.horarioRaw || pendingFormData.horario);
+        const nombreCliente = pendingFormData.nombre;
+        const empresaCliente = pendingFormData.empresa || "No especificada";
+        
+        const message = `🔹 *NUEVA RESERVA ANGEL TOUR* 🔹\n    Idioma: ${t.idioma}\n\n📅 *Fecha:* ${fechaWhatsApp}\n⏰ *Horario preferido:* ${horarioWhatsApp}\n👤 *Nombre:* ${nombreCliente}\n🏢 *Empresa:* ${empresaCliente}\n👥 *Adultos:* ${pendingFormData.adultos}\n🧒 *Menores:* ${pendingFormData.menores}\n💰 *Total:* ${totalFormatted}\n\n✅ Reserva generada desde el formulario web. El horario final será confirmado por WhatsApp sujeto a disponibilidad.`;
+        
+        const encodedMessage = encodeURIComponent(message);
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+        
         closeModal();
+        
+        const btn = document.getElementById('btnSubmit');
+        const originalHTML = btn.innerHTML;
+        const successText = currentLang === 'pt' ? '✓ ENVIADO!' : (currentLang === 'es' ? '✓ ENVIADO!' : '✓ SENT!');
+        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span>${successText}</span>`;
+        setTimeout(() => { btn.innerHTML = originalHTML; }, 2000);
+        
+        document.getElementById('dataForm').reset();
+        adultosInput.value = '0';
+        menoresInput.value = '0';
+        calcularValorTotal();
+        fechaInput.value = '';
+        horarioSelect.value = '';
+        nombreInput.value = '';
+        empresaInput.value = '';
+    }
+
+    document.getElementById('dataForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const fecha = fechaInput.value;
+        const horario = horarioSelect.value;
+        const nombre = nombreInput.value.trim();
+        const empresa = empresaInput.value.trim();
+        const adultos = adultosInput.value;
+        const menores = menoresInput.value;
+        
+        if (!fecha) { alert('❌ Seleccione una fecha'); return; }
+        if (!horario) { alert('❌ Seleccione un horario'); return; }
+        if (!nombre) { alert('❌ Complete el nombre'); return; }
+        if (adultos === '' || isNaN(adultos) || parseInt(adultos) < 0) { alert('❌ Ingrese un número válido de adultos'); return; }
+        if (menores === '' || isNaN(menores) || parseInt(menores) < 0) { alert('❌ Ingrese un número válido de menores'); return; }
+        
+        showModalWithData({ fecha, horario, nombre, empresa, adultos, menores });
     });
 
-    // --- Listeners iniciales ---
-    document.querySelectorAll('.btn-language').forEach(btn => {
-        btn.addEventListener('click', () => updateLanguage(btn.dataset.lang));
-    });
-
-    document.getElementById('adultos').addEventListener('input', calculateTotal);
-    document.getElementById('menores').addEventListener('input', calculateTotal);
     document.getElementById('closeModalBtn').addEventListener('click', closeModal);
     document.getElementById('cancelModalBtn').addEventListener('click', closeModal);
-
-    // Restricción de fecha mínima (hoy)
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('fecha').min = today;
-
-    // Iniciar con Portugués por defecto
-    updateLanguage('pt');
-    calculateTotal();
+    document.getElementById('confirmSendBtn').addEventListener('click', sendToWhatsApp);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 </script>
+
 </body>
 </html>
