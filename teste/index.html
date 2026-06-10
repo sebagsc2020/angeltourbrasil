@@ -6,7 +6,9 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Angel Tour Brasil | Reserva Profesional</title>
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="format-detection" content="telephone=no">
+    <title>Angel+Tour Brasil | Reserva Profesional</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -41,7 +43,6 @@
         .btn-language:hover { background: #0EA5E9; border-color: #0EA5E9; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(14, 165, 233, 0.15); }
         .btn-language.active { background: #0EA5E9; border-color: #0EA5E9; box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.25); transform: scale(0.98); }
         
-        /* Weather Widget Container - 7 días */
         .weather-widget-container {
             margin: 1rem 1.8rem 0.8rem 1.8rem;
             padding: 0.5rem;
@@ -72,7 +73,7 @@
             border-radius: 16px;
         }
         
-        /* Estilos para el campo de fecha - cursor pointer en toda el área */
+        /* Estilos para el campo de fecha - clic en toda el área */
         .date-input-wrapper {
             position: relative;
             cursor: pointer;
@@ -80,7 +81,6 @@
         .date-input-wrapper input {
             cursor: pointer;
         }
-        /* Forzar que todo el input sea clickeable para abrir el calendario */
         input[type="date"] {
             cursor: pointer;
             color-scheme: light;
@@ -100,9 +100,6 @@
         ::-webkit-datetime-edit { padding: 0.2rem 0; }
         ::-webkit-datetime-edit-fields-wrapper { color: #0F172A; }
         ::-webkit-datetime-edit-text { color: #64748B; padding: 0 0.2rem; }
-        ::-webkit-datetime-edit-month-field:hover,
-        ::-webkit-datetime-edit-day-field:hover,
-        ::-webkit-datetime-edit-year-field:hover { background: #E2E8F0; border-radius: 4px; }
         
         .form-wrapper { padding: 1.2rem 1.8rem 2rem 1.8rem; }
         .form-group { margin-bottom: 1.4rem; }
@@ -122,7 +119,8 @@
         .price-info { font-size: 0.65rem; font-weight: 450; color: #64748B; margin-top: 0.35rem; margin-left: 2rem; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
         .discount-badge { background: #E6F7EC; color: #0D6E2E; padding: 0.2rem 0.6rem; border-radius: 30px; font-weight: 600; font-size: 0.65rem; display: inline-block; }
         .btn-submit { width: 100%; background: linear-gradient(105deg, #0EA5E9, #3B82F6); border: none; padding: 1rem; border-radius: 18px; font-size: 0.95rem; font-weight: 600; color: white; display: flex; align-items: center; justify-content: center; gap: 0.6rem; cursor: pointer; transition: all 0.25s ease; margin-top: 1rem; font-family: 'Inter', sans-serif; box-shadow: 0 6px 14px rgba(14, 165, 233, 0.25); }
-        .btn-submit:hover { transform: translateY(-2px); filter: brightness(1.02); box-shadow: 0 10px 20px rgba(14, 165, 233, 0.3); }
+        .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .btn-submit:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.02); box-shadow: 0 10px 20px rgba(14, 165, 233, 0.3); }
         .btn-submit svg { width: 18px; height: 18px; stroke: white; stroke-width: 2.2; }
         .footer { padding: 1rem 1.8rem; text-align: center; border-top: 1px solid #E2E8F0; font-size: 0.68rem; font-weight: 450; color: #64748B; display: flex; justify-content: center; gap: 1.5rem; background: #FAFAFC; }
         .footer span { display: inline-flex; align-items: center; gap: 0.35rem; }
@@ -164,8 +162,6 @@
             .modal-content { padding: 1.2rem; }
             .btn-language { width: 36px; height: 36px; }
             .btn-language img { width: 20px; height: 20px; }
-            .modal-detail-item { font-size: 0.8rem; }
-            .modal-detail-label svg { width: 14px; height: 14px; }
         }
     </style>
 </head>
@@ -188,10 +184,9 @@
         </div>
     </div>
 
-    <!-- WEATHER WIDGET - Previsión 7 días Porto Belo -->
     <div class="weather-widget-container" id="weatherWidgetContainer">
         <div id="weatherWidgetPlaceholder" style="width:100%;">
-            <div class="weather-loading">🌊 Cargando previsión del tiempo para Porto Belo (7 días)...</div>
+            <div class="weather-loading">🌊 Cargando previsión del tiempo para Porto Belo...</div>
         </div>
     </div>
 
@@ -220,24 +215,24 @@
 
             <div class="form-group">
                 <label id="labelNombre"><span class="label-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span id="textNombre">NOMBRE</span></label>
-                <div class="input-wrapper"><span class="input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><input type="text" id="nombre" name="nombre" required placeholder="Ex: Carlos Silva" autocomplete="off"></div>
+                <div class="input-wrapper"><span class="input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><input type="text" id="nombre" name="nombre" required placeholder="Ex: Carlos Silva" maxlength="100" autocomplete="off"></div>
             </div>
 
             <div class="form-group">
                 <label id="labelEmpresa"><span class="label-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><line x1="16" y1="3" x2="16" y2="7"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="12" y1="11" x2="12" y2="15"/><line x1="9" y1="13" x2="15" y2="13"/></svg></span><span id="textEmpresa">EMPRESA</span></label>
-                <div class="input-wrapper"><span class="input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><line x1="16" y1="3" x2="16" y2="7"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="12" y1="11" x2="12" y2="15"/><line x1="9" y1="13" x2="15" y2="13"/></svg></span><input type="text" id="empresa" name="empresa" placeholder="Ex: Turismo Brasil" autocomplete="off"></div>
+                <div class="input-wrapper"><span class="input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><line x1="16" y1="3" x2="16" y2="7"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="12" y1="11" x2="12" y2="15"/><line x1="9" y1="13" x2="15" y2="13"/></svg></span><input type="text" id="empresa" name="empresa" placeholder="Ex: Turismo Brasil" maxlength="100" autocomplete="off"></div>
                 <div class="optional-note" id="empresaNote">*Opcional para reservas individuales</div>
             </div>
 
             <div class="form-group">
                 <label id="labelAdultos"><span class="label-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span id="textAdultos">ADULTOS</span></label>
-                <div class="input-wrapper"><span class="input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><input type="number" id="adultos" name="adultos" required placeholder="Ex: 2" step="1" min="0" value="0" autocomplete="off"></div>
+                <div class="input-wrapper"><span class="input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><input type="number" id="adultos" name="adultos" required placeholder="Ex: 2" step="1" min="0" max="99" value="0" autocomplete="off"></div>
                 <div class="price-info">💰 R$ 85,00 cada adulto</div>
             </div>
 
             <div class="form-group">
                 <label id="labelMenores"><span class="label-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span><span id="textMenores">MENORES de 6 a 11 años</span></label>
-                <div class="input-wrapper"><span class="input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span><input type="number" id="menores" name="menores" placeholder="Ex: 1" step="1" min="0" value="0" autocomplete="off"></div>
+                <div class="input-wrapper"><span class="input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span><input type="number" id="menores" name="menores" placeholder="Ex: 1" step="1" min="0" max="99" value="0" autocomplete="off"></div>
                 <div class="price-info"><span class="discount-badge">🎯 50% de descuento</span></div>
             </div>
 
@@ -270,54 +265,139 @@
 </div>
 
 <script>
-    // Función para abrir el calendario nativo al hacer clic en cualquier parte del campo de fecha
+    // ========== PROTOCOLO DE SEGURIDAD ==========
+    
+    // 1. Prevenir doble envío
+    let isSubmitting = false;
+    
+    // 2. Sanitización de texto (prevenir XSS)
+    function sanitizeText(input) {
+        if (!input) return '';
+        return input.replace(/[<>]/g, function(m) {
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).trim().slice(0, 200);
+    }
+    
+    // 3. Validar número
+    function isValidNumber(value, min = 0, max = 99) {
+        const num = parseInt(value);
+        if (isNaN(num)) return false;
+        return num >= min && num <= max;
+    }
+    
+    // 4. Validar fecha (no puede ser anterior a hoy)
+    function isValidDate(dateString) {
+        if (!dateString) return false;
+        const selectedDate = new Date(dateString);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return selectedDate >= today;
+    }
+    
+    // 5. Validar nombre (solo letras, espacios y caracteres básicos)
+    function isValidName(name) {
+        if (!name || name.length < 2) return false;
+        const regex = /^[a-zA-ZáéíóúñÁÉÍÓÚÑ\s]+$/;
+        return regex.test(name);
+    }
+    
+    // 6. Prevenir inyección en URLs
+    function sanitizeUrlInput(input) {
+        return encodeURIComponent(input);
+    }
+    
+    let userLocationFormatted = "Ubicación no disponible";
+    let formSubmitted = false;
+    
+    async function getUserLocation() {
+        const apis = [
+            {
+                url: 'https://ipapi.co/json/',
+                parser: (data) => {
+                    const country = data.country_name || '';
+                    const city = data.city || '';
+                    const region = data.region || '';
+                    if (country) {
+                        if (city) return `${country} - ${city}`;
+                        if (region) return `${country} - ${region}`;
+                        return country;
+                    }
+                    return null;
+                }
+            },
+            {
+                url: 'https://ipwho.is/',
+                parser: (data) => {
+                    if (data.success !== false) {
+                        const country = data.country || '';
+                        const city = data.city || '';
+                        const region = data.region || '';
+                        if (country) {
+                            if (city) return `${country} - ${city}`;
+                            if (region) return `${country} - ${region}`;
+                            return country;
+                        }
+                    }
+                    return null;
+                }
+            }
+        ];
+        
+        for (const api of apis) {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                const response = await fetch(api.url, { signal: controller.signal });
+                clearTimeout(timeoutId);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const location = api.parser(data);
+                    if (location) {
+                        userLocationFormatted = location;
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.log('Error con API:', error);
+                continue;
+            }
+        }
+        userLocationFormatted = "Ubicación no disponible";
+    }
+
+    // Función para abrir el calendario al hacer clic en cualquier parte del campo fecha
     function setupDatePickerClick() {
         const fechaInput = document.getElementById('fecha');
         if (fechaInput) {
-            // Método 1: Usar showPicker() si está disponible (moderno)
-            fechaInput.addEventListener('click', function(e) {
-                e.stopPropagation();
-                if (typeof this.showPicker === 'function') {
-                    try {
-                        this.showPicker();
-                    } catch (err) {
-                        console.log('showPicker no soportado, usando método alternativo');
-                        this.focus();
+            // Evento click en todo el contenedor del campo
+            const wrapper = fechaInput.closest('.date-input-wrapper');
+            if (wrapper) {
+                wrapper.addEventListener('click', function(e) {
+                    // Evitar que el clic en el ícono se propague dos veces
+                    if (e.target === wrapper || e.target.classList.contains('input-icon') || e.target.classList.contains('date-input-wrapper')) {
+                        e.stopPropagation();
                     }
-                } else {
-                    // Método alternativo: focus y dispatchEvent
-                    this.focus();
-                    // Simular clic en el botón del calendario
-                    const event = new MouseEvent('mousedown', { bubbles: true });
-                    this.dispatchEvent(event);
-                }
-            });
-        }
-    }
-
-    let userLocationFormatted = "Ubicación no disponible";
-    
-    async function getUserLocation() {
-        try {
-            const response = await fetch('https://ipapi.co/json/');
-            const data = await response.json();
-            const country = data.country_name || '';
-            const city = data.city || '';
-            const region = data.region || '';
-            if (country) {
-                if (city) userLocationFormatted = `${country} - ${city}`;
-                else if (region) userLocationFormatted = `${country} - ${region}`;
-                else userLocationFormatted = country;
-            } else {
-                userLocationFormatted = "Ubicación no disponible";
+                    if (typeof fechaInput.showPicker === 'function') {
+                        try {
+                            fechaInput.showPicker();
+                        } catch (err) {
+                            fechaInput.focus();
+                        }
+                    } else {
+                        fechaInput.focus();
+                        const event = new MouseEvent('mousedown', { bubbles: true });
+                        fechaInput.dispatchEvent(event);
+                    }
+                });
             }
-        } catch (error) {
-            console.log('Error obteniendo ubicación:', error);
-            userLocationFormatted = "Ubicación no disponible";
+            // También asegurar que el input tenga cursor pointer
+            fechaInput.style.cursor = 'pointer';
         }
     }
 
-    // Función para cargar el widget de clima con previsión de 7 días
     function loadWeatherWidget(lang) {
         const container = document.getElementById('weatherWidgetPlaceholder');
         if (!container) return;
@@ -420,8 +500,9 @@
 
     let currentLang = 'pt';
     let pendingFormData = null;
+    let locationPromise = null;
     
-    getUserLocation();
+    locationPromise = getUserLocation();
 
     const fechaInput = document.getElementById('fecha');
     const horarioSelect = document.getElementById('horario');
@@ -435,6 +516,7 @@
     const infoNoteDiv = document.getElementById('infoNoteText');
     const horarioNoteDiv = document.getElementById('horarioNote');
     const empresaNoteDiv = document.getElementById('empresaNote');
+    const btnSubmit = document.getElementById('btnSubmit');
 
     function setupNumberInputClearing(inputElement) {
         if (!inputElement) return;
@@ -452,7 +534,6 @@
         empresaInput.value = '';
         calcularValorTotal();
         setTimeout(() => loadWeatherWidget(currentLang), 100);
-        // Configurar el calendario para que se abra al hacer clic
         setupDatePickerClick();
     });
 
@@ -516,8 +597,8 @@
         modalDetails.innerHTML = `
             <div class="modal-detail-item"><span class="modal-detail-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> ${t.fecha}:</span><span class="modal-detail-value">${fechaFormateada}</span></div>
             <div class="modal-detail-item"><span class="modal-detail-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${t.horario}:</span><span class="modal-detail-value">${horarioDisplay}</span></div>
-            <div class="modal-detail-item"><span class="modal-detail-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${t.nombre}:</span><span class="modal-detail-value">${escapeHtml(formDataObj.nombre)}</span></div>
-            <div class="modal-detail-item"><span class="modal-detail-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><line x1="16" y1="3" x2="16" y2="7"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="12" y1="11" x2="12" y2="15"/><line x1="9" y1="13" x2="15" y2="13"/></svg> ${t.empresa}:</span><span class="modal-detail-value">${escapeHtml(formDataObj.empresa || '—')}</span></div>
+            <div class="modal-detail-item"><span class="modal-detail-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${t.nombre}:</span><span class="modal-detail-value">${sanitizeText(formDataObj.nombre)}</span></div>
+            <div class="modal-detail-item"><span class="modal-detail-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><line x1="16" y1="3" x2="16" y2="7"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="12" y1="11" x2="12" y2="15"/><line x1="9" y1="13" x2="15" y2="13"/></svg> ${t.empresa}:</span><span class="modal-detail-value">${sanitizeText(formDataObj.empresa) || '—'}</span></div>
             <div class="modal-detail-item"><span class="modal-detail-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> ${t.adultos}:</span><span class="modal-detail-value">${formDataObj.adultos}</span></div>
             <div class="modal-detail-item"><span class="modal-detail-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg> ${t.menores}:</span><span class="modal-detail-value">${formDataObj.menores} <span style="font-size:0.7rem; color:#059669;">(50% off)</span></span></div>
             <div class="total-highlight"><div class="modal-detail-item"><span class="modal-detail-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> ${t.total_popup}:</span><span class="modal-detail-value" style="color: #0EA5E9; font-weight: 700;">${totalFormatted}</span></div></div>
@@ -529,12 +610,18 @@
         modal.classList.add('active');
     }
 
-    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, function(m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
-
     function closeModal() { modal.classList.remove('active'); pendingFormData = null; }
 
-    function sendToWhatsApp() {
-        if (!pendingFormData) return;
+    async function sendToWhatsApp() {
+        if (!pendingFormData || isSubmitting) return;
+        
+        isSubmitting = true;
+        btnSubmit.disabled = true;
+        
+        if (locationPromise) {
+            await locationPromise;
+        }
+        
         const t = translations[currentLang];
         const adultosNum = parseInt(pendingFormData.adultos) || 0;
         const menoresNum = parseInt(pendingFormData.menores) || 0;
@@ -542,8 +629,8 @@
         const totalFormatted = totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         const fechaWhatsApp = pendingFormData.fechaFormateada || formatDateToDDMMYYYY(pendingFormData.fecha);
         const horarioWhatsApp = getHorarioEspanol(pendingFormData.horarioRaw || pendingFormData.horario);
-        const nombreCliente = pendingFormData.nombre;
-        const empresaCliente = pendingFormData.empresa || "No especificada";
+        const nombreCliente = sanitizeText(pendingFormData.nombre);
+        const empresaCliente = sanitizeText(pendingFormData.empresa) || "No especificada";
         const langText = getLanguageText(currentLang);
         
         const message = `🔹 *NUEVA RESERVA ANGEL TOUR* 🔹\n    ${langText} - ${userLocationFormatted}\n\n📅 *Fecha:* ${fechaWhatsApp}\n⏰ *Horario:* ${horarioWhatsApp}\n👤 *Nombre:* ${nombreCliente}\n🏢 *Empresa:* ${empresaCliente}\n👥 *Adultos:* ${pendingFormData.adultos}\n🧒 *Menores:* ${pendingFormData.menores}\n💰 *Total:* ${totalFormatted}\n\n✅ Reserva via formulario web.`;
@@ -553,11 +640,13 @@
         
         closeModal();
         
-        const btn = document.getElementById('btnSubmit');
-        const originalHTML = btn.innerHTML;
         const successText = currentLang === 'pt' ? '✓ ENVIADO!' : (currentLang === 'es' ? '✓ ENVIADO!' : '✓ SENT!');
-        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span>${successText}</span>`;
-        setTimeout(() => { btn.innerHTML = originalHTML; }, 2000);
+        btnSubmit.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span>${successText}</span>`;
+        setTimeout(() => {
+            btnSubmit.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span id="btnText">ENVIAR RESERVA</span>`;
+            btnSubmit.disabled = false;
+            isSubmitting = false;
+        }, 3000);
         
         document.getElementById('dataForm').reset();
         adultosInput.value = '0';
@@ -571,17 +660,25 @@
 
     document.getElementById('dataForm').addEventListener('submit', (e) => {
         e.preventDefault();
+        
         const fecha = fechaInput.value;
         const horario = horarioSelect.value;
-        const nombre = nombreInput.value.trim();
-        const empresa = empresaInput.value.trim();
+        const nombre = sanitizeText(nombreInput.value);
+        const empresa = sanitizeText(empresaInput.value);
         const adultos = adultosInput.value;
         const menores = menoresInput.value;
-        if (!fecha) { alert('❌ Seleccione una fecha'); return; }
+        
+        // Validaciones de seguridad
+        if (!fecha || !isValidDate(fecha)) { 
+            alert('❌ Seleccione una fecha válida (no puede ser anterior a hoy)'); 
+            return; 
+        }
         if (!horario) { alert('❌ Seleccione un horario'); return; }
-        if (!nombre) { alert('❌ Complete el nombre'); return; }
-        if (adultos === '' || isNaN(adultos) || parseInt(adultos) < 0) { alert('❌ Ingrese un número válido de adultos'); return; }
-        if (menores === '' || isNaN(menores) || parseInt(menores) < 0) { alert('❌ Ingrese un número válido de menores'); return; }
+        if (!nombre || nombre.length < 2) { alert('❌ Complete el nombre correctamente (mínimo 2 caracteres)'); return; }
+        if (!isValidName(nombre)) { alert('❌ El nombre solo puede contener letras y espacios'); return; }
+        if (!isValidNumber(adultos, 0, 99)) { alert('❌ Ingrese un número válido de adultos (0-99)'); return; }
+        if (!isValidNumber(menores, 0, 99)) { alert('❌ Ingrese un número válido de menores (0-99)'); return; }
+        
         showModalWithData({ fecha, horario, nombre, empresa, adultos, menores });
     });
 
