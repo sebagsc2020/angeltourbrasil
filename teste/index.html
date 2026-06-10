@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <!-- Meta tags para evitar caché del navegador -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -252,21 +251,34 @@
         .weather-widget-container {
             margin: 0.5rem 1.5rem 0.8rem 1.5rem;
             padding: 0.5rem;
-            background: rgba(15, 23, 42, 0.4);
+            background: linear-gradient(135deg, #0a4a7a 0%, #0d3b5e 100%);
             border-radius: 1rem;
-            border: 1px solid rgba(56, 189, 248, 0.2);
+            border: 1px solid rgba(56, 189, 248, 0.5);
             overflow: hidden;
             transition: all 0.2s ease;
-            min-height: 180px;
+            min-height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .weather-widget-container iframe {
-            filter: hue-rotate(140deg) saturate(1.1) brightness(0.95);
+        body.light-mode .weather-widget-container {
+            background: linear-gradient(135deg, #1a6da8 0%, #0f5485 100%);
+            border-color: rgba(14, 165, 233, 0.6);
         }
-        
-        .weatherwidget-io {
-            width: 100%;
-            border-radius: 0.75rem;
+
+        .weather-loading {
+            color: #E2E8F0;
+            font-size: 0.8rem;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Estilo para el iframe del widget - azul claro */
+        .weather-widget-container iframe {
+            filter: hue-rotate(200deg) saturate(1.2) brightness(1.05);
+            background: transparent;
         }
 
         .form-wrapper {
@@ -477,7 +489,6 @@
             gap: 0.3rem;
         }
 
-        /* MODAL POPUP STYLES */
         .modal {
             display: none;
             position: fixed;
@@ -704,9 +715,11 @@
         </div>
     </div>
 
-    <!-- WEATHER WIDGET -->
+    <!-- WEATHER WIDGET CON FONDO AZUL CLARO/MARINO -->
     <div class="weather-widget-container" id="weatherWidgetContainer">
-        <div id="weatherWidgetPlaceholder"></div>
+        <div id="weatherWidgetPlaceholder" style="width:100%;">
+            <div class="weather-loading">🌊 Cargando clima de Porto Belo...</div>
+        </div>
     </div>
 
     <div class="form-wrapper">
@@ -722,7 +735,6 @@
                 </div>
             </div>
 
-            <!-- CAMPO HORARIO CON SOLO 3 OPCIONES -->
             <div class="form-group">
                 <label id="labelHorario">
                     <span class="label-icon">⏰</span>
@@ -818,7 +830,6 @@
     </div>
 </div>
 
-<!-- MODAL DE CONFIRMAÇÃO -->
 <div id="confirmModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -839,27 +850,7 @@
 </div>
 
 <script>
-    // Eliminar caché del formulario - Forzar recarga de recursos
-    (function() {
-        // Limpiar sessionStorage y localStorage de datos del formulario (si los hay)
-        if (sessionStorage.getItem('formSubmitted')) {
-            sessionStorage.removeItem('formSubmitted');
-        }
-        if (localStorage.getItem('formData_backup')) {
-            localStorage.removeItem('formData_backup');
-        }
-        
-        // Forzar recarga de recursos con timestamp
-        const links = document.querySelectorAll('link[rel="stylesheet"]');
-        links.forEach(link => {
-            const href = link.getAttribute('href');
-            if (href && !href.includes('?')) {
-                link.setAttribute('href', href + '?v=' + Date.now());
-            }
-        });
-    })();
-
-    // Función para cargar/recargar el widget del clima
+    // Función mejorada para cargar el widget del clima con colores azules
     function loadWeatherWidget(lang) {
         const container = document.getElementById('weatherWidgetPlaceholder');
         if (!container) return;
@@ -874,23 +865,40 @@
         };
         
         const title = titles[lang] || titles['es'];
-        const theme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
         
-        // Agregar timestamp para evitar caché del widget
-        container.innerHTML = `<a class="weatherwidget-io" href="https://forecast7.com/${widgetLang}/n27d16n48d58/porto-belo/?t=${Date.now()}" data-label_1="${title.label1}" data-label_2="${title.label2}" data-theme="${theme}" style="pointer-events: none; cursor: default;">${title.label1} ${title.label2}</a>`;
+        const widgetLink = document.createElement('a');
+        widgetLink.className = 'weatherwidget-io';
+        widgetLink.href = `https://forecast7.com/${widgetLang}/n27d16n48d58/porto-belo/`;
+        widgetLink.setAttribute('data-label_1', title.label1);
+        widgetLink.setAttribute('data-label_2', title.label2);
+        widgetLink.setAttribute('data-theme', 'original');
+        widgetLink.style.pointerEvents = 'none';
+        widgetLink.style.cursor = 'default';
+        widgetLink.textContent = `${title.label1} ${title.label2}`;
         
-        const existingScript = document.getElementById('weatherwidget-io-js');
-        if (existingScript) existingScript.remove();
+        container.innerHTML = '';
+        container.appendChild(widgetLink);
+        
+        const scriptId = 'weatherwidget-io-js';
+        const existingScript = document.getElementById(scriptId);
+        if (existingScript) {
+            existingScript.remove();
+        }
         
         const script = document.createElement('script');
-        script.id = 'weatherwidget-io-js';
-        script.src = 'https://weatherwidget.io/js/widget.min.js?v=' + Date.now();
+        script.id = scriptId;
+        script.src = 'https://weatherwidget.io/js/widget.min.js';
+        script.onload = function() {
+            setTimeout(() => {
+                const widgetFrame = document.querySelector('.weather-widget-container iframe');
+                if (widgetFrame) {
+                    // Filtro para tonos azules claros (elimina marrones y rojizos)
+                    widgetFrame.style.filter = 'hue-rotate(190deg) saturate(1.3) brightness(1.08) contrast(1.05)';
+                    widgetFrame.style.background = 'transparent';
+                }
+            }, 1000);
+        };
         document.head.appendChild(script);
-        
-        setTimeout(() => {
-            const widgetFrame = document.querySelector('.weather-widget-container iframe');
-            if (widgetFrame) widgetFrame.style.filter = 'hue-rotate(140deg) saturate(1.1) brightness(0.95)';
-        }, 500);
     }
 
     const PRECIO_ADULTO = 85.00;
@@ -981,9 +989,7 @@
     const infoNoteDiv = document.getElementById('infoNoteText');
     const horarioNoteDiv = document.getElementById('horarioNote');
 
-    // Limpiar campos al cargar la página (eliminar caché de formulario)
     window.addEventListener('load', function() {
-        // Resetear completamente el formulario
         document.getElementById('dataForm').reset();
         adultosInput.value = '0';
         menoresInput.value = '0';
@@ -992,25 +998,7 @@
         nombreInput.value = '';
         empresaInput.value = '';
         calcularValorTotal();
-        
-        // Limpiar cualquier posible dato autocompletado del navegador
-        setTimeout(() => {
-            const allInputs = document.querySelectorAll('input, select');
-            allInputs.forEach(input => {
-                if (input.type !== 'hidden' && input.type !== 'submit') {
-                    if (input.tagName === 'SELECT') {
-                        input.selectedIndex = 0;
-                    } else if (input.type !== 'number' || (input.id !== 'adultos' && input.id !== 'menores')) {
-                        if (input.id !== 'adultos' && input.id !== 'menores') {
-                            input.value = '';
-                        }
-                    }
-                }
-            });
-            adultosInput.value = '0';
-            menoresInput.value = '0';
-            calcularValorTotal();
-        }, 10);
+        setTimeout(() => loadWeatherWidget(currentLang), 100);
     });
 
     const today = new Date().toISOString().split('T')[0];
@@ -1075,7 +1063,6 @@
             document.body.classList.remove('light-mode');
             updateThemeUI(true);
         }
-        setTimeout(() => loadWeatherWidget(currentLang), 100);
     }
     
     function updateThemeUI(isDark) {
@@ -1094,7 +1081,6 @@
         const isLight = document.body.classList.toggle('light-mode');
         localStorage.setItem('theme', isLight ? 'light' : 'dark');
         updateThemeUI(!isLight);
-        loadWeatherWidget(currentLang);
     }
     
     document.getElementById('themeToggleCard').addEventListener('click', toggleTheme);
@@ -1195,7 +1181,6 @@
         btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round"/></svg><span>${successText}</span>`;
         setTimeout(() => { btn.innerHTML = originalHTML; }, 2000);
         
-        // Reset completo del formulario después de enviar
         document.getElementById('dataForm').reset();
         adultosInput.value = '0';
         menoresInput.value = '0';
