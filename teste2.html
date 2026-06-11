@@ -643,7 +643,7 @@
       }
     }
 
-    /* ESTILOS DEL POPUP DE IDIOMAS SIMPLIFICADO - BOTONES MÁS PEQUEÑOS */
+    /* ESTILOS DEL POPUP DE IDIOMAS */
     .language-popup {
       display: flex;
       position: fixed;
@@ -737,7 +737,7 @@
 </head>
 <body>
 
-<!-- POPUP DE SELECCIÓN DE IDIOMA SIMPLIFICADO -->
+<!-- POPUP DE SELECCIÓN DE IDIOMA -->
 <div id="languagePopup" class="language-popup">
   <div class="popup-content">
     <div class="popup-logo">
@@ -823,7 +823,7 @@
   </div>
 </section>
 
-<!-- SECCIÓN GALERÍA - VIDEO YOUTUBE CON LOOP + GALERÍA LIGHTBOX 12 FOTOS -->
+<!-- SECCIÓN GALERÍA -->
 <section id="galeria" class="section">
   <div class="container">
     <h2 class="section-title" data-key="gallery_title">Viva essa aventura</h2>
@@ -992,154 +992,6 @@
 <a href="https://wa.me/5547999991234?text=Olá! Gostaria de informações sobre o passeio de barco" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
 <script>
-  // ========== POPUP DE IDIOMAS ==========
-  const popup = document.getElementById('languagePopup');
-  const popupBtns = document.querySelectorAll('.popup-lang-btn');
-  
-  // Verificar si ya se seleccionó un idioma antes
-  const savedLanguage = localStorage.getItem('preferred_language');
-  
-  if (savedLanguage && translations[savedLanguage]) {
-    popup.classList.add('hidden');
-  }
-  
-  // Manejar selección de idioma en el popup
-  popupBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const lang = btn.getAttribute('data-lang');
-      changeLanguage(lang);
-      popup.classList.add('hidden');
-    });
-  });
-
-  // ========== FUNCIÓN PARA DESPLAZAMIENTO CON OFFSET ==========
-  function scrollToSectionWithOffset(elementId) {
-    const element = document.getElementById(elementId);
-    if (element) {
-      const header = document.querySelector('.header');
-      const headerHeight = header ? header.offsetHeight : 80;
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = elementPosition - headerHeight - 10;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
-  }
-
-  // ========== LIGHTBOX GALERÍA ==========
-  const galleryItems = document.querySelectorAll('.gallery-item');
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-  const lightboxClose = document.querySelector('.lightbox-close');
-  const lightboxPrev = document.querySelector('.lightbox-prev');
-  const lightboxNext = document.querySelector('.lightbox-next');
-  const lightboxCounter = document.getElementById('lightbox-counter');
-  
-  let currentImageIndex = 0;
-  const images = [];
-  
-  galleryItems.forEach((item, index) => {
-    const img = item.querySelector('img');
-    images.push(img.src);
-    item.addEventListener('click', () => {
-      currentImageIndex = index;
-      updateLightboxImage();
-      lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
-  });
-  
-  function updateLightboxImage() {
-    lightboxImg.src = images[currentImageIndex];
-    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
-  }
-  
-  function closeLightbox() {
-    lightbox.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-  
-  function nextImage() {
-    currentImageIndex = (currentImageIndex + 1) % images.length;
-    updateLightboxImage();
-  }
-  
-  function prevImage() {
-    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-    updateLightboxImage();
-  }
-  
-  lightboxClose.addEventListener('click', closeLightbox);
-  lightboxNext.addEventListener('click', nextImage);
-  lightboxPrev.addEventListener('click', prevImage);
-  
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) closeLightbox();
-  });
-  
-  document.addEventListener('keydown', (e) => {
-    if (!lightbox.classList.contains('active')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowRight') nextImage();
-    if (e.key === 'ArrowLeft') prevImage();
-  });
-
-  // ========== FUNCIONES DEL MENÚ ==========
-  function closeMenuOnMobile() {
-    if (window.innerWidth <= 880) {
-      const navLinksElem = document.getElementById('navLinks');
-      if (navLinksElem && navLinksElem.classList.contains('active')) {
-        navLinksElem.classList.remove('active');
-      }
-    }
-  }
-
-  const menuToggle = document.getElementById('menuToggle');
-  const navLinksElem = document.getElementById('navLinks');
-  const navLinkItems = document.querySelectorAll('.nav-link');
-  
-  if (menuToggle) {
-    menuToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      navLinksElem.classList.toggle('active');
-    });
-  }
-  
-  navLinkItems.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const href = link.getAttribute('href');
-      
-      if (href && href !== '#') {
-        const sectionId = href.substring(1);
-        scrollToSectionWithOffset(sectionId);
-      }
-      
-      closeMenuOnMobile();
-    });
-  });
-  
-  window.addEventListener('load', () => {
-    window.scrollTo(0, 0);
-  });
-  
-  document.addEventListener('click', (e) => {
-    if (window.innerWidth <= 880) {
-      if (navLinksElem && menuToggle && !navLinksElem.contains(e.target) && !menuToggle.contains(e.target)) {
-        navLinksElem.classList.remove('active');
-      }
-    }
-  });
-
-  const langButtons = document.querySelectorAll('.lang-btn-header');
-  langButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      setTimeout(() => closeMenuOnMobile(), 100);
-    });
-  });
-
   // ========== TRADUCCIONES ==========
   const translations = {
     es: {
@@ -1288,6 +1140,7 @@
   let locationPromise = null;
   let userLocationFormatted = "Detectando...";
 
+  // ========== FUNCIONES ==========
   function getLangCode(lang) {
     const codes = { 'es': 'ESP', 'pt': 'POR', 'en': 'ENG' };
     return codes[lang] || 'ESP';
@@ -1393,15 +1246,24 @@
     return total;
   }
 
+  function scrollToSectionWithOffset(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+      const header = document.querySelector('.header');
+      const headerHeight = header ? header.offsetHeight : 80;
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerHeight - 10;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
+  }
+
   function changeLanguage(lang) {
     currentLang = lang;
     const t = translations[lang];
     
     document.querySelectorAll('[data-key]').forEach(el => {
       const key = el.getAttribute('data-key');
-      if (t[key]) {
-        el.textContent = t[key];
-      }
+      if (t[key]) el.textContent = t[key];
     });
     
     document.getElementById('textFecha').textContent = t.fecha;
@@ -1507,62 +1369,116 @@
     document.getElementById('horario').value = '';
   }
 
-  // Inicialización
+  // ========== INICIALIZACIÓN Y EVENTOS ==========
   locationPromise = getUserLocation();
   
-  const horarioCards = document.querySelectorAll('.horario-card');
-  const horarioHidden = document.getElementById('horario');
+  // LIGHTBOX
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxClose = document.querySelector('.lightbox-close');
+  const lightboxPrev = document.querySelector('.lightbox-prev');
+  const lightboxNext = document.querySelector('.lightbox-next');
+  const lightboxCounter = document.getElementById('lightbox-counter');
+  let currentImageIndex = 0;
+  const images = [];
   
-  horarioCards.forEach(card => {
-    card.addEventListener('click', function() {
-      horarioCards.forEach(c => c.classList.remove('selected'));
-      this.classList.add('selected');
-      if (horarioHidden) horarioHidden.value = this.getAttribute('data-horario');
+  galleryItems.forEach((item, index) => {
+    const img = item.querySelector('img');
+    images.push(img.src);
+    item.addEventListener('click', () => {
+      currentImageIndex = index;
+      lightboxImg.src = images[currentImageIndex];
+      lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
     });
   });
   
-  document.getElementById('adultos').addEventListener('input', calcularValorTotal);
-  document.getElementById('menores').addEventListener('input', calcularValorTotal);
+  lightboxClose.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+  lightboxNext.addEventListener('click', () => {
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+    lightboxImg.src = images[currentImageIndex];
+    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+  });
+  lightboxPrev.addEventListener('click', () => {
+    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+    lightboxImg.src = images[currentImageIndex];
+    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+  });
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.remove('active'); });
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') lightbox.classList.remove('active');
+    if (e.key === 'ArrowRight') lightboxNext.click();
+    if (e.key === 'ArrowLeft') lightboxPrev.click();
+  });
+
+  // MENÚ MÓVIL
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinksElem = document.getElementById('navLinks');
+  const navLinkItems = document.querySelectorAll('.nav-link');
   
-  const todayDate = new Date().toISOString().split('T')[0];
-  document.getElementById('fecha').setAttribute('min', todayDate);
+  function closeMenuOnMobile() {
+    if (window.innerWidth <= 880 && navLinksElem.classList.contains('active')) {
+      navLinksElem.classList.remove('active');
+    }
+  }
   
-  document.getElementById('dataForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const fecha = document.getElementById('fecha').value;
-    const horario = document.getElementById('horario').value;
-    const nombre = sanitizeText(document.getElementById('nombre').value);
-    const empresa = sanitizeText(document.getElementById('empresa').value);
-    const adultos = document.getElementById('adultos').value;
-    const menores = document.getElementById('menores').value;
-    
-    if (!fecha || !isValidDate(fecha)) { alert('❌ Seleccione una fecha válida (no puede ser anterior a hoy)'); return; }
-    if (!horario) { alert('❌ Seleccione un horario'); return; }
-    if (!nombre || nombre.length < 2) { alert('❌ Complete el nombre correctamente (mínimo 2 caracteres)'); return; }
-    if (!isValidName(nombre)) { alert('❌ El nombre solo puede contener letras y espacios'); return; }
-    if (!isValidNumber(adultos, 0, 99)) { alert('❌ Ingrese un número válido de adultos (0-99)'); return; }
-    if (!isValidNumber(menores, 0, 99)) { alert('❌ Ingrese un número válido de menores (0-99)'); return; }
-    
-    showModalWithData({ fecha, horario, nombre, empresa, adultos, menores });
+  if (menuToggle) {
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navLinksElem.classList.toggle('active');
+    });
+  }
+  
+  navLinkItems.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const href = link.getAttribute('href');
+      if (href && href !== '#') scrollToSectionWithOffset(href.substring(1));
+      closeMenuOnMobile();
+    });
   });
   
+  document.addEventListener('click', (e) => {
+    if (window.innerWidth <= 880 && navLinksElem && menuToggle && !navLinksElem.contains(e.target) && !menuToggle.contains(e.target)) {
+      navLinksElem.classList.remove('active');
+    }
+  });
+
+  // BOTONES DE IDIOMA DEL HEADER
   document.querySelectorAll('.lang-btn-header').forEach(btn => {
+    btn.addEventListener('click', () => changeLanguage(btn.getAttribute('data-lang')));
+  });
+
+  // ========== POPUP DE IDIOMAS ==========
+  const popup = document.getElementById('languagePopup');
+  const savedLanguage = localStorage.getItem('preferred_language');
+  
+  // Manejar selección de idioma en el popup
+  document.querySelectorAll('.popup-lang-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const lang = btn.getAttribute('data-lang');
       changeLanguage(lang);
+      popup.classList.add('hidden');
     });
   });
   
-  // Si no hay idioma guardado, mostrar popup y establecer idioma por defecto
+  // Inicializar idioma
   if (savedLanguage && translations[savedLanguage]) {
     changeLanguage(savedLanguage);
+    popup.classList.add('hidden');
   } else {
     changeLanguage('pt');
-    // El popup ya está visible por defecto (no tiene clase hidden)
   }
   
   calcularValorTotal();
   setTimeout(() => loadWeatherWidget(currentLang), 100);
+  window.addEventListener('load', () => window.scrollTo(0, 0));
 </script>
 </body>
 </html>
