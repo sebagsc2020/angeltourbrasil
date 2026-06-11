@@ -467,7 +467,7 @@
     }
     .modal-body {
       padding: 1.5rem;
-      max-height: 50vh;
+      max-height: 45vh;
       overflow-y: auto;
       line-height: 1.6;
       color: #334155;
@@ -479,13 +479,14 @@
       padding: 1rem 1.5rem;
       border-top: 1px solid #E2E8F0;
       display: flex;
-      gap: 1rem;
+      gap: 0.8rem;
       justify-content: flex-end;
+      flex-wrap: wrap;
     }
     .btn-share-wa {
       background: #25D366;
       border: none;
-      padding: 0.75rem 1.5rem;
+      padding: 0.7rem 1.2rem;
       border-radius: 50px;
       color: white;
       font-weight: 600;
@@ -494,20 +495,43 @@
       align-items: center;
       gap: 0.5rem;
       transition: all 0.3s;
+      font-size: 0.85rem;
     }
     .btn-share-wa:hover {
       transform: translateY(-2px);
       filter: brightness(1.05);
     }
+    .btn-read-aloud {
+      background: #3B82F6;
+      border: none;
+      padding: 0.7rem 1.2rem;
+      border-radius: 50px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s;
+      font-size: 0.85rem;
+    }
+    .btn-read-aloud:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+    .btn-read-aloud.stop {
+      background: #EF4444;
+    }
     .btn-modal-close {
       background: #F1F5F9;
       border: none;
-      padding: 0.75rem 1.5rem;
+      padding: 0.7rem 1.2rem;
       border-radius: 50px;
       color: #475569;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s;
+      font-size: 0.85rem;
     }
     .btn-modal-close:hover {
       background: #E2E8F0;
@@ -543,6 +567,13 @@
       .lang-btn-header.active img {
         width: 24px;
         height: 24px;
+      }
+      .modal-footer {
+        flex-direction: column;
+      }
+      .btn-share-wa, .btn-read-aloud, .btn-modal-close {
+        width: 100%;
+        justify-content: center;
       }
     }
     
@@ -893,28 +924,28 @@
   </div>
 </div>
 
-<!-- SECCIÓN ITINERARIO (El Paseo) CON POPUPS INTERACTIVOS -->
+<!-- SECCIÓN ITINERARIO (El Paseo) CON POPUPS INTERACTIVOS - TEXTOS EN ESPAÑOL -->
 <section id="itinerario" class="section section-bg-light">
   <div class="container">
     <h2 class="section-title" data-key="itinerary_title">Roteiro da Experiência</h2>
     <p class="section-sub" data-key="itinerary_sub">Embarque em Porto dos Piratas e viva momentos inesquecíveis</p>
     <div class="timeline" id="timelineContainer">
-      <div class="timeline-step" data-step="1" data-title="Embarque" data-desc="Trapiche em Porto dos Piratas / Porto Belo." data-longtext="O embarque é realizado no pitoresco Trapiche de Porto dos Piratas, em Porto Belo - SC. Este local é conhecido por suas águas calmas e pela paisagem deslumbrante que combina o mar azul com a vegetação nativa. Os viajantes são recebidos por nossa equipe amigável e profissional, que garante um início de experiência tranquilo e organizado. Prepare-se para uma jornada inesquecível pela Costa Esmeralda, um dos destinos mais bonitos do litoral catarinense.">
+      <div class="timeline-step" data-step="1" data-title="Embarque" data-desc="Trapiche en Porto dos Piratas / Porto Belo." data-longtext="El embarque se realiza en el pintoresco Trapiche de Porto dos Piratas, en Porto Belo - SC. Este lugar es conocido por sus aguas tranquilas y su impresionante paisaje que combina el mar azul con la vegetación nativa. Los viajeros son recibidos por nuestro equipo amigable y profesional, que garantiza un comienzo de experiencia tranquilo y organizado. Prepárate para un viaje inolvidable por la Costa Esmeralda, uno de los destinos más bellos del litoral catarinense.">
         <div class="step-number">1</div>
         <h3 data-key="step1_title">Embarque</h3>
         <p data-key="step1_desc">Trapiche em Porto dos Piratas / Porto Belo.</p>
       </div>
-      <div class="timeline-step" data-step="2" data-title="Navegação" data-desc="1h30 pela Costa Esmeralda, paisagens de cinema." data-longtext="Durante 1 hora e 30 minutos, navegamos pela deslumbrante Costa Esmeralda. Este trecho é conhecido por suas águas cristalinas, ilhas paradisíacas e formações rochosas impressionantes. Você verá praias isoladas, costões cobertos pela Mata Atlântica e uma variedade de aves marinhas. A bordo, nossa equipe compartilha curiosidades sobre a região e garante sua segurança e conforto. Leve sua câmera, pois cada curva revela uma paisagem digna de cartão-postal!">
+      <div class="timeline-step" data-step="2" data-title="Navegación" data-desc="1h30 por la Costa Esmeralda, paisajes de cine." data-longtext="Durante 1 hora y 30 minutos, navegamos por la deslumbrante Costa Esmeralda. Este tramo es conocido por sus aguas cristalinas, islas paradisíacas y formaciones rocosas impresionantes. Verás playas aisladas, acantilados cubiertos por la Mata Atlántica y una variedad de aves marinas. A bordo, nuestro equipo comparte curiosidades sobre la región y garantiza su seguridad y comodidad. ¡Lleva tu cámara, porque cada curva revela un paisaje digno de postal!">
         <div class="step-number">2</div>
         <h3 data-key="step2_title">Navegação</h3>
         <p data-key="step2_desc">1h30 pela Costa Esmeralda, paisagens de cinema.</p>
       </div>
-      <div class="timeline-step" data-step="3" data-title="Parada na Baía" data-desc="Caixa D'Aço: natação, tobogã e mergulho." data-longtext="Chegamos à deslumbrante Baía de Caixa D'Aço, um verdadeiro paraíso escondido. Aqui você poderá mergulhar em águas mornas e cristalinas, perfeitas para nadar e observar pequenos peixes. Para os aventureiros, nosso tobogã inflável proporciona diversão garantida para adultos e crianças. A segurança é nossa prioridade: coletes salva-vidas são fornecidos e guarda-vidas ficam atentos a todos os banhistas. Aproveite também para relaxar nas áreas rasas e sentir a energia revigorante do mar.">
+      <div class="timeline-step" data-step="3" data-title="Parada en la Bahía" data-desc="Caixa D'Aço: natación, tobogán y buceo." data-longtext="Llegamos a la deslumbrante Bahía de Caixa D'Aço, un verdadero paraíso escondido. Aquí podrás sumergirte en aguas cálidas y cristalinas, perfectas para nadar y observar pequeños peces. Para los aventureros, nuestro tobogán inflable proporciona diversión garantizada para adultos y niños. La seguridad es nuestra prioridad: se proporcionan chalecos salvavidas y los salvavidas están atentos a todos los bañistas. Aprovecha también para relajarte en las zonas poco profundas y sentir la energía rejuvenecedora del mar.">
         <div class="step-number">3</div>
         <h3 data-key="step3_title">Parada na Baía</h3>
         <p data-key="step3_desc">Caixa D'Aço: natação, tobogã e mergulho.</p>
       </div>
-      <div class="timeline-step" data-step="4" data-title="Festa a bordo" data-desc="Frutas, batida tropical e muita música." data-longtext="De volta ao barco, a celebração continua! Servimos um delicioso buffet de frutas frescas e nossa famosa batida de coco, preparada na hora. A música animada cria o clima perfeito para confraternizar com novos amigos enquanto navegamos de volta. É o momento ideal para compartilhar fotos, dançar e reviver os melhores momentos do passeio. Nossa equipe garante que você chegue ao ponto de embarque com uma sensação de missão cumprida e muitas lembranças positivas.">
+      <div class="timeline-step" data-step="4" data-title="Fiesta a bordo" data-desc="Frutas, batida tropical y mucha música." data-longtext="¡De vuelta al barco, la celebración continúa! Servimos un delicioso buffet de frutas frescas y nuestra famosa batida de coco, preparada en el momento. La música animada crea el ambiente perfecto para confraternizar con nuevos amigos mientras navegamos de regreso. Es el momento ideal para compartir fotos, bailar y revivir los mejores momentos del paseo. Nuestro equipo garantiza que llegues al punto de embarque con una sensación de misión cumplida y muchos recuerdos positivos.">
         <div class="step-number">4</div>
         <h3 data-key="step4_title">Festa a bordo</h3>
         <p data-key="step4_desc">Frutas, batida tropical e muita música.</p>
@@ -923,7 +954,7 @@
   </div>
 </section>
 
-<!-- MODAL PARA POPUP DE INFORMACIÓN -->
+<!-- MODAL PARA POPUP DE INFORMACIÓN CON LECTOR DE VOZ -->
 <div id="infoModal" class="info-modal">
   <div class="modal-card">
     <div class="modal-header">
@@ -934,9 +965,14 @@
       <p>Contenido del popup...</p>
     </div>
     <div class="modal-footer">
-      <button class="btn-modal-close" id="closeModalFooterBtn">Cerrar</button>
+      <button class="btn-read-aloud" id="readAloudBtn">
+        <i class="fas fa-volume-up"></i> Leer en voz alta
+      </button>
       <button class="btn-share-wa" id="shareWhatsappBtn">
-        <i class="fab fa-whatsapp"></i> Compartir por WhatsApp
+        <i class="fab fa-whatsapp"></i> Compartir
+      </button>
+      <button class="btn-modal-close" id="closeModalFooterBtn">
+        Cerrar
       </button>
     </div>
   </div>
@@ -1115,15 +1151,64 @@
 <a href="https://wa.me/5547999991234?text=Olá! Gostaria de informações sobre o passeio de barco" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
 <script>
-  // ========== MODAL POPUP PARA LAS SECCIONES DEL ITINERARIO ==========
+  // ========== MODAL POPUP CON LECTOR DE VOZ (TEXT-TO-SPEECH) ==========
   const modal = document.getElementById('infoModal');
   const modalTitle = document.getElementById('modalTitle');
   const modalBody = document.getElementById('modalBody');
   const closeModalBtn = document.getElementById('closeModalBtn');
   const closeModalFooterBtn = document.getElementById('closeModalFooterBtn');
   const shareWhatsappBtn = document.getElementById('shareWhatsappBtn');
+  const readAloudBtn = document.getElementById('readAloudBtn');
   
   let currentStepData = null;
+  let speechSynthesis = window.speechSynthesis;
+  let currentUtterance = null;
+  let isSpeaking = false;
+  
+  function stopReading() {
+    if (speechSynthesis) {
+      speechSynthesis.cancel();
+      isSpeaking = false;
+      readAloudBtn.innerHTML = '<i class="fas fa-volume-up"></i> Leer en voz alta';
+      readAloudBtn.classList.remove('stop');
+    }
+  }
+  
+  function readTextAloud(text) {
+    if (!speechSynthesis) {
+      alert('Tu navegador no soporta la síntesis de voz');
+      return;
+    }
+    
+    stopReading();
+    
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = currentLang === 'es' ? 'es-ES' : (currentLang === 'pt' ? 'pt-BR' : 'en-US');
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+    
+    utterance.onstart = () => {
+      isSpeaking = true;
+      readAloudBtn.innerHTML = '<i class="fas fa-stop"></i> Detener';
+      readAloudBtn.classList.add('stop');
+    };
+    
+    utterance.onend = () => {
+      isSpeaking = false;
+      readAloudBtn.innerHTML = '<i class="fas fa-volume-up"></i> Leer en voz alta';
+      readAloudBtn.classList.remove('stop');
+    };
+    
+    utterance.onerror = () => {
+      isSpeaking = false;
+      readAloudBtn.innerHTML = '<i class="fas fa-volume-up"></i> Leer en voz alta';
+      readAloudBtn.classList.remove('stop');
+    };
+    
+    currentUtterance = utterance;
+    speechSynthesis.speak(utterance);
+  }
   
   function openModal(stepData) {
     currentStepData = stepData;
@@ -1131,9 +1216,11 @@
     modalBody.innerHTML = `<p><strong>${stepData.desc}</strong></p><p>${stepData.longtext}</p>`;
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    stopReading();
   }
   
   function closeModal() {
+    stopReading();
     modal.classList.remove('active');
     document.body.style.overflow = '';
     currentStepData = null;
@@ -1150,6 +1237,17 @@
     if (currentStepData) {
       const message = `🌟 *ANGEL TOUR BRASIL* 🌟\n\n📌 *${currentStepData.title}*\n📍 ${currentStepData.desc}\n\n📖 ${currentStepData.longtext}\n\n✅ ¡Vive esta experiencia única en la Costa Esmeralda!\n🔗 Más información: https://www.angeltourbrasil.com.br`;
       window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+    }
+  });
+  
+  readAloudBtn.addEventListener('click', () => {
+    if (currentStepData) {
+      if (isSpeaking) {
+        stopReading();
+      } else {
+        const textToRead = `${currentStepData.title}. ${currentStepData.desc}. ${currentStepData.longtext}`;
+        readTextAloud(textToRead);
+      }
     }
   });
   
