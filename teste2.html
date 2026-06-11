@@ -600,7 +600,28 @@
       gap: 32px;
     }
     .footer-col i { margin-right: 8px; color: var(--turquoise); }
-    .social i { font-size: 1.5rem; margin-right: 16px; color: white; }
+    .social {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .social a {
+      color: white;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .social a:hover {
+      transform: translateY(-3px);
+    }
+    .social a i {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+    .social a:hover i.fa-instagram { color: #E4405F; }
+    .social a:hover i.fa-facebook { color: #1877F2; }
+    .social a:hover i.fa-youtube { color: #FF0000; }
     .map-link {
       display: inline-flex;
       align-items: center;
@@ -1140,7 +1161,15 @@
       </div>
       <div class="footer-col social">
         <h4 data-key="footer_follow">Siga a aventura</h4>
-        <i class="fab fa-instagram"></i> <i class="fab fa-facebook"></i> <i class="fab fa-youtube"></i>
+        <a href="https://www.instagram.com/angeltourbrasil/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/angeltourbrasil/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a href="https://www.youtube.com/@angeltourbrasil" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+          <i class="fab fa-youtube"></i>
+        </a>
       </div>
     </div>
     <hr style="margin: 32px 0 20px; border-color:#2A4B64;">
@@ -1212,6 +1241,8 @@
   
   function openModal(stepData) {
     currentStepData = stepData;
+    modalTitle.textContent = stepData.title;
+    modalBody.innerHTML = `<p><strong>${stepData.desc}</strong></p><p>${stepData.longtext}</p>`;
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
     stopReading();
@@ -1273,8 +1304,6 @@
         desc: step.getAttribute('data-desc'),
         longtext: step.getAttribute('data-longtext')
       };
-      modalTitle.textContent = stepData.title;
-      modalBody.innerHTML = `<p><strong>${stepData.desc}</strong></p><p>${stepData.longtext}</p>`;
       openModal(stepData);
     });
   });
