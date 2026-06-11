@@ -219,7 +219,7 @@
         display: block;
       }
       .whatsapp-float {
-        bottom: 80px;
+        bottom: 90px;
       }
     }
     
@@ -1649,7 +1649,7 @@
     if (!container) return;
     const widgetLangMap = { 'es': 'es', 'pt': 'pt', 'en': 'en' };
     const widgetLang = widgetLangMap[lang] || 'es';
-    const titles = { 'es': { label1: 'PORTO BELO', label2: 'Previsión 7 días' }, 'pt': { label1: 'PORTO BELO', label2: 'Previsão 7 dias' }, 'en': { label1: 'PORTO BELO', label2: '7-Day Forecast' } };
+    const titles = { 'es': { label1: 'PORTO BELO', label2: 'Previsión 3 días' }, 'pt': { label1: 'PORTO BELO', label2: 'Previsão 3 dias' }, 'en': { label1: 'PORTO BELO', label2: '3-Day Forecast' } };
     const title = titles[lang] || titles['es'];
     const widgetLink = document.createElement('a');
     widgetLink.className = 'weatherwidget-io';
@@ -1658,7 +1658,7 @@
     widgetLink.setAttribute('data-label_2', title.label2);
     widgetLink.setAttribute('data-theme', 'original');
     widgetLink.setAttribute('data-base', 'www');
-    widgetLink.setAttribute('data-days', '7');
+    widgetLink.setAttribute('data-days', '3');
     widgetLink.style.pointerEvents = 'none';
     widgetLink.style.cursor = 'default';
     widgetLink.style.width = '100%';
