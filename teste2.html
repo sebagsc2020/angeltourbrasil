@@ -56,7 +56,6 @@
     }
     .logo span { color: var(--turquoise); }
     
-    /* Contenedor de botones de idioma y menú en la misma línea */
     .header-right {
       display: flex;
       align-items: center;
@@ -439,6 +438,26 @@
     }
     .footer-col i { margin-right: 8px; color: var(--turquoise); }
     .social i { font-size: 1.5rem; margin-right: 16px; color: white; }
+    .map-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.1);
+      padding: 8px 16px;
+      border-radius: 40px;
+      margin-top: 12px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: #DDD;
+    }
+    .map-link:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+    .map-link i {
+      color: #00B4D8;
+      font-size: 1.1rem;
+    }
     
     @media (max-width: 880px) {
       .navbar {
@@ -710,14 +729,13 @@
   </div>
 </header>
 
-<!-- El resto del contenido (hero, secciones, galería, formulario, footer) se mantiene igual -->
 <section id="inicio" class="hero">
   <div class="hero-content">
     <h1 data-key="hero_title">O passeio mais completo da Costa Esmeralda</h1>
     <p data-key="hero_sub">Navegue por paisagens paradisíacas, nade na Bahía de Caixa D'Aço, aproveite tobogã, frutas tropicais e muita animação a bordo.</p>
     <div class="btn-group">
       <a href="#itinerario" class="btn-primary" data-key="btn_route">Ver Roteiro</a>
-      <a href="https://wa.me/5547999991234?text=Olá! Gostaria de informações sobre o passeio" class="btn-outline" target="_blank" data-key="btn_guarantee">Garantir Vaga</a>
+      <a href="#reserva" class="btn-outline garantia-link" data-key="btn_guarantee">Garantir Vaga</a>
     </div>
   </div>
 </section>
@@ -897,6 +915,10 @@
         <p><i class="fas fa-anchor"></i> <span data-key="footer_address">Trapiche Porto dos Piratas, Porto Belo - SC</span></p>
         <p><i class="fab fa-whatsapp"></i> (47) 99999-1234</p>
         <p><i class="far fa-envelope"></i> contato@angeltourbrasil.com.br</p>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=Trapiche+Porto+dos+Piratas+Porto+Belo+SC+Brasil" target="_blank" class="map-link" rel="noopener noreferrer">
+          <i class="fas fa-map-marker-alt"></i>
+          <span data-key="map_text">Abrir no Google Maps</span>
+        </a>
       </div>
       <div class="footer-col">
         <h4 data-key="footer_nav">Navegação</h4>
@@ -917,10 +939,7 @@
 <a href="https://wa.me/5547999991234?text=Olá! Gostaria de informações sobre o passeio de barco" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
 <script>
-  // Aquí va todo el JavaScript igual que antes (traducciones, lightbox, menú, formulario, etc.)
-  // Manteniendo la funcionalidad completa
-  
-  // ========== TRADUCCIONES (mismo código que antes) ==========
+  // ========== TRADUCCIONES ==========
   const translations = {
     es: {
       nav_home: "Inicio", nav_tour: "El Paseo", nav_gallery: "Galería", nav_book: "Reservar",
@@ -945,6 +964,7 @@
       footer_address: "Trapiche Porto dos Piratas, Porto Belo - SC",
       footer_nav: "Navegación", footer_home: "Inicio", footer_route: "Itinerario", footer_gallery: "Galería", footer_follow: "Sigue la aventura",
       footer_copyright: "© 2026 Angel Tour Brasil – El paseo más completo de la Costa Esmeralda.",
+      map_text: "Abrir en Google Maps",
       fecha: "FECHA DEL PASEO",
       horario: "PREFERENCIA DE HORARIO",
       horario1: "Mañana",
@@ -991,6 +1011,7 @@
       footer_address: "Trapiche Porto dos Piratas, Porto Belo - SC",
       footer_nav: "Navegação", footer_home: "Início", footer_route: "Itinerário", footer_gallery: "Galeria", footer_follow: "Siga a aventura",
       footer_copyright: "© 2026 Angel Tour Brasil – O passeio mais completo da Costa Esmeralda.",
+      map_text: "Abrir no Google Maps",
       fecha: "DATA DO PASSEIO",
       horario: "PREFERÊNCIA DE HORÁRIO",
       horario1: "Manhã",
@@ -1034,9 +1055,10 @@
       test1_text: "Fantastic tour! The team is very attentive, the scenery is a show apart. My kids loved the waterslide.",
       test2_text: "Safety and fun. Delicious coconut drink and the stop at Caixa D'Aço is an unforgettable swim.",
       test3_text: "Best boat tour in Porto Belo! Incredible professionals, impeccable structure. I'll definitely come back.",
-      footer_address: "Pier Porto dos Piratas, Porto Belo - SC",
+      footer_address: "Trapiche Porto dos Piratas, Porto Belo - SC",
       footer_nav: "Navigation", footer_home: "Home", footer_route: "Itinerary", footer_gallery: "Gallery", footer_follow: "Follow the adventure",
       footer_copyright: "© 2026 Angel Tour Brasil – The most complete tour of the Emerald Coast.",
+      map_text: "Open in Google Maps",
       fecha: "TOUR DATE",
       horario: "TIME PREFERENCE",
       horario1: "Morning",
@@ -1298,6 +1320,15 @@
 
   // ========== INICIALIZACIÓN Y EVENTOS ==========
   locationPromise = getUserLocation();
+  
+  // Función específica para el botón "Garantir Vaga" / "Asegurar Plaza"
+  const garantiaBtn = document.querySelector('.garantia-link');
+  if (garantiaBtn) {
+    garantiaBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      scrollToSectionWithOffset('reserva');
+    });
+  }
   
   // LIGHTBOX CON SWIPE
   const galleryItems = document.querySelectorAll('.gallery-item');
