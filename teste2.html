@@ -20,6 +20,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #ffffff;
       color: #1A2C3E;
+      overflow-x: hidden;
     }
     h1, h2, h3, .logo, .nav-links a, .btn, .section-title {
       font-family: 'Poppins', sans-serif;
@@ -212,14 +213,6 @@
     @media (min-width: 881px) {
       .sticky-booking-bar {
         display: none;
-      }
-    }
-    @media (max-width: 880px) {
-      .sticky-booking-bar {
-        display: block;
-      }
-      .whatsapp-float {
-        bottom: 90px;
       }
     }
     
@@ -759,6 +752,9 @@
         width: 24px;
         height: 24px;
       }
+      .whatsapp-float {
+        bottom: 100px !important;
+      }
     }
     .whatsapp-float {
       position: fixed;
@@ -998,7 +994,7 @@
   <div class="sticky-booking-content">
     <div class="sticky-booking-info">
       <span data-key="sticky_subtitle">Reserva tu lugar</span>
-      <strong data-key="sticky_price">⭐ Precios especiales! ⭐</strong>
+      <strong data-key="sticky_price">⭐ ¡Precios especiales! ⭐</strong>
     </div>
     <button id="stickyBookBtn" class="btn-sticky-book">
       <i class="fas fa-calendar-check"></i> <span data-key="sticky_btn">Reservar Ahora</span>
@@ -1249,199 +1245,7 @@
 <a href="https://wa.me/5547999991234?text=Olá! Gostaria de informações sobre o passeio de barco" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
 <script>
-  // ========== STICKY BOOKING BAR (MÓVIL) ==========
-  const stickyBar = document.getElementById('stickyBookingBar');
-  const heroSection = document.getElementById('inicio');
-  const stickyBookBtn = document.getElementById('stickyBookBtn');
-  
-  let lastScrollY = 0;
-  
-  function checkStickyBar() {
-    if (window.innerWidth <= 880) {
-      const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
-      const scrollY = window.scrollY;
-      
-      if (scrollY > heroBottom - 100) {
-        stickyBar.classList.add('show');
-      } else {
-        stickyBar.classList.remove('show');
-      }
-      lastScrollY = scrollY;
-    } else {
-      stickyBar.classList.remove('show');
-    }
-  }
-  
-  window.addEventListener('scroll', checkStickyBar);
-  window.addEventListener('resize', checkStickyBar);
-  checkStickyBar();
-  
-  if (stickyBookBtn) {
-    stickyBookBtn.addEventListener('click', () => {
-      const reservaSection = document.getElementById('reserva');
-      if (reservaSection) {
-        reservaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  }
-
-  // ========== NUEVA GALERÍA INTERACTIVA ==========
-  const idsImagenes = [1057, 1043, 1011, 1044, 1050, 1069, 1025, 1035, 1074, 1084, 110, 112];
-  const imagenesGrandes = idsImagenes.map(id => `https://picsum.photos/1200/900?image=${id}`);
-  const imagenesChicas = idsImagenes.map(id => `https://picsum.photos/400/300?image=${id}`);
-
-  const grid = document.getElementById('gridGaleria');
-  let indiceActual = 0;
-  let touchStartX = 0;
-  let touchEndX = 0;
-  
-  imagenesChicas.forEach((urlMiniatura, indice) => {
-    const item = document.createElement('div');
-    item.className = 'gallery-item';
-    item.setAttribute('onclick', `abrirLightbox(${indice})`);
-    
-    const img = document.createElement('img');
-    img.src = urlMiniatura;
-    img.alt = `Foto ${indice + 1}`;
-    img.loading = 'lazy';
-    
-    item.appendChild(img);
-    grid.appendChild(item);
-  });
-
-  function abrirLightbox(indice) {
-    indiceActual = indice;
-    actualizarLightbox();
-    document.getElementById('lightboxModern').classList.add('active');
-    document.body.style.overflow = 'hidden';
-    
-    const hint = document.getElementById('swipeHint');
-    hint.classList.remove('animar');
-    void hint.offsetWidth;
-    hint.classList.add('animar');
-  }
-
-  function actualizarLightbox() {
-    const contenedorImg = document.getElementById('lightboxImg');
-    contenedorImg.src = imagenesGrandes[indiceActual];
-    document.getElementById('fotoContador').innerText = `${indiceActual + 1} / ${imagenesGrandes.length}`;
-  }
-
-  function cambiarImagen(direccion) {
-    indiceActual += direccion;
-    if (indiceActual < 0) indiceActual = imagenesGrandes.length - 1;
-    else if (indiceActual >= imagenesGrandes.length) indiceActual = 0;
-    actualizarLightbox();
-    document.getElementById('swipeHint').classList.remove('animar');
-  }
-
-  function cerrarLightbox() {
-    document.getElementById('lightboxModern').classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  const lightboxModern = document.getElementById('lightboxModern');
-  lightboxModern.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
-  lightboxModern.addEventListener('touchend', e => {
-    touchEndX = e.changedTouches[0].screenX;
-    const limite = 60;
-    if (touchStartX - touchEndX > limite) cambiarImagen(1);
-    if (touchEndX - touchStartX > limite) cambiarImagen(-1);
-  });
-  lightboxModern.addEventListener('click', e => { if (e.target === lightboxModern) cerrarLightbox(); });
-  document.getElementById('closeLightboxBtn').addEventListener('click', cerrarLightbox);
-  document.addEventListener('keydown', e => {
-    if (lightboxModern.classList.contains('active')) {
-      if (e.key === 'Escape') cerrarLightbox();
-      if (e.key === 'ArrowRight') cambiarImagen(1);
-      if (e.key === 'ArrowLeft') cambiarImagen(-1);
-    }
-  });
-
-  // ========== MODAL POPUP CON LECTOR DE VOZ ==========
-  const modal = document.getElementById('infoModal');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalBody = document.getElementById('modalBody');
-  const closeModalBtn = document.getElementById('closeModalBtn');
-  const closeModalFooterBtn = document.getElementById('closeModalFooterBtn');
-  const shareWhatsappBtn = document.getElementById('shareWhatsappBtn');
-  const readAloudBtn = document.getElementById('readAloudBtn');
-  
-  let currentStepData = null;
-  let speechSynthesis = window.speechSynthesis;
-  let currentUtterance = null;
-  let isSpeaking = false;
-  let currentLang = 'pt';
-  
-  function stopReading() {
-    if (speechSynthesis) {
-      speechSynthesis.cancel();
-      isSpeaking = false;
-      readAloudBtn.innerHTML = '<i class="fas fa-volume-up"></i> Leer en voz alta';
-      readAloudBtn.classList.remove('stop');
-    }
-  }
-  
-  function readTextAloud(text, lang) {
-    if (!speechSynthesis) return alert('Tu navegador no soporta síntesis de voz');
-    stopReading();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = lang === 'es' ? 'es-ES' : (lang === 'pt' ? 'pt-BR' : 'en-US');
-    utterance.rate = 0.9;
-    utterance.onstart = () => { isSpeaking = true; readAloudBtn.innerHTML = '<i class="fas fa-stop"></i> Detener'; readAloudBtn.classList.add('stop'); };
-    utterance.onend = () => { isSpeaking = false; readAloudBtn.innerHTML = '<i class="fas fa-volume-up"></i> Leer en voz alta'; readAloudBtn.classList.remove('stop'); };
-    utterance.onerror = () => { isSpeaking = false; readAloudBtn.innerHTML = '<i class="fas fa-volume-up"></i> Leer en voz alta'; readAloudBtn.classList.remove('stop'); };
-    currentUtterance = utterance;
-    speechSynthesis.speak(utterance);
-  }
-  
-  function openModal(stepData) {
-    currentStepData = stepData;
-    modalTitle.textContent = stepData.title;
-    modalBody.innerHTML = `<p><strong>${stepData.desc}</strong></p><p>${stepData.longtext}</p>`;
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    stopReading();
-  }
-  
-  function closeModalFunc() {
-    stopReading();
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
-    currentStepData = null;
-  }
-  
-  closeModalBtn.addEventListener('click', closeModalFunc);
-  closeModalFooterBtn.addEventListener('click', closeModalFunc);
-  modal.addEventListener('click', e => { if (e.target === modal) closeModalFunc(); });
-  
-  shareWhatsappBtn.addEventListener('click', () => {
-    if (currentStepData) {
-      const message = `🌟 *ANGEL TOUR BRASIL* 🌟\n\n📌 *${currentStepData.title}*\n📍 ${currentStepData.desc}\n\n📖 ${currentStepData.longtext}\n\n✅ ¡Vive esta experiencia única en la Costa Esmeralda!`;
-      window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
-    }
-  });
-  
-  readAloudBtn.addEventListener('click', () => {
-    if (currentStepData) {
-      if (isSpeaking) stopReading();
-      else readTextAloud(`${currentStepData.title}. ${currentStepData.desc}. ${currentStepData.longtext}`, currentLang);
-    }
-  });
-  
-  const timelineSteps = document.querySelectorAll('.timeline-step');
-  timelineSteps.forEach(step => {
-    step.addEventListener('click', () => {
-      const stepData = {
-        title: step.getAttribute('data-title') || step.querySelector('h3')?.innerText || '',
-        desc: step.getAttribute('data-desc') || step.querySelector('p')?.innerText || '',
-        longtext: step.getAttribute('data-longtext') || ''
-      };
-      openModal(stepData);
-    });
-  });
-
-  // ========== TRADUCCIONES ==========
+  // ========== TRADUCCIONES COMPLETAS (MULTI-IDIOMA) ==========
   const translations = {
     es: {
       nav_home: "Inicio", nav_tour: "El Paseo", nav_gallery: "Galería", nav_book: "Reservar",
@@ -1595,33 +1399,59 @@
     }
   };
 
+  let currentLang = 'pt';
+  let currentStepData = null;
+  let speechSynthesis = window.speechSynthesis;
+  let currentUtterance = null;
+  let isSpeaking = false;
+
+  // Función principal para cambiar idioma - RECORRE TODA LA PÁGINA Y CAMBIA TEXTOS INSTANTÁNEAMENTE
   function changeLanguage(lang) {
     currentLang = lang;
     const t = translations[lang];
+    
+    // Recorrer todos los elementos con data-key
     document.querySelectorAll('[data-key]').forEach(el => {
       const key = el.getAttribute('data-key');
-      if (t[key]) el.textContent = t[key];
+      if (t[key] !== undefined) {
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          el.placeholder = t[key];
+        } else {
+          el.textContent = t[key];
+        }
+      }
     });
-    document.getElementById('textFecha').textContent = t.fecha;
-    document.getElementById('textHorario').textContent = t.horario;
-    document.getElementById('textNombre').textContent = t.nombre;
-    document.getElementById('textEmpresa').textContent = t.empresa;
-    document.getElementById('textAdultos').textContent = t.adultos;
-    document.getElementById('textMenores').textContent = t.menores;
-    document.getElementById('textTotal').textContent = t.total;
-    document.getElementById('btnText').textContent = t.btn;
-    document.getElementById('horarioNote').textContent = t.horario_note;
-    document.getElementById('empresaNote').textContent = t.empresa_note;
-    document.getElementById('infoNoteText').textContent = t.info_text;
-    document.getElementById('discountBadge').textContent = t.discount_text;
-    document.getElementById('precioAdultos').textContent = t.precio_adultos;
-    document.getElementById('footerBoat').textContent = t.footer_boat;
-    document.getElementById('footerSecure').textContent = t.footer_secure;
-    document.getElementById('footerConfirm').textContent = t.footer_confirm;
-    document.getElementById('horarioTitulo1').textContent = t.horario1;
-    document.getElementById('horarioTitulo2').textContent = t.horario2;
-    document.getElementById('horarioTitulo3').textContent = t.horario3;
     
+    // Elementos específicos del formulario (que no tienen data-key)
+    const elementsToTranslate = {
+      textFecha: t.fecha,
+      textHorario: t.horario,
+      textNombre: t.nombre,
+      textEmpresa: t.empresa,
+      textAdultos: t.adultos,
+      textMenores: t.menores,
+      textTotal: t.total,
+      btnText: t.btn,
+      horarioNote: t.horario_note,
+      empresaNote: t.empresa_note,
+      infoNoteText: t.info_text,
+      discountBadge: t.discount_text,
+      precioAdultos: t.precio_adultos,
+      footerBoat: t.footer_boat,
+      footerSecure: t.footer_secure,
+      footerConfirm: t.footer_confirm,
+      horarioTitulo1: t.horario1,
+      horarioTitulo2: t.horario2,
+      horarioTitulo3: t.horario3
+    };
+    
+    for (const [id, value] of Object.entries(elementsToTranslate)) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
+    
+    // Actualizar textos del itinerario (tarjetas clickeables)
+    const timelineSteps = document.querySelectorAll('.timeline-step');
     timelineSteps.forEach(step => {
       const titleKey = step.getAttribute(`data-key-${lang}`);
       const descKey = step.getAttribute(`data-desc-${lang}`);
@@ -1630,18 +1460,94 @@
         step.setAttribute('data-title', titleKey);
         step.setAttribute('data-desc', descKey);
         step.setAttribute('data-longtext', longtextKey);
-        step.querySelector('h3').textContent = titleKey;
-        step.querySelector('p').textContent = descKey;
+        const h3 = step.querySelector('h3');
+        const p = step.querySelector('p');
+        if (h3) h3.textContent = titleKey;
+        if (p) p.textContent = descKey;
       }
     });
     
+    // Actualizar botones de idioma (estilo activo)
     document.querySelectorAll('.lang-btn-header').forEach(btn => {
       btn.classList.remove('active');
       if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
     });
     
+    // Recargar widget del clima
     loadWeatherWidget(lang);
+    
+    // Guardar preferencia
     localStorage.setItem('preferred_language', lang);
+  }
+
+  // Funciones del modal de voz
+  function stopReading() {
+    if (speechSynthesis) {
+      speechSynthesis.cancel();
+      isSpeaking = false;
+      const readAloudBtn = document.getElementById('readAloudBtn');
+      if (readAloudBtn) {
+        readAloudBtn.innerHTML = '<i class="fas fa-volume-up"></i> Leer en voz alta';
+        readAloudBtn.classList.remove('stop');
+      }
+    }
+  }
+  
+  function readTextAloud(text, lang) {
+    if (!speechSynthesis) return alert('Tu navegador no soporta síntesis de voz');
+    stopReading();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = lang === 'es' ? 'es-ES' : (lang === 'pt' ? 'pt-BR' : 'en-US');
+    utterance.rate = 0.9;
+    const readAloudBtn = document.getElementById('readAloudBtn');
+    utterance.onstart = () => {
+      isSpeaking = true;
+      if (readAloudBtn) {
+        readAloudBtn.innerHTML = '<i class="fas fa-stop"></i> Detener';
+        readAloudBtn.classList.add('stop');
+      }
+    };
+    utterance.onend = () => {
+      isSpeaking = false;
+      if (readAloudBtn) {
+        readAloudBtn.innerHTML = '<i class="fas fa-volume-up"></i> Leer en voz alta';
+        readAloudBtn.classList.remove('stop');
+      }
+    };
+    utterance.onerror = () => {
+      isSpeaking = false;
+      if (readAloudBtn) {
+        readAloudBtn.innerHTML = '<i class="fas fa-volume-up"></i> Leer en voz alta';
+        readAloudBtn.classList.remove('stop');
+      }
+    };
+    currentUtterance = utterance;
+    speechSynthesis.speak(utterance);
+  }
+
+  // Funciones del modal
+  function openModal(stepData) {
+    currentStepData = stepData;
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    if (modalTitle) modalTitle.textContent = stepData.title;
+    if (modalBody) modalBody.innerHTML = `<p><strong>${stepData.desc}</strong></p><p>${stepData.longtext}</p>`;
+    const modal = document.getElementById('infoModal');
+    if (modal) {
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+    stopReading();
+  }
+  
+  function closeModalFunc() {
+    stopReading();
+    const modal = document.getElementById('infoModal');
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    currentStepData = null;
   }
 
   async function loadWeatherWidget(lang) {
@@ -1675,10 +1581,13 @@
   }
 
   function calcularValorTotal() {
-    const adultos = parseInt(document.getElementById('adultos').value) || 0;
-    const menores = parseInt(document.getElementById('menores').value) || 0;
+    const adultos = parseInt(document.getElementById('adultos')?.value || 0);
+    const menores = parseInt(document.getElementById('menores')?.value || 0);
     const total = (adultos * 85) + (menores * 42.5);
-    document.getElementById('valorTotal').value = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const valorTotalInput = document.getElementById('valorTotal');
+    if (valorTotalInput) {
+      valorTotalInput.value = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
     return total;
   }
 
@@ -1693,22 +1602,158 @@
     }
   }
 
-  // Inicialización
+  // ========== INICIALIZACIÓN ==========
+  
+  // Configurar eventos de los botones de idioma
+  document.querySelectorAll('.lang-btn-header').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.getAttribute('data-lang');
+      changeLanguage(lang);
+    });
+  });
+  
+  // Configurar eventos del sticky booking bar
+  const stickyBar = document.getElementById('stickyBookingBar');
+  const heroSection = document.getElementById('inicio');
+  const stickyBookBtn = document.getElementById('stickyBookBtn');
+  
+  function checkStickyBar() {
+    if (window.innerWidth <= 880 && heroSection) {
+      const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+      const scrollY = window.scrollY;
+      if (scrollY > heroBottom - 100) {
+        stickyBar?.classList.add('show');
+      } else {
+        stickyBar?.classList.remove('show');
+      }
+    } else {
+      stickyBar?.classList.remove('show');
+    }
+  }
+  
+  window.addEventListener('scroll', checkStickyBar);
+  window.addEventListener('resize', checkStickyBar);
+  checkStickyBar();
+  
+  if (stickyBookBtn) {
+    stickyBookBtn.addEventListener('click', () => {
+      const reservaSection = document.getElementById('reserva');
+      if (reservaSection) reservaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+  
+  // Configurar el botón "Garantir Vaga"
   const garantiaBtn = document.querySelector('.garantia-link');
-  if (garantiaBtn) garantiaBtn.addEventListener('click', e => { e.preventDefault(); scrollToSectionWithOffset('reserva'); });
-
+  if (garantiaBtn) {
+    garantiaBtn.addEventListener('click', e => { e.preventDefault(); scrollToSectionWithOffset('reserva'); });
+  }
+  
+  // Configurar eventos del modal
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const closeModalFooterBtn = document.getElementById('closeModalFooterBtn');
+  const shareWhatsappBtn = document.getElementById('shareWhatsappBtn');
+  const readAloudBtn = document.getElementById('readAloudBtn');
+  
+  if (closeModalBtn) closeModalBtn.addEventListener('click', closeModalFunc);
+  if (closeModalFooterBtn) closeModalFooterBtn.addEventListener('click', closeModalFunc);
+  
+  const modal = document.getElementById('infoModal');
+  if (modal) {
+    modal.addEventListener('click', e => { if (e.target === modal) closeModalFunc(); });
+  }
+  
+  if (shareWhatsappBtn) {
+    shareWhatsappBtn.addEventListener('click', () => {
+      if (currentStepData) {
+        const message = `🌟 *ANGEL TOUR BRASIL* 🌟\n\n📌 *${currentStepData.title}*\n📍 ${currentStepData.desc}\n\n📖 ${currentStepData.longtext}\n\n✅ ¡Vive esta experiencia única en la Costa Esmeralda!`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+      }
+    });
+  }
+  
+  if (readAloudBtn) {
+    readAloudBtn.addEventListener('click', () => {
+      if (currentStepData) {
+        if (isSpeaking) {
+          stopReading();
+        } else {
+          readTextAloud(`${currentStepData.title}. ${currentStepData.desc}. ${currentStepData.longtext}`, currentLang);
+        }
+      }
+    });
+  }
+  
+  // Configurar eventos de las tarjetas del itinerario
+  const timelineSteps = document.querySelectorAll('.timeline-step');
+  timelineSteps.forEach(step => {
+    step.addEventListener('click', () => {
+      const stepData = {
+        title: step.getAttribute('data-title') || step.querySelector('h3')?.innerText || '',
+        desc: step.getAttribute('data-desc') || step.querySelector('p')?.innerText || '',
+        longtext: step.getAttribute('data-longtext') || ''
+      };
+      openModal(stepData);
+    });
+  });
+  
+  // Configurar eventos del formulario
+  const adultosInput = document.getElementById('adultos');
+  const menoresInput = document.getElementById('menores');
+  if (adultosInput) adultosInput.addEventListener('input', calcularValorTotal);
+  if (menoresInput) menoresInput.addEventListener('input', calcularValorTotal);
+  
+  const fechaInput = document.getElementById('fecha');
+  if (fechaInput) {
+    const todayDate = new Date().toISOString().split('T')[0];
+    fechaInput.setAttribute('min', todayDate);
+  }
+  
+  const dataForm = document.getElementById('dataForm');
+  if (dataForm) {
+    dataForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const fecha = document.getElementById('fecha')?.value;
+      const horario = document.getElementById('horario')?.value;
+      const nombre = document.getElementById('nombre')?.value.trim();
+      const empresa = document.getElementById('empresa')?.value.trim();
+      const adultos = document.getElementById('adultos')?.value;
+      const menores = document.getElementById('menores')?.value;
+      if (!fecha || !horario || !nombre) { alert('❌ Complete todos los campos'); return; }
+      const totalValue = (parseInt(adultos) * 85) + (parseInt(menores) * 42.5);
+      const totalFormatted = totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      const fechaFormateada = fecha.split('-').reverse().join('/');
+      const horarioDisplay = { '09:30': '9:30 Hs', '11:10': '11:10 Hs', '13:00': '13:00 Hs' }[horario] || horario;
+      const message = `🔹 *RESERVA ANGEL TOUR* 🔹\n\n📅 Fecha: ${fechaFormateada}\n⏰ Horario: ${horarioDisplay}\n👤 Nombre: ${nombre}\n🏢 Empresa: ${empresa || 'No especificada'}\n👥 Adultos: ${adultos}\n🧒 Menores: ${menores}\n💰 Total: ${totalFormatted}\n\n✅ ¡Gracias por reservar!`;
+      window.open(`https://wa.me/5547999679084?text=${encodeURIComponent(message)}`, '_blank');
+    });
+  }
+  
+  // Configurar eventos de los horarios
+  const horarioCards = document.querySelectorAll('.horario-card');
+  const horarioHidden = document.getElementById('horario');
+  horarioCards.forEach(card => {
+    card.addEventListener('click', function() {
+      horarioCards.forEach(c => c.classList.remove('selected'));
+      this.classList.add('selected');
+      if (horarioHidden) horarioHidden.value = this.getAttribute('data-horario');
+    });
+  });
+  
+  // Configurar menú móvil
   const menuToggle = document.getElementById('menuToggle');
   const navLinksElem = document.getElementById('navLinks');
   const navLinkItems = document.querySelectorAll('.nav-link');
-  const langButtonsHeader = document.querySelectorAll('.lang-btn-header');
   
   function closeMenuOnMobile() {
-    if (window.innerWidth <= 880 && navLinksElem.classList.contains('active')) {
+    if (window.innerWidth <= 880 && navLinksElem?.classList.contains('active')) {
       navLinksElem.classList.remove('active');
     }
   }
   
-  if (menuToggle) menuToggle.addEventListener('click', e => { e.stopPropagation(); navLinksElem.classList.toggle('active'); });
+  if (menuToggle) {
+    menuToggle.addEventListener('click', e => { e.stopPropagation(); navLinksElem?.classList.toggle('active'); });
+  }
+  
   navLinkItems.forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
@@ -1717,42 +1762,108 @@
       closeMenuOnMobile();
     });
   });
-  langButtonsHeader.forEach(btn => btn.addEventListener('click', () => setTimeout(() => closeMenuOnMobile(), 100)));
+  
+  document.querySelectorAll('.lang-btn-header').forEach(btn => {
+    btn.addEventListener('click', () => setTimeout(() => closeMenuOnMobile(), 100));
+  });
+  
   document.addEventListener('click', e => {
     if (window.innerWidth <= 880 && navLinksElem && menuToggle && !navLinksElem.contains(e.target) && !menuToggle.contains(e.target)) {
       navLinksElem.classList.remove('active');
     }
   });
-
-  langButtonsHeader.forEach(btn => {
-    btn.addEventListener('click', () => changeLanguage(btn.getAttribute('data-lang')));
+  
+  // Inicializar galería
+  const idsImagenes = [1057, 1043, 1011, 1044, 1050, 1069, 1025, 1035, 1074, 1084, 110, 112];
+  const imagenesGrandes = idsImagenes.map(id => `https://picsum.photos/1200/900?image=${id}`);
+  const imagenesChicas = idsImagenes.map(id => `https://picsum.photos/400/300?image=${id}`);
+  
+  const grid = document.getElementById('gridGaleria');
+  let indiceActual = 0;
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  if (grid) {
+    imagenesChicas.forEach((urlMiniatura, indice) => {
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.setAttribute('onclick', `abrirLightbox(${indice})`);
+      const img = document.createElement('img');
+      img.src = urlMiniatura;
+      img.alt = `Foto ${indice + 1}`;
+      img.loading = 'lazy';
+      item.appendChild(img);
+      grid.appendChild(item);
+    });
+  }
+  
+  window.abrirLightbox = function(indice) {
+    indiceActual = indice;
+    actualizarLightbox();
+    const lightbox = document.getElementById('lightboxModern');
+    if (lightbox) {
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    const hint = document.getElementById('swipeHint');
+    if (hint) {
+      hint.classList.remove('animar');
+      void hint.offsetWidth;
+      hint.classList.add('animar');
+    }
+  };
+  
+  function actualizarLightbox() {
+    const img = document.getElementById('lightboxImg');
+    const counter = document.getElementById('fotoContador');
+    if (img) img.src = imagenesGrandes[indiceActual];
+    if (counter) counter.innerText = `${indiceActual + 1} / ${imagenesGrandes.length}`;
+  }
+  
+  function cambiarImagen(direccion) {
+    indiceActual += direccion;
+    if (indiceActual < 0) indiceActual = imagenesGrandes.length - 1;
+    else if (indiceActual >= imagenesGrandes.length) indiceActual = 0;
+    actualizarLightbox();
+    const hint = document.getElementById('swipeHint');
+    if (hint) hint.classList.remove('animar');
+  }
+  
+  function cerrarLightbox() {
+    const lightbox = document.getElementById('lightboxModern');
+    if (lightbox) {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+  
+  const lightboxModern = document.getElementById('lightboxModern');
+  if (lightboxModern) {
+    lightboxModern.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+    lightboxModern.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      const limite = 60;
+      if (touchStartX - touchEndX > limite) cambiarImagen(1);
+      if (touchEndX - touchStartX > limite) cambiarImagen(-1);
+    });
+    lightboxModern.addEventListener('click', e => { if (e.target === lightboxModern) cerrarLightbox(); });
+  }
+  
+  const closeLightboxBtn = document.getElementById('closeLightboxBtn');
+  if (closeLightboxBtn) closeLightboxBtn.addEventListener('click', cerrarLightbox);
+  
+  document.addEventListener('keydown', e => {
+    const lightbox = document.getElementById('lightboxModern');
+    if (lightbox?.classList.contains('active')) {
+      if (e.key === 'Escape') cerrarLightbox();
+      if (e.key === 'ArrowRight') cambiarImagen(1);
+      if (e.key === 'ArrowLeft') cambiarImagen(-1);
+    }
   });
   
+  // Cargar idioma guardado
   const savedLanguage = localStorage.getItem('preferred_language');
   changeLanguage(savedLanguage && translations[savedLanguage] ? savedLanguage : 'pt');
-  
-  document.getElementById('adultos').addEventListener('input', calcularValorTotal);
-  document.getElementById('menores').addEventListener('input', calcularValorTotal);
-  const todayDate = new Date().toISOString().split('T')[0];
-  document.getElementById('fecha').setAttribute('min', todayDate);
-  
-  document.getElementById('dataForm').addEventListener('submit', e => {
-    e.preventDefault();
-    const fecha = document.getElementById('fecha').value;
-    const horario = document.getElementById('horario').value;
-    const nombre = document.getElementById('nombre').value.trim();
-    const empresa = document.getElementById('empresa').value.trim();
-    const adultos = document.getElementById('adultos').value;
-    const menores = document.getElementById('menores').value;
-    if (!fecha || !horario || !nombre) { alert('❌ Complete todos los campos'); return; }
-    const totalValue = (parseInt(adultos) * 85) + (parseInt(menores) * 42.5);
-    const totalFormatted = totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    const fechaFormateada = fecha.split('-').reverse().join('/');
-    const horarioDisplay = { '09:30': '9:30 Hs', '11:10': '11:10 Hs', '13:00': '13:00 Hs' }[horario] || horario;
-    const message = `🔹 *RESERVA ANGEL TOUR* 🔹\n\n📅 Fecha: ${fechaFormateada}\n⏰ Horario: ${horarioDisplay}\n👤 Nombre: ${nombre}\n🏢 Empresa: ${empresa || 'No especificada'}\n👥 Adultos: ${adultos}\n🧒 Menores: ${menores}\n💰 Total: ${totalFormatted}\n\n✅ ¡Gracias por reservar!`;
-    window.open(`https://wa.me/5547999679084?text=${encodeURIComponent(message)}`, '_blank');
-  });
-  
   calcularValorTotal();
   setTimeout(() => loadWeatherWidget(currentLang), 100);
   window.addEventListener('load', () => window.scrollTo(0, 0));
