@@ -8,26 +8,20 @@
     <meta http-equiv="Expires" content="0">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="format-detection" content="telephone=no">
-    <title>Angel Tour Brasil | Reserva Profesional</title>
+    <title>Angel+Tour Brasil | Reserva Profesional</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
         * { 
             margin: 0; 
             padding: 0; 
             box-sizing: border-box;
-            /* Deshabilitar selección de texto en toda la página */
             user-select: none;
             -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
         }
         
-        /* Permitir selección solo en inputs y textareas para que el usuario pueda escribir */
-        input, select, textarea {
+        input, select, textarea, .horario-card {
             user-select: text;
             -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
         }
         
         body {
@@ -75,49 +69,62 @@
             align-items: center;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
         }
-        .weather-widget-container:hover {
-            border-color: #CBD5E1;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        .weather-widget-container:hover { border-color: #CBD5E1; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04); }
+        .weather-loading { color: #64748B; font-size: 0.8rem; font-weight: 450; text-align: center; padding: 20px; }
+        .weatherwidget-io { width: 100%; border-radius: 16px; }
+        
+        /* Estilos para tarjetas de horario */
+        .horario-cards {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 0.25rem;
         }
-        .weather-loading {
-            color: #64748B;
-            font-size: 0.8rem;
-            font-weight: 450;
-            text-align: center;
-            padding: 20px;
-        }
-        .weatherwidget-io {
-            width: 100%;
+        .horario-card {
+            flex: 1;
+            background: #FFFFFF;
+            border: 1.5px solid #E2E8F0;
             border-radius: 16px;
+            padding: 0.85rem 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .horario-card:hover {
+            border-color: #0EA5E9;
+            background: #F0F9FF;
+            transform: translateY(-2px);
+        }
+        .horario-card.selected {
+            border-color: #0EA5E9;
+            background: #0EA5E9;
+            color: white;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+        }
+        .horario-card .horario-titulo {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+        .horario-card .horario-hora {
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+        .horario-card.selected .horario-titulo,
+        .horario-card.selected .horario-hora {
+            color: white;
+        }
+        .horario-input-hidden {
+            display: none;
         }
         
-        /* Estilos para el campo de fecha - clic en toda el área */
-        .date-input-wrapper {
-            position: relative;
-            cursor: pointer;
-        }
-        .date-input-wrapper input {
-            cursor: pointer;
-        }
-        input[type="date"] {
-            cursor: pointer;
-            color-scheme: light;
-        }
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            cursor: pointer;
-            filter: invert(0.3);
-            position: absolute;
-            right: 1rem;
-            opacity: 0.6;
-            transition: opacity 0.2s;
-        }
-        input[type="date"]::-webkit-calendar-picker-indicator:hover {
-            opacity: 1;
-            filter: invert(0.2);
-        }
-        ::-webkit-datetime-edit { padding: 0.2rem 0; }
-        ::-webkit-datetime-edit-fields-wrapper { color: #0F172A; }
-        ::-webkit-datetime-edit-text { color: #64748B; padding: 0 0.2rem; }
+        .date-input-wrapper { position: relative; cursor: pointer; }
+        .date-input-wrapper input { cursor: pointer; }
+        input[type="date"] { cursor: pointer; color-scheme: light; }
+        input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; filter: invert(0.3); position: absolute; right: 1rem; opacity: 0.6; }
+        input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
         
         .form-wrapper { padding: 1.2rem 1.8rem 2rem 1.8rem; }
         .form-group { margin-bottom: 1.4rem; }
@@ -128,7 +135,6 @@
         .input-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 1; }
         .input-icon svg { width: 18px; height: 18px; stroke: #94A3B8; stroke-width: 1.6; fill: none; }
         input, select { width: 100%; padding: 0.85rem 1rem 0.85rem 2.6rem; background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 16px; font-size: 0.95rem; font-weight: 450; color: #0F172A; font-family: 'Inter', monospace; transition: all 0.2s ease; }
-        select { appearance: none; cursor: pointer; padding-right: 2.5rem; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2364748B' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1.2rem; }
         input:focus, select:focus { outline: none; border-color: #0EA5E9; box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12); background: #FFFFFF; }
         input::placeholder { color: #94A3B8; font-weight: 420; font-size: 0.9rem; }
         .optional-note { font-size: 0.65rem; font-weight: 450; color: #64748B; margin-top: 0.4rem; margin-left: 0.5rem; }
@@ -180,6 +186,10 @@
             .modal-content { padding: 1.2rem; }
             .btn-language { width: 36px; height: 36px; }
             .btn-language img { width: 20px; height: 20px; }
+            .horario-cards { gap: 0.5rem; }
+            .horario-card { padding: 0.6rem 0.3rem; }
+            .horario-card .horario-titulo { font-size: 0.6rem; }
+            .horario-card .horario-hora { font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -218,16 +228,24 @@
                 </div>
             </div>
 
+            <!-- HORARIO TIPO TARJETA -->
             <div class="form-group">
                 <label id="labelHorario"><span class="label-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><span id="textHorario">PREFERENCIA DE HORARIO</span></label>
-                <div class="input-wrapper"><span class="input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
-                    <select id="horario" name="horario" required autocomplete="off">
-                        <option value="">Seleccione un horario</option>
-                        <option value="09:30">Mañana 9:30 Hs.</option>
-                        <option value="11:10">Media Mañana 11:10 Hs.</option>
-                        <option value="13:00">Tarde 13:00 Hs.</option>
-                    </select>
+                <div class="horario-cards">
+                    <div class="horario-card" data-horario="09:30" data-titulo="Mañana" data-hora="9:30 Hs">
+                        <div class="horario-titulo">Mañana</div>
+                        <div class="horario-hora">9:30 Hs</div>
+                    </div>
+                    <div class="horario-card" data-horario="11:10" data-titulo="Media Mañana" data-hora="11:10 Hs">
+                        <div class="horario-titulo">Media Mañana</div>
+                        <div class="horario-hora">11:10 Hs</div>
+                    </div>
+                    <div class="horario-card" data-horario="13:00" data-titulo="Tarde" data-hora="13:00 Hs">
+                        <div class="horario-titulo">Tarde</div>
+                        <div class="horario-hora">13:00 Hs</div>
+                    </div>
                 </div>
+                <input type="hidden" id="horario" name="horario" required>
                 <div class="price-info" id="horarioNote">⏱️ Sujeto a disponibilidad, puede variar conforme reservas previas, el horario será confirmado via WhatsApp.</div>
             </div>
 
@@ -257,7 +275,7 @@
             <div class="form-group">
                 <label id="labelTotal"><span id="textTotal">VALOR TOTAL</span></label>
                 <div class="input-wrapper"><input type="text" id="valorTotal" name="valorTotal" class="total-display" readonly value="R$ 0,00" autocomplete="off"></div>
-                <div class="info-note" id="infoNoteText">💡 El valor mencionado es para grupos cerrados o agencias, en viajes particulares el valor puede sufrir variaciones, ante cualquier duda no deje de consultarnos.</div>
+                <div class="info-note" id="infoNoteText">💡 El valor mencionado es para grupos cerrados o agencias, en viajes individuales el valor puede sufrir variaciones, ante cualquier duda no deje de consultarnos.</div>
             </div>
 
             <button type="submit" class="btn-submit" id="btnSubmit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span id="btnText">ENVIAR RESERVA</span></button>
@@ -283,32 +301,15 @@
 </div>
 
 <script>
-    // ========== DESHABILITAR BOTÓN DERECHO (MENÚ CONTEXTUAL) ==========
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        return false;
-    });
-    
-    // También deshabilitar para elementos específicos que podrían tener menús propios
-    document.querySelectorAll('input, select, textarea, .btn-language, .btn-submit, .btn-cancel, .btn-confirm').forEach(el => {
-        el.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        });
-    });
+    // ========== DESHABILITAR BOTÓN DERECHO ==========
+    document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; });
     
     // ========== PROTOCOLO DE SEGURIDAD ==========
-    
     let isSubmitting = false;
     
     function sanitizeText(input) {
         if (!input) return '';
-        return input.replace(/[<>]/g, function(m) {
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        }).trim().slice(0, 200);
+        return input.replace(/[<>]/g, function(m) { if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }).trim().slice(0, 200);
     }
     
     function isValidNumber(value, min = 0, max = 99) {
@@ -331,106 +332,65 @@
         return regex.test(name);
     }
     
-    let userLocationFormatted = "Ubicación no disponible";
+    function getHorarioText(value) {
+        const map = { '09:30': 'Mañana 9:30 Hs.', '11:10': 'Media Mañana 11:10 Hs.', '13:00': 'Tarde 13:00 Hs.' };
+        return map[value] || value;
+    }
+    
+    // Detección de ubicación mejorada
+    let userLocationFormatted = "Obteniendo ubicación...";
+    let locationPromise = null;
     
     async function getUserLocation() {
         const apis = [
-            {
-                url: 'https://ipapi.co/json/',
-                parser: (data) => {
-                    const country = data.country_name || '';
-                    const city = data.city || '';
-                    const region = data.region || '';
-                    if (country) {
-                        if (city) return `${country} - ${city}`;
-                        if (region) return `${country} - ${region}`;
-                        return country;
-                    }
-                    return null;
-                }
-            },
-            {
-                url: 'https://ipwho.is/',
-                parser: (data) => {
-                    if (data.success !== false) {
-                        const country = data.country || '';
-                        const city = data.city || '';
-                        const region = data.region || '';
-                        if (country) {
-                            if (city) return `${country} - ${city}`;
-                            if (region) return `${country} - ${region}`;
-                            return country;
-                        }
-                    }
-                    return null;
-                }
-            }
+            { url: 'https://ipapi.co/json/', parser: (data) => data.country_name ? (data.city ? `${data.country_name} - ${data.city}` : (data.region ? `${data.country_name} - ${data.region}` : data.country_name)) : null },
+            { url: 'https://ipwho.is/', parser: (data) => data.country ? (data.city ? `${data.country} - ${data.city}` : (data.region ? `${data.country} - ${data.region}` : data.country)) : null },
+            { url: 'https://freeipapi.com/api/json/', parser: (data) => data.countryName ? (data.cityName ? `${data.countryName} - ${data.cityName}` : (data.regionName ? `${data.countryName} - ${data.regionName}` : data.countryName)) : null }
         ];
         
         for (const api of apis) {
             try {
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                const timeoutId = setTimeout(() => controller.abort(), 4000);
                 const response = await fetch(api.url, { signal: controller.signal });
                 clearTimeout(timeoutId);
-                
                 if (response.ok) {
                     const data = await response.json();
                     const location = api.parser(data);
-                    if (location) {
+                    if (location && location !== ' - ' && location !== 'undefined - undefined') {
                         userLocationFormatted = location;
+                        console.log('Ubicación obtenida:', userLocationFormatted);
                         return;
                     }
                 }
-            } catch (error) {
-                console.log('Error con API:', error);
-                continue;
-            }
+            } catch (error) { continue; }
         }
-        userLocationFormatted = "Ubicación no disponible";
+        userLocationFormatted = "Ubicación no detectada";
+        console.log('No se pudo obtener ubicación');
     }
-
+    
+    function getFlagForLang(langCode) {
+        const flags = { 'es': '🇪🇸', 'pt': '🇧🇷', 'en': '🇺🇸' };
+        return flags[langCode] || '🏳️';
+    }
+    
     function setupDatePickerClick() {
         const fechaInput = document.getElementById('fecha');
         if (fechaInput) {
-            const wrapper = fechaInput.closest('.date-input-wrapper');
-            if (wrapper) {
-                wrapper.addEventListener('click', function(e) {
-                    if (e.target === wrapper || e.target.classList.contains('input-icon') || e.target.classList.contains('date-input-wrapper')) {
-                        e.stopPropagation();
-                    }
-                    if (typeof fechaInput.showPicker === 'function') {
-                        try {
-                            fechaInput.showPicker();
-                        } catch (err) {
-                            fechaInput.focus();
-                        }
-                    } else {
-                        fechaInput.focus();
-                        const event = new MouseEvent('mousedown', { bubbles: true });
-                        fechaInput.dispatchEvent(event);
-                    }
-                });
-            }
-            fechaInput.style.cursor = 'pointer';
+            fechaInput.addEventListener('click', function() {
+                if (typeof this.showPicker === 'function') { try { this.showPicker(); } catch(err) { this.focus(); } }
+                else { this.focus(); }
+            });
         }
     }
-
+    
     function loadWeatherWidget(lang) {
         const container = document.getElementById('weatherWidgetPlaceholder');
         if (!container) return;
-        
         const widgetLangMap = { 'es': 'es', 'pt': 'pt', 'en': 'en' };
         const widgetLang = widgetLangMap[lang] || 'es';
-        
-        const titles = {
-            'es': { label1: 'PORTO BELO', label2: 'Previsión 7 días' },
-            'pt': { label1: 'PORTO BELO', label2: 'Previsão 7 dias' },
-            'en': { label1: 'PORTO BELO', label2: '7-Day Forecast' }
-        };
-        
+        const titles = { 'es': { label1: 'PORTO BELO', label2: 'Previsión 7 días' }, 'pt': { label1: 'PORTO BELO', label2: 'Previsão 7 dias' }, 'en': { label1: 'PORTO BELO', label2: '7-Day Forecast' } };
         const title = titles[lang] || titles['es'];
-        
         const widgetLink = document.createElement('a');
         widgetLink.className = 'weatherwidget-io';
         widgetLink.href = `https://forecast7.com/${widgetLang}/n27d16n48d58/porto-belo/`;
@@ -444,86 +404,29 @@
         widgetLink.style.width = '100%';
         widgetLink.style.display = 'block';
         widgetLink.textContent = `${title.label1} ${title.label2}`;
-        
         container.innerHTML = '';
         container.appendChild(widgetLink);
-        
         const existingScript = document.getElementById('weatherwidget-io-js');
         if (existingScript) existingScript.remove();
-        
         const script = document.createElement('script');
         script.id = 'weatherwidget-io-js';
         script.src = 'https://weatherwidget.io/js/widget.min.js';
         document.head.appendChild(script);
     }
-
+    
     function formatDateToDDMMYYYY(dateString) {
         if (!dateString) return '';
         const parts = dateString.split('-');
         if (parts.length !== 3) return dateString;
         return `${parts[2]}/${parts[1]}/${parts[0]}`;
     }
-
-    function getHorarioEspanol(horarioValue) {
-        const horarioMap = { '09:30': 'Mañana 9:30 Hs.', '11:10': 'Media Mañana 11:10 Hs.', '13:00': 'Tarde 13:00 Hs.' };
-        return horarioMap[horarioValue] || horarioValue;
-    }
-
-    function getHorarioDisplay(horarioValue, lang) {
-        const horarioMap = {
-            'es': { '09:30': 'Mañana 9:30 Hs.', '11:10': 'Media Mañana 11:10 Hs.', '13:00': 'Tarde 13:00 Hs.' },
-            'pt': { '09:30': 'Manhã 9:30 Hs.', '11:10': 'Meia Manhã 11:10 Hs.', '13:00': 'Tarde 13:00 Hs.' },
-            'en': { '09:30': 'Morning 9:30 AM', '11:10': 'Late Morning 11:10 AM', '13:00': 'Afternoon 1:00 PM' }
-        };
-        return horarioMap[lang]?.[horarioValue] || horarioValue;
-    }
-
-    function getHorarioOptions(lang) {
-        const options = {
-            'es': [{ value: '09:30', text: 'Mañana 9:30 Hs.' }, { value: '11:10', text: 'Media Mañana 11:10 Hs.' }, { value: '13:00', text: 'Tarde 13:00 Hs.' }],
-            'pt': [{ value: '09:30', text: 'Manhã 9:30 Hs.' }, { value: '11:10', text: 'Meia Manhã 11:10 Hs.' }, { value: '13:00', text: 'Tarde 13:00 Hs.' }],
-            'en': [{ value: '09:30', text: 'Morning 9:30 AM' }, { value: '11:10', text: 'Late Morning 11:10 AM' }, { value: '13:00', text: 'Afternoon 1:00 PM' }]
-        };
-        return options[lang] || options['es'];
-    }
-
-    function updateHorarioSelect(lang) {
-        const horarioSelect = document.getElementById('horario');
-        const currentValue = horarioSelect.value;
-        const options = getHorarioOptions(lang);
-        horarioSelect.innerHTML = '';
-        const placeholders = { 'es': 'Seleccione un horario', 'pt': 'Selecione um horário', 'en': 'Select a time' };
-        const defaultOption = document.createElement('option');
-        defaultOption.value = '';
-        defaultOption.textContent = placeholders[lang] || 'Seleccione un horario';
-        horarioSelect.appendChild(defaultOption);
-        options.forEach(opt => { const option = document.createElement('option'); option.value = opt.value; option.textContent = opt.text; horarioSelect.appendChild(option); });
-        if (currentValue) horarioSelect.value = currentValue;
-    }
-
-    function getLanguageText(langCode) {
-        const texts = { 'es': '[ESPAÑOL]', 'pt': '[PORTUGUÊS]', 'en': '[ENGLISH]' };
-        return texts[langCode] || '[ESPAÑOL]';
-    }
-
-    const PRECIO_ADULTO = 85.00;
-    const PRECIO_MENOR = 42.50;
-    const WHATSAPP_NUMBER = '5493518692251';
-
-    const translations = {
-        es: { subtitle: "Reserve su paseo · Confirme los datos · Envío por WhatsApp", fecha: "FECHA DEL PASEO", horario: "PREFERENCIA DE HORARIO", nombre: "NOMBRE", empresa: "EMPRESA", empresa_note: "*Opcional para reservas individuales", adultos: "ADULTOS", menores: "MENORES de 6 a 11 años", total: "VALOR TOTAL", total_popup: "VALOR DE SU RESERVA", btn: "ENVIAR RESERVA", footer_boat: "Paseos en barco", footer_secure: "Confirmación segura", footer_confirm: "Envío por WhatsApp", modal_title: "Confirmar reserva", modal_cancel: "Cancelar", modal_confirm: "Enviar via WhatsApp", info_text: "💡 El valor mencionado es para grupos cerrados o agencias, en viajes individuales el valor puede sufrir variaciones, ante cualquier duda no deje de consultarnos.", discount_text: "🎯 50% de descuento", horario_placeholder: "Seleccione un horario", horario_note: "⏱️ Sujeto a disponibilidad, puede variar conforme reservas previas, el horario será confirmado via WhatsApp.", lang_text: "[ESPAÑOL]" },
-        pt: { subtitle: "Reserve seu passeio · Confirme os dados · Envio via WhatsApp", fecha: "DATA DO PASSEIO", horario: "PREFERÊNCIA DE HORÁRIO", nombre: "NOME", empresa: "EMPRESA", empresa_note: "*Opcional para reservas individuais", adultos: "ADULTOS", menores: "MENORES de 6 a 11 anos", total: "VALOR TOTAL", total_popup: "VALOR DA SUA RESERVA", btn: "ENVIAR RESERVA", footer_boat: "Passeios de barco", footer_secure: "Confirmação segura", footer_confirm: "Envio via WhatsApp", modal_title: "Confirmar reserva", modal_cancel: "Cancelar", modal_confirm: "Enviar via WhatsApp", info_text: "💡 O valor mencionado é para grupos fechados ou agências, em viagens individuais o valor pode sofrer variações, em caso de dúvida não deixe de nos consultar.", discount_text: "🎯 50% de desconto", horario_placeholder: "Selecione um horário", horario_note: "⏱️ Sujeito à disponibilidade, pode variar conforme reservas prévias, o horário será confirmado via WhatsApp.", lang_text: "[PORTUGUÊS]" },
-        en: { subtitle: "Book your tour · Confirm details · Send via WhatsApp", fecha: "TOUR DATE", horario: "TIME PREFERENCE", nombre: "NAME", empresa: "COMPANY", empresa_note: "*Optional for individual reservations", adultos: "ADULTS", menores: "CHILDREN 6 to 11 years", total: "TOTAL VALUE", total_popup: "YOUR RESERVATION VALUE", btn: "SEND RESERVATION", footer_boat: "Boat tours", footer_secure: "Secure confirmation", footer_confirm: "WhatsApp delivery", modal_title: "Confirm reservation", modal_cancel: "Cancel", modal_confirm: "Send via WhatsApp", info_text: "💡 The mentioned price is for closed groups or agencies; for individual trips, the price may vary. If you have any questions, please do not hesitate to contact us.", discount_text: "🎯 50% discount", horario_placeholder: "Select a time", horario_note: "⏱️ Subject to availability, may vary based on previous bookings. The final schedule will be confirmed via WhatsApp.", lang_text: "[ENGLISH]" }
-    };
-
-    let currentLang = 'pt';
-    let pendingFormData = null;
-    let locationPromise = null;
     
+    // Inicialización
     locationPromise = getUserLocation();
-
+    
     const fechaInput = document.getElementById('fecha');
-    const horarioSelect = document.getElementById('horario');
+    const horarioHidden = document.getElementById('horario');
+    const horarioCards = document.querySelectorAll('.horario-card');
     const nombreInput = document.getElementById('nombre');
     const empresaInput = document.getElementById('empresa');
     const adultosInput = document.getElementById('adultos');
@@ -535,43 +438,62 @@
     const horarioNoteDiv = document.getElementById('horarioNote');
     const empresaNoteDiv = document.getElementById('empresaNote');
     const btnSubmit = document.getElementById('btnSubmit');
-
+    
+    // Eventos para tarjetas de horario
+    horarioCards.forEach(card => {
+        card.addEventListener('click', function() {
+            horarioCards.forEach(c => c.classList.remove('selected'));
+            this.classList.add('selected');
+            horarioHidden.value = this.getAttribute('data-horario');
+        });
+    });
+    
     function setupNumberInputClearing(inputElement) {
         if (!inputElement) return;
         inputElement.addEventListener('focus', function() { if (this.value === '0') this.value = ''; });
         inputElement.addEventListener('blur', function() { if (this.value === '' || this.value === null) { this.value = '0'; calcularValorTotal(); } });
     }
-
+    
     window.addEventListener('load', function() {
         document.getElementById('dataForm').reset();
         adultosInput.value = '0';
         menoresInput.value = '0';
         fechaInput.value = '';
-        horarioSelect.value = '';
         nombreInput.value = '';
         empresaInput.value = '';
+        horarioCards.forEach(c => c.classList.remove('selected'));
+        horarioHidden.value = '';
         calcularValorTotal();
         setTimeout(() => loadWeatherWidget(currentLang), 100);
         setupDatePickerClick();
     });
-
+    
     const today = new Date().toISOString().split('T')[0];
     fechaInput.setAttribute('min', today);
-
+    
     function calcularValorTotal() {
         const adultos = parseInt(adultosInput.value) || 0;
         const menores = parseInt(menoresInput.value) || 0;
-        const total = (adultos * PRECIO_ADULTO) + (menores * PRECIO_MENOR);
+        const total = (adultos * 85.00) + (menores * 42.50);
         valorTotalInput.value = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         return total;
     }
-
+    
     adultosInput.addEventListener('input', calcularValorTotal);
     menoresInput.addEventListener('input', calcularValorTotal);
     setupNumberInputClearing(adultosInput);
     setupNumberInputClearing(menoresInput);
     calcularValorTotal();
-
+    
+    let currentLang = 'pt';
+    let pendingFormData = null;
+    
+    const translations = {
+        es: { subtitle: "Reserve su paseo · Confirme los datos · Envío por WhatsApp", fecha: "FECHA DEL PASEO", horario: "PREFERENCIA DE HORARIO", nombre: "NOMBRE", empresa: "EMPRESA", empresa_note: "*Opcional para reservas individuales", adultos: "ADULTOS", menores: "MENORES de 6 a 11 años", total: "VALOR TOTAL", total_popup: "VALOR DE SU RESERVA", btn: "ENVIAR RESERVA", footer_boat: "Paseos en barco", footer_secure: "Confirmación segura", footer_confirm: "Envío por WhatsApp", modal_title: "Confirmar reserva", modal_cancel: "Cancelar", modal_confirm: "Enviar via WhatsApp", info_text: "💡 El valor mencionado es para grupos cerrados o agencias, en viajes individuales el valor puede sufrir variaciones, ante cualquier duda no deje de consultarnos.", discount_text: "🎯 50% de descuento", horario_note: "⏱️ Sujeto a disponibilidad, puede variar conforme reservas previas, el horario será confirmado via WhatsApp." },
+        pt: { subtitle: "Reserve seu passeio · Confirme os dados · Envio via WhatsApp", fecha: "DATA DO PASSEIO", horario: "PREFERÊNCIA DE HORÁRIO", nombre: "NOME", empresa: "EMPRESA", empresa_note: "*Opcional para reservas individuais", adultos: "ADULTOS", menores: "MENORES de 6 a 11 anos", total: "VALOR TOTAL", total_popup: "VALOR DA SUA RESERVA", btn: "ENVIAR RESERVA", footer_boat: "Passeios de barco", footer_secure: "Confirmação segura", footer_confirm: "Envio via WhatsApp", modal_title: "Confirmar reserva", modal_cancel: "Cancelar", modal_confirm: "Enviar via WhatsApp", info_text: "💡 O valor mencionado é para grupos fechados ou agências, em viagens individuais o valor pode sofrer variações, em caso de dúvida não deixe de nos consultar.", discount_text: "🎯 50% de desconto", horario_note: "⏱️ Sujeito à disponibilidade, pode variar conforme reservas prévias, o horário será confirmado via WhatsApp." },
+        en: { subtitle: "Book your tour · Confirm details · Send via WhatsApp", fecha: "TOUR DATE", horario: "TIME PREFERENCE", nombre: "NAME", empresa: "COMPANY", empresa_note: "*Optional for individual reservations", adultos: "ADULTS", menores: "CHILDREN 6 to 11 years", total: "TOTAL VALUE", total_popup: "YOUR RESERVATION VALUE", btn: "SEND RESERVATION", footer_boat: "Boat tours", footer_secure: "Secure confirmation", footer_confirm: "WhatsApp delivery", modal_title: "Confirm reservation", modal_cancel: "Cancel", modal_confirm: "Send via WhatsApp", info_text: "💡 The mentioned price is for closed groups or agencies; for individual trips, the price may vary. If you have any questions, please do not hesitate to contact us.", discount_text: "🎯 50% discount", horario_note: "⏱️ Subject to availability, may vary based on previous bookings. The final schedule will be confirmed via WhatsApp." }
+    };
+    
     function changeLanguage(lang) {
         currentLang = lang;
         const t = translations[lang];
@@ -592,25 +514,24 @@
         if (empresaNoteDiv) empresaNoteDiv.textContent = t.empresa_note;
         const discountBadge = document.querySelector('.discount-badge');
         if (discountBadge) discountBadge.textContent = t.discount_text;
-        updateHorarioSelect(lang);
         document.querySelectorAll('.btn-language').forEach(btn => { btn.classList.remove('active'); if (btn.getAttribute('data-lang') === lang) btn.classList.add('active'); });
         loadWeatherWidget(lang);
         localStorage.setItem('preferred_language', lang);
     }
-
+    
     document.querySelectorAll('.btn-language').forEach(btn => { btn.addEventListener('click', () => changeLanguage(btn.getAttribute('data-lang'))); });
-
+    
     const savedLang = localStorage.getItem('preferred_language');
     changeLanguage(savedLang && translations[savedLang] ? savedLang : 'pt');
-
+    
     function showModalWithData(formDataObj) {
         const t = translations[currentLang];
         const adultosNum = parseInt(formDataObj.adultos) || 0;
         const menoresNum = parseInt(formDataObj.menores) || 0;
-        const totalValue = (adultosNum * PRECIO_ADULTO) + (menoresNum * PRECIO_MENOR);
+        const totalValue = (adultosNum * 85.00) + (menoresNum * 42.50);
         const totalFormatted = totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         const fechaFormateada = formatDateToDDMMYYYY(formDataObj.fecha);
-        const horarioDisplay = getHorarioDisplay(formDataObj.horario, currentLang);
+        const horarioDisplay = getHorarioText(formDataObj.horario);
         
         modalDetails.innerHTML = `
             <div class="modal-detail-item"><span class="modal-detail-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> ${t.fecha}:</span><span class="modal-detail-value">${fechaFormateada}</span></div>
@@ -624,81 +545,48 @@
         document.querySelector('#confirmModal .modal-header h3').textContent = `📋 ${t.modal_title}`;
         document.getElementById('cancelModalBtn').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:14px;height:14px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> ${t.modal_cancel}`;
         document.getElementById('confirmSendBtn').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:16px;height:16px"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg> ${t.modal_confirm}`;
-        pendingFormData = { ...formDataObj, totalFormatted, fechaFormateada, horarioDisplay, horarioRaw: formDataObj.horario };
+        pendingFormData = { ...formDataObj, totalFormatted, fechaFormateada, horarioDisplay };
         modal.classList.add('active');
     }
-
+    
     function closeModal() { modal.classList.remove('active'); pendingFormData = null; }
-
+    
     async function sendToWhatsApp() {
         if (!pendingFormData || isSubmitting) return;
-        
         isSubmitting = true;
         btnSubmit.disabled = true;
-        
-        if (locationPromise) {
-            await locationPromise;
-        }
-        
-        const t = translations[currentLang];
-        const adultosNum = parseInt(pendingFormData.adultos) || 0;
-        const menoresNum = parseInt(pendingFormData.menores) || 0;
-        const totalValue = (adultosNum * PRECIO_ADULTO) + (menoresNum * PRECIO_MENOR);
-        const totalFormatted = totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        const fechaWhatsApp = pendingFormData.fechaFormateada || formatDateToDDMMYYYY(pendingFormData.fecha);
-        const horarioWhatsApp = getHorarioEspanol(pendingFormData.horarioRaw || pendingFormData.horario);
-        const nombreCliente = sanitizeText(pendingFormData.nombre);
-        const empresaCliente = sanitizeText(pendingFormData.empresa) || "No especificada";
-        const langText = getLanguageText(currentLang);
-        
-        const message = `🔹 *NUEVA RESERVA ANGEL TOUR* 🔹\n    ${langText} - ${userLocationFormatted}\n\n📅 *Fecha:* ${fechaWhatsApp}\n⏰ *Horario:* ${horarioWhatsApp}\n👤 *Nombre:* ${nombreCliente}\n🏢 *Empresa:* ${empresaCliente}\n👥 *Adultos:* ${pendingFormData.adultos}\n🧒 *Menores:* ${pendingFormData.menores}\n💰 *Total:* ${totalFormatted}\n\n✅ Reserva via formulario web.`;
-        
-        const encodedMessage = encodeURIComponent(message);
-        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
-        
+        if (locationPromise) await locationPromise;
+        const totalFormatted = pendingFormData.totalFormatted;
+        const message = `🔹 *NUEVA RESERVA ANGEL TOUR* 🔹\n    ${getFlagForLang(currentLang)} - ${userLocationFormatted}\n\n📅 *Fecha:* ${pendingFormData.fechaFormateada}\n⏰ *Horario preferido:* ${pendingFormData.horarioDisplay}\n👤 *Nombre:* ${sanitizeText(pendingFormData.nombre)}\n🏢 *Empresa:* ${sanitizeText(pendingFormData.empresa) || "No especificada"}\n👥 *Adultos:* ${pendingFormData.adultos}\n🧒 *Menores:* ${pendingFormData.menores}\n💰 *Total:* ${totalFormatted}\n\n✅ Reserva via formulario web.`;
+        window.open(`https://wa.me/5493518692251?text=${encodeURIComponent(message)}`, '_blank');
         closeModal();
-        
         const successText = currentLang === 'pt' ? '✓ ENVIADO!' : (currentLang === 'es' ? '✓ ENVIADO!' : '✓ SENT!');
         btnSubmit.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span>${successText}</span>`;
-        setTimeout(() => {
-            btnSubmit.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span id="btnText">ENVIAR RESERVA</span>`;
-            btnSubmit.disabled = false;
-            isSubmitting = false;
-        }, 3000);
-        
+        setTimeout(() => { btnSubmit.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span id="btnText">ENVIAR RESERVA</span>`; btnSubmit.disabled = false; isSubmitting = false; }, 3000);
         document.getElementById('dataForm').reset();
-        adultosInput.value = '0';
-        menoresInput.value = '0';
-        calcularValorTotal();
-        fechaInput.value = '';
-        horarioSelect.value = '';
-        nombreInput.value = '';
-        empresaInput.value = '';
+        adultosInput.value = '0'; menoresInput.value = '0'; calcularValorTotal();
+        fechaInput.value = ''; nombreInput.value = ''; empresaInput.value = '';
+        horarioCards.forEach(c => c.classList.remove('selected'));
+        horarioHidden.value = '';
     }
-
+    
     document.getElementById('dataForm').addEventListener('submit', (e) => {
         e.preventDefault();
-        
         const fecha = fechaInput.value;
-        const horario = horarioSelect.value;
+        const horario = horarioHidden.value;
         const nombre = sanitizeText(nombreInput.value);
         const empresa = sanitizeText(empresaInput.value);
         const adultos = adultosInput.value;
         const menores = menoresInput.value;
-        
-        if (!fecha || !isValidDate(fecha)) { 
-            alert('❌ Seleccione una fecha válida (no puede ser anterior a hoy)'); 
-            return; 
-        }
+        if (!fecha || !isValidDate(fecha)) { alert('❌ Seleccione una fecha válida (no puede ser anterior a hoy)'); return; }
         if (!horario) { alert('❌ Seleccione un horario'); return; }
         if (!nombre || nombre.length < 2) { alert('❌ Complete el nombre correctamente (mínimo 2 caracteres)'); return; }
         if (!isValidName(nombre)) { alert('❌ El nombre solo puede contener letras y espacios'); return; }
         if (!isValidNumber(adultos, 0, 99)) { alert('❌ Ingrese un número válido de adultos (0-99)'); return; }
         if (!isValidNumber(menores, 0, 99)) { alert('❌ Ingrese un número válido de menores (0-99)'); return; }
-        
         showModalWithData({ fecha, horario, nombre, empresa, adultos, menores });
     });
-
+    
     document.getElementById('closeModalBtn').addEventListener('click', closeModal);
     document.getElementById('cancelModalBtn').addEventListener('click', closeModal);
     document.getElementById('confirmSendBtn').addEventListener('click', sendToWhatsApp);
