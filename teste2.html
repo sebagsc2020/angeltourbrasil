@@ -35,13 +35,24 @@
       --orange-cta: #FF8C42;
       --gray-light: #F5F7FA;
     }
+    
+    /* ========== HEADER CON EFECTO GLASSMORPHISM ========== */
     .header {
-      background: white;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
       position: sticky;
       top: 0;
       z-index: 100;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     }
+    .header:hover {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+    }
+    
     .navbar {
       display: flex;
       justify-content: space-between;
@@ -67,8 +78,8 @@
       align-items: center;
     }
     .lang-btn-header {
-      background: #FFFFFF;
-      border: 1px solid #E2E8F0;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 40px;
       width: 36px;
       height: 36px;
@@ -77,10 +88,11 @@
       align-items: center;
       justify-content: center;
       transition: all 0.3s ease;
+      backdrop-filter: blur(4px);
     }
     .lang-btn-header:hover {
-      background: #F1F5F9;
-      border-color: #CBD5E1;
+      background: #0EA5E9;
+      border-color: #0EA5E9;
       transform: translateY(-2px);
     }
     .lang-btn-header.active {
@@ -127,11 +139,88 @@
     }
     .nav-links a:hover { color: var(--turquoise); }
     .btn-reserva-nav {
-      background: var(--orange-cta);
+      background: linear-gradient(135deg, var(--orange-cta), #e0732c);
       padding: 10px 24px;
       border-radius: 40px;
       color: white !important;
       font-weight: 700;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn-reserva-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(255, 140, 66, 0.3);
+    }
+    
+    /* ========== STICKY BOOKING BAR (MÓVIL) ========== */
+    .sticky-booking-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, #0A2F6C 0%, #005f8c 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 12px 20px;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      z-index: 99;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+    .sticky-booking-bar.show {
+      transform: translateY(0);
+    }
+    .sticky-booking-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .sticky-booking-info {
+      flex: 1;
+    }
+    .sticky-booking-info span {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.7);
+      display: block;
+    }
+    .sticky-booking-info strong {
+      font-size: 1rem;
+      color: white;
+      font-weight: 700;
+    }
+    .btn-sticky-book {
+      background: linear-gradient(135deg, var(--orange-cta), #e0732c);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 50px;
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .btn-sticky-book:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+    @media (min-width: 881px) {
+      .sticky-booking-bar {
+        display: none;
+      }
+    }
+    @media (max-width: 880px) {
+      .sticky-booking-bar {
+        display: block;
+      }
+      .whatsapp-float {
+        bottom: 80px;
+      }
     }
     
     .hero {
@@ -272,7 +361,7 @@
       border: none;
     }
     
-    /* Galería Lightbox */
+    /* ========== NUEVA GALERÍA INTERACTIVA ========== */
     .gallery-container {
       max-width: 1100px;
       margin: 3rem auto 0;
@@ -304,113 +393,103 @@
     .gallery-item:hover img {
       transform: scale(1.05);
     }
-    .gallery-item-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-      padding: 1rem;
-      color: white;
-      font-size: 0.8rem;
-      font-weight: 500;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .gallery-item:hover .gallery-item-overlay {
-      opacity: 1;
-    }
     
-    /* Lightbox Modal para imágenes */
-    .lightbox {
+    /* Lightbox Moderno */
+    .lightbox-modern {
       display: none;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.95);
+      background: rgba(0, 0, 0, 0.95);
       z-index: 1000;
       justify-content: center;
       align-items: center;
-      cursor: pointer;
+      touch-action: none;
     }
-    .lightbox.active {
+    .lightbox-modern.active {
       display: flex;
     }
     .lightbox-content {
-      max-width: 90%;
-      max-height: 90%;
       position: relative;
-      -webkit-tap-highlight-color: transparent;
+      max-width: 90%;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .lightbox-content img {
-      width: 100%;
-      height: auto;
-      max-height: 85vh;
-      object-fit: contain;
+      max-width: 100%;
+      max-height: 75vh;
       border-radius: 12px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-      pointer-events: none;
-    }
-    .lightbox-close {
-      position: absolute;
-      top: -40px;
-      right: 0;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 2rem;
-      cursor: pointer;
-      transition: transform 0.2s;
-      z-index: 10;
-    }
-    .lightbox-close:hover {
-      transform: scale(1.1);
-    }
-    .lightbox-prev, .lightbox-next {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255,255,255,0.2);
-      border: none;
-      color: white;
-      font-size: 2rem;
-      padding: 1rem;
-      cursor: pointer;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-      z-index: 10;
-    }
-    .lightbox-prev:hover, .lightbox-next:hover {
-      background: rgba(255,255,255,0.4);
-      transform: translateY(-50%) scale(1.1);
-    }
-    .lightbox-prev {
-      left: -70px;
-    }
-    .lightbox-next {
-      right: -70px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      user-select: none;
+      -webkit-user-drag: none;
     }
     .lightbox-counter {
-      position: absolute;
-      bottom: -40px;
-      left: 50%;
-      transform: translateX(-50%);
       color: white;
-      font-size: 0.9rem;
-      background: rgba(0,0,0,0.5);
-      padding: 0.3rem 0.8rem;
+      margin-top: 15px;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.1);
+      padding: 6px 16px;
       border-radius: 20px;
-      z-index: 10;
+      font-weight: 600;
+    }
+    .close-btn {
+      position: absolute;
+      top: -50px;
+      right: 0;
+      color: white;
+      font-size: 35px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      transition: transform 0.2s;
+    }
+    .close-btn:hover {
+      transform: scale(1.1);
     }
     
-    /* Modal POPUP para las secciones del itinerario */
+    /* Animación del dedo indicador */
+    .swipe-hint {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 1010;
+      opacity: 0;
+    }
+    .swipe-hint.animar {
+      animation: aparecerYDeslizar 2.3s ease-in-out forwards;
+    }
+    .swipe-hint svg {
+      width: 75px;
+      height: 75px;
+      fill: rgba(255, 255, 255, 0.6);
+      filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.6));
+    }
+    @keyframes aparecerYDeslizar {
+      0% {
+        opacity: 0;
+        transform: translate(30%, -50%);
+      }
+      15% {
+        opacity: 1;
+        transform: translate(30%, -50%);
+      }
+      70% {
+        opacity: 1;
+        transform: translate(-70%, -50%);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-70%, -50%);
+      }
+    }
+    
+    /* Modal POPUP */
     .info-modal {
       display: none;
       position: fixed;
@@ -542,15 +621,6 @@
         grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
       }
-      .lightbox-prev, .lightbox-next {
-        width: 40px;
-        height: 40px;
-        font-size: 1.5rem;
-      }
-      .lightbox-prev { left: 10px; }
-      .lightbox-next { right: 10px; }
-      .lightbox-close { top: 10px; right: 10px; }
-      .lightbox-counter { bottom: -30px; }
       .modal-card {
         width: 95%;
       }
@@ -658,7 +728,8 @@
         display: none;
         flex-direction: column;
         width: 100%;
-        background: white;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(12px);
         padding: 24px;
         border-radius: 24px;
         margin-top: 20px;
@@ -704,6 +775,7 @@
       font-size: 2rem;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       z-index: 99;
+      transition: bottom 0.3s ease;
     }
     .horario-card.selected {
       border-color: #0EA5E9 !important;
@@ -921,6 +993,19 @@
   </div>
 </header>
 
+<!-- STICKY BOOKING BAR (MÓVIL) -->
+<div id="stickyBookingBar" class="sticky-booking-bar">
+  <div class="sticky-booking-content">
+    <div class="sticky-booking-info">
+      <span data-key="sticky_subtitle">Reserva tu lugar</span>
+      <strong data-key="sticky_price">⭐ ¡Precios especiales! ⭐</strong>
+    </div>
+    <button id="stickyBookBtn" class="btn-sticky-book">
+      <i class="fas fa-calendar-check"></i> <span data-key="sticky_btn">Reservar Ahora</span>
+    </button>
+  </div>
+</div>
+
 <section id="inicio" class="hero">
   <div class="hero-content">
     <h1 data-key="hero_title">O passeio mais completo da Costa Esmeralda</h1>
@@ -986,20 +1071,14 @@
       <p>Contenido del popup...</p>
     </div>
     <div class="modal-footer">
-      <button class="btn-read-aloud" id="readAloudBtn">
-        <i class="fas fa-volume-up"></i> Leer en voz alta
-      </button>
-      <button class="btn-share-wa" id="shareWhatsappBtn">
-        <i class="fab fa-whatsapp"></i> Compartir
-      </button>
-      <button class="btn-modal-close" id="closeModalFooterBtn">
-        Cerrar
-      </button>
+      <button class="btn-read-aloud" id="readAloudBtn"><i class="fas fa-volume-up"></i> Leer en voz alta</button>
+      <button class="btn-share-wa" id="shareWhatsappBtn"><i class="fab fa-whatsapp"></i> Compartir</button>
+      <button class="btn-modal-close" id="closeModalFooterBtn">Cerrar</button>
     </div>
   </div>
 </div>
 
-<!-- SECCIÓN GALERÍA -->
+<!-- SECCIÓN GALERÍA CON NUEVO ESTILO INTERACTIVO -->
 <section id="galeria" class="section">
   <div class="container">
     <h2 class="section-title" data-key="gallery_title">Viva essa aventura</h2>
@@ -1017,31 +1096,21 @@
     </div>
     
     <div class="gallery-container">
-      <div class="gallery-grid" id="galleryGrid">
-        <div class="gallery-item" data-index="0"><img src="https://images.pexels.com/photos/163033/boat-speed-boat-vehicle-163033.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Barco Angel Tour"><div class="gallery-item-overlay"><i class="fas fa-search-plus"></i> Ver imagen</div></div>
-        <div class="gallery-item" data-index="1"><img src="https://images.pexels.com/photos/457882/pexels-photo-457882.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Praia paradisíaca"><div class="gallery-item-overlay"><i class="fas fa-search-plus"></i> Ver imagen</div></div>
-        <div class="gallery-item" data-index="2"><img src="https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Tobogã divertido"><div class="gallery-item-overlay"><i class="fas fa-search-plus"></i> Ver imagen</div></div>
-        <div class="gallery-item" data-index="3"><img src="https://images.pexels.com/photos/3094799/pexels-photo-3094799.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Frutas tropicais"><div class="gallery-item-overlay"><i class="fas fa-search-plus"></i> Ver imagen</div></div>
-        <div class="gallery-item" data-index="4"><img src="https://images.pexels.com/photos/842548/pexels-photo-842548.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Pôr do sol no mar"><div class="gallery-item-overlay"><i class="fas fa-search-plus"></i> Ver imagen</div></div>
-        <div class="gallery-item" data-index="5"><img src="https://images.pexels.com/photos/260689/pexels-photo-260689.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Grupo de amigos"><div class="gallery-item-overlay"><i class="fas fa-search-plus"></i> Ver imagen</div></div>
-        <div class="gallery-item" data-index="6"><img src="https://images.pexels.com/photos/753626/pexels-photo-753626.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Paisagem marinha"><div class="gallery-item-overlay"><i class="fas fa-search-plus"></i> Ver imagen</div></div>
-        <div class="gallery-item" data-index="7"><img src="https://images.pexels.com/photos/1271619/pexels-photo-1271619.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Barco navegando"><div class="gallery-item-overlay"><i class="fas fa-search-plus"></i> Ver imagen</div></div>
-        <div class="gallery-item" data-index="8"><img src="https://images.pexels.com/photos/1658967/pexels-photo-1658967.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Costa Esmeralda"><div class="gallery-item-overlay"><i class="fas fa-search-plus"></i> Ver imagen</div></div>
-        <div class="gallery-item" data-index="9"><img src="https://images.pexels.com/photos/2612304/pexels-photo-2612304.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Família feliz"><div class="gallery-item-overlay"><i class="fas fa-search-plus"></i> Ver imagen</div></div>
-        <div class="gallery-item" data-index="10"><img src="https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Trilha na praia"><div class="gallery-item-overlay"><i class="fas fa-search-plus"></i> Ver imagen</div></div>
-        <div class="gallery-item" data-index="11"><img src="https://images.pexels.com/photos/3220567/pexels-photo-3220567.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Vista aérea"><div class="gallery-item-overlay"><i class="fas fa-search-plus"></i> Ver imagen</div></div>
-      </div>
+      <div class="gallery-grid" id="gridGaleria"></div>
     </div>
   </div>
 </section>
 
-<div id="lightbox" class="lightbox">
-  <div class="lightbox-content" id="lightboxContent">
-    <button class="lightbox-close">&times;</button>
-    <button class="lightbox-prev"><i class="fas fa-chevron-left"></i></button>
-    <img id="lightbox-img" src="" alt="">
-    <button class="lightbox-next"><i class="fas fa-chevron-right"></i></button>
-    <div class="lightbox-counter" id="lightbox-counter"></div>
+<div id="lightboxModern" class="lightbox-modern">
+  <div class="lightbox-content">
+    <button class="close-btn" id="closeLightboxBtn">&times;</button>
+    <div id="swipeHint" class="swipe-hint">
+      <svg viewBox="0 0 24 24">
+        <path d="M10 21.5c-2.21 0-4-1.79-4-4v-1.92l-.76-.32c-1.32-.56-2.07-1.93-1.83-3.34.21-1.22 1.21-2.15 2.45-2.22l.14-.01v-3.7c0-1.66 1.34-3 3-3s3 1.34 3 3v3.19c.31-.12.64-.19 1-.19.98 0 1.83.53 2.3 1.31.33-.2.72-.31 1.15-.31.91 0 1.7.53 2.1 1.3.36-.19.78-.3 1.22-.3 1.38 0 2.5 1.12 2.5 2.5v4c0 3.86-3.14 7-7 7h-3.32zm-2-5.92V17.5c0 1.1.9 2 2 2h3.32c2.76 0 5-2.24 5-5v-4c0-.28-.22-.5-.5-.5s-.5.22-.5.5v3h-1v-4.5c0-.28-.22-.5-.5-.5s-.5.22-.5.5v4.5h-1v-5c0-.28-.22-.5-.5-.5s-.5.22-.5.5v5h-1V6c0-.55-.45-1-1-1s-1 .45-1 1v7.71c-.72.33-1.25 1.01-1.38 1.83l-.01.12c-.08.45.15.89.57 1.07l1.32.55z"/>
+      </svg>
+    </div>
+    <img id="lightboxImg" src="" alt="Imagen ampliada">
+    <div class="lightbox-counter" id="fotoContador">1 / 12</div>
   </div>
 </div>
 
@@ -1180,7 +1249,116 @@
 <a href="https://wa.me/5547999991234?text=Olá! Gostaria de informações sobre o passeio de barco" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
 <script>
-  // ========== MODAL POPUP CON LECTOR DE VOZ (TEXT-TO-SPEECH) ==========
+  // ========== STICKY BOOKING BAR (MÓVIL) ==========
+  const stickyBar = document.getElementById('stickyBookingBar');
+  const heroSection = document.getElementById('inicio');
+  const stickyBookBtn = document.getElementById('stickyBookBtn');
+  
+  let lastScrollY = 0;
+  
+  function checkStickyBar() {
+    if (window.innerWidth <= 880) {
+      const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+      const scrollY = window.scrollY;
+      
+      if (scrollY > heroBottom - 100) {
+        stickyBar.classList.add('show');
+      } else {
+        stickyBar.classList.remove('show');
+      }
+      lastScrollY = scrollY;
+    } else {
+      stickyBar.classList.remove('show');
+    }
+  }
+  
+  window.addEventListener('scroll', checkStickyBar);
+  window.addEventListener('resize', checkStickyBar);
+  checkStickyBar();
+  
+  if (stickyBookBtn) {
+    stickyBookBtn.addEventListener('click', () => {
+      const reservaSection = document.getElementById('reserva');
+      if (reservaSection) {
+        reservaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+
+  // ========== NUEVA GALERÍA INTERACTIVA ==========
+  const idsImagenes = [1057, 1043, 1011, 1044, 1050, 1069, 1025, 1035, 1074, 1084, 110, 112];
+  const imagenesGrandes = idsImagenes.map(id => `https://picsum.photos/1200/900?image=${id}`);
+  const imagenesChicas = idsImagenes.map(id => `https://picsum.photos/400/300?image=${id}`);
+
+  const grid = document.getElementById('gridGaleria');
+  let indiceActual = 0;
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  imagenesChicas.forEach((urlMiniatura, indice) => {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.setAttribute('onclick', `abrirLightbox(${indice})`);
+    
+    const img = document.createElement('img');
+    img.src = urlMiniatura;
+    img.alt = `Foto ${indice + 1}`;
+    img.loading = 'lazy';
+    
+    item.appendChild(img);
+    grid.appendChild(item);
+  });
+
+  function abrirLightbox(indice) {
+    indiceActual = indice;
+    actualizarLightbox();
+    document.getElementById('lightboxModern').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    const hint = document.getElementById('swipeHint');
+    hint.classList.remove('animar');
+    void hint.offsetWidth;
+    hint.classList.add('animar');
+  }
+
+  function actualizarLightbox() {
+    const contenedorImg = document.getElementById('lightboxImg');
+    contenedorImg.src = imagenesGrandes[indiceActual];
+    document.getElementById('fotoContador').innerText = `${indiceActual + 1} / ${imagenesGrandes.length}`;
+  }
+
+  function cambiarImagen(direccion) {
+    indiceActual += direccion;
+    if (indiceActual < 0) indiceActual = imagenesGrandes.length - 1;
+    else if (indiceActual >= imagenesGrandes.length) indiceActual = 0;
+    actualizarLightbox();
+    document.getElementById('swipeHint').classList.remove('animar');
+  }
+
+  function cerrarLightbox() {
+    document.getElementById('lightboxModern').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  const lightboxModern = document.getElementById('lightboxModern');
+  lightboxModern.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+  lightboxModern.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    const limite = 60;
+    if (touchStartX - touchEndX > limite) cambiarImagen(1);
+    if (touchEndX - touchStartX > limite) cambiarImagen(-1);
+  });
+  lightboxModern.addEventListener('click', e => { if (e.target === lightboxModern) cerrarLightbox(); });
+  document.getElementById('closeLightboxBtn').addEventListener('click', cerrarLightbox);
+  document.addEventListener('keydown', e => {
+    if (lightboxModern.classList.contains('active')) {
+      if (e.key === 'Escape') cerrarLightbox();
+      if (e.key === 'ArrowRight') cambiarImagen(1);
+      if (e.key === 'ArrowLeft') cambiarImagen(-1);
+    }
+  });
+
+  // ========== MODAL POPUP CON LECTOR DE VOZ ==========
   const modal = document.getElementById('infoModal');
   const modalTitle = document.getElementById('modalTitle');
   const modalBody = document.getElementById('modalBody');
@@ -1193,6 +1371,7 @@
   let speechSynthesis = window.speechSynthesis;
   let currentUtterance = null;
   let isSpeaking = false;
+  let currentLang = 'pt';
   
   function stopReading() {
     if (speechSynthesis) {
@@ -1204,37 +1383,14 @@
   }
   
   function readTextAloud(text, lang) {
-    if (!speechSynthesis) {
-      alert('Tu navegador no soporta la síntesis de voz');
-      return;
-    }
-    
+    if (!speechSynthesis) return alert('Tu navegador no soporta síntesis de voz');
     stopReading();
-    
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = lang === 'es' ? 'es-ES' : (lang === 'pt' ? 'pt-BR' : 'en-US');
     utterance.rate = 0.9;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-    
-    utterance.onstart = () => {
-      isSpeaking = true;
-      readAloudBtn.innerHTML = '<i class="fas fa-stop"></i> Detener';
-      readAloudBtn.classList.add('stop');
-    };
-    
-    utterance.onend = () => {
-      isSpeaking = false;
-      readAloudBtn.innerHTML = '<i class="fas fa-volume-up"></i> Leer en voz alta';
-      readAloudBtn.classList.remove('stop');
-    };
-    
-    utterance.onerror = () => {
-      isSpeaking = false;
-      readAloudBtn.innerHTML = '<i class="fas fa-volume-up"></i> Leer en voz alta';
-      readAloudBtn.classList.remove('stop');
-    };
-    
+    utterance.onstart = () => { isSpeaking = true; readAloudBtn.innerHTML = '<i class="fas fa-stop"></i> Detener'; readAloudBtn.classList.add('stop'); };
+    utterance.onend = () => { isSpeaking = false; readAloudBtn.innerHTML = '<i class="fas fa-volume-up"></i> Leer en voz alta'; readAloudBtn.classList.remove('stop'); };
+    utterance.onerror = () => { isSpeaking = false; readAloudBtn.innerHTML = '<i class="fas fa-volume-up"></i> Leer en voz alta'; readAloudBtn.classList.remove('stop'); };
     currentUtterance = utterance;
     speechSynthesis.speak(utterance);
   }
@@ -1243,66 +1399,43 @@
     currentStepData = stepData;
     modalTitle.textContent = stepData.title;
     modalBody.innerHTML = `<p><strong>${stepData.desc}</strong></p><p>${stepData.longtext}</p>`;
-    modal.classList.add('active');
+    modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
     stopReading();
   }
   
-  function closeModal() {
+  function closeModalFunc() {
     stopReading();
-    modal.classList.remove('active');
+    modal.style.display = 'none';
     document.body.style.overflow = '';
     currentStepData = null;
   }
   
-  closeModalBtn.addEventListener('click', closeModal);
-  closeModalFooterBtn.addEventListener('click', closeModal);
-  
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
-  });
+  closeModalBtn.addEventListener('click', closeModalFunc);
+  closeModalFooterBtn.addEventListener('click', closeModalFunc);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModalFunc(); });
   
   shareWhatsappBtn.addEventListener('click', () => {
     if (currentStepData) {
-      const message = `🌟 *ANGEL TOUR BRASIL* 🌟\n\n📌 *${currentStepData.title}*\n📍 ${currentStepData.desc}\n\n📖 ${currentStepData.longtext}\n\n✅ ¡Vive esta experiencia única en la Costa Esmeralda!\n🔗 Más información: https://www.angeltourbrasil.com.br`;
+      const message = `🌟 *ANGEL TOUR BRASIL* 🌟\n\n📌 *${currentStepData.title}*\n📍 ${currentStepData.desc}\n\n📖 ${currentStepData.longtext}\n\n✅ ¡Vive esta experiencia única en la Costa Esmeralda!`;
       window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
     }
   });
   
   readAloudBtn.addEventListener('click', () => {
     if (currentStepData) {
-      if (isSpeaking) {
-        stopReading();
-      } else {
-        const textToRead = `${currentStepData.title}. ${currentStepData.desc}. ${currentStepData.longtext}`;
-        readTextAloud(textToRead, currentLang);
-      }
+      if (isSpeaking) stopReading();
+      else readTextAloud(`${currentStepData.title}. ${currentStepData.desc}. ${currentStepData.longtext}`, currentLang);
     }
   });
   
-  // Asignar eventos a las tarjetas del itinerario
   const timelineSteps = document.querySelectorAll('.timeline-step');
-  
-  function updateStepData() {
-    timelineSteps.forEach(step => {
-      const titleKey = step.getAttribute(`data-key-${currentLang}`);
-      const descKey = step.getAttribute(`data-desc-${currentLang}`);
-      const longtextKey = step.getAttribute(`data-longtext-${currentLang}`);
-      
-      if (titleKey) {
-        step.setAttribute('data-title', titleKey);
-        step.setAttribute('data-desc', descKey);
-        step.setAttribute('data-longtext', longtextKey);
-      }
-    });
-  }
-  
   timelineSteps.forEach(step => {
     step.addEventListener('click', () => {
       const stepData = {
-        title: step.getAttribute('data-title'),
-        desc: step.getAttribute('data-desc'),
-        longtext: step.getAttribute('data-longtext')
+        title: step.getAttribute('data-title') || step.querySelector('h3')?.innerText || '',
+        desc: step.getAttribute('data-desc') || step.querySelector('p')?.innerText || '',
+        longtext: step.getAttribute('data-longtext') || ''
       };
       openModal(stepData);
     });
@@ -1334,6 +1467,9 @@
       footer_nav: "Navegación", footer_home: "Inicio", footer_route: "Itinerario", footer_gallery: "Galería", footer_follow: "Sigue la aventura",
       footer_copyright: "© 2026 Angel Tour Brasil – El paseo más completo de la Costa Esmeralda.",
       map_text: "Abrir en Google Maps",
+      sticky_subtitle: "Reserva tu lugar",
+      sticky_price: "⭐ ¡Precios especiales! ⭐",
+      sticky_btn: "Reservar Ahora",
       fecha: "FECHA DEL PASEO",
       horario: "PREFERENCIA DE HORARIO",
       horario1: "Mañana",
@@ -1381,6 +1517,9 @@
       footer_nav: "Navegação", footer_home: "Início", footer_route: "Itinerário", footer_gallery: "Galeria", footer_follow: "Siga a aventura",
       footer_copyright: "© 2026 Angel Tour Brasil – O passeio mais completo da Costa Esmeralda.",
       map_text: "Abrir no Google Maps",
+      sticky_subtitle: "Reserve seu lugar",
+      sticky_price: "⭐ Preços especiais! ⭐",
+      sticky_btn: "Reservar Agora",
       fecha: "DATA DO PASSEIO",
       horario: "PREFERÊNCIA DE HORÁRIO",
       horario1: "Manhã",
@@ -1428,6 +1567,9 @@
       footer_nav: "Navigation", footer_home: "Home", footer_route: "Itinerary", footer_gallery: "Gallery", footer_follow: "Follow the adventure",
       footer_copyright: "© 2026 Angel Tour Brasil – The most complete tour of the Emerald Coast.",
       map_text: "Open in Google Maps",
+      sticky_subtitle: "Book your spot",
+      sticky_price: "⭐ Special prices! ⭐",
+      sticky_btn: "Book Now",
       fecha: "TOUR DATE",
       horario: "TIME PREFERENCE",
       horario1: "Morning",
@@ -1453,43 +1595,56 @@
     }
   };
 
-  let currentLang = 'pt';
-  let pendingFormData = null;
-  let isSubmitting = false;
-  let locationPromise = null;
-  let userLocationFormatted = "Detectando...";
-
-  function getLangCode(lang) {
-    const codes = { 'es': 'ESP', 'pt': 'POR', 'en': 'ENG' };
-    return codes[lang] || 'ESP';
+  function changeLanguage(lang) {
+    currentLang = lang;
+    const t = translations[lang];
+    document.querySelectorAll('[data-key]').forEach(el => {
+      const key = el.getAttribute('data-key');
+      if (t[key]) el.textContent = t[key];
+    });
+    document.getElementById('textFecha').textContent = t.fecha;
+    document.getElementById('textHorario').textContent = t.horario;
+    document.getElementById('textNombre').textContent = t.nombre;
+    document.getElementById('textEmpresa').textContent = t.empresa;
+    document.getElementById('textAdultos').textContent = t.adultos;
+    document.getElementById('textMenores').textContent = t.menores;
+    document.getElementById('textTotal').textContent = t.total;
+    document.getElementById('btnText').textContent = t.btn;
+    document.getElementById('horarioNote').textContent = t.horario_note;
+    document.getElementById('empresaNote').textContent = t.empresa_note;
+    document.getElementById('infoNoteText').textContent = t.info_text;
+    document.getElementById('discountBadge').textContent = t.discount_text;
+    document.getElementById('precioAdultos').textContent = t.precio_adultos;
+    document.getElementById('footerBoat').textContent = t.footer_boat;
+    document.getElementById('footerSecure').textContent = t.footer_secure;
+    document.getElementById('footerConfirm').textContent = t.footer_confirm;
+    document.getElementById('horarioTitulo1').textContent = t.horario1;
+    document.getElementById('horarioTitulo2').textContent = t.horario2;
+    document.getElementById('horarioTitulo3').textContent = t.horario3;
+    
+    timelineSteps.forEach(step => {
+      const titleKey = step.getAttribute(`data-key-${lang}`);
+      const descKey = step.getAttribute(`data-desc-${lang}`);
+      const longtextKey = step.getAttribute(`data-longtext-${lang}`);
+      if (titleKey) {
+        step.setAttribute('data-title', titleKey);
+        step.setAttribute('data-desc', descKey);
+        step.setAttribute('data-longtext', longtextKey);
+        step.querySelector('h3').textContent = titleKey;
+        step.querySelector('p').textContent = descKey;
+      }
+    });
+    
+    document.querySelectorAll('.lang-btn-header').forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+    });
+    
+    loadWeatherWidget(lang);
+    localStorage.setItem('preferred_language', lang);
   }
 
-  async function getUserLocation() {
-    const apis = [
-      { url: 'https://ipapi.co/json/', parser: (data) => { if (data && data.country_code) { let location = data.country_code.toUpperCase(); if (data.city) location = `${location} - ${data.city}`; else if (data.region) location = `${location} - ${data.region}`; return location; } return null; } },
-      { url: 'https://ipwho.is/', parser: (data) => { if (data && data.country_code && data.success !== false) { let location = data.country_code.toUpperCase(); if (data.city) location = `${location} - ${data.city}`; else if (data.region) location = `${location} - ${data.region}`; return location; } return null; } }
-    ];
-    for (const api of apis) {
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000);
-        const response = await fetch(api.url, { signal: controller.signal });
-        clearTimeout(timeoutId);
-        if (response.ok) {
-          const data = await response.json();
-          const location = api.parser(data);
-          if (location && location !== ' - ' && location !== 'undefined - undefined' && location.length > 1) {
-            userLocationFormatted = location;
-            return;
-          }
-        }
-      } catch (error) { continue; }
-    }
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Desconocida';
-    userLocationFormatted = `INT - ${timezone.split('/')[0]}`;
-  }
-
-  function loadWeatherWidget(lang) {
+  async function loadWeatherWidget(lang) {
     const container = document.getElementById('weatherWidgetPlaceholder');
     if (!container) return;
     const widgetLangMap = { 'es': 'es', 'pt': 'pt', 'en': 'en' };
@@ -1519,47 +1674,10 @@
     document.head.appendChild(script);
   }
 
-  function formatDateToDDMMYYYY(dateString) {
-    if (!dateString) return '';
-    const parts = dateString.split('-');
-    if (parts.length !== 3) return dateString;
-    return `${parts[2]}/${parts[1]}/${parts[0]}`;
-  }
-
-  function getHorarioText(value) {
-    const map = { '09:30': '9:30 Hs', '11:10': '11:10 Hs', '13:00': '13:00 Hs' };
-    return map[value] || value;
-  }
-
-  function sanitizeText(input) {
-    if (!input) return '';
-    return input.replace(/[<>]/g, function(m) { if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }).trim().slice(0, 200);
-  }
-
-  function isValidDate(dateString) {
-    if (!dateString) return false;
-    const selectedDate = new Date(dateString);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return selectedDate >= today;
-  }
-
-  function isValidName(name) {
-    if (!name || name.length < 2) return false;
-    const regex = /^[a-zA-ZáéíóúñÁÉÍÓÚÑ\s]+$/;
-    return regex.test(name);
-  }
-
-  function isValidNumber(value, min = 0, max = 99) {
-    const num = parseInt(value);
-    if (isNaN(num)) return false;
-    return num >= min && num <= max;
-  }
-
   function calcularValorTotal() {
     const adultos = parseInt(document.getElementById('adultos').value) || 0;
     const menores = parseInt(document.getElementById('menores').value) || 0;
-    const total = (adultos * 85.00) + (menores * 42.50);
+    const total = (adultos * 85) + (menores * 42.5);
     document.getElementById('valorTotal').value = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     return total;
   }
@@ -1575,213 +1693,10 @@
     }
   }
 
-  function changeLanguage(lang) {
-    currentLang = lang;
-    const t = translations[lang];
-    
-    document.querySelectorAll('[data-key]').forEach(el => {
-      const key = el.getAttribute('data-key');
-      if (t[key]) el.textContent = t[key];
-    });
-    
-    document.getElementById('textFecha').textContent = t.fecha;
-    document.getElementById('textHorario').textContent = t.horario;
-    document.getElementById('textNombre').textContent = t.nombre;
-    document.getElementById('textEmpresa').textContent = t.empresa;
-    document.getElementById('textAdultos').textContent = t.adultos;
-    document.getElementById('textMenores').textContent = t.menores;
-    document.getElementById('textTotal').textContent = t.total;
-    document.getElementById('btnText').textContent = t.btn;
-    document.getElementById('horarioNote').textContent = t.horario_note;
-    document.getElementById('empresaNote').textContent = t.empresa_note;
-    document.getElementById('infoNoteText').textContent = t.info_text;
-    document.getElementById('discountBadge').textContent = t.discount_text;
-    document.getElementById('precioAdultos').textContent = t.precio_adultos;
-    document.getElementById('footerBoat').textContent = t.footer_boat;
-    document.getElementById('footerSecure').textContent = t.footer_secure;
-    document.getElementById('footerConfirm').textContent = t.footer_confirm;
-    
-    document.getElementById('horarioTitulo1').textContent = t.horario1;
-    document.getElementById('horarioTitulo2').textContent = t.horario2;
-    document.getElementById('horarioTitulo3').textContent = t.horario3;
-    
-    // Actualizar los datos de las tarjetas del itinerario según el idioma
-    timelineSteps.forEach(step => {
-      const titleVal = step.getAttribute(`data-key-${lang}`);
-      const descVal = step.getAttribute(`data-desc-${lang}`);
-      const longtextVal = step.getAttribute(`data-longtext-${lang}`);
-      if (titleVal) {
-        step.setAttribute('data-title', titleVal);
-        step.setAttribute('data-desc', descVal);
-        step.setAttribute('data-longtext', longtextVal);
-      }
-    });
-    
-    document.querySelectorAll('.lang-btn-header').forEach(btn => {
-      btn.classList.remove('active');
-      if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
-    });
-    
-    loadWeatherWidget(lang);
-    localStorage.setItem('preferred_language', lang);
-  }
-
-  function showModalWithData(formDataObj) {
-    const t = translations[currentLang];
-    const adultosNum = parseInt(formDataObj.adultos) || 0;
-    const menoresNum = parseInt(formDataObj.menores) || 0;
-    const totalValue = (adultosNum * 85.00) + (menoresNum * 42.50);
-    const totalFormatted = totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    const fechaFormateada = formatDateToDDMMYYYY(formDataObj.fecha);
-    const horarioDisplay = getHorarioText(formDataObj.horario);
-    
-    const modalHtml = `
-      <div id="confirmModal" style="display:flex; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px); z-index:1000; justify-content:center; align-items:center;">
-        <div style="background:#FFFFFF; border-radius:28px; max-width:440px; width:90%; padding:1.6rem; border:1px solid #E2E8F0; box-shadow:0 25px 45px -12px rgba(0,0,0,0.25);">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; padding-bottom:0.7rem; border-bottom:2px solid #E2E8F0;">
-            <h3 style="font-size:1.3rem; font-weight:700;">📋 ${t.modal_title}</h3>
-            <button id="closeModalBtnConfirm" style="background:none; border:none; font-size:1.6rem; cursor:pointer;">&times;</button>
-          </div>
-          <div style="margin:1rem 0; max-height:400px; overflow-y:auto;">
-            <div style="display:flex; justify-content:space-between; padding:0.75rem 0; border-bottom:1px solid #E2E8F0;"><span style="font-weight:600;">${t.fecha}:</span><span>${fechaFormateada}</span></div>
-            <div style="display:flex; justify-content:space-between; padding:0.75rem 0; border-bottom:1px solid #E2E8F0;"><span style="font-weight:600;">${t.horario}:</span><span>${horarioDisplay}</span></div>
-            <div style="display:flex; justify-content:space-between; padding:0.75rem 0; border-bottom:1px solid #E2E8F0;"><span style="font-weight:600;">${t.nombre}:</span><span>${sanitizeText(formDataObj.nombre)}</span></div>
-            <div style="display:flex; justify-content:space-between; padding:0.75rem 0; border-bottom:1px solid #E2E8F0;"><span style="font-weight:600;">${t.empresa}:</span><span>${sanitizeText(formDataObj.empresa) || '—'}</span></div>
-            <div style="display:flex; justify-content:space-between; padding:0.75rem 0; border-bottom:1px solid #E2E8F0;"><span style="font-weight:600;">${t.adultos}:</span><span>${formDataObj.adultos}</span></div>
-            <div style="display:flex; justify-content:space-between; padding:0.75rem 0; border-bottom:1px solid #E2E8F0;"><span style="font-weight:600;">${t.menores}:</span><span>${formDataObj.menores} <span style="font-size:0.7rem;">(50% off)</span></span></div>
-            <div style="margin-top:0.5rem; background:#F8FAFC; border-radius:16px; padding:0.7rem;"><div style="display:flex; justify-content:space-between;"><span style="font-weight:600;">${t.total}:</span><span style="color:#0EA5E9; font-weight:700;">${totalFormatted}</span></div></div>
-          </div>
-          <div style="display:flex; gap:0.9rem; margin-top:1.2rem;">
-            <button id="cancelModalBtnConfirm" style="flex:1; padding:0.8rem; border-radius:60px; font-weight:600; background:#F1F5F9; border:1px solid #E2E8F0; cursor:pointer;">${t.modal_cancel}</button>
-            <button id="confirmSendBtnConfirm" style="flex:1; padding:0.8rem; border-radius:60px; font-weight:600; background:linear-gradient(105deg, #25D366, #128C7E); color:white; border:none; cursor:pointer;">${t.modal_confirm}</button>
-          </div>
-        </div>
-      </div>
-    `;
-    const existingModal = document.getElementById('confirmModal');
-    if (existingModal) existingModal.remove();
-    document.body.insertAdjacentHTML('beforeend', modalHtml);
-    pendingFormData = { ...formDataObj, totalFormatted, fechaFormateada, horarioDisplay };
-    document.getElementById('closeModalBtnConfirm').addEventListener('click', () => document.getElementById('confirmModal').remove());
-    document.getElementById('cancelModalBtnConfirm').addEventListener('click', () => document.getElementById('confirmModal').remove());
-    document.getElementById('confirmSendBtnConfirm').addEventListener('click', sendToWhatsApp);
-  }
-
-  async function sendToWhatsApp() {
-    if (!pendingFormData || isSubmitting) return;
-    isSubmitting = true;
-    const btnSubmitElem = document.getElementById('btnSubmit');
-    if (btnSubmitElem) btnSubmitElem.disabled = true;
-    if (locationPromise) await locationPromise;
-    const totalFormatted = pendingFormData.totalFormatted;
-    const langCode = getLangCode(currentLang);
-    const message = `🔹 *NUEVA RESERVA ANGEL TOUR* 🔹\n    ${langCode} - ${userLocationFormatted}\n\n📅 *Fecha:* ${pendingFormData.fechaFormateada}\n⏰ *Horario:* ${pendingFormData.horarioDisplay}\n👤 *Nombre:* ${sanitizeText(pendingFormData.nombre)}\n🏢 *Empresa:* ${sanitizeText(pendingFormData.empresa) || "No especificada"}\n👥 *Adultos:* ${pendingFormData.adultos}\n🧒 *Menores:* ${pendingFormData.menores}\n💰 *Total:* ${totalFormatted}\n\n✅ Reserva via formulario web.`;
-    window.open(`https://wa.me/5547999679084?text=${encodeURIComponent(message)}`, '_blank');
-    const modal = document.getElementById('confirmModal');
-    if (modal) modal.remove();
-    const successText = currentLang === 'pt' ? '✓ ENVIADO!' : (currentLang === 'es' ? '✓ ENVIADO!' : '✓ SENT!');
-    if (btnSubmitElem) {
-      btnSubmitElem.innerHTML = `<i class="fab fa-whatsapp"></i> <span>${successText}</span>`;
-      setTimeout(() => { 
-        btnSubmitElem.innerHTML = `<i class="fab fa-whatsapp"></i> <span id="btnText">${translations[currentLang].btn}</span>`; 
-        btnSubmitElem.disabled = false; 
-        isSubmitting = false; 
-      }, 3000);
-    }
-    document.getElementById('dataForm').reset();
-    document.getElementById('adultos').value = '0';
-    document.getElementById('menores').value = '0';
-    calcularValorTotal();
-    document.getElementById('fecha').value = '';
-    document.getElementById('nombre').value = '';
-    document.getElementById('empresa').value = '';
-    document.querySelectorAll('.horario-card').forEach(c => c.classList.remove('selected'));
-    document.getElementById('horario').value = '';
-  }
-
-  // ========== INICIALIZACIÓN Y EVENTOS ==========
-  locationPromise = getUserLocation();
-  
+  // Inicialización
   const garantiaBtn = document.querySelector('.garantia-link');
-  if (garantiaBtn) {
-    garantiaBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      scrollToSectionWithOffset('reserva');
-    });
-  }
-  
-  // LIGHTBOX CON SWIPE
-  const galleryItems = document.querySelectorAll('.gallery-item');
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-  const lightboxClose = document.querySelector('.lightbox-close');
-  const lightboxPrev = document.querySelector('.lightbox-prev');
-  const lightboxNext = document.querySelector('.lightbox-next');
-  const lightboxCounter = document.getElementById('lightbox-counter');
-  let currentImageIndex = 0;
-  const images = [];
-  let touchStartX = 0, touchEndX = 0, touchStartY = 0, touchEndY = 0;
-  
-  galleryItems.forEach((item, index) => {
-    const img = item.querySelector('img');
-    images.push(img.src);
-    item.addEventListener('click', () => {
-      currentImageIndex = index;
-      updateLightboxImage();
-      lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
-  });
-  
-  function updateLightboxImage() {
-    lightboxImg.src = images[currentImageIndex];
-    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
-  }
-  
-  function nextImage() {
-    currentImageIndex = (currentImageIndex + 1) % images.length;
-    updateLightboxImage();
-  }
-  
-  function prevImage() {
-    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-    updateLightboxImage();
-  }
-  
-  function closeLightbox() {
-    lightbox.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-  
-  lightbox.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-    touchStartY = e.changedTouches[0].screenY;
-  });
-  
-  lightbox.addEventListener('touchend', (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    touchEndY = e.changedTouches[0].screenY;
-    const deltaX = touchEndX - touchStartX;
-    const deltaY = touchEndY - touchStartY;
-    const minSwipeDistance = 50;
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
-      if (deltaX > 0) prevImage();
-      else nextImage();
-    }
-  });
-  
-  lightboxClose.addEventListener('click', closeLightbox);
-  lightboxNext.addEventListener('click', nextImage);
-  lightboxPrev.addEventListener('click', prevImage);
-  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-  document.addEventListener('keydown', (e) => {
-    if (!lightbox.classList.contains('active')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowRight') nextImage();
-    if (e.key === 'ArrowLeft') prevImage();
-  });
+  if (garantiaBtn) garantiaBtn.addEventListener('click', e => { e.preventDefault(); scrollToSectionWithOffset('reserva'); });
 
-  // MENÚ MÓVIL
   const menuToggle = document.getElementById('menuToggle');
   const navLinksElem = document.getElementById('navLinks');
   const navLinkItems = document.querySelectorAll('.nav-link');
@@ -1793,56 +1708,54 @@
     }
   }
   
-  if (menuToggle) {
-    menuToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      navLinksElem.classList.toggle('active');
-    });
-  }
-  
+  if (menuToggle) menuToggle.addEventListener('click', e => { e.stopPropagation(); navLinksElem.classList.toggle('active'); });
   navLinkItems.forEach(link => {
-    link.addEventListener('click', (e) => {
+    link.addEventListener('click', e => {
       e.preventDefault();
       const href = link.getAttribute('href');
       if (href && href !== '#') scrollToSectionWithOffset(href.substring(1));
       closeMenuOnMobile();
     });
   });
-  
-  langButtonsHeader.forEach(btn => {
-    btn.addEventListener('click', () => {
-      setTimeout(() => closeMenuOnMobile(), 100);
-    });
-  });
-  
-  document.addEventListener('click', (e) => {
+  langButtonsHeader.forEach(btn => btn.addEventListener('click', () => setTimeout(() => closeMenuOnMobile(), 100)));
+  document.addEventListener('click', e => {
     if (window.innerWidth <= 880 && navLinksElem && menuToggle && !navLinksElem.contains(e.target) && !menuToggle.contains(e.target)) {
       navLinksElem.classList.remove('active');
     }
   });
 
-  // BOTONES DE IDIOMA DEL HEADER
   langButtonsHeader.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const lang = btn.getAttribute('data-lang');
-      changeLanguage(lang);
-    });
+    btn.addEventListener('click', () => changeLanguage(btn.getAttribute('data-lang')));
   });
   
-  // Inicializar idioma
   const savedLanguage = localStorage.getItem('preferred_language');
-  if (savedLanguage && translations[savedLanguage]) {
-    changeLanguage(savedLanguage);
-  } else {
-    changeLanguage('pt');
-  }
+  changeLanguage(savedLanguage && translations[savedLanguage] ? savedLanguage : 'pt');
+  
+  document.getElementById('adultos').addEventListener('input', calcularValorTotal);
+  document.getElementById('menores').addEventListener('input', calcularValorTotal);
+  const todayDate = new Date().toISOString().split('T')[0];
+  document.getElementById('fecha').setAttribute('min', todayDate);
+  
+  document.getElementById('dataForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const fecha = document.getElementById('fecha').value;
+    const horario = document.getElementById('horario').value;
+    const nombre = document.getElementById('nombre').value.trim();
+    const empresa = document.getElementById('empresa').value.trim();
+    const adultos = document.getElementById('adultos').value;
+    const menores = document.getElementById('menores').value;
+    if (!fecha || !horario || !nombre) { alert('❌ Complete todos los campos'); return; }
+    const totalValue = (parseInt(adultos) * 85) + (parseInt(menores) * 42.5);
+    const totalFormatted = totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const fechaFormateada = fecha.split('-').reverse().join('/');
+    const horarioDisplay = { '09:30': '9:30 Hs', '11:10': '11:10 Hs', '13:00': '13:00 Hs' }[horario] || horario;
+    const message = `🔹 *RESERVA ANGEL TOUR* 🔹\n\n📅 Fecha: ${fechaFormateada}\n⏰ Horario: ${horarioDisplay}\n👤 Nombre: ${nombre}\n🏢 Empresa: ${empresa || 'No especificada'}\n👥 Adultos: ${adultos}\n🧒 Menores: ${menores}\n💰 Total: ${totalFormatted}\n\n✅ ¡Gracias por reservar!`;
+    window.open(`https://wa.me/5547999679084?text=${encodeURIComponent(message)}`, '_blank');
+  });
   
   calcularValorTotal();
   setTimeout(() => loadWeatherWidget(currentLang), 100);
   window.addEventListener('load', () => window.scrollTo(0, 0));
-  
-  // Inicializar los datos de las tarjetas
-  changeLanguage(currentLang);
 </script>
 </body>
 </html>
