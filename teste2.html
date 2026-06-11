@@ -55,35 +55,17 @@
       color: var(--deep-blue);
     }
     .logo span { color: var(--turquoise); }
-    .nav-links {
+    
+    /* Contenedor de botones de idioma y menú en la misma línea */
+    .header-right {
       display: flex;
-      gap: 32px;
-      list-style: none;
       align-items: center;
-      margin: 0;
-      padding: 0;
-      transition: all 0.3s ease;
-    }
-    .nav-links a {
-      text-decoration: none;
-      font-weight: 600;
-      color: #2C3E50;
-      transition: 0.3s;
-      cursor: pointer;
-    }
-    .nav-links a:hover { color: var(--turquoise); }
-    .btn-reserva-nav {
-      background: var(--orange-cta);
-      padding: 10px 24px;
-      border-radius: 40px;
-      color: white !important;
-      font-weight: 700;
+      gap: 1rem;
     }
     .lang-buttons-header {
       display: flex;
       gap: 0.5rem;
       align-items: center;
-      margin-left: 16px;
     }
     .lang-btn-header {
       background: #FFFFFF;
@@ -113,11 +95,38 @@
       object-fit: contain;
     }
     .menu-icon {
-      display: none;
       font-size: 1.8rem;
       cursor: pointer;
       color: var(--deep-blue);
+      display: flex;
+      align-items: center;
     }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 600;
+      color: #2C3E50;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .nav-links a:hover { color: var(--turquoise); }
+    .btn-reserva-nav {
+      background: var(--orange-cta);
+      padding: 10px 24px;
+      border-radius: 40px;
+      color: white !important;
+      font-weight: 700;
+    }
+    
     .hero {
       background: linear-gradient(135deg, #0A2F6C 0%, #005f8c 100%);
       color: white;
@@ -432,6 +441,16 @@
     .social i { font-size: 1.5rem; margin-right: 16px; color: white; }
     
     @media (max-width: 880px) {
+      .navbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .navbar > div:first-child {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
       .nav-links {
         display: none;
         flex-direction: column;
@@ -444,23 +463,19 @@
         box-shadow: 0 8px 20px rgba(0,0,0,0.1);
       }
       .nav-links.active { display: flex; }
-      .menu-icon { display: block; }
       .hero h1 { font-size: 2.2rem; }
       .section-title { font-size: 1.9rem; }
       .timeline { flex-direction: column; }
-      .lang-buttons-header {
-        margin-left: 0;
-        margin-top: 10px;
+      .header-right {
+        gap: 0.75rem;
       }
-      .navbar {
-        flex-direction: column;
-        align-items: stretch;
+      .lang-btn-header {
+        width: 32px;
+        height: 32px;
       }
-      .navbar > div:first-child {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+      .lang-btn-header img {
+        width: 18px;
+        height: 18px;
       }
     }
     .whatsapp-float {
@@ -674,8 +689,15 @@
     <div class="navbar">
       <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
         <div class="logo">Angel Tour <span>Brasil</span></div>
-        <div class="menu-icon" id="menuToggle">
-          <i class="fas fa-bars"></i>
+        <div class="header-right">
+          <div class="lang-buttons-header" id="langButtonsHeader">
+            <button class="lang-btn-header" data-lang="es" title="Español"><img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-es.png" alt="Español"></button>
+            <button class="lang-btn-header" data-lang="pt" title="Português"><img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-pt.png" alt="Português"></button>
+            <button class="lang-btn-header" data-lang="en" title="English"><img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-us.png" alt="English"></button>
+          </div>
+          <div class="menu-icon" id="menuToggle">
+            <i class="fas fa-bars"></i>
+          </div>
         </div>
       </div>
       <ul class="nav-links" id="navLinks">
@@ -683,18 +705,12 @@
         <li><a href="#itinerario" class="nav-link" data-key="nav_tour">El Paseo</a></li>
         <li><a href="#galeria" class="nav-link" data-key="nav_gallery">Galería</a></li>
         <li><a href="#reserva" class="btn-reserva-nav nav-link" data-key="nav_book">Reservar</a></li>
-        <li>
-          <div class="lang-buttons-header" id="langButtonsHeader">
-            <button class="lang-btn-header" data-lang="es" title="Español"><img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-es.png" alt="Español"></button>
-            <button class="lang-btn-header" data-lang="pt" title="Português"><img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-pt.png" alt="Português"></button>
-            <button class="lang-btn-header" data-lang="en" title="English"><img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-us.png" alt="English"></button>
-          </div>
-        </li>
       </ul>
     </div>
   </div>
 </header>
 
+<!-- El resto del contenido (hero, secciones, galería, formulario, footer) se mantiene igual -->
 <section id="inicio" class="hero">
   <div class="hero-content">
     <h1 data-key="hero_title">O passeio mais completo da Costa Esmeralda</h1>
@@ -901,7 +917,10 @@
 <a href="https://wa.me/5547999991234?text=Olá! Gostaria de informações sobre o passeio de barco" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
 <script>
-  // ========== TRADUCCIONES ==========
+  // Aquí va todo el JavaScript igual que antes (traducciones, lightbox, menú, formulario, etc.)
+  // Manteniendo la funcionalidad completa
+  
+  // ========== TRADUCCIONES (mismo código que antes) ==========
   const translations = {
     es: {
       nav_home: "Inicio", nav_tour: "El Paseo", nav_gallery: "Galería", nav_book: "Reservar",
@@ -1280,7 +1299,7 @@
   // ========== INICIALIZACIÓN Y EVENTOS ==========
   locationPromise = getUserLocation();
   
-  // ========== LIGHTBOX CON SWIPE (DESLIZAR DEDO) ==========
+  // LIGHTBOX CON SWIPE
   const galleryItems = document.querySelectorAll('.gallery-item');
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
@@ -1288,15 +1307,9 @@
   const lightboxPrev = document.querySelector('.lightbox-prev');
   const lightboxNext = document.querySelector('.lightbox-next');
   const lightboxCounter = document.getElementById('lightbox-counter');
-  const lightboxContent = document.getElementById('lightboxContent');
   let currentImageIndex = 0;
   const images = [];
-  
-  // Variables para el swipe
-  let touchStartX = 0;
-  let touchEndX = 0;
-  let touchStartY = 0;
-  let touchEndY = 0;
+  let touchStartX = 0, touchEndX = 0, touchStartY = 0, touchEndY = 0;
   
   galleryItems.forEach((item, index) => {
     const img = item.querySelector('img');
@@ -1329,7 +1342,6 @@
     document.body.style.overflow = '';
   }
   
-  // Eventos táctiles para swipe (deslizar el dedo)
   lightbox.addEventListener('touchstart', (e) => {
     touchStartX = e.changedTouches[0].screenX;
     touchStartY = e.changedTouches[0].screenY;
@@ -1338,35 +1350,19 @@
   lightbox.addEventListener('touchend', (e) => {
     touchEndX = e.changedTouches[0].screenX;
     touchEndY = e.changedTouches[0].screenY;
-    handleSwipe();
-  });
-  
-  function handleSwipe() {
     const deltaX = touchEndX - touchStartX;
     const deltaY = touchEndY - touchStartY;
     const minSwipeDistance = 50;
-    
-    // Verificar si el movimiento horizontal es mayor que el vertical (para evitar conflictos con scroll vertical)
     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
-      if (deltaX > 0) {
-        // Swipe hacia la derecha -> imagen anterior
-        prevImage();
-      } else {
-        // Swipe hacia la izquierda -> imagen siguiente
-        nextImage();
-      }
+      if (deltaX > 0) prevImage();
+      else nextImage();
     }
-  }
+  });
   
-  // Eventos de mouse/flechas/botones
   lightboxClose.addEventListener('click', closeLightbox);
   lightboxNext.addEventListener('click', nextImage);
   lightboxPrev.addEventListener('click', prevImage);
-  
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) closeLightbox();
-  });
-  
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', (e) => {
     if (!lightbox.classList.contains('active')) return;
     if (e.key === 'Escape') closeLightbox();
@@ -1374,7 +1370,7 @@
     if (e.key === 'ArrowLeft') prevImage();
   });
 
-  // ========== MENÚ MÓVIL ==========
+  // MENÚ MÓVIL
   const menuToggle = document.getElementById('menuToggle');
   const navLinksElem = document.getElementById('navLinks');
   const navLinkItems = document.querySelectorAll('.nav-link');
@@ -1422,7 +1418,7 @@
     });
   });
   
-  // Inicializar idioma guardado o usar portugués por defecto
+  // Inicializar idioma
   const savedLanguage = localStorage.getItem('preferred_language');
   if (savedLanguage && translations[savedLanguage]) {
     changeLanguage(savedLanguage);
