@@ -599,7 +599,7 @@
         const totalFormatted = pendingFormData.totalFormatted;
         const langCode = getLangCode(currentLang);
         const message = `🔹 *NUEVA RESERVA ANGEL TOUR* 🔹\n    ${langCode} - ${userLocationFormatted}\n\n📅 *Fecha:* ${pendingFormData.fechaFormateada}\n⏰ *Horario:* ${pendingFormData.horarioDisplay}\n👤 *Nombre:* ${sanitizeText(pendingFormData.nombre)}\n🏢 *Empresa:* ${sanitizeText(pendingFormData.empresa) || "No especificada"}\n👥 *Adultos:* ${pendingFormData.adultos}\n🧒 *Menores:* ${pendingFormData.menores}\n💰 *Total:* ${totalFormatted}\n\n✅ Reserva via formulario web.`;
-        window.open(`https://wa.me/5493518692251?text=${encodeURIComponent(message)}`, '_blank');
+        window.open(`https://wa.me/554799679084?text=${encodeURIComponent(message)}`, '_blank');
         closeModal();
         const successText = currentLang === 'pt' ? '✓ ENVIADO!' : (currentLang === 'es' ? '✓ ENVIADO!' : '✓ SENT!');
         btnSubmit.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span>${successText}</span>`;
