@@ -76,22 +76,30 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s ease;
+      transition: all 0.3s ease;
     }
     .lang-btn-header:hover {
-      background: #0EA5E9;
-      border-color: #0EA5E9;
+      background: #F1F5F9;
+      border-color: #CBD5E1;
       transform: translateY(-2px);
     }
     .lang-btn-header.active {
-      background: #0EA5E9;
-      border-color: #0EA5E9;
-      box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.25);
+      background: #E2E8F0;
+      border-color: #CBD5E1;
+      box-shadow: 0 0 0 2px rgba(100, 116, 139, 0.2);
+      width: 50px;
+      height: 50px;
+      transform: scale(1.02);
+    }
+    .lang-btn-header.active img {
+      width: 28px;
+      height: 28px;
     }
     .lang-btn-header img {
       width: 20px;
       height: 20px;
       object-fit: contain;
+      transition: all 0.3s ease;
     }
     .menu-icon {
       font-size: 1.8rem;
@@ -208,6 +216,8 @@
     .card-icon i { font-size: 3rem; color: var(--turquoise); margin-bottom: 20px; }
     .card-icon h3 { font-size: 1.4rem; margin-bottom: 12px; }
     .card-icon:hover { transform: translateY(-8px);}
+    
+    /* Itinerario - Estilos interactivos */
     .timeline {
       display: flex;
       flex-wrap: wrap;
@@ -223,6 +233,13 @@
       text-align: center;
       box-shadow: 0 6px 14px rgba(0,0,0,0.03);
       border: 1px solid rgba(0,180,216,0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .timeline-step:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      border-color: var(--turquoise);
     }
     .step-number {
       background: var(--turquoise);
@@ -238,7 +255,7 @@
       margin: 0 auto 20px;
     }
     
-    /* VIDEO YOUTUBE CON LOOP */
+    /* Video YouTube */
     .video-wrapper {
       max-width: 1000px;
       margin: 0 auto;
@@ -255,7 +272,7 @@
       border: none;
     }
     
-    /* ESTILOS DE LA GALERÍA LIGHTBOX - 12 FOTOS */
+    /* Galería Lightbox */
     .gallery-container {
       max-width: 1100px;
       margin: 3rem auto 0;
@@ -304,7 +321,7 @@
       opacity: 1;
     }
     
-    /* Lightbox Modal - CON SOPORTE PARA SWIPE */
+    /* Lightbox Modal para imágenes */
     .lightbox {
       display: none;
       position: fixed;
@@ -392,6 +409,110 @@
       border-radius: 20px;
       z-index: 10;
     }
+    
+    /* Modal POPUP para las secciones del itinerario */
+    .info-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+    .info-modal.active {
+      display: flex;
+    }
+    .modal-card {
+      background: white;
+      border-radius: 32px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+      animation: modalSlideIn 0.3s ease;
+    }
+    @keyframes modalSlideIn {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid #E2E8F0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-header h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--deep-blue);
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #94A3B8;
+      transition: all 0.2s;
+    }
+    .modal-close:hover {
+      color: #EF4444;
+      transform: scale(1.1);
+    }
+    .modal-body {
+      padding: 1.5rem;
+      max-height: 50vh;
+      overflow-y: auto;
+      line-height: 1.6;
+      color: #334155;
+    }
+    .modal-body p {
+      margin-bottom: 1rem;
+    }
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid #E2E8F0;
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+    }
+    .btn-share-wa {
+      background: #25D366;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s;
+    }
+    .btn-share-wa:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+    .btn-modal-close {
+      background: #F1F5F9;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      color: #475569;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-modal-close:hover {
+      background: #E2E8F0;
+    }
+    
     @media (max-width: 900px) {
       .gallery-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -406,11 +527,22 @@
       .lightbox-next { right: 10px; }
       .lightbox-close { top: 10px; right: 10px; }
       .lightbox-counter { bottom: -30px; }
+      .modal-card {
+        width: 95%;
+      }
     }
     @media (max-width: 600px) {
       .gallery-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 0.8rem;
+      }
+      .lang-btn-header.active {
+        width: 44px;
+        height: 44px;
+      }
+      .lang-btn-header.active img {
+        width: 24px;
+        height: 24px;
       }
     }
     
@@ -492,9 +624,17 @@
         width: 32px;
         height: 32px;
       }
+      .lang-btn-header.active {
+        width: 44px;
+        height: 44px;
+      }
       .lang-btn-header img {
         width: 18px;
         height: 18px;
+      }
+      .lang-btn-header.active img {
+        width: 24px;
+        height: 24px;
       }
     }
     .whatsapp-float {
@@ -753,18 +893,54 @@
   </div>
 </div>
 
+<!-- SECCIÓN ITINERARIO (El Paseo) CON POPUPS INTERACTIVOS -->
 <section id="itinerario" class="section section-bg-light">
   <div class="container">
     <h2 class="section-title" data-key="itinerary_title">Roteiro da Experiência</h2>
     <p class="section-sub" data-key="itinerary_sub">Embarque em Porto dos Piratas e viva momentos inesquecíveis</p>
-    <div class="timeline">
-      <div class="timeline-step"><div class="step-number">1</div><h3 data-key="step1_title">Embarque</h3><p data-key="step1_desc">Trapiche em Porto dos Piratas / Porto Belo.</p></div>
-      <div class="timeline-step"><div class="step-number">2</div><h3 data-key="step2_title">Navegação</h3><p data-key="step2_desc">1h30 pela Costa Esmeralda, paisagens de cinema.</p></div>
-      <div class="timeline-step"><div class="step-number">3</div><h3 data-key="step3_title">Parada na Baía</h3><p data-key="step3_desc">Caixa D'Aço: natação, tobogã e mergulho.</p></div>
-      <div class="timeline-step"><div class="step-number">4</div><h3 data-key="step4_title">Festa a bordo</h3><p data-key="step4_desc">Frutas, batida tropical e muita música.</p></div>
+    <div class="timeline" id="timelineContainer">
+      <div class="timeline-step" data-step="1" data-title="Embarque" data-desc="Trapiche em Porto dos Piratas / Porto Belo." data-longtext="O embarque é realizado no pitoresco Trapiche de Porto dos Piratas, em Porto Belo - SC. Este local é conhecido por suas águas calmas e pela paisagem deslumbrante que combina o mar azul com a vegetação nativa. Os viajantes são recebidos por nossa equipe amigável e profissional, que garante um início de experiência tranquilo e organizado. Prepare-se para uma jornada inesquecível pela Costa Esmeralda, um dos destinos mais bonitos do litoral catarinense.">
+        <div class="step-number">1</div>
+        <h3 data-key="step1_title">Embarque</h3>
+        <p data-key="step1_desc">Trapiche em Porto dos Piratas / Porto Belo.</p>
+      </div>
+      <div class="timeline-step" data-step="2" data-title="Navegação" data-desc="1h30 pela Costa Esmeralda, paisagens de cinema." data-longtext="Durante 1 hora e 30 minutos, navegamos pela deslumbrante Costa Esmeralda. Este trecho é conhecido por suas águas cristalinas, ilhas paradisíacas e formações rochosas impressionantes. Você verá praias isoladas, costões cobertos pela Mata Atlântica e uma variedade de aves marinhas. A bordo, nossa equipe compartilha curiosidades sobre a região e garante sua segurança e conforto. Leve sua câmera, pois cada curva revela uma paisagem digna de cartão-postal!">
+        <div class="step-number">2</div>
+        <h3 data-key="step2_title">Navegação</h3>
+        <p data-key="step2_desc">1h30 pela Costa Esmeralda, paisagens de cinema.</p>
+      </div>
+      <div class="timeline-step" data-step="3" data-title="Parada na Baía" data-desc="Caixa D'Aço: natação, tobogã e mergulho." data-longtext="Chegamos à deslumbrante Baía de Caixa D'Aço, um verdadeiro paraíso escondido. Aqui você poderá mergulhar em águas mornas e cristalinas, perfeitas para nadar e observar pequenos peixes. Para os aventureiros, nosso tobogã inflável proporciona diversão garantida para adultos e crianças. A segurança é nossa prioridade: coletes salva-vidas são fornecidos e guarda-vidas ficam atentos a todos os banhistas. Aproveite também para relaxar nas áreas rasas e sentir a energia revigorante do mar.">
+        <div class="step-number">3</div>
+        <h3 data-key="step3_title">Parada na Baía</h3>
+        <p data-key="step3_desc">Caixa D'Aço: natação, tobogã e mergulho.</p>
+      </div>
+      <div class="timeline-step" data-step="4" data-title="Festa a bordo" data-desc="Frutas, batida tropical e muita música." data-longtext="De volta ao barco, a celebração continua! Servimos um delicioso buffet de frutas frescas e nossa famosa batida de coco, preparada na hora. A música animada cria o clima perfeito para confraternizar com novos amigos enquanto navegamos de volta. É o momento ideal para compartilhar fotos, dançar e reviver os melhores momentos do passeio. Nossa equipe garante que você chegue ao ponto de embarque com uma sensação de missão cumprida e muitas lembranças positivas.">
+        <div class="step-number">4</div>
+        <h3 data-key="step4_title">Festa a bordo</h3>
+        <p data-key="step4_desc">Frutas, batida tropical e muita música.</p>
+      </div>
     </div>
   </div>
 </section>
+
+<!-- MODAL PARA POPUP DE INFORMACIÓN -->
+<div id="infoModal" class="info-modal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3 id="modalTitle">Título</h3>
+      <button class="modal-close" id="closeModalBtn">&times;</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <p>Contenido del popup...</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-modal-close" id="closeModalFooterBtn">Cerrar</button>
+      <button class="btn-share-wa" id="shareWhatsappBtn">
+        <i class="fab fa-whatsapp"></i> Compartir por WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- SECCIÓN GALERÍA -->
 <section id="galeria" class="section">
@@ -939,6 +1115,57 @@
 <a href="https://wa.me/5547999991234?text=Olá! Gostaria de informações sobre o passeio de barco" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
 <script>
+  // ========== MODAL POPUP PARA LAS SECCIONES DEL ITINERARIO ==========
+  const modal = document.getElementById('infoModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalBody = document.getElementById('modalBody');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const closeModalFooterBtn = document.getElementById('closeModalFooterBtn');
+  const shareWhatsappBtn = document.getElementById('shareWhatsappBtn');
+  
+  let currentStepData = null;
+  
+  function openModal(stepData) {
+    currentStepData = stepData;
+    modalTitle.textContent = stepData.title;
+    modalBody.innerHTML = `<p><strong>${stepData.desc}</strong></p><p>${stepData.longtext}</p>`;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    currentStepData = null;
+  }
+  
+  closeModalBtn.addEventListener('click', closeModal);
+  closeModalFooterBtn.addEventListener('click', closeModal);
+  
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+  
+  shareWhatsappBtn.addEventListener('click', () => {
+    if (currentStepData) {
+      const message = `🌟 *ANGEL TOUR BRASIL* 🌟\n\n📌 *${currentStepData.title}*\n📍 ${currentStepData.desc}\n\n📖 ${currentStepData.longtext}\n\n✅ ¡Vive esta experiencia única en la Costa Esmeralda!\n🔗 Más información: https://www.angeltourbrasil.com.br`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+    }
+  });
+  
+  // Asignar eventos a las tarjetas del itinerario
+  const timelineSteps = document.querySelectorAll('.timeline-step');
+  timelineSteps.forEach(step => {
+    step.addEventListener('click', () => {
+      const stepData = {
+        title: step.getAttribute('data-title'),
+        desc: step.getAttribute('data-desc'),
+        longtext: step.getAttribute('data-longtext')
+      };
+      openModal(stepData);
+    });
+  });
+
   // ========== TRADUCCIONES ==========
   const translations = {
     es: {
@@ -1259,7 +1486,7 @@
         <div style="background:#FFFFFF; border-radius:28px; max-width:440px; width:90%; padding:1.6rem; border:1px solid #E2E8F0; box-shadow:0 25px 45px -12px rgba(0,0,0,0.25);">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; padding-bottom:0.7rem; border-bottom:2px solid #E2E8F0;">
             <h3 style="font-size:1.3rem; font-weight:700;">📋 ${t.modal_title}</h3>
-            <button id="closeModalBtn" style="background:none; border:none; font-size:1.6rem; cursor:pointer;">&times;</button>
+            <button id="closeModalBtnConfirm" style="background:none; border:none; font-size:1.6rem; cursor:pointer;">&times;</button>
           </div>
           <div style="margin:1rem 0; max-height:400px; overflow-y:auto;">
             <div style="display:flex; justify-content:space-between; padding:0.75rem 0; border-bottom:1px solid #E2E8F0;"><span style="font-weight:600;">${t.fecha}:</span><span>${fechaFormateada}</span></div>
@@ -1271,8 +1498,8 @@
             <div style="margin-top:0.5rem; background:#F8FAFC; border-radius:16px; padding:0.7rem;"><div style="display:flex; justify-content:space-between;"><span style="font-weight:600;">${t.total}:</span><span style="color:#0EA5E9; font-weight:700;">${totalFormatted}</span></div></div>
           </div>
           <div style="display:flex; gap:0.9rem; margin-top:1.2rem;">
-            <button id="cancelModalBtn" style="flex:1; padding:0.8rem; border-radius:60px; font-weight:600; background:#F1F5F9; border:1px solid #E2E8F0; cursor:pointer;">${t.modal_cancel}</button>
-            <button id="confirmSendBtn" style="flex:1; padding:0.8rem; border-radius:60px; font-weight:600; background:linear-gradient(105deg, #25D366, #128C7E); color:white; border:none; cursor:pointer;">${t.modal_confirm}</button>
+            <button id="cancelModalBtnConfirm" style="flex:1; padding:0.8rem; border-radius:60px; font-weight:600; background:#F1F5F9; border:1px solid #E2E8F0; cursor:pointer;">${t.modal_cancel}</button>
+            <button id="confirmSendBtnConfirm" style="flex:1; padding:0.8rem; border-radius:60px; font-weight:600; background:linear-gradient(105deg, #25D366, #128C7E); color:white; border:none; cursor:pointer;">${t.modal_confirm}</button>
           </div>
         </div>
       </div>
@@ -1281,9 +1508,9 @@
     if (existingModal) existingModal.remove();
     document.body.insertAdjacentHTML('beforeend', modalHtml);
     pendingFormData = { ...formDataObj, totalFormatted, fechaFormateada, horarioDisplay };
-    document.getElementById('closeModalBtn').addEventListener('click', () => document.getElementById('confirmModal').remove());
-    document.getElementById('cancelModalBtn').addEventListener('click', () => document.getElementById('confirmModal').remove());
-    document.getElementById('confirmSendBtn').addEventListener('click', sendToWhatsApp);
+    document.getElementById('closeModalBtnConfirm').addEventListener('click', () => document.getElementById('confirmModal').remove());
+    document.getElementById('cancelModalBtnConfirm').addEventListener('click', () => document.getElementById('confirmModal').remove());
+    document.getElementById('confirmSendBtnConfirm').addEventListener('click', sendToWhatsApp);
   }
 
   async function sendToWhatsApp() {
@@ -1321,7 +1548,6 @@
   // ========== INICIALIZACIÓN Y EVENTOS ==========
   locationPromise = getUserLocation();
   
-  // Función específica para el botón "Garantir Vaga" / "Asegurar Plaza"
   const garantiaBtn = document.querySelector('.garantia-link');
   if (garantiaBtn) {
     garantiaBtn.addEventListener('click', (e) => {
