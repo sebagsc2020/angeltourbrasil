@@ -737,7 +737,7 @@
 </head>
 <body>
 
-<!-- POPUP DE SELECCIÓN DE IDIOMA -->
+<!-- POPUP DE SELECCIÓN DE IDIOMA - SIEMPRE VISIBLE AL INICIO -->
 <div id="languagePopup" class="language-popup">
   <div class="popup-content">
     <div class="popup-logo">
@@ -1140,7 +1140,6 @@
   let locationPromise = null;
   let userLocationFormatted = "Detectando...";
 
-  // ========== FUNCIONES ==========
   function getLangCode(lang) {
     const codes = { 'es': 'ESP', 'pt': 'POR', 'en': 'ENG' };
     return codes[lang] || 'ESP';
@@ -1459,6 +1458,17 @@
   const popup = document.getElementById('languagePopup');
   const savedLanguage = localStorage.getItem('preferred_language');
   
+  // Si ya hay un idioma guardado, ocultar el popup y aplicar ese idioma
+  if (savedLanguage && translations[savedLanguage]) {
+    popup.classList.add('hidden');
+    changeLanguage(savedLanguage);
+  } else {
+    // Primera visita: mostrar popup con idioma por defecto (portugués)
+    changeLanguage('pt');
+    // Asegurarse de que el popup esté visible
+    popup.classList.remove('hidden');
+  }
+  
   // Manejar selección de idioma en el popup
   document.querySelectorAll('.popup-lang-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1467,14 +1477,6 @@
       popup.classList.add('hidden');
     });
   });
-  
-  // Inicializar idioma
-  if (savedLanguage && translations[savedLanguage]) {
-    changeLanguage(savedLanguage);
-    popup.classList.add('hidden');
-  } else {
-    changeLanguage('pt');
-  }
   
   calcularValorTotal();
   setTimeout(() => loadWeatherWidget(currentLang), 100);
