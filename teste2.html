@@ -296,7 +296,7 @@
       opacity: 1;
     }
     
-    /* Lightbox Modal */
+    /* Lightbox Modal - CON SOPORTE PARA SWIPE */
     .lightbox {
       display: none;
       position: fixed;
@@ -317,6 +317,7 @@
       max-width: 90%;
       max-height: 90%;
       position: relative;
+      -webkit-tap-highlight-color: transparent;
     }
     .lightbox-content img {
       width: 100%;
@@ -325,6 +326,7 @@
       object-fit: contain;
       border-radius: 12px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      pointer-events: none;
     }
     .lightbox-close {
       position: absolute;
@@ -336,6 +338,7 @@
       font-size: 2rem;
       cursor: pointer;
       transition: transform 0.2s;
+      z-index: 10;
     }
     .lightbox-close:hover {
       transform: scale(1.1);
@@ -357,6 +360,7 @@
       align-items: center;
       justify-content: center;
       transition: all 0.2s;
+      z-index: 10;
     }
     .lightbox-prev:hover, .lightbox-next:hover {
       background: rgba(255,255,255,0.4);
@@ -378,17 +382,12 @@
       background: rgba(0,0,0,0.5);
       padding: 0.3rem 0.8rem;
       border-radius: 20px;
+      z-index: 10;
     }
     @media (max-width: 900px) {
       .gallery-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
-      }
-    }
-    @media (max-width: 600px) {
-      .gallery-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.8rem;
       }
       .lightbox-prev, .lightbox-next {
         width: 40px;
@@ -399,6 +398,12 @@
       .lightbox-next { right: 10px; }
       .lightbox-close { top: 10px; right: 10px; }
       .lightbox-counter { bottom: -30px; }
+    }
+    @media (max-width: 600px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+      }
     }
     
     .testimonial-card {
@@ -643,122 +648,26 @@
       }
     }
 
-    /* ESTILOS DEL POPUP DE IDIOMAS */
-    .language-popup {
-      display: flex;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
-      z-index: 2000;
-      justify-content: center;
-      align-items: center;
-    }
-    .language-popup.hidden {
-      display: none;
-    }
-    .popup-content {
-      background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
-      border-radius: 32px;
-      padding: 2rem 1.5rem;
-      max-width: 480px;
-      width: 90%;
-      text-align: center;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-    }
-    .popup-logo {
-      margin-bottom: 1.5rem;
-    }
-    .popup-logo img {
-      max-width: 180px;
-      height: auto;
-    }
-    .popup-buttons {
-      display: flex;
-      gap: 0.75rem;
-      justify-content: center;
-      flex-wrap: nowrap;
-    }
-    .popup-lang-btn {
+    /* Widget del tiempo con esquinas redondeadas */
+    .weather-widget-container {
+      margin-bottom: 2rem;
+      padding: 0.5rem;
       background: #FFFFFF;
-      border: 2px solid #E2E8F0;
-      border-radius: 50px;
-      padding: 0.6rem 0.8rem;
-      min-width: 100px;
-      cursor: pointer;
-      transition: all 0.3s ease;
+      border: 1px solid #E2E8F0;
+      border-radius: 20px;
+      min-height: 220px;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      gap: 0.3rem;
-      flex: 1;
+      overflow: hidden;
     }
-    .popup-lang-btn:hover {
-      transform: translateY(-3px);
-      border-color: #00B4D8;
-      box-shadow: 0 8px 20px rgba(0,180,216,0.2);
-    }
-    .popup-lang-btn img {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-    .popup-lang-btn .lang-name {
-      font-weight: 700;
-      font-size: 0.8rem;
-    }
-    @media (max-width: 500px) {
-      .popup-content {
-        padding: 1.5rem 1rem;
-      }
-      .popup-logo img {
-        max-width: 140px;
-      }
-      .popup-buttons {
-        gap: 0.5rem;
-      }
-      .popup-lang-btn {
-        min-width: 70px;
-        padding: 0.5rem 0.4rem;
-      }
-      .popup-lang-btn img {
-        width: 28px;
-        height: 28px;
-      }
-      .popup-lang-btn .lang-name {
-        font-size: 0.7rem;
-      }
+    .weatherwidget-io {
+      border-radius: 16px !important;
+      overflow: hidden !important;
     }
   </style>
 </head>
 <body>
-
-<!-- POPUP DE SELECCIÓN DE IDIOMA - SIEMPRE VISIBLE AL INICIO -->
-<div id="languagePopup" class="language-popup">
-  <div class="popup-content">
-    <div class="popup-logo">
-      <img src="https://sebagsc2020.github.io/angeltourbrasil/images/logoangel.png" alt="Angel Tour Brasil">
-    </div>
-    <div class="popup-buttons">
-      <button class="popup-lang-btn" data-lang="es">
-        <img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-es.png" alt="Español">
-        <span class="lang-name">Español</span>
-      </button>
-      <button class="popup-lang-btn" data-lang="pt">
-        <img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-pt.png" alt="Português">
-        <span class="lang-name">Português</span>
-      </button>
-      <button class="popup-lang-btn" data-lang="en">
-        <img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-us.png" alt="English">
-        <span class="lang-name">English</span>
-      </button>
-    </div>
-  </div>
-</div>
 
 <header class="header">
   <div class="container">
@@ -860,7 +769,7 @@
 </section>
 
 <div id="lightbox" class="lightbox">
-  <div class="lightbox-content">
+  <div class="lightbox-content" id="lightboxContent">
     <button class="lightbox-close">&times;</button>
     <button class="lightbox-prev"><i class="fas fa-chevron-left"></i></button>
     <img id="lightbox-img" src="" alt="">
@@ -883,7 +792,7 @@
 <section id="reserva">
 <div class="container" style="max-width: 700px; margin: 0 auto; padding: 0 24px 80px 24px;">
     <div class="form-wrapper-simple">
-        <div style="margin-bottom: 2rem; padding: 0.5rem; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; min-height: 220px; display: flex; justify-content: center; align-items: center;">
+        <div class="weather-widget-container">
             <div id="weatherWidgetPlaceholder" style="width:100%;">
                 <div style="color: #64748B; font-size: 0.8rem; text-align: center; padding: 20px;">🌊 Cargando previsión del tiempo para Porto Belo...</div>
             </div>
@@ -1371,7 +1280,7 @@
   // ========== INICIALIZACIÓN Y EVENTOS ==========
   locationPromise = getUserLocation();
   
-  // LIGHTBOX
+  // ========== LIGHTBOX CON SWIPE (DESLIZAR DEDO) ==========
   const galleryItems = document.querySelectorAll('.gallery-item');
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
@@ -1379,47 +1288,97 @@
   const lightboxPrev = document.querySelector('.lightbox-prev');
   const lightboxNext = document.querySelector('.lightbox-next');
   const lightboxCounter = document.getElementById('lightbox-counter');
+  const lightboxContent = document.getElementById('lightboxContent');
   let currentImageIndex = 0;
   const images = [];
+  
+  // Variables para el swipe
+  let touchStartX = 0;
+  let touchEndX = 0;
+  let touchStartY = 0;
+  let touchEndY = 0;
   
   galleryItems.forEach((item, index) => {
     const img = item.querySelector('img');
     images.push(img.src);
     item.addEventListener('click', () => {
       currentImageIndex = index;
-      lightboxImg.src = images[currentImageIndex];
-      lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+      updateLightboxImage();
       lightbox.classList.add('active');
       document.body.style.overflow = 'hidden';
     });
   });
   
-  lightboxClose.addEventListener('click', () => {
+  function updateLightboxImage() {
+    lightboxImg.src = images[currentImageIndex];
+    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+  }
+  
+  function nextImage() {
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+    updateLightboxImage();
+  }
+  
+  function prevImage() {
+    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+    updateLightboxImage();
+  }
+  
+  function closeLightbox() {
     lightbox.classList.remove('active');
     document.body.style.overflow = '';
+  }
+  
+  // Eventos táctiles para swipe (deslizar el dedo)
+  lightbox.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
   });
-  lightboxNext.addEventListener('click', () => {
-    currentImageIndex = (currentImageIndex + 1) % images.length;
-    lightboxImg.src = images[currentImageIndex];
-    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+  
+  lightbox.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    touchEndY = e.changedTouches[0].screenY;
+    handleSwipe();
   });
-  lightboxPrev.addEventListener('click', () => {
-    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-    lightboxImg.src = images[currentImageIndex];
-    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+  
+  function handleSwipe() {
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+    const minSwipeDistance = 50;
+    
+    // Verificar si el movimiento horizontal es mayor que el vertical (para evitar conflictos con scroll vertical)
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+      if (deltaX > 0) {
+        // Swipe hacia la derecha -> imagen anterior
+        prevImage();
+      } else {
+        // Swipe hacia la izquierda -> imagen siguiente
+        nextImage();
+      }
+    }
+  }
+  
+  // Eventos de mouse/flechas/botones
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightboxNext.addEventListener('click', nextImage);
+  lightboxPrev.addEventListener('click', prevImage);
+  
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
   });
-  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.remove('active'); });
+  
   document.addEventListener('keydown', (e) => {
     if (!lightbox.classList.contains('active')) return;
-    if (e.key === 'Escape') lightbox.classList.remove('active');
-    if (e.key === 'ArrowRight') lightboxNext.click();
-    if (e.key === 'ArrowLeft') lightboxPrev.click();
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') nextImage();
+    if (e.key === 'ArrowLeft') prevImage();
   });
 
-  // MENÚ MÓVIL
+  // ========== MENÚ MÓVIL ==========
   const menuToggle = document.getElementById('menuToggle');
   const navLinksElem = document.getElementById('navLinks');
   const navLinkItems = document.querySelectorAll('.nav-link');
+  const langButtonsHeader = document.querySelectorAll('.lang-btn-header');
   
   function closeMenuOnMobile() {
     if (window.innerWidth <= 880 && navLinksElem.classList.contains('active')) {
@@ -1443,6 +1402,12 @@
     });
   });
   
+  langButtonsHeader.forEach(btn => {
+    btn.addEventListener('click', () => {
+      setTimeout(() => closeMenuOnMobile(), 100);
+    });
+  });
+  
   document.addEventListener('click', (e) => {
     if (window.innerWidth <= 880 && navLinksElem && menuToggle && !navLinksElem.contains(e.target) && !menuToggle.contains(e.target)) {
       navLinksElem.classList.remove('active');
@@ -1450,33 +1415,20 @@
   });
 
   // BOTONES DE IDIOMA DEL HEADER
-  document.querySelectorAll('.lang-btn-header').forEach(btn => {
-    btn.addEventListener('click', () => changeLanguage(btn.getAttribute('data-lang')));
-  });
-
-  // ========== POPUP DE IDIOMAS ==========
-  const popup = document.getElementById('languagePopup');
-  const savedLanguage = localStorage.getItem('preferred_language');
-  
-  // Si ya hay un idioma guardado, ocultar el popup y aplicar ese idioma
-  if (savedLanguage && translations[savedLanguage]) {
-    popup.classList.add('hidden');
-    changeLanguage(savedLanguage);
-  } else {
-    // Primera visita: mostrar popup con idioma por defecto (portugués)
-    changeLanguage('pt');
-    // Asegurarse de que el popup esté visible
-    popup.classList.remove('hidden');
-  }
-  
-  // Manejar selección de idioma en el popup
-  document.querySelectorAll('.popup-lang-btn').forEach(btn => {
+  langButtonsHeader.forEach(btn => {
     btn.addEventListener('click', () => {
       const lang = btn.getAttribute('data-lang');
       changeLanguage(lang);
-      popup.classList.add('hidden');
     });
   });
+  
+  // Inicializar idioma guardado o usar portugués por defecto
+  const savedLanguage = localStorage.getItem('preferred_language');
+  if (savedLanguage && translations[savedLanguage]) {
+    changeLanguage(savedLanguage);
+  } else {
+    changeLanguage('pt');
+  }
   
   calcularValorTotal();
   setTimeout(() => loadWeatherWidget(currentLang), 100);
