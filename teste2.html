@@ -61,12 +61,14 @@
       padding: 18px 0;
       flex-wrap: wrap;
     }
-    .logo {
-      font-size: 1.7rem;
+    .logo-text {
+      font-size: 1.5rem;
       font-weight: 800;
       color: var(--deep-blue);
     }
-    .logo span { color: var(--turquoise); }
+    .logo-text span { 
+      color: var(--turquoise); 
+    }
     
     .header-right {
       display: flex;
@@ -216,33 +218,56 @@
       }
     }
     
+    /* HERO - LOGO A LA IZQUIERDA, TEXTO A LA DERECHA */
     .hero {
       background: linear-gradient(135deg, #0A2F6C 0%, #005f8c 100%);
       color: white;
     }
     .hero-content {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
-      text-align: center;
-      padding: 80px 20px 90px;
+      justify-content: space-between;
+      gap: 48px;
+      padding: 60px 0 70px;
+      flex-wrap: wrap;
     }
-    .hero h1 {
-      font-size: 3.2rem;
-      max-width: 900px;
-      margin-bottom: 20px;
+    .hero-left {
+      flex: 1;
+      min-width: 280px;
+      display: flex;
+      justify-content: center;
+    }
+    .hero-logo {
+      max-width: 320px;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+      background: transparent;
+    }
+    .hero-logo img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .hero-right {
+      flex: 1;
+      min-width: 280px;
+    }
+    .hero-right h1 {
+      font-size: 2.5rem;
       font-weight: 800;
+      margin-bottom: 20px;
+      line-height: 1.2;
     }
-    .hero p {
-      font-size: 1.25rem;
-      max-width: 650px;
+    .hero-right p {
+      font-size: 1.1rem;
       margin-bottom: 32px;
+      line-height: 1.5;
+      max-width: 550px;
     }
     .btn-group {
       display: flex;
       gap: 18px;
       flex-wrap: wrap;
-      justify-content: center;
     }
     .btn-primary, .btn-outline {
       padding: 14px 32px;
@@ -264,6 +289,7 @@
       background: transparent;
     }
     .btn-outline:hover { background: white; color: var(--deep-blue);}
+    
     .section { padding: 80px 0; }
     .section-bg-light { background: var(--gray-light); }
     .section-title {
@@ -299,7 +325,7 @@
     .card-icon h3 { font-size: 1.4rem; margin-bottom: 12px; }
     .card-icon:hover { transform: translateY(-8px);}
     
-    /* Itinerario - Estilos interactivos */
+    /* Itinerario */
     .timeline {
       display: flex;
       flex-wrap: wrap;
@@ -354,7 +380,7 @@
       border: none;
     }
     
-    /* ========== NUEVA GALERÍA INTERACTIVA ========== */
+    /* Galería */
     .gallery-container {
       max-width: 1100px;
       margin: 3rem auto 0;
@@ -387,7 +413,7 @@
       transform: scale(1.05);
     }
     
-    /* Lightbox Moderno */
+    /* Lightbox */
     .lightbox-modern {
       display: none;
       position: fixed;
@@ -417,8 +443,6 @@
       max-height: 75vh;
       border-radius: 12px;
       box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-      user-select: none;
-      -webkit-user-drag: none;
     }
     .lightbox-counter {
       color: white;
@@ -438,13 +462,7 @@
       cursor: pointer;
       background: none;
       border: none;
-      transition: transform 0.2s;
     }
-    .close-btn:hover {
-      transform: scale(1.1);
-    }
-    
-    /* Animación del dedo indicador */
     .swipe-hint {
       position: absolute;
       top: 50%;
@@ -461,28 +479,15 @@
       width: 75px;
       height: 75px;
       fill: rgba(255, 255, 255, 0.6);
-      filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.6));
     }
     @keyframes aparecerYDeslizar {
-      0% {
-        opacity: 0;
-        transform: translate(30%, -50%);
-      }
-      15% {
-        opacity: 1;
-        transform: translate(30%, -50%);
-      }
-      70% {
-        opacity: 1;
-        transform: translate(-70%, -50%);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(-70%, -50%);
-      }
+      0% { opacity: 0; transform: translate(30%, -50%); }
+      15% { opacity: 1; transform: translate(30%, -50%); }
+      70% { opacity: 1; transform: translate(-70%, -50%); }
+      100% { opacity: 0; transform: translate(-70%, -50%); }
     }
     
-    /* Modal POPUP */
+    /* Modal */
     .info-modal {
       display: none;
       position: fixed;
@@ -496,9 +501,7 @@
       justify-content: center;
       align-items: center;
     }
-    .info-modal.active {
-      display: flex;
-    }
+    .info-modal.active { display: flex; }
     .modal-card {
       background: white;
       border-radius: 32px;
@@ -520,33 +523,16 @@
       justify-content: space-between;
       align-items: center;
     }
-    .modal-header h3 {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--deep-blue);
-    }
+    .modal-header h3 { font-size: 1.3rem; font-weight: 700; color: var(--deep-blue); }
     .modal-close {
       background: none;
       border: none;
       font-size: 1.5rem;
       cursor: pointer;
       color: #94A3B8;
-      transition: all 0.2s;
     }
-    .modal-close:hover {
-      color: #EF4444;
-      transform: scale(1.1);
-    }
-    .modal-body {
-      padding: 1.5rem;
-      max-height: 45vh;
-      overflow-y: auto;
-      line-height: 1.6;
-      color: #334155;
-    }
-    .modal-body p {
-      margin-bottom: 1rem;
-    }
+    .modal-close:hover { color: #EF4444; }
+    .modal-body { padding: 1.5rem; max-height: 45vh; overflow-y: auto; line-height: 1.6; color: #334155; }
     .modal-footer {
       padding: 1rem 1.5rem;
       border-top: 1px solid #E2E8F0;
@@ -566,12 +552,6 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      transition: all 0.3s;
-      font-size: 0.85rem;
-    }
-    .btn-share-wa:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.05);
     }
     .btn-read-aloud {
       background: #3B82F6;
@@ -584,16 +564,8 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      transition: all 0.3s;
-      font-size: 0.85rem;
     }
-    .btn-read-aloud:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.05);
-    }
-    .btn-read-aloud.stop {
-      background: #EF4444;
-    }
+    .btn-read-aloud.stop { background: #EF4444; }
     .btn-modal-close {
       background: #F1F5F9;
       border: none;
@@ -602,42 +574,21 @@
       color: #475569;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s;
-      font-size: 0.85rem;
-    }
-    .btn-modal-close:hover {
-      background: #E2E8F0;
     }
     
     @media (max-width: 900px) {
-      .gallery-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
-      }
-      .modal-card {
-        width: 95%;
-      }
+      .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+      .modal-card { width: 95%; }
+      .hero-content { flex-direction: column; text-align: center; }
+      .hero-right { text-align: center; }
+      .hero-right p { margin-left: auto; margin-right: auto; }
+      .hero-logo { margin-left: auto; margin-right: auto; }
+      .btn-group { justify-content: center; }
     }
     @media (max-width: 600px) {
-      .gallery-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.8rem;
-      }
-      .lang-btn-header.active {
-        width: 44px;
-        height: 44px;
-      }
-      .lang-btn-header.active img {
-        width: 24px;
-        height: 24px;
-      }
-      .modal-footer {
-        flex-direction: column;
-      }
-      .btn-share-wa, .btn-read-aloud, .btn-modal-close {
-        width: 100%;
-        justify-content: center;
-      }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .modal-footer { flex-direction: column; }
+      .btn-share-wa, .btn-read-aloud, .btn-modal-close { width: 100%; justify-content: center; }
     }
     
     .testimonial-card {
@@ -654,7 +605,6 @@
       background: #0A2B3E;
       color: #DDD;
       padding: 48px 0 24px;
-      margin-top: 0;
     }
     .footer-content {
       display: flex;
@@ -663,25 +613,10 @@
       gap: 32px;
     }
     .footer-col i { margin-right: 8px; color: var(--turquoise); }
-    .social {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
-    .social a {
-      color: white;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .social a:hover {
-      transform: translateY(-3px);
-    }
-    .social a i {
-      font-size: 1.5rem;
-      margin: 0;
-    }
+    .social { display: flex; gap: 1rem; align-items: center; }
+    .social a { color: white; transition: all 0.3s ease; }
+    .social a:hover { transform: translateY(-3px); }
+    .social a i { font-size: 1.5rem; margin: 0; }
     .social a:hover i.fa-instagram { color: #E4405F; }
     .social a:hover i.fa-facebook { color: #1877F2; }
     .social a:hover i.fa-youtube { color: #FF0000; }
@@ -693,30 +628,15 @@
       padding: 8px 16px;
       border-radius: 40px;
       margin-top: 12px;
-      transition: all 0.3s ease;
       text-decoration: none;
       color: #DDD;
     }
-    .map-link:hover {
-      background: rgba(255,255,255,0.2);
-      transform: translateY(-2px);
-    }
-    .map-link i {
-      color: #00B4D8;
-      font-size: 1.1rem;
-    }
+    .map-link:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+    .map-link i { color: #00B4D8; }
     
     @media (max-width: 880px) {
-      .navbar {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .navbar > div:first-child {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
+      .navbar { flex-direction: column; align-items: stretch; }
+      .navbar > div:first-child { width: 100%; display: flex; justify-content: space-between; align-items: center; }
       .nav-links {
         display: none;
         flex-direction: column;
@@ -727,34 +647,11 @@
         border-radius: 24px;
         margin-top: 20px;
         gap: 18px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
       }
       .nav-links.active { display: flex; }
-      .hero h1 { font-size: 2.2rem; }
       .section-title { font-size: 1.9rem; }
       .timeline { flex-direction: column; }
-      .header-right {
-        gap: 0.75rem;
-      }
-      .lang-btn-header {
-        width: 32px;
-        height: 32px;
-      }
-      .lang-btn-header.active {
-        width: 44px;
-        height: 44px;
-      }
-      .lang-btn-header img {
-        width: 18px;
-        height: 18px;
-      }
-      .lang-btn-header.active img {
-        width: 24px;
-        height: 24px;
-      }
-      .whatsapp-float {
-        bottom: 100px !important;
-      }
+      .whatsapp-float { bottom: 100px !important; }
     }
     .whatsapp-float {
       position: fixed;
@@ -771,7 +668,6 @@
       font-size: 2rem;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       z-index: 99;
-      transition: bottom 0.3s ease;
     }
     .horario-card.selected {
       border-color: #0EA5E9 !important;
@@ -779,7 +675,7 @@
       color: white !important;
     }
     
-    /* Estilos del formulario */
+    /* Formulario */
     .form-wrapper-simple {
       background: #FFFFFF;
       border-radius: 32px;
@@ -787,11 +683,7 @@
       overflow: hidden;
       padding: 2.5rem;
     }
-    .form-grid-2col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
+    .form-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
     .form-label {
       display: flex;
       align-items: center;
@@ -799,14 +691,10 @@
       font-size: 0.7rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
       color: #475569;
       margin-bottom: 0.6rem;
     }
-    .form-label i {
-      font-size: 0.8rem;
-      color: var(--turquoise);
-    }
+    .form-label i { font-size: 0.8rem; color: var(--turquoise); }
     .form-input {
       width: 100%;
       padding: 1rem 1.2rem;
@@ -815,24 +703,14 @@
       font-size: 1rem;
       font-family: 'Inter', sans-serif;
       transition: all 0.2s ease;
-      background: #FFFFFF;
     }
     .form-input:focus {
       outline: none;
       border-color: var(--turquoise);
       box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.1);
     }
-    .form-note {
-      font-size: 0.7rem;
-      color: #64748B;
-      margin-top: 0.5rem;
-      margin-left: 0.5rem;
-    }
-    .horarios-group {
-      display: flex;
-      gap: 1rem;
-      margin-top: 0.25rem;
-    }
+    .form-note { font-size: 0.7rem; color: #64748B; margin-top: 0.5rem; margin-left: 0.5rem; }
+    .horarios-group { display: flex; gap: 1rem; margin-top: 0.25rem; }
     .horario-card {
       flex: 1;
       background: #F8FAFC;
@@ -843,22 +721,9 @@
       cursor: pointer;
       transition: all 0.2s ease;
     }
-    .horario-card:hover {
-      border-color: var(--turquoise);
-      background: #F0F9FF;
-      transform: translateY(-2px);
-    }
-    .horario-card .horario-titulo {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 0.25rem;
-    }
-    .horario-card .horario-hora {
-      font-size: 1rem;
-      font-weight: 800;
-    }
+    .horario-card:hover { border-color: var(--turquoise); background: #F0F9FF; transform: translateY(-2px); }
+    .horario-card .horario-titulo { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.25rem; }
+    .horario-card .horario-hora { font-size: 1rem; font-weight: 800; }
     .info-box {
       background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
       border-radius: 20px;
@@ -866,11 +731,7 @@
       margin: 1.5rem 0;
       border-left: 4px solid var(--turquoise);
     }
-    .info-box p {
-      margin: 0.25rem 0;
-      font-size: 0.75rem;
-      color: #334155;
-    }
+    .info-box p { margin: 0.25rem 0; font-size: 0.75rem; color: #334155; }
     .discount-badge {
       background: #E6F7EC;
       color: #0D6E2E;
@@ -905,11 +766,7 @@
       transition: all 0.3s ease;
       margin-top: 1rem;
     }
-    .btn-submit-modern:hover {
-      transform: translateY(-3px);
-      filter: brightness(1.02);
-      box-shadow: 0 10px 25px rgba(0, 180, 216, 0.3);
-    }
+    .btn-submit-modern:hover { transform: translateY(-3px); filter: brightness(1.02); box-shadow: 0 10px 25px rgba(0, 180, 216, 0.3); }
     .footer-form {
       padding-top: 1.5rem;
       margin-top: 1rem;
@@ -922,27 +779,11 @@
       gap: 2rem;
     }
     @media (max-width: 680px) {
-      .form-wrapper-simple {
-        padding: 1.5rem;
-      }
-      .form-grid-2col {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-      .horarios-group {
-        flex-direction: column;
-        gap: 0.75rem;
-      }
-      .horario-card {
-        padding: 0.75rem;
-      }
-      .footer-form {
-        flex-wrap: wrap;
-        gap: 0.75rem;
-      }
+      .form-wrapper-simple { padding: 1.5rem; }
+      .form-grid-2col { grid-template-columns: 1fr; gap: 1rem; }
+      .horarios-group { flex-direction: column; gap: 0.75rem; }
+      .footer-form { flex-wrap: wrap; gap: 0.75rem; }
     }
-
-    /* Widget del tiempo con esquinas redondeadas */
     .weather-widget-container {
       margin-bottom: 2rem;
       padding: 0.5rem;
@@ -955,10 +796,7 @@
       align-items: center;
       overflow: hidden;
     }
-    .weatherwidget-io {
-      border-radius: 16px !important;
-      overflow: hidden !important;
-    }
+    .weatherwidget-io { border-radius: 16px !important; overflow: hidden !important; }
   </style>
 </head>
 <body>
@@ -967,7 +805,7 @@
   <div class="container">
     <div class="navbar">
       <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-        <div class="logo">Angel Tour <span>Brasil</span></div>
+        <div class="logo-text">Angel Tour <span>Brasil</span></div>
         <div class="header-right">
           <div class="lang-buttons-header" id="langButtonsHeader">
             <button class="lang-btn-header" data-lang="es" title="Español"><img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-es.png" alt="Español"></button>
@@ -989,7 +827,7 @@
   </div>
 </header>
 
-<!-- STICKY BOOKING BAR (MÓVIL) -->
+<!-- STICKY BOOKING BAR -->
 <div id="stickyBookingBar" class="sticky-booking-bar">
   <div class="sticky-booking-content">
     <div class="sticky-booking-info">
@@ -1002,13 +840,23 @@
   </div>
 </div>
 
+<!-- HERO SECTION - LOGO IZQUIERDA, TEXTO DERECHA -->
 <section id="inicio" class="hero">
-  <div class="hero-content">
-    <h1 data-key="hero_title">O passeio mais completo da Costa Esmeralda</h1>
-    <p data-key="hero_sub">Navegue por paisagens paradisíacas, nade na Bahía de Caixa D'Aço, aproveite tobogã, frutas tropicais e muita animação a bordo.</p>
-    <div class="btn-group">
-      <a href="#itinerario" class="btn-primary" data-key="btn_route">Ver Roteiro</a>
-      <a href="#reserva" class="btn-outline garantia-link" data-key="btn_guarantee">Garantir Vaga</a>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-logo">
+          <img src="https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/logoangel-pb.png" alt="Angel Tour Brasil Logo">
+        </div>
+      </div>
+      <div class="hero-right">
+        <h1 data-key="hero_title">O passeio mais completo da Costa Esmeralda</h1>
+        <p data-key="hero_sub">Navegue por paisagens paradisíacas, nade na Bahía de Caixa D'Aço, aproveite tobogã, frutas tropicais e muita animação a bordo.</p>
+        <div class="btn-group">
+          <a href="#itinerario" class="btn-primary" data-key="btn_route">Ver Roteiro</a>
+          <a href="#reserva" class="btn-outline garantia-link" data-key="btn_guarantee">Garantir Vaga</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1026,37 +874,37 @@
   </div>
 </div>
 
-<!-- SECCIÓN ITINERARIO (El Paseo) CON POPUPS INTERACTIVOS -->
+<!-- ITINERARIO -->
 <section id="itinerario" class="section section-bg-light">
   <div class="container">
     <h2 class="section-title" data-key="itinerary_title">Roteiro da Experiência</h2>
     <p class="section-sub" data-key="itinerary_sub">Embarque em Porto dos Piratas e viva momentos inesquecíveis</p>
     <div class="timeline" id="timelineContainer">
-      <div class="timeline-step" data-step="1" data-key-es="Embarque" data-key-pt="Embarque" data-key-en="Boarding" data-desc-es="Trapiche en Porto dos Piratas / Porto Belo." data-desc-pt="Trapiche em Porto dos Piratas / Porto Belo." data-desc-en="Pier in Porto dos Piratas / Porto Belo." data-longtext-es="El embarque se realiza en el pintoresco Trapiche de Porto dos Piratas, en Porto Belo - SC. Este lugar es conocido por sus aguas tranquilas y su impresionante paisaje que combina el mar azul con la vegetación nativa. Los viajeros son recibidos por nuestro equipo amigable y profesional, que garantiza un comienzo de experiencia tranquilo y organizado. Prepárate para un viaje inolvidable por la Costa Esmeralda, uno de los destinos más bellos del litoral catarinense." data-longtext-pt="O embarque é realizado no pitoresco Trapiche de Porto dos Piratas, em Porto Belo - SC. Este local é conhecido por suas águas calmas e pela paisagem deslumbrante que combina o mar azul com a vegetação nativa. Os viajantes são recebidos por nossa equipe amigável e profissional, que garante um início de experiência tranquilo e organizado. Prepare-se para uma jornada inesquecível pela Costa Esmeralda, um dos destinos mais bonitos do litoral catarinense." data-longtext-en="Boarding takes place at the picturesque Trapiche de Porto dos Piratas in Porto Belo - SC. This place is known for its calm waters and stunning landscape that combines the blue sea with native vegetation. Travelers are welcomed by our friendly and professional team, ensuring a calm and organized start to the experience. Get ready for an unforgettable journey along the Emerald Coast, one of the most beautiful destinations on the Santa Catarina coast.">
+      <div class="timeline-step" data-step="1" data-key-es="Embarque" data-key-pt="Embarque" data-key-en="Boarding" data-desc-es="Trapiche en Porto dos Piratas / Porto Belo." data-desc-pt="Trapiche em Porto dos Piratas / Porto Belo." data-desc-en="Pier in Porto dos Piratas / Porto Belo." data-longtext-es="El embarque se realiza en el pintoresco Trapiche de Porto dos Piratas, en Porto Belo - SC." data-longtext-pt="O embarque é realizado no pitoresco Trapiche de Porto dos Piratas, em Porto Belo - SC." data-longtext-en="Boarding takes place at the picturesque Trapiche de Porto dos Piratas in Porto Belo - SC.">
         <div class="step-number">1</div>
         <h3 data-key="step1_title">Embarque</h3>
         <p data-key="step1_desc">Trapiche em Porto dos Piratas / Porto Belo.</p>
       </div>
-      <div class="timeline-step" data-step="2" data-key-es="Navegación" data-key-pt="Navegação" data-key-en="Cruising" data-desc-es="1h30 por la Costa Esmeralda, paisajes de cine." data-desc-pt="1h30 pela Costa Esmeralda, paisagens de cinema." data-desc-en="1h30 along the Emerald Coast, movie-like scenery." data-longtext-es="Durante 1 hora y 30 minutos, navegamos por la deslumbrante Costa Esmeralda. Este tramo es conocido por sus aguas cristalinas, islas paradisíacas y formaciones rocosas impresionantes. Verás playas aisladas, acantilados cubiertos por la Mata Atlántica y una variedad de aves marinas. A bordo, nuestro equipo comparte curiosidades sobre la región y garantiza su seguridad y comodidad. ¡Lleva tu cámara, porque cada curva revela un paisaje digno de postal!" data-longtext-pt="Durante 1 hora e 30 minutos, navegamos pela deslumbrante Costa Esmeralda. Este trecho é conhecido por suas águas cristalinas, ilhas paradisíacas e formações rochosas impressionantes. Você verá praias isoladas, costões cobertos pela Mata Atlântica e uma variedade de aves marinhas. A bordo, nossa equipe compartilha curiosidades sobre a região e garante sua segurança e conforto. Leve sua câmera, pois cada curva revela uma paisagem digna de cartão-postal!" data-longtext-en="For 1 hour and 30 minutes, we sail along the stunning Emerald Coast. This stretch is known for its crystal clear waters, paradisiacal islands, and impressive rock formations. You will see secluded beaches, cliffs covered by the Atlantic Forest, and a variety of seabirds. On board, our team shares interesting facts about the region and ensures your safety and comfort. Bring your camera, because every turn reveals a postcard-worthy landscape!">
+      <div class="timeline-step" data-step="2" data-key-es="Navegación" data-key-pt="Navegação" data-key-en="Cruising" data-desc-es="1h30 por la Costa Esmeralda" data-desc-pt="1h30 pela Costa Esmeralda" data-desc-en="1h30 along the Emerald Coast" data-longtext-es="Durante 1 hora y 30 minutos, navegamos por la deslumbrante Costa Esmeralda." data-longtext-pt="Durante 1 hora e 30 minutos, navegamos pela deslumbrante Costa Esmeralda." data-longtext-en="For 1 hour and 30 minutes, we sail along the stunning Emerald Coast.">
         <div class="step-number">2</div>
         <h3 data-key="step2_title">Navegação</h3>
-        <p data-key="step2_desc">1h30 pela Costa Esmeralda, paisagens de cinema.</p>
+        <p data-key="step2_desc">1h30 pela Costa Esmeralda</p>
       </div>
-      <div class="timeline-step" data-step="3" data-key-es="Parada en la Bahía" data-key-pt="Parada na Baía" data-key-en="Bay Stop" data-desc-es="Caixa D'Aço: natación, tobogán y buceo." data-desc-pt="Caixa D'Aço: natação, tobogã e mergulho." data-desc-en="Caixa D'Aço: swimming, waterslide and snorkeling." data-longtext-es="Llegamos a la deslumbrante Bahía de Caixa D'Aço, un verdadero paraíso escondido. Aquí podrás sumergirte en aguas cálidas y cristalinas, perfectas para nadar y observar pequeños peces. Para los aventureros, nuestro tobogán inflable proporciona diversión garantizada para adultos y niños. La seguridad es nuestra prioridad: se proporcionan chalecos salvavidas y los salvavidas están atentos a todos los bañistas. Aprovecha también para relajarte en las zonas poco profundas y sentir la energía rejuvenecedora del mar." data-longtext-pt="Chegamos à deslumbrante Baía de Caixa D'Aço, um verdadeiro paraíso escondido. Aqui você poderá mergulhar em águas mornas e cristalinas, perfeitas para nadar e observar pequenos peixes. Para os aventureiros, nosso tobogã inflável proporciona diversão garantida para adultos e crianças. A segurança é nossa prioridade: coletes salva-vidas são fornecidos e guarda-vidas ficam atentos a todos os banhistas. Aproveite também para relaxar nas áreas rasas e sentir a energia revigorante do mar." data-longtext-en="We arrive at the stunning Caixa D'Aço Bay, a true hidden paradise. Here you can dive into warm, crystal-clear waters, perfect for swimming and observing small fish. For the adventurous, our inflatable waterslide guarantees fun for adults and children. Safety is our priority: life jackets are provided and lifeguards watch over all swimmers. Also take the opportunity to relax in the shallow areas and feel the rejuvenating energy of the sea.">
+      <div class="timeline-step" data-step="3" data-key-es="Parada en la Bahía" data-key-pt="Parada na Baía" data-key-en="Bay Stop" data-desc-es="Caixa D'Aço: natación" data-desc-pt="Caixa D'Aço: natação" data-desc-en="Caixa D'Aço: swimming" data-longtext-es="Llegamos a la deslumbrante Bahía de Caixa D'Aço, un verdadero paraíso escondido." data-longtext-pt="Chegamos à deslumbrante Baía de Caixa D'Aço, um verdadeiro paraíso escondido." data-longtext-en="We arrive at the stunning Caixa D'Aço Bay, a true hidden paradise.">
         <div class="step-number">3</div>
         <h3 data-key="step3_title">Parada na Baía</h3>
-        <p data-key="step3_desc">Caixa D'Aço: natação, tobogã e mergulho.</p>
+        <p data-key="step3_desc">Caixa D'Aço: natação</p>
       </div>
-      <div class="timeline-step" data-step="4" data-key-es="Fiesta a bordo" data-key-pt="Festa a bordo" data-key-en="Party on board" data-desc-es="Frutas, batida tropical y mucha música." data-desc-pt="Frutas, batida tropical e muita música." data-desc-en="Fruits, tropical cocktails and great music." data-longtext-es="¡De vuelta al barco, la celebración continúa! Servimos un delicioso buffet de frutas frescas y nuestra famosa batida de coco, preparada en el momento. La música animada crea el ambiente perfecto para confraternizar con nuevos amigos mientras navegamos de regreso. Es el momento ideal para compartir fotos, bailar y revivir los mejores momentos del paseo. Nuestro equipo garantiza que llegues al punto de embarque con una sensación de misión cumplida y muchos recuerdos positivos." data-longtext-pt="De volta ao barco, a celebração continua! Servimos um delicioso buffet de frutas frescas e nossa famosa batida de coco, preparada na hora. A música animada cria o clima perfeito para confraternizar com novos amigos enquanto navegamos de volta. É o momento ideal para compartilhar fotos, dançar e reviver os melhores momentos do passeio. Nossa equipe garante que você chegue ao ponto de embarque com uma sensação de missão cumprida e muitas lembranças positivas." data-longtext-en="Back on the boat, the celebration continues! We serve a delicious buffet of fresh fruits and our famous coconut cocktail, made on the spot. The lively music creates the perfect atmosphere to socialize with new friends as we sail back. It's the ideal time to share photos, dance, and relive the best moments of the tour. Our team ensures you return to the boarding point with a sense of mission accomplished and many positive memories.">
+      <div class="timeline-step" data-step="4" data-key-es="Fiesta a bordo" data-key-pt="Festa a bordo" data-key-en="Party on board" data-desc-es="Frutas, batida tropical" data-desc-pt="Frutas, batida tropical" data-desc-en="Fruits, tropical cocktails" data-longtext-es="¡De vuelta al barco, la celebración continúa! Servimos un delicioso buffet de frutas frescas." data-longtext-pt="De volta ao barco, a celebração continua! Servimos um delicioso buffet de frutas frescas." data-longtext-en="Back on the boat, the celebration continues! We serve a delicious buffet of fresh fruits.">
         <div class="step-number">4</div>
         <h3 data-key="step4_title">Festa a bordo</h3>
-        <p data-key="step4_desc">Frutas, batida tropical e muita música.</p>
+        <p data-key="step4_desc">Frutas, batida tropical</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MODAL PARA POPUP DE INFORMACIÓN CON LECTOR DE VOZ -->
+<!-- MODAL -->
 <div id="infoModal" class="info-modal">
   <div class="modal-card">
     <div class="modal-header">
@@ -1074,23 +922,14 @@
   </div>
 </div>
 
-<!-- SECCIÓN GALERÍA CON NUEVO ESTILO INTERACTIVO -->
+<!-- GALERÍA -->
 <section id="galeria" class="section">
   <div class="container">
     <h2 class="section-title" data-key="gallery_title">Viva essa aventura</h2>
     <p class="section-sub" data-key="gallery_sub">Assista ao passeio e inspire-se para sua viagem</p>
-    
     <div class="video-wrapper">
-      <iframe 
-        src="https://www.youtube.com/embed/eoaLoqbpOCk?autoplay=1&mute=1&loop=1&playlist=eoaLoqbpOCk&controls=1&rel=0&modestbranding=1" 
-        title="Angel Tour Brasil 2016 Porto Belo" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-        referrerpolicy="strict-origin-when-cross-origin" 
-        allowfullscreen>
-      </iframe>
+      <iframe src="https://www.youtube.com/embed/eoaLoqbpOCk?autoplay=1&mute=1&loop=1&playlist=eoaLoqbpOCk&controls=1&rel=0" title="Angel Tour Brasil" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
-    
     <div class="gallery-container">
       <div class="gallery-grid" id="gridGaleria"></div>
     </div>
@@ -1101,9 +940,7 @@
   <div class="lightbox-content">
     <button class="close-btn" id="closeLightboxBtn">&times;</button>
     <div id="swipeHint" class="swipe-hint">
-      <svg viewBox="0 0 24 24">
-        <path d="M10 21.5c-2.21 0-4-1.79-4-4v-1.92l-.76-.32c-1.32-.56-2.07-1.93-1.83-3.34.21-1.22 1.21-2.15 2.45-2.22l.14-.01v-3.7c0-1.66 1.34-3 3-3s3 1.34 3 3v3.19c.31-.12.64-.19 1-.19.98 0 1.83.53 2.3 1.31.33-.2.72-.31 1.15-.31.91 0 1.7.53 2.1 1.3.36-.19.78-.3 1.22-.3 1.38 0 2.5 1.12 2.5 2.5v4c0 3.86-3.14 7-7 7h-3.32zm-2-5.92V17.5c0 1.1.9 2 2 2h3.32c2.76 0 5-2.24 5-5v-4c0-.28-.22-.5-.5-.5s-.5.22-.5.5v3h-1v-4.5c0-.28-.22-.5-.5-.5s-.5.22-.5.5v4.5h-1v-5c0-.28-.22-.5-.5-.5s-.5.22-.5.5v5h-1V6c0-.55-.45-1-1-1s-1 .45-1 1v7.71c-.72.33-1.25 1.01-1.38 1.83l-.01.12c-.08.45.15.89.57 1.07l1.32.55z"/>
-      </svg>
+      <svg viewBox="0 0 24 24"><path d="M10 21.5c-2.21 0-4-1.79-4-4v-1.92l-.76-.32c-1.32-.56-2.07-1.93-1.83-3.34.21-1.22 1.21-2.15 2.45-2.22l.14-.01v-3.7c0-1.66 1.34-3 3-3s3 1.34 3 3v3.19c.31-.12.64-.19 1-.19.98 0 1.83.53 2.3 1.31.33-.2.72-.31 1.15-.31.91 0 1.7.53 2.1 1.3.36-.19.78-.3 1.22-.3 1.38 0 2.5 1.12 2.5 2.5v4c0 3.86-3.14 7-7 7h-3.32z"/></svg>
     </div>
     <img id="lightboxImg" src="" alt="Imagen ampliada">
     <div class="lightbox-counter" id="fotoContador">1 / 12</div>
@@ -1114,9 +951,9 @@
   <div class="container">
     <h2 class="section-title" data-key="testimonials_title">Quem já navegou, recomenda</h2>
     <div class="cards-grid" style="gap: 28px;">
-      <div class="testimonial-card"><div class="stars">★★★★★</div><p data-key="test1_text">"Passeio fantástico! A equipe é muito atenciosa, a paisagem é um show à parte. Meus filhos amaram o tobogã."</p><strong>– Mariana S.</strong></div>
+      <div class="testimonial-card"><div class="stars">★★★★★</div><p data-key="test1_text">"Passeio fantástico! A equipe é muito atenciosa, a paisagem é um show à parte."</p><strong>– Mariana S.</strong></div>
       <div class="testimonial-card"><div class="stars">★★★★★</div><p data-key="test2_text">"Segurança e diversão. Batida de coco deliciosa e parada em Caixa D'Aço é um mergulho inesquecível."</p><strong>– Rafael C.</strong></div>
-      <div class="testimonial-card"><div class="stars">★★★★★</div><p data-key="test3_text">"Melhor passeio de barco de Porto Belo! Profissionais incríveis, estrutura impecável. Voltarei com certeza."</p><strong>– Patrícia K.</strong></div>
+      <div class="testimonial-card"><div class="stars">★★★★★</div><p data-key="test3_text">"Melhor passeio de barco de Porto Belo! Profissionais incríveis, estrutura impecável."</p><strong>– Patrícia K.</strong></div>
     </div>
   </div>
 </div>
@@ -1126,10 +963,9 @@
     <div class="form-wrapper-simple">
         <div class="weather-widget-container">
             <div id="weatherWidgetPlaceholder" style="width:100%;">
-                <div style="color: #64748B; font-size: 0.8rem; text-align: center; padding: 20px;">🌊 Cargando previsión del tiempo para Porto Belo...</div>
+                <div style="color: #64748B; font-size: 0.8rem; text-align: center; padding: 20px;">🌊 Cargando previsión del tiempo...</div>
             </div>
         </div>
-
         <form id="dataForm">
             <div class="form-grid-2col">
                 <div>
@@ -1139,24 +975,14 @@
                 <div>
                     <div class="form-label"><i class="far fa-clock"></i> <span id="textHorario">PREFERÊNCIA DE HORÁRIO</span></div>
                     <div class="horarios-group">
-                        <div class="horario-card" data-horario="09:30">
-                            <div class="horario-titulo" id="horarioTitulo1">Mañana</div>
-                            <div class="horario-hora">9:30 Hs</div>
-                        </div>
-                        <div class="horario-card" data-horario="11:10">
-                            <div class="horario-titulo" id="horarioTitulo2">Media Mañana</div>
-                            <div class="horario-hora">11:10 Hs</div>
-                        </div>
-                        <div class="horario-card" data-horario="13:00">
-                            <div class="horario-titulo" id="horarioTitulo3">Tarde</div>
-                            <div class="horario-hora">13:00 Hs</div>
-                        </div>
+                        <div class="horario-card" data-horario="09:30"><div class="horario-titulo" id="horarioTitulo1">Mañana</div><div class="horario-hora">9:30 Hs</div></div>
+                        <div class="horario-card" data-horario="11:10"><div class="horario-titulo" id="horarioTitulo2">Media Mañana</div><div class="horario-hora">11:10 Hs</div></div>
+                        <div class="horario-card" data-horario="13:00"><div class="horario-titulo" id="horarioTitulo3">Tarde</div><div class="horario-hora">13:00 Hs</div></div>
                     </div>
                     <input type="hidden" id="horario" name="horario" required>
-                    <div class="form-note" id="horarioNote">⏱️ Sujeito à disponibilidade, o horário será confirmado via WhatsApp.</div>
+                    <div class="form-note" id="horarioNote">⏱️ Sujeito à disponibilidade</div>
                 </div>
             </div>
-
             <div class="form-grid-2col" style="margin-top: 1rem;">
                 <div>
                     <div class="form-label"><i class="fas fa-user"></i> <span id="textNombre">NOME</span></div>
@@ -1165,10 +991,9 @@
                 <div>
                     <div class="form-label"><i class="fas fa-building"></i> <span id="textEmpresa">EMPRESA</span></div>
                     <input type="text" id="empresa" name="empresa" placeholder="Ex: Turismo Brasil" class="form-input">
-                    <div class="form-note" id="empresaNote">*Opcional para reservas individuais</div>
+                    <div class="form-note" id="empresaNote">*Opcional</div>
                 </div>
             </div>
-
             <div class="form-grid-2col" style="margin-top: 1rem;">
                 <div>
                     <div class="form-label"><i class="fas fa-users"></i> <span id="textAdultos">ADULTOS</span></div>
@@ -1176,26 +1001,22 @@
                     <div class="form-note" id="precioAdultos">💰 R$ 85,00 cada adulto</div>
                 </div>
                 <div>
-                    <div class="form-label"><i class="fas fa-child"></i> <span id="textMenores">MENORES de 6 a 11 años</span></div>
+                    <div class="form-label"><i class="fas fa-child"></i> <span id="textMenores">MENORES 6-11 años</span></div>
                     <input type="number" id="menores" name="menores" step="1" min="0" max="99" value="0" class="form-input">
                     <div class="form-note"><span id="discountBadge" class="discount-badge">🎯 50% de desconto</span></div>
                 </div>
             </div>
-
             <div class="info-box">
-                <p>💡 <span id="infoNoteText">O valor mencionado é para grupos fechados ou agências, em viagens individuais o valor pode sofrer variações, em caso de dúvida não deixe de nos consultar.</span></p>
+                <p>💡 <span id="infoNoteText">O valor mencionado é para grupos fechados ou agências, em viagens individuais o valor pode sofrer variações.</span></p>
             </div>
-
             <div>
                 <div class="form-label"><i class="fas fa-dollar-sign"></i> <span id="textTotal">VALOR TOTAL</span></div>
                 <input type="text" id="valorTotal" name="valorTotal" readonly value="R$ 0,00" class="form-input total-display">
             </div>
-
             <button type="submit" id="btnSubmit" class="btn-submit-modern">
                 <i class="fab fa-whatsapp"></i> <span id="btnText">ENVIAR RESERVA</span>
             </button>
         </form>
-
         <div class="footer-form">
             <span><i class="fas fa-ship"></i> <span id="footerBoat">Passeios de barco</span></span>
             <span><i class="fas fa-lock"></i> <span id="footerSecure">Confirmação segura</span></span>
@@ -1213,10 +1034,7 @@
         <p><i class="fas fa-anchor"></i> <span data-key="footer_address">Trapiche Porto dos Piratas, Porto Belo - SC</span></p>
         <p><i class="fab fa-whatsapp"></i> (47) 99999-1234</p>
         <p><i class="far fa-envelope"></i> contato@angeltourbrasil.com.br</p>
-        <a href="https://www.google.com/maps/dir/?api=1&destination=Trapiche+Porto+dos+Piratas+Porto+Belo+SC+Brasil" target="_blank" class="map-link" rel="noopener noreferrer">
-          <i class="fas fa-map-marker-alt"></i>
-          <span data-key="map_text">Abrir no Google Maps</span>
-        </a>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=Trapiche+Porto+dos+Piratas+Porto+Belo+SC+Brasil" target="_blank" class="map-link"><i class="fas fa-map-marker-alt"></i> <span data-key="map_text">Abrir no Google Maps</span></a>
       </div>
       <div class="footer-col">
         <h4 data-key="footer_nav">Navegação</h4>
@@ -1226,15 +1044,9 @@
       </div>
       <div class="footer-col social">
         <h4 data-key="footer_follow">Siga a aventura</h4>
-        <a href="https://www.instagram.com/angeltourbrasil/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a href="https://www.facebook.com/angeltourbrasil/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-          <i class="fab fa-facebook"></i>
-        </a>
-        <a href="https://www.youtube.com/@angeltourbrasil" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-          <i class="fab fa-youtube"></i>
-        </a>
+        <a href="https://www.instagram.com/angeltourbrasil/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/angeltourbrasil/" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.youtube.com/@angeltourbrasil" target="_blank"><i class="fab fa-youtube"></i></a>
       </div>
     </div>
     <hr style="margin: 32px 0 20px; border-color:#2A4B64;">
@@ -1242,631 +1054,92 @@
   </div>
 </footer>
 
-<a href="https://wa.me/5547999991234?text=Olá! Gostaria de informações sobre o passeio de barco" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<a href="https://wa.me/5547999991234?text=Olá! Gostaria de informações sobre o passeio" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
 <script>
   // ========== TRADUCCIONES COMPLETAS (MULTI-IDIOMA) ==========
   const translations = {
-    es: {
-      nav_home: "Inicio", nav_tour: "El Paseo", nav_gallery: "Galería", nav_book: "Reservar",
-      hero_title: "El paseo más completo de la Costa Esmeralda",
-      hero_sub: "Navegue por paisajes paradisíacos, nade en la Bahía de Caixa D'Aço, disfrute del tobogán, frutas tropicales y mucha animación a bordo.",
-      btn_route: "Ver Itinerario", btn_guarantee: "Asegurar Plaza",
-      why_title: "¿Por qué navegar con Angel Tour?", why_sub: "Experiencia completa, seguridad y diversión para todas las edades",
-      diff1_title: "Seguridad total", diff1_desc: "Chalecos + salvavidas y tripulación entrenada",
-      diff2_title: "Parada en Caixa D'Aço", diff2_desc: "Aguas cristalinas para nadar con tranquilidad",
-      diff3_title: "Buffet & Batidas", diff3_desc: "Frutas frescas y batida de coco a bordo",
-      diff4_title: "Diversión asegurada", diff4_desc: "Tobogán, música y animación para adultos y niños",
-      itinerary_title: "Itinerario de la Experiencia", itinerary_sub: "Embarque en Porto dos Piratas y viva momentos inolvidables",
-      step1_title: "Embarque", step1_desc: "Trapiche en Porto dos Piratas / Porto Belo.",
-      step2_title: "Navegación", step2_desc: "1h30 por la Costa Esmeralda, paisajes de cine.",
-      step3_title: "Parada en la Bahía", step3_desc: "Caixa D'Aço: natación, tobogán y buceo.",
-      step4_title: "Fiesta a bordo", step4_desc: "Frutas, batida tropical y mucha música.",
-      gallery_title: "Vive esta aventura", gallery_sub: "Mira el paseo e inspírate para tu viaje",
-      testimonials_title: "Quienes ya navegaron, recomiendan",
-      test1_text: "¡Paseo fantástico! El equipo es muy atento, el paisaje es un espectáculo aparte. A mis hijos les encantó el tobogán.",
-      test2_text: "Seguridad y diversión. La batida de coco deliciosa y la parada en Caixa D'Aço es un baño inolvidable.",
-      test3_text: "¡El mejor paseo en barco de Porto Belo! Profesionales increíbles, estructura impecable. Volveré sin duda.",
-      footer_address: "Trapiche Porto dos Piratas, Porto Belo - SC",
-      footer_nav: "Navegación", footer_home: "Inicio", footer_route: "Itinerario", footer_gallery: "Galería", footer_follow: "Sigue la aventura",
-      footer_copyright: "© 2026 Angel Tour Brasil – El paseo más completo de la Costa Esmeralda.",
-      map_text: "Abrir en Google Maps",
-      sticky_subtitle: "Reserva tu lugar",
-      sticky_price: "⭐ ¡Precios especiales! ⭐",
-      sticky_btn: "Reservar Ahora",
-      fecha: "FECHA DEL PASEO",
-      horario: "PREFERENCIA DE HORARIO",
-      horario1: "Mañana",
-      horario2: "Media Mañana",
-      horario3: "Tarde",
-      nombre: "NOMBRE",
-      empresa: "EMPRESA",
-      empresa_note: "*Opcional para reservas individuales",
-      adultos: "ADULTOS",
-      menores: "MENORES de 6 a 11 años",
-      total: "VALOR TOTAL",
-      btn: "ENVIAR RESERVA",
-      horario_note: "⏱️ Sujeto a disponibilidad, el horario será confirmado via WhatsApp.",
-      info_text: "💡 El valor mencionado es para grupos cerrados o agencias, en viajes individuales el valor puede sufrir variaciones, ante cualquier duda no deje de consultarnos.",
-      discount_text: "🎯 50% de descuento",
-      precio_adultos: "💰 R$ 85,00 cada adulto",
-      footer_boat: "Paseos en barco",
-      footer_secure: "Confirmación segura",
-      footer_confirm: "Envío por WhatsApp",
-      modal_title: "Confirmar reserva",
-      modal_cancel: "Cancelar",
-      modal_confirm: "Enviar via WhatsApp"
-    },
-    pt: {
-      nav_home: "Início", nav_tour: "O Passeio", nav_gallery: "Galeria", nav_book: "Reservar",
-      hero_title: "O passeio mais completo da Costa Esmeralda",
-      hero_sub: "Navegue por paisagens paradisíacas, nade na Bahía de Caixa D'Aço, aproveite tobogã, frutas tropicais e muita animação a bordo.",
-      btn_route: "Ver Roteiro", btn_guarantee: "Garantir Vaga",
-      why_title: "Por que velejar com a Angel Tour?", why_sub: "Experiência completa, segurança e diversão para todas as idades",
-      diff1_title: "Segurança total", diff1_desc: "Coletes + guarda-vidas e tripulação treinada",
-      diff2_title: "Parada em Caixa D'Aço", diff2_desc: "Águas cristalinas para nadar com tranquilidade",
-      diff3_title: "Buffet & Batidas", diff3_desc: "Frutas frescas e batida de coco a bordo",
-      diff4_title: "Diversão garantida", diff4_desc: "Tobogã, música e animação para adultos e crianças",
-      itinerary_title: "Roteiro da Experiência", itinerary_sub: "Embarque em Porto dos Piratas e viva momentos inesquecíveis",
-      step1_title: "Embarque", step1_desc: "Trapiche em Porto dos Piratas / Porto Belo.",
-      step2_title: "Navegação", step2_desc: "1h30 pela Costa Esmeralda, paisagens de cinema.",
-      step3_title: "Parada na Baía", step3_desc: "Caixa D'Aço: natação, tobogã e mergulho.",
-      step4_title: "Festa a bordo", step4_desc: "Frutas, batida tropical e muita música.",
-      gallery_title: "Viva essa aventura", gallery_sub: "Assista ao passeio e inspire-se para sua viagem",
-      testimonials_title: "Quem já navegou, recomenda",
-      test1_text: "Passeio fantástico! A equipe é muito atenciosa, a paisagem é um show à parte. Meus filhos amaram o tobogã.",
-      test2_text: "Segurança e diversão. Batida de coco deliciosa e parada em Caixa D'Aço é um mergulho inesquecível.",
-      test3_text: "Melhor passeio de barco de Porto Belo! Profissionais incríveis, estrutura impecável. Voltarei com certeza.",
-      footer_address: "Trapiche Porto dos Piratas, Porto Belo - SC",
-      footer_nav: "Navegação", footer_home: "Início", footer_route: "Itinerário", footer_gallery: "Galeria", footer_follow: "Siga a aventura",
-      footer_copyright: "© 2026 Angel Tour Brasil – O passeio mais completo da Costa Esmeralda.",
-      map_text: "Abrir no Google Maps",
-      sticky_subtitle: "Reserve seu lugar",
-      sticky_price: "⭐ Preços especiais! ⭐",
-      sticky_btn: "Reservar Agora",
-      fecha: "DATA DO PASSEIO",
-      horario: "PREFERÊNCIA DE HORÁRIO",
-      horario1: "Manhã",
-      horario2: "Meia Manhã",
-      horario3: "Tarde",
-      nombre: "NOME",
-      empresa: "EMPRESA",
-      empresa_note: "*Opcional para reservas individuais",
-      adultos: "ADULTOS",
-      menores: "MENORES de 6 a 11 anos",
-      total: "VALOR TOTAL",
-      btn: "ENVIAR RESERVA",
-      horario_note: "⏱️ Sujeito à disponibilidade, o horário será confirmado via WhatsApp.",
-      info_text: "💡 O valor mencionado é para grupos fechados ou agências, em viagens individuais o valor pode sofrer variações, em caso de dúvida não deixe de nos consultar.",
-      discount_text: "🎯 50% de desconto",
-      precio_adultos: "💰 R$ 85,00 cada adulto",
-      footer_boat: "Passeios de barco",
-      footer_secure: "Confirmação segura",
-      footer_confirm: "Envio por WhatsApp",
-      modal_title: "Confirmar reserva",
-      modal_cancel: "Cancelar",
-      modal_confirm: "Enviar via WhatsApp"
-    },
-    en: {
-      nav_home: "Home", nav_tour: "The Tour", nav_gallery: "Gallery", nav_book: "Book Now",
-      hero_title: "The most complete tour of the Emerald Coast",
-      hero_sub: "Sail through stunning landscapes, swim in Caixa D'Aço Bay, enjoy a waterslide, tropical fruits, and lots of fun on board.",
-      btn_route: "See Itinerary", btn_guarantee: "Book Now",
-      why_title: "Why sail with Angel Tour?", why_sub: "Complete experience, safety and fun for all ages",
-      diff1_title: "Total safety", diff1_desc: "Life jackets + lifeguards and trained crew",
-      diff2_title: "Stop at Caixa D'Aço", diff2_desc: "Crystal clear waters for a safe swim",
-      diff3_title: "Buffet & Drinks", diff3_desc: "Fresh fruits and coconut cocktail on board",
-      diff4_title: "Guaranteed fun", diff4_desc: "Waterslide, music and entertainment for all ages",
-      itinerary_title: "Experience Itinerary", itinerary_sub: "Board at Porto dos Piratas and live unforgettable moments",
-      step1_title: "Boarding", step1_desc: "Pier in Porto dos Piratas / Porto Belo.",
-      step2_title: "Cruising", step2_desc: "1h30 along the Emerald Coast, movie-like scenery.",
-      step3_title: "Bay Stop", step3_desc: "Caixa D'Aço: swimming, waterslide and snorkeling.",
-      step4_title: "Party on board", step4_desc: "Fruits, tropical cocktails and great music.",
-      gallery_title: "Live this adventure", gallery_sub: "Watch the tour and get inspired for your trip",
-      testimonials_title: "Those who have sailed, recommend",
-      test1_text: "Fantastic tour! The team is very attentive, the scenery is a show apart. My kids loved the waterslide.",
-      test2_text: "Safety and fun. Delicious coconut drink and the stop at Caixa D'Aço is an unforgettable swim.",
-      test3_text: "Best boat tour in Porto Belo! Incredible professionals, impeccable structure. I'll definitely come back.",
-      footer_address: "Trapiche Porto dos Piratas, Porto Belo - SC",
-      footer_nav: "Navigation", footer_home: "Home", footer_route: "Itinerary", footer_gallery: "Gallery", footer_follow: "Follow the adventure",
-      footer_copyright: "© 2026 Angel Tour Brasil – The most complete tour of the Emerald Coast.",
-      map_text: "Open in Google Maps",
-      sticky_subtitle: "Book your spot",
-      sticky_price: "⭐ Special prices! ⭐",
-      sticky_btn: "Book Now",
-      fecha: "TOUR DATE",
-      horario: "TIME PREFERENCE",
-      horario1: "Morning",
-      horario2: "Late Morning",
-      horario3: "Afternoon",
-      nombre: "NAME",
-      empresa: "COMPANY",
-      empresa_note: "*Optional for individual reservations",
-      adultos: "ADULTS",
-      menores: "CHILDREN 6 to 11 years",
-      total: "TOTAL VALUE",
-      btn: "SEND RESERVATION",
-      horario_note: "⏱️ Subject to availability, the schedule will be confirmed via WhatsApp.",
-      info_text: "💡 The mentioned price is for closed groups or agencies; for individual trips, the price may vary. If you have any questions, please do not hesitate to contact us.",
-      discount_text: "🎯 50% discount",
-      precio_adultos: "💰 R$ 85.00 per adult",
-      footer_boat: "Boat tours",
-      footer_secure: "Secure confirmation",
-      footer_confirm: "WhatsApp delivery",
-      modal_title: "Confirm reservation",
-      modal_cancel: "Cancel",
-      modal_confirm: "Send via WhatsApp"
-    }
+    es: { nav_home:"Inicio", nav_tour:"El Paseo", nav_gallery:"Galería", nav_book:"Reservar", hero_title:"El paseo más completo de la Costa Esmeralda", hero_sub:"Navegue por paisajes paradisíacos, nade en la Bahía de Caixa D'Aço, disfrute del tobogán, frutas tropicales y mucha animación a bordo.", btn_route:"Ver Itinerario", btn_guarantee:"Asegurar Plaza", why_title:"¿Por qué navegar con Angel Tour?", why_sub:"Experiencia completa, seguridad y diversión para todas las edades", diff1_title:"Seguridad total", diff1_desc:"Chalecos + salvavidas y tripulación entrenada", diff2_title:"Parada en Caixa D'Aço", diff2_desc:"Aguas cristalinas para nadar con tranquilidad", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas y batida de coco a bordo", diff4_title:"Diversión asegurada", diff4_desc:"Tobogán, música y animación para adultos y niños", itinerary_title:"Itinerario de la Experiencia", itinerary_sub:"Embarque en Porto dos Piratas y viva momentos inolvidables", step1_title:"Embarque", step1_desc:"Trapiche en Porto dos Piratas / Porto Belo.", step2_title:"Navegación", step2_desc:"1h30 por la Costa Esmeralda, paisajes de cine.", step3_title:"Parada en la Bahía", step3_desc:"Caixa D'Aço: natación, tobogán y buceo.", step4_title:"Fiesta a bordo", step4_desc:"Frutas, batida tropical y mucha música.", gallery_title:"Vive esta aventura", gallery_sub:"Mira el paseo e inspírate para tu viaje", testimonials_title:"Quienes ya navegaron, recomiendan", test1_text:"¡Paseo fantástico! El equipo es muy atento, el paisaje es un espectáculo aparte. A mis hijos les encantó el tobogán.", test2_text:"Seguridad y diversión. La batida de coco deliciosa y la parada en Caixa D'Aço es un baño inolvidable.", test3_text:"¡El mejor paseo en barco de Porto Belo! Profesionales increíbles, estructura impecable. Volveré sin duda.", footer_address:"Trapiche Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegación", footer_home:"Inicio", footer_route:"Itinerario", footer_gallery:"Galería", footer_follow:"Sigue la aventura", footer_copyright:"© 2026 Angel Tour Brasil – El paseo más completo de la Costa Esmeralda.", map_text:"Abrir en Google Maps", sticky_subtitle:"Reserva tu lugar", sticky_price:"⭐ ¡Precios especiales! ⭐", sticky_btn:"Reservar Ahora", fecha:"FECHA DEL PASEO", horario:"PREFERENCIA DE HORARIO", horario1:"Mañana", horario2:"Media Mañana", horario3:"Tarde", nombre:"NOMBRE", empresa:"EMPRESA", empresa_note:"*Opcional para reservas individuales", adultos:"ADULTOS", menores:"MENORES de 6 a 11 años", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeto a disponibilidad, el horario será confirmado via WhatsApp.", info_text:"💡 El valor mencionado es para grupos cerrados o agencias, en viajes individuales el valor puede sufrir variaciones, ante cualquier duda no deje de consultarnos.", discount_text:"🎯 50% de descuento", precio_adultos:"💰 R$ 85,00 cada adulto", footer_boat:"Paseos en barco", footer_secure:"Confirmación segura", footer_confirm:"Envío por WhatsApp" },
+    pt: { nav_home:"Início", nav_tour:"O Passeio", nav_gallery:"Galeria", nav_book:"Reservar", hero_title:"O passeio mais completo da Costa Esmeralda", hero_sub:"Navegue por paisagens paradisíacas, nade na Bahía de Caixa D'Aço, aproveite tobogã, frutas tropicais e muita animação a bordo.", btn_route:"Ver Roteiro", btn_guarantee:"Garantir Vaga", why_title:"Por que velejar com a Angel Tour?", why_sub:"Experiência completa, segurança e diversão para todas as idades", diff1_title:"Segurança total", diff1_desc:"Coletes + guarda-vidas e tripulação treinada", diff2_title:"Parada em Caixa D'Aço", diff2_desc:"Águas cristalinas para nadar com tranquilidade", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas e batida de coco a bordo", diff4_title:"Diversão garantida", diff4_desc:"Tobogã, música e animação para adultos e crianças", itinerary_title:"Roteiro da Experiência", itinerary_sub:"Embarque em Porto dos Piratas e viva momentos inesquecíveis", step1_title:"Embarque", step1_desc:"Trapiche em Porto dos Piratas / Porto Belo.", step2_title:"Navegação", step2_desc:"1h30 pela Costa Esmeralda, paisagens de cinema.", step3_title:"Parada na Baía", step3_desc:"Caixa D'Aço: natação, tobogã e mergulho.", step4_title:"Festa a bordo", step4_desc:"Frutas, batida tropical e muita música.", gallery_title:"Viva essa aventura", gallery_sub:"Assista ao passeio e inspire-se para sua viagem", testimonials_title:"Quem já navegou, recomenda", test1_text:"Passeio fantástico! A equipe é muito atenciosa, a paisagem é um show à parte. Meus filhos amaram o tobogã.", test2_text:"Segurança e diversão. Batida de coco deliciosa e parada em Caixa D'Aço é um mergulho inesquecível.", test3_text:"Melhor passeio de barco de Porto Belo! Profissionais incríveis, estrutura impecável. Voltarei com certeza.", footer_address:"Trapiche Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegação", footer_home:"Início", footer_route:"Itinerário", footer_gallery:"Galeria", footer_follow:"Siga a aventura", footer_copyright:"© 2026 Angel Tour Brasil – O passeio mais completo da Costa Esmeralda.", map_text:"Abrir no Google Maps", sticky_subtitle:"Reserve seu lugar", sticky_price:"⭐ Preços especiais! ⭐", sticky_btn:"Reservar Agora", fecha:"DATA DO PASSEIO", horario:"PREFERÊNCIA DE HORÁRIO", horario1:"Manhã", horario2:"Meia Manhã", horario3:"Tarde", nombre:"NOME", empresa:"EMPRESA", empresa_note:"*Opcional para reservas individuais", adultos:"ADULTOS", menores:"MENORES de 6 a 11 anos", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeito à disponibilidade, o horário será confirmado via WhatsApp.", info_text:"💡 O valor mencionado é para grupos fechados ou agências, em viagens individuais o valor pode sofrer variações, em caso de dúvida não deixe de nos consultar.", discount_text:"🎯 50% de desconto", precio_adultos:"💰 R$ 85,00 cada adulto", footer_boat:"Passeios de barco", footer_secure:"Confirmação segura", footer_confirm:"Envio por WhatsApp" },
+    en: { nav_home:"Home", nav_tour:"The Tour", nav_gallery:"Gallery", nav_book:"Book Now", hero_title:"The most complete tour of the Emerald Coast", hero_sub:"Sail through stunning landscapes, swim in Caixa D'Aço Bay, enjoy a waterslide, tropical fruits, and lots of fun on board.", btn_route:"See Itinerary", btn_guarantee:"Book Now", why_title:"Why sail with Angel Tour?", why_sub:"Complete experience, safety and fun for all ages", diff1_title:"Total safety", diff1_desc:"Life jackets + lifeguards and trained crew", diff2_title:"Stop at Caixa D'Aço", diff2_desc:"Crystal clear waters for a safe swim", diff3_title:"Buffet & Drinks", diff3_desc:"Fresh fruits and coconut cocktail on board", diff4_title:"Guaranteed fun", diff4_desc:"Waterslide, music and entertainment for all ages", itinerary_title:"Experience Itinerary", itinerary_sub:"Board at Porto dos Piratas and live unforgettable moments", step1_title:"Boarding", step1_desc:"Pier in Porto dos Piratas / Porto Belo.", step2_title:"Cruising", step2_desc:"1h30 along the Emerald Coast, movie-like scenery.", step3_title:"Bay Stop", step3_desc:"Caixa D'Aço: swimming, waterslide and snorkeling.", step4_title:"Party on board", step4_desc:"Fruits, tropical cocktails and great music.", gallery_title:"Live this adventure", gallery_sub:"Watch the tour and get inspired for your trip", testimonials_title:"Those who have sailed, recommend", test1_text:"Fantastic tour! The team is very attentive, the scenery is a show apart. My kids loved the waterslide.", test2_text:"Safety and fun. Delicious coconut drink and the stop at Caixa D'Aço is an unforgettable swim.", test3_text:"Best boat tour in Porto Belo! Incredible professionals, impeccable structure. I'll definitely come back.", footer_address:"Trapiche Porto dos Piratas, Porto Belo - SC", footer_nav:"Navigation", footer_home:"Home", footer_route:"Itinerary", footer_gallery:"Gallery", footer_follow:"Follow the adventure", footer_copyright:"© 2026 Angel Tour Brasil – The most complete tour of the Emerald Coast.", map_text:"Open in Google Maps", sticky_subtitle:"Book your spot", sticky_price:"⭐ Special prices! ⭐", sticky_btn:"Book Now", fecha:"TOUR DATE", horario:"TIME PREFERENCE", horario1:"Morning", horario2:"Late Morning", horario3:"Afternoon", nombre:"NAME", empresa:"COMPANY", empresa_note:"*Optional for individual reservations", adultos:"ADULTS", menores:"CHILDREN 6 to 11 years", total:"TOTAL VALUE", btn:"SEND RESERVATION", horario_note:"⏱️ Subject to availability, the schedule will be confirmed via WhatsApp.", info_text:"💡 The mentioned price is for closed groups or agencies; for individual trips, the price may vary. If you have any questions, please do not hesitate to contact us.", discount_text:"🎯 50% discount", precio_adultos:"💰 R$ 85.00 per adult", footer_boat:"Boat tours", footer_secure:"Secure confirmation", footer_confirm:"WhatsApp delivery" }
   };
 
   let currentLang = 'pt';
   let currentStepData = null;
   let speechSynthesis = window.speechSynthesis;
-  let currentUtterance = null;
   let isSpeaking = false;
 
-  // Función principal para cambiar idioma - RECORRE TODA LA PÁGINA Y CAMBIA TEXTOS INSTANTÁNEAMENTE
-  function changeLanguage(lang) {
-    currentLang = lang;
-    const t = translations[lang];
-    
-    // Recorrer todos los elementos con data-key
-    document.querySelectorAll('[data-key]').forEach(el => {
-      const key = el.getAttribute('data-key');
-      if (t[key] !== undefined) {
-        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-          el.placeholder = t[key];
-        } else {
-          el.textContent = t[key];
-        }
-      }
-    });
-    
-    // Elementos específicos del formulario (que no tienen data-key)
-    const elementsToTranslate = {
-      textFecha: t.fecha,
-      textHorario: t.horario,
-      textNombre: t.nombre,
-      textEmpresa: t.empresa,
-      textAdultos: t.adultos,
-      textMenores: t.menores,
-      textTotal: t.total,
-      btnText: t.btn,
-      horarioNote: t.horario_note,
-      empresaNote: t.empresa_note,
-      infoNoteText: t.info_text,
-      discountBadge: t.discount_text,
-      precioAdultos: t.precio_adultos,
-      footerBoat: t.footer_boat,
-      footerSecure: t.footer_secure,
-      footerConfirm: t.footer_confirm,
-      horarioTitulo1: t.horario1,
-      horarioTitulo2: t.horario2,
-      horarioTitulo3: t.horario3
-    };
-    
-    for (const [id, value] of Object.entries(elementsToTranslate)) {
-      const el = document.getElementById(id);
-      if (el) el.textContent = value;
-    }
-    
-    // Actualizar textos del itinerario (tarjetas clickeables)
-    const timelineSteps = document.querySelectorAll('.timeline-step');
-    timelineSteps.forEach(step => {
-      const titleKey = step.getAttribute(`data-key-${lang}`);
-      const descKey = step.getAttribute(`data-desc-${lang}`);
-      const longtextKey = step.getAttribute(`data-longtext-${lang}`);
-      if (titleKey) {
-        step.setAttribute('data-title', titleKey);
-        step.setAttribute('data-desc', descKey);
-        step.setAttribute('data-longtext', longtextKey);
-        const h3 = step.querySelector('h3');
-        const p = step.querySelector('p');
-        if (h3) h3.textContent = titleKey;
-        if (p) p.textContent = descKey;
-      }
-    });
-    
-    // Actualizar botones de idioma (estilo activo)
-    document.querySelectorAll('.lang-btn-header').forEach(btn => {
-      btn.classList.remove('active');
-      if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
-    });
-    
-    // Recargar widget del clima
-    loadWeatherWidget(lang);
-    
-    // Guardar preferencia
-    localStorage.setItem('preferred_language', lang);
-  }
-
-  // Funciones del modal de voz
-  function stopReading() {
-    if (speechSynthesis) {
-      speechSynthesis.cancel();
-      isSpeaking = false;
-      const readAloudBtn = document.getElementById('readAloudBtn');
-      if (readAloudBtn) {
-        readAloudBtn.innerHTML = '<i class="fas fa-volume-up"></i> Leer en voz alta';
-        readAloudBtn.classList.remove('stop');
-      }
-    }
-  }
-  
-  function readTextAloud(text, lang) {
-    if (!speechSynthesis) return alert('Tu navegador no soporta síntesis de voz');
-    stopReading();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = lang === 'es' ? 'es-ES' : (lang === 'pt' ? 'pt-BR' : 'en-US');
-    utterance.rate = 0.9;
-    const readAloudBtn = document.getElementById('readAloudBtn');
-    utterance.onstart = () => {
-      isSpeaking = true;
-      if (readAloudBtn) {
-        readAloudBtn.innerHTML = '<i class="fas fa-stop"></i> Detener';
-        readAloudBtn.classList.add('stop');
-      }
-    };
-    utterance.onend = () => {
-      isSpeaking = false;
-      if (readAloudBtn) {
-        readAloudBtn.innerHTML = '<i class="fas fa-volume-up"></i> Leer en voz alta';
-        readAloudBtn.classList.remove('stop');
-      }
-    };
-    utterance.onerror = () => {
-      isSpeaking = false;
-      if (readAloudBtn) {
-        readAloudBtn.innerHTML = '<i class="fas fa-volume-up"></i> Leer en voz alta';
-        readAloudBtn.classList.remove('stop');
-      }
-    };
-    currentUtterance = utterance;
-    speechSynthesis.speak(utterance);
-  }
-
-  // Funciones del modal
-  function openModal(stepData) {
-    currentStepData = stepData;
-    const modalTitle = document.getElementById('modalTitle');
-    const modalBody = document.getElementById('modalBody');
-    if (modalTitle) modalTitle.textContent = stepData.title;
-    if (modalBody) modalBody.innerHTML = `<p><strong>${stepData.desc}</strong></p><p>${stepData.longtext}</p>`;
-    const modal = document.getElementById('infoModal');
-    if (modal) {
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-    stopReading();
-  }
-  
-  function closeModalFunc() {
-    stopReading();
-    const modal = document.getElementById('infoModal');
-    if (modal) {
-      modal.style.display = 'none';
-      document.body.style.overflow = '';
-    }
-    currentStepData = null;
-  }
-
-  async function loadWeatherWidget(lang) {
-    const container = document.getElementById('weatherWidgetPlaceholder');
-    if (!container) return;
-    const widgetLangMap = { 'es': 'es', 'pt': 'pt', 'en': 'en' };
-    const widgetLang = widgetLangMap[lang] || 'es';
-    const titles = { 'es': { label1: 'PORTO BELO', label2: 'Previsión 3 días' }, 'pt': { label1: 'PORTO BELO', label2: 'Previsão 3 dias' }, 'en': { label1: 'PORTO BELO', label2: '3-Day Forecast' } };
-    const title = titles[lang] || titles['es'];
-    const widgetLink = document.createElement('a');
-    widgetLink.className = 'weatherwidget-io';
-    widgetLink.href = `https://forecast7.com/${widgetLang}/n27d16n48d58/porto-belo/`;
-    widgetLink.setAttribute('data-label_1', title.label1);
-    widgetLink.setAttribute('data-label_2', title.label2);
-    widgetLink.setAttribute('data-theme', 'original');
-    widgetLink.setAttribute('data-base', 'www');
-    widgetLink.setAttribute('data-days', '3');
-    widgetLink.style.pointerEvents = 'none';
-    widgetLink.style.cursor = 'default';
-    widgetLink.style.width = '100%';
-    widgetLink.style.display = 'block';
-    widgetLink.textContent = `${title.label1} ${title.label2}`;
-    container.innerHTML = '';
-    container.appendChild(widgetLink);
-    const existingScript = document.getElementById('weatherwidget-io-js');
-    if (existingScript) existingScript.remove();
-    const script = document.createElement('script');
-    script.id = 'weatherwidget-io-js';
-    script.src = 'https://weatherwidget.io/js/widget.min.js';
-    document.head.appendChild(script);
-  }
-
-  function calcularValorTotal() {
-    const adultos = parseInt(document.getElementById('adultos')?.value || 0);
-    const menores = parseInt(document.getElementById('menores')?.value || 0);
-    const total = (adultos * 85) + (menores * 42.5);
-    const valorTotalInput = document.getElementById('valorTotal');
-    if (valorTotalInput) {
-      valorTotalInput.value = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    }
-    return total;
-  }
-
-  function scrollToSectionWithOffset(elementId) {
-    const element = document.getElementById(elementId);
-    if (element) {
-      const header = document.querySelector('.header');
-      const headerHeight = header ? header.offsetHeight : 80;
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = elementPosition - headerHeight - 10;
-      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-    }
-  }
-
-  // ========== INICIALIZACIÓN ==========
-  
-  // Configurar eventos de los botones de idioma
-  document.querySelectorAll('.lang-btn-header').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const lang = btn.getAttribute('data-lang');
-      changeLanguage(lang);
-    });
-  });
-  
-  // Configurar eventos del sticky booking bar
-  const stickyBar = document.getElementById('stickyBookingBar');
-  const heroSection = document.getElementById('inicio');
-  const stickyBookBtn = document.getElementById('stickyBookBtn');
-  
-  function checkStickyBar() {
-    if (window.innerWidth <= 880 && heroSection) {
-      const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
-      const scrollY = window.scrollY;
-      if (scrollY > heroBottom - 100) {
-        stickyBar?.classList.add('show');
-      } else {
-        stickyBar?.classList.remove('show');
-      }
-    } else {
-      stickyBar?.classList.remove('show');
-    }
-  }
-  
-  window.addEventListener('scroll', checkStickyBar);
-  window.addEventListener('resize', checkStickyBar);
-  checkStickyBar();
-  
-  if (stickyBookBtn) {
-    stickyBookBtn.addEventListener('click', () => {
-      const reservaSection = document.getElementById('reserva');
-      if (reservaSection) reservaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  }
-  
-  // Configurar el botón "Garantir Vaga"
-  const garantiaBtn = document.querySelector('.garantia-link');
-  if (garantiaBtn) {
-    garantiaBtn.addEventListener('click', e => { e.preventDefault(); scrollToSectionWithOffset('reserva'); });
-  }
-  
-  // Configurar eventos del modal
-  const closeModalBtn = document.getElementById('closeModalBtn');
-  const closeModalFooterBtn = document.getElementById('closeModalFooterBtn');
-  const shareWhatsappBtn = document.getElementById('shareWhatsappBtn');
-  const readAloudBtn = document.getElementById('readAloudBtn');
-  
-  if (closeModalBtn) closeModalBtn.addEventListener('click', closeModalFunc);
-  if (closeModalFooterBtn) closeModalFooterBtn.addEventListener('click', closeModalFunc);
-  
-  const modal = document.getElementById('infoModal');
-  if (modal) {
-    modal.addEventListener('click', e => { if (e.target === modal) closeModalFunc(); });
-  }
-  
-  if (shareWhatsappBtn) {
-    shareWhatsappBtn.addEventListener('click', () => {
-      if (currentStepData) {
-        const message = `🌟 *ANGEL TOUR BRASIL* 🌟\n\n📌 *${currentStepData.title}*\n📍 ${currentStepData.desc}\n\n📖 ${currentStepData.longtext}\n\n✅ ¡Vive esta experiencia única en la Costa Esmeralda!`;
-        window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
-      }
-    });
-  }
-  
-  if (readAloudBtn) {
-    readAloudBtn.addEventListener('click', () => {
-      if (currentStepData) {
-        if (isSpeaking) {
-          stopReading();
-        } else {
-          readTextAloud(`${currentStepData.title}. ${currentStepData.desc}. ${currentStepData.longtext}`, currentLang);
-        }
-      }
-    });
-  }
-  
-  // Configurar eventos de las tarjetas del itinerario
-  const timelineSteps = document.querySelectorAll('.timeline-step');
-  timelineSteps.forEach(step => {
-    step.addEventListener('click', () => {
-      const stepData = {
-        title: step.getAttribute('data-title') || step.querySelector('h3')?.innerText || '',
-        desc: step.getAttribute('data-desc') || step.querySelector('p')?.innerText || '',
-        longtext: step.getAttribute('data-longtext') || ''
-      };
-      openModal(stepData);
-    });
-  });
-  
-  // Configurar eventos del formulario
-  const adultosInput = document.getElementById('adultos');
-  const menoresInput = document.getElementById('menores');
-  if (adultosInput) adultosInput.addEventListener('input', calcularValorTotal);
-  if (menoresInput) menoresInput.addEventListener('input', calcularValorTotal);
-  
-  const fechaInput = document.getElementById('fecha');
-  if (fechaInput) {
-    const todayDate = new Date().toISOString().split('T')[0];
-    fechaInput.setAttribute('min', todayDate);
-  }
-  
-  const dataForm = document.getElementById('dataForm');
-  if (dataForm) {
-    dataForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const fecha = document.getElementById('fecha')?.value;
-      const horario = document.getElementById('horario')?.value;
-      const nombre = document.getElementById('nombre')?.value.trim();
-      const empresa = document.getElementById('empresa')?.value.trim();
-      const adultos = document.getElementById('adultos')?.value;
-      const menores = document.getElementById('menores')?.value;
-      if (!fecha || !horario || !nombre) { alert('❌ Complete todos los campos'); return; }
-      const totalValue = (parseInt(adultos) * 85) + (parseInt(menores) * 42.5);
-      const totalFormatted = totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-      const fechaFormateada = fecha.split('-').reverse().join('/');
-      const horarioDisplay = { '09:30': '9:30 Hs', '11:10': '11:10 Hs', '13:00': '13:00 Hs' }[horario] || horario;
-      const message = `🔹 *RESERVA ANGEL TOUR* 🔹\n\n📅 Fecha: ${fechaFormateada}\n⏰ Horario: ${horarioDisplay}\n👤 Nombre: ${nombre}\n🏢 Empresa: ${empresa || 'No especificada'}\n👥 Adultos: ${adultos}\n🧒 Menores: ${menores}\n💰 Total: ${totalFormatted}\n\n✅ ¡Gracias por reservar!`;
-      window.open(`https://wa.me/5547999679084?text=${encodeURIComponent(message)}`, '_blank');
-    });
-  }
-  
-  // Configurar eventos de los horarios
-  const horarioCards = document.querySelectorAll('.horario-card');
-  const horarioHidden = document.getElementById('horario');
-  horarioCards.forEach(card => {
-    card.addEventListener('click', function() {
-      horarioCards.forEach(c => c.classList.remove('selected'));
-      this.classList.add('selected');
-      if (horarioHidden) horarioHidden.value = this.getAttribute('data-horario');
-    });
-  });
-  
-  // Configurar menú móvil
-  const menuToggle = document.getElementById('menuToggle');
-  const navLinksElem = document.getElementById('navLinks');
-  const navLinkItems = document.querySelectorAll('.nav-link');
-  
-  function closeMenuOnMobile() {
-    if (window.innerWidth <= 880 && navLinksElem?.classList.contains('active')) {
-      navLinksElem.classList.remove('active');
-    }
-  }
-  
-  if (menuToggle) {
-    menuToggle.addEventListener('click', e => { e.stopPropagation(); navLinksElem?.classList.toggle('active'); });
-  }
-  
-  navLinkItems.forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const href = link.getAttribute('href');
-      if (href && href !== '#') scrollToSectionWithOffset(href.substring(1));
-      closeMenuOnMobile();
-    });
-  });
-  
-  document.querySelectorAll('.lang-btn-header').forEach(btn => {
-    btn.addEventListener('click', () => setTimeout(() => closeMenuOnMobile(), 100));
-  });
-  
-  document.addEventListener('click', e => {
-    if (window.innerWidth <= 880 && navLinksElem && menuToggle && !navLinksElem.contains(e.target) && !menuToggle.contains(e.target)) {
-      navLinksElem.classList.remove('active');
-    }
-  });
-  
-  // Inicializar galería
+  // IDs de imágenes para la galería
   const idsImagenes = [1057, 1043, 1011, 1044, 1050, 1069, 1025, 1035, 1074, 1084, 110, 112];
   const imagenesGrandes = idsImagenes.map(id => `https://picsum.photos/1200/900?image=${id}`);
   const imagenesChicas = idsImagenes.map(id => `https://picsum.photos/400/300?image=${id}`);
-  
-  const grid = document.getElementById('gridGaleria');
+
+  function changeLanguage(lang) {
+    currentLang = lang;
+    const t = translations[lang];
+    document.querySelectorAll('[data-key]').forEach(el => { const key = el.getAttribute('data-key'); if(t[key] !== undefined) el.textContent = t[key]; });
+    const els = { textFecha:t.fecha, textHorario:t.horario, textNombre:t.nombre, textEmpresa:t.empresa, textAdultos:t.adultos, textMenores:t.menores, textTotal:t.total, btnText:t.btn, horarioNote:t.horario_note, empresaNote:t.empresa_note, infoNoteText:t.info_text, discountBadge:t.discount_text, precioAdultos:t.precio_adultos, footerBoat:t.footer_boat, footerSecure:t.footer_secure, footerConfirm:t.footer_confirm, horarioTitulo1:t.horario1, horarioTitulo2:t.horario2, horarioTitulo3:t.horario3 };
+    for(const [id,val] of Object.entries(els)){ const el=document.getElementById(id); if(el) el.textContent=val; }
+    document.querySelectorAll('.timeline-step').forEach(step => { const title = step.getAttribute(`data-key-${lang}`); const desc = step.getAttribute(`data-desc-${lang}`); const longtext = step.getAttribute(`data-longtext-${lang}`); if(title){ step.setAttribute('data-title',title); step.setAttribute('data-desc',desc); step.setAttribute('data-longtext',longtext); const h3=step.querySelector('h3'); const p=step.querySelector('p'); if(h3) h3.textContent=title; if(p) p.textContent=desc; } });
+    document.querySelectorAll('.lang-btn-header').forEach(btn => { btn.classList.remove('active'); if(btn.getAttribute('data-lang')===lang) btn.classList.add('active'); });
+    loadWeatherWidget(lang);
+    localStorage.setItem('preferred_language', lang);
+  }
+
+  function stopReading() { if(speechSynthesis){ speechSynthesis.cancel(); isSpeaking=false; const btn=document.getElementById('readAloudBtn'); if(btn){ btn.innerHTML='<i class="fas fa-volume-up"></i> Leer en voz alta'; btn.classList.remove('stop'); } } }
+  function readTextAloud(text,lang){ if(!speechSynthesis) return alert('No soporta síntesis de voz'); stopReading(); const utterance=new SpeechSynthesisUtterance(text); utterance.lang=lang==='es'?'es-ES':(lang==='pt'?'pt-BR':'en-US'); utterance.rate=0.9; const btn=document.getElementById('readAloudBtn'); utterance.onstart=()=>{ isSpeaking=true; if(btn){ btn.innerHTML='<i class="fas fa-stop"></i> Detener'; btn.classList.add('stop'); } }; utterance.onend=()=>{ isSpeaking=false; if(btn){ btn.innerHTML='<i class="fas fa-volume-up"></i> Leer en voz alta'; btn.classList.remove('stop'); } }; speechSynthesis.speak(utterance); }
+
+  function openModal(stepData){ currentStepData=stepData; document.getElementById('modalTitle').textContent=stepData.title; document.getElementById('modalBody').innerHTML=`<p><strong>${stepData.desc}</strong></p><p>${stepData.longtext}</p>`; document.getElementById('infoModal').style.display='flex'; document.body.style.overflow='hidden'; stopReading(); }
+  function closeModalFunc(){ stopReading(); document.getElementById('infoModal').style.display='none'; document.body.style.overflow=''; currentStepData=null; }
+
+  async function loadWeatherWidget(lang) { const container=document.getElementById('weatherWidgetPlaceholder'); if(!container) return; const widgetLang={es:'es',pt:'pt',en:'en'}[lang]||'es'; const titles={es:{label1:'PORTO BELO',label2:'Previsión 3 días'},pt:{label1:'PORTO BELO',label2:'Previsão 3 dias'},en:{label1:'PORTO BELO',label2:'3-Day Forecast'}}; const title=titles[lang]||titles.es; const link=document.createElement('a'); link.className='weatherwidget-io'; link.href=`https://forecast7.com/${widgetLang}/n27d16n48d58/porto-belo/`; link.setAttribute('data-label_1',title.label1); link.setAttribute('data-label_2',title.label2); link.setAttribute('data-theme','original'); link.setAttribute('data-days','3'); link.style.cssText='pointer-events:none;cursor:default;width:100%;display:block'; link.textContent=`${title.label1} ${title.label2}`; container.innerHTML=''; container.appendChild(link); const oldScript=document.getElementById('weatherwidget-io-js'); if(oldScript) oldScript.remove(); const script=document.createElement('script'); script.id='weatherwidget-io-js'; script.src='https://weatherwidget.io/js/widget.min.js'; document.head.appendChild(script); }
+
+  function calcularValorTotal(){ const adultos=parseInt(document.getElementById('adultos')?.value||0); const menores=parseInt(document.getElementById('menores')?.value||0); const total=(adultos*85)+(menores*42.5); const input=document.getElementById('valorTotal'); if(input) input.value=total.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); return total; }
+  function scrollToSectionWithOffset(id){ const el=document.getElementById(id); if(el){ const headerH=document.querySelector('.header')?.offsetHeight||80; window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-headerH-10,behavior:'smooth'}); } }
+
+  document.querySelectorAll('.lang-btn-header').forEach(btn=>btn.addEventListener('click',()=>changeLanguage(btn.getAttribute('data-lang'))));
+  const stickyBar=document.getElementById('stickyBookingBar'), heroSec=document.getElementById('inicio'), stickyBtn=document.getElementById('stickyBookBtn');
+  function checkStickyBar(){ if(window.innerWidth<=880 && heroSec){ const heroBottom=heroSec.offsetTop+heroSec.offsetHeight; window.scrollY>heroBottom-100?stickyBar?.classList.add('show'):stickyBar?.classList.remove('show'); } else stickyBar?.classList.remove('show'); }
+  window.addEventListener('scroll',checkStickyBar); window.addEventListener('resize',checkStickyBar); checkStickyBar();
+  if(stickyBtn) stickyBtn.addEventListener('click',()=>document.getElementById('reserva')?.scrollIntoView({behavior:'smooth'}));
+  document.querySelector('.garantia-link')?.addEventListener('click',e=>{e.preventDefault(); scrollToSectionWithOffset('reserva');});
+  document.getElementById('closeModalBtn')?.addEventListener('click',closeModalFunc);
+  document.getElementById('closeModalFooterBtn')?.addEventListener('click',closeModalFunc);
+  document.getElementById('infoModal')?.addEventListener('click',e=>{if(e.target===document.getElementById('infoModal')) closeModalFunc();});
+  document.getElementById('shareWhatsappBtn')?.addEventListener('click',()=>{if(currentStepData){ window.open(`https://wa.me/?text=${encodeURIComponent(`🌟 ANGEL TOUR BRASIL 🌟\n\n📌 ${currentStepData.title}\n📍 ${currentStepData.desc}\n\n📖 ${currentStepData.longtext}`)}`,'_blank');}});
+  document.getElementById('readAloudBtn')?.addEventListener('click',()=>{if(currentStepData){ if(isSpeaking) stopReading(); else readTextAloud(`${currentStepData.title}. ${currentStepData.desc}. ${currentStepData.longtext}`,currentLang); } });
+  document.querySelectorAll('.timeline-step').forEach(step=>step.addEventListener('click',()=>{ openModal({ title:step.getAttribute('data-title')||step.querySelector('h3')?.innerText||'', desc:step.getAttribute('data-desc')||step.querySelector('p')?.innerText||'', longtext:step.getAttribute('data-longtext')||'' }); }));
+  document.getElementById('adultos')?.addEventListener('input',calcularValorTotal);
+  document.getElementById('menores')?.addEventListener('input',calcularValorTotal);
+  const fechaInp=document.getElementById('fecha'); if(fechaInp) fechaInp.setAttribute('min',new Date().toISOString().split('T')[0]);
+  document.getElementById('dataForm')?.addEventListener('submit',e=>{ e.preventDefault(); const fecha=document.getElementById('fecha')?.value, horario=document.getElementById('horario')?.value, nombre=document.getElementById('nombre')?.value.trim(), empresa=document.getElementById('empresa')?.value.trim(), adultos=document.getElementById('adultos')?.value, menores=document.getElementById('menores')?.value; if(!fecha||!horario||!nombre){ alert('❌ Complete todos los campos'); return; } const total=(parseInt(adultos)*85)+(parseInt(menores)*42.5); const msg=`🔹 RESERVA ANGEL TOUR 🔹\n\n📅 Fecha: ${fecha.split('-').reverse().join('/')}\n⏰ Horario: ${{'09:30':'9:30','11:10':'11:10','13:00':'13:00'}[horario]||horario} Hs\n👤 Nombre: ${nombre}\n🏢 Empresa: ${empresa||'No especificada'}\n👥 Adultos: ${adultos}\n🧒 Menores: ${menores}\n💰 Total: ${total.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}`; window.open(`https://wa.me/5547999679084?text=${encodeURIComponent(msg)}`,'_blank'); });
+  document.querySelectorAll('.horario-card').forEach(card=>{ card.addEventListener('click',function(){ document.querySelectorAll('.horario-card').forEach(c=>c.classList.remove('selected')); this.classList.add('selected'); document.getElementById('horario').value=this.getAttribute('data-horario'); }); });
+  const menuToggle=document.getElementById('menuToggle'), navLinks=document.getElementById('navLinks');
+  if(menuToggle) menuToggle.addEventListener('click',()=>navLinks?.classList.toggle('active'));
+  document.querySelectorAll('.nav-link').forEach(link=>link.addEventListener('click',e=>{ e.preventDefault(); const href=link.getAttribute('href'); if(href&&href!=='#') scrollToSectionWithOffset(href.substring(1)); if(window.innerWidth<=880) navLinks?.classList.remove('active'); }));
+  document.addEventListener('click',e=>{ if(window.innerWidth<=880&&navLinks&&menuToggle&&!navLinks.contains(e.target)&&!menuToggle.contains(e.target)) navLinks.classList.remove('active'); });
+
+  // Inicializar galería
+  const gridGaleria = document.getElementById('gridGaleria');
   let indiceActual = 0;
   let touchStartX = 0;
   let touchEndX = 0;
   
-  if (grid) {
-    imagenesChicas.forEach((urlMiniatura, indice) => {
-      const item = document.createElement('div');
-      item.className = 'gallery-item';
-      item.setAttribute('onclick', `abrirLightbox(${indice})`);
-      const img = document.createElement('img');
-      img.src = urlMiniatura;
-      img.alt = `Foto ${indice + 1}`;
-      img.loading = 'lazy';
-      item.appendChild(img);
-      grid.appendChild(item);
-    });
-  }
+  if(gridGaleria){ imagenesChicas.forEach((urlMini, indice) => { const item = document.createElement('div'); item.className = 'gallery-item'; item.setAttribute('onclick', `abrirLightbox(${indice})`); const img = document.createElement('img'); img.src = urlMini; img.alt = `Foto ${indice + 1}`; img.loading = 'lazy'; item.appendChild(img); gridGaleria.appendChild(item); }); }
   
-  window.abrirLightbox = function(indice) {
-    indiceActual = indice;
-    actualizarLightbox();
-    const lightbox = document.getElementById('lightboxModern');
-    if (lightbox) {
-      lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-    const hint = document.getElementById('swipeHint');
-    if (hint) {
-      hint.classList.remove('animar');
-      void hint.offsetWidth;
-      hint.classList.add('animar');
-    }
-  };
-  
-  function actualizarLightbox() {
-    const img = document.getElementById('lightboxImg');
-    const counter = document.getElementById('fotoContador');
-    if (img) img.src = imagenesGrandes[indiceActual];
-    if (counter) counter.innerText = `${indiceActual + 1} / ${imagenesGrandes.length}`;
-  }
-  
-  function cambiarImagen(direccion) {
-    indiceActual += direccion;
-    if (indiceActual < 0) indiceActual = imagenesGrandes.length - 1;
-    else if (indiceActual >= imagenesGrandes.length) indiceActual = 0;
-    actualizarLightbox();
-    const hint = document.getElementById('swipeHint');
-    if (hint) hint.classList.remove('animar');
-  }
-  
-  function cerrarLightbox() {
-    const lightbox = document.getElementById('lightboxModern');
-    if (lightbox) {
-      lightbox.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-  }
-  
-  const lightboxModern = document.getElementById('lightboxModern');
-  if (lightboxModern) {
-    lightboxModern.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
-    lightboxModern.addEventListener('touchend', e => {
-      touchEndX = e.changedTouches[0].screenX;
-      const limite = 60;
-      if (touchStartX - touchEndX > limite) cambiarImagen(1);
-      if (touchEndX - touchStartX > limite) cambiarImagen(-1);
-    });
-    lightboxModern.addEventListener('click', e => { if (e.target === lightboxModern) cerrarLightbox(); });
-  }
-  
-  const closeLightboxBtn = document.getElementById('closeLightboxBtn');
-  if (closeLightboxBtn) closeLightboxBtn.addEventListener('click', cerrarLightbox);
-  
-  document.addEventListener('keydown', e => {
-    const lightbox = document.getElementById('lightboxModern');
-    if (lightbox?.classList.contains('active')) {
-      if (e.key === 'Escape') cerrarLightbox();
-      if (e.key === 'ArrowRight') cambiarImagen(1);
-      if (e.key === 'ArrowLeft') cambiarImagen(-1);
-    }
-  });
-  
-  // Cargar idioma guardado
-  const savedLanguage = localStorage.getItem('preferred_language');
-  changeLanguage(savedLanguage && translations[savedLanguage] ? savedLanguage : 'pt');
+  window.abrirLightbox = function(indice) { indiceActual = indice; actualizarLightbox(); const lb = document.getElementById('lightboxModern'); if(lb) { lb.classList.add('active'); document.body.style.overflow = 'hidden'; } const hint = document.getElementById('swipeHint'); if(hint){ hint.classList.remove('animar'); void hint.offsetWidth; hint.classList.add('animar'); } };
+  function actualizarLightbox() { const img = document.getElementById('lightboxImg'); const counter = document.getElementById('fotoContador'); if(img) img.src = imagenesGrandes[indiceActual]; if(counter) counter.innerText = `${indiceActual + 1} / ${imagenesGrandes.length}`; }
+  function cambiarImagen(direccion) { indiceActual += direccion; if(indiceActual < 0) indiceActual = imagenesGrandes.length - 1; else if(indiceActual >= imagenesGrandes.length) indiceActual = 0; actualizarLightbox(); const hint = document.getElementById('swipeHint'); if(hint) hint.classList.remove('animar'); }
+  function cerrarLightbox() { const lb = document.getElementById('lightboxModern'); if(lb) { lb.classList.remove('active'); document.body.style.overflow = ''; } }
+  const lightboxModern = document.getElementById('lightboxModern'); if(lightboxModern) { lightboxModern.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true }); lightboxModern.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; if(touchStartX - touchEndX > 60) cambiarImagen(1); if(touchEndX - touchStartX > 60) cambiarImagen(-1); }); lightboxModern.addEventListener('click', e => { if(e.target === lightboxModern) cerrarLightbox(); }); }
+  document.getElementById('closeLightboxBtn')?.addEventListener('click', cerrarLightbox);
+  document.addEventListener('keydown', e => { if(document.getElementById('lightboxModern')?.classList.contains('active')) { if(e.key === 'Escape') cerrarLightbox(); if(e.key === 'ArrowRight') cambiarImagen(1); if(e.key === 'ArrowLeft') cambiarImagen(-1); } });
+
+  // Inicializar todo
+  const savedLang = localStorage.getItem('preferred_language');
+  changeLanguage(savedLang && translations[savedLang] ? savedLang : 'pt');
   calcularValorTotal();
   setTimeout(() => loadWeatherWidget(currentLang), 100);
-  window.addEventListener('load', () => window.scrollTo(0, 0));
 </script>
 </body>
 </html>
