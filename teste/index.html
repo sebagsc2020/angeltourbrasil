@@ -11,7 +11,25 @@
     <title>Angel+Tour Brasil | Reserva Profesional</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box;
+            /* Deshabilitar selección de texto en toda la página */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        
+        /* Permitir selección solo en inputs y textareas para que el usuario pueda escribir */
+        input, select, textarea {
+            user-select: text;
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+        }
+        
         body {
             font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
@@ -239,7 +257,7 @@
             <div class="form-group">
                 <label id="labelTotal"><span id="textTotal">VALOR TOTAL</span></label>
                 <div class="input-wrapper"><input type="text" id="valorTotal" name="valorTotal" class="total-display" readonly value="R$ 0,00" autocomplete="off"></div>
-                <div class="info-note" id="infoNoteText">💡 El valor mencionado es para grupos cerrados o agencias, en viajes individuales el valor puede sufrir variaciones, ante cualquier duda no deje de consultarnos.</div>
+                <div class="info-note" id="infoNoteText">💡 El valor mencionado es para grupos cerrados o agencias, en viajes particulares el valor puede sufrir variaciones, ante cualquier duda no deje de consultarnos.</div>
             </div>
 
             <button type="submit" class="btn-submit" id="btnSubmit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span id="btnText">ENVIAR RESERVA</span></button>
@@ -265,12 +283,25 @@
 </div>
 
 <script>
+    // ========== DESHABILITAR BOTÓN DERECHO (MENÚ CONTEXTUAL) ==========
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+    });
+    
+    // También deshabilitar para elementos específicos que podrían tener menús propios
+    document.querySelectorAll('input, select, textarea, .btn-language, .btn-submit, .btn-cancel, .btn-confirm').forEach(el => {
+        el.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        });
+    });
+    
     // ========== PROTOCOLO DE SEGURIDAD ==========
     
-    // 1. Prevenir doble envío
     let isSubmitting = false;
     
-    // 2. Sanitización de texto (prevenir XSS)
     function sanitizeText(input) {
         if (!input) return '';
         return input.replace(/[<>]/g, function(m) {
@@ -280,14 +311,12 @@
         }).trim().slice(0, 200);
     }
     
-    // 3. Validar número
     function isValidNumber(value, min = 0, max = 99) {
         const num = parseInt(value);
         if (isNaN(num)) return false;
         return num >= min && num <= max;
     }
     
-    // 4. Validar fecha (no puede ser anterior a hoy)
     function isValidDate(dateString) {
         if (!dateString) return false;
         const selectedDate = new Date(dateString);
@@ -296,20 +325,13 @@
         return selectedDate >= today;
     }
     
-    // 5. Validar nombre (solo letras, espacios y caracteres básicos)
     function isValidName(name) {
         if (!name || name.length < 2) return false;
         const regex = /^[a-zA-ZáéíóúñÁÉÍÓÚÑ\s]+$/;
         return regex.test(name);
     }
     
-    // 6. Prevenir inyección en URLs
-    function sanitizeUrlInput(input) {
-        return encodeURIComponent(input);
-    }
-    
     let userLocationFormatted = "Ubicación no disponible";
-    let formSubmitted = false;
     
     async function getUserLocation() {
         const apis = [
@@ -368,15 +390,12 @@
         userLocationFormatted = "Ubicación no disponible";
     }
 
-    // Función para abrir el calendario al hacer clic en cualquier parte del campo fecha
     function setupDatePickerClick() {
         const fechaInput = document.getElementById('fecha');
         if (fechaInput) {
-            // Evento click en todo el contenedor del campo
             const wrapper = fechaInput.closest('.date-input-wrapper');
             if (wrapper) {
                 wrapper.addEventListener('click', function(e) {
-                    // Evitar que el clic en el ícono se propague dos veces
                     if (e.target === wrapper || e.target.classList.contains('input-icon') || e.target.classList.contains('date-input-wrapper')) {
                         e.stopPropagation();
                     }
@@ -393,7 +412,6 @@
                     }
                 });
             }
-            // También asegurar que el input tenga cursor pointer
             fechaInput.style.cursor = 'pointer';
         }
     }
@@ -668,7 +686,6 @@
         const adultos = adultosInput.value;
         const menores = menoresInput.value;
         
-        // Validaciones de seguridad
         if (!fecha || !isValidDate(fecha)) { 
             alert('❌ Seleccione una fecha válida (no puede ser anterior a hoy)'); 
             return; 
