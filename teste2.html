@@ -1,11 +1,11 @@
-.<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
   <!-- ========== METATAGS PRINCIPALES ========== -->
-  <title>Angel+Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
+  <title>Angel++Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
   <meta name="description" content="Conheça o passeio mais completo da região! Passeio pela Costa Esmeralda, parada na Bahía de Caixa D'Aço, tobogã, buffet de frutas, batida de côco e muita animação. Embarque em Porto Belo - SC.">
   <meta name="keywords" content="Angel Tour Brasil, passeio de barco, Costa Esmeralda, Porto Belo, Caixa D'Aço, turismo Santa Catarina, passeio de barco Porto Belo, escuna Porto Belo">
   <meta name="author" content="Angel Tour Brasil">
@@ -1148,6 +1148,7 @@
   let currentStepData = null;
   let speechSynthesis = window.speechSynthesis;
   let isSpeaking = false;
+  let paisUsuario = "DESCONOCIDO"; // Variable para almacenar el país del usuario
 
   // ========== TUS 12 IMÁGENES REEMPLAZADAS ==========
   const imagenesGrandes = [
@@ -1167,6 +1168,23 @@
   
   // Usamos las mismas imágenes para miniaturas (el CSS las ajustará)
   const imagenesChicas = imagenesGrandes;
+
+  // Función para obtener el país del usuario usando ip-api.com (gratuito, sin API key)
+  async function obtenerPaisUsuario() {
+    try {
+      const respuesta = await fetch('http://ip-api.com/json/');
+      const datos = await respuesta.json();
+      if (datos && datos.country) {
+        paisUsuario = datos.country.toUpperCase();
+      } else {
+        paisUsuario = "DESCONOCIDO";
+      }
+    } catch (error) {
+      console.error("Error obteniendo país:", error);
+      paisUsuario = "DESCONOCIDO";
+    }
+    return paisUsuario;
+  }
 
   function changeLanguage(lang) {
     currentLang = lang;
@@ -1243,7 +1261,43 @@
   if(menoresInput) menoresInput.addEventListener('input', calcularValorTotal);
   
   const fechaInp=document.getElementById('fecha'); if(fechaInp) fechaInp.setAttribute('min',new Date().toISOString().split('T')[0]);
-  document.getElementById('dataForm')?.addEventListener('submit',e=>{ e.preventDefault(); const fecha=document.getElementById('fecha')?.value, horario=document.getElementById('horario')?.value, nombre=document.getElementById('nombre')?.value.trim(), empresa=document.getElementById('empresa')?.value.trim(), adultos=document.getElementById('adultos')?.value, menores=document.getElementById('menores')?.value; if(!fecha||!horario||!nombre){ alert('❌ Complete todos los campos'); return; } const total=(parseInt(adultos)*85)+(parseInt(menores)*42.5); const msg=`🔹 RESERVA ANGEL TOUR 🔹\n\n📅 Fecha: ${fecha.split('-').reverse().join('/')}\n⏰ Horario: ${{'09:30':'9:30','11:10':'11:10','13:00':'13:00'}[horario]||horario} Hs\n👤 Nombre: ${nombre}\n🏢 Empresa: ${empresa||'No especificada'}\n👥 Adultos: ${adultos}\n🧒 Menores: ${menores}\n💰 Total: ${total.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}`; window.open(`https://wa.me/5493518692251?text=${encodeURIComponent(msg)}`,'_blank'); });
+  
+  // Modificación del evento submit para incluir idioma y país
+  document.getElementById('dataForm')?.addEventListener('submit', async (e) => { 
+    e.preventDefault(); 
+    
+    const fecha = document.getElementById('fecha')?.value; 
+    const horario = document.getElementById('horario')?.value; 
+    const nombre = document.getElementById('nombre')?.value.trim(); 
+    const empresa = document.getElementById('empresa')?.value.trim(); 
+    const adultos = document.getElementById('adultos')?.value; 
+    const menores = document.getElementById('menores')?.value; 
+    
+    if(!fecha || !horario || !nombre) { 
+      alert('❌ Complete todos los campos'); 
+      return; 
+    } 
+    
+    // Obtener código de idioma de 3 letras
+    let codigoIdioma = "";
+    if (currentLang === "es") codigoIdioma = "ARG";
+    else if (currentLang === "pt") codigoIdioma = "BRA";
+    else if (currentLang === "en") codigoIdioma = "USA";
+    else codigoIdioma = "???";
+    
+    // Obtener país del usuario (ya se obtiene al cargar)
+    // Asegurar que paisUsuario esté actualizado
+    if (paisUsuario === "DESCONOCIDO") {
+      await obtenerPaisUsuario();
+    }
+    
+    const total = (parseInt(adultos) * 85) + (parseInt(menores) * 42.5);
+    
+    const msg = `🔹 RESERVA ANGEL TOUR 🔹\n\n📅 Fecha: ${fecha.split('-').reverse().join('/')}\n⏰ Horario: ${{'09:30':'9:30','11:10':'11:10','13:00':'13:00'}[horario] || horario} Hs\n👤 Nombre: ${nombre}\n🏢 Empresa: ${empresa || 'No especificada'}\n👥 Adultos: ${adultos}\n🧒 Menores: ${menores}\n💰 Total: ${total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}\n🌐 Idioma: ${codigoIdioma}\n📍 País IP: ${paisUsuario}`;
+    
+    window.open(`https://wa.me/5493518692251?text=${encodeURIComponent(msg)}`, '_blank'); 
+  });
+  
   document.querySelectorAll('.horario-card').forEach(card=>{ card.addEventListener('click',function(){ document.querySelectorAll('.horario-card').forEach(c=>c.classList.remove('selected')); this.classList.add('selected'); document.getElementById('horario').value=this.getAttribute('data-horario'); }); });
   const menuToggle=document.getElementById('menuToggle'), navLinks=document.getElementById('navLinks');
   if(menuToggle) menuToggle.addEventListener('click',()=>navLinks?.classList.toggle('active'));
@@ -1284,6 +1338,11 @@
   changeLanguage(savedLang && translations[savedLang] ? savedLang : 'pt');
   calcularValorTotal();
   setTimeout(() => loadWeatherWidget(currentLang), 100);
+  
+  // Obtener el país del usuario al cargar la página
+  obtenerPaisUsuario().then(() => {
+    console.log("País del usuario detectado:", paisUsuario);
+  });
 </script>
 </body>
 </html>
