@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
   <!-- ========== METATAGS PRINCIPALES ========== -->
-  <title>Angel++Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
+  <title>Angel+Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
   <meta name="description" content="Conheça o passeio mais completo da região! Passeio pela Costa Esmeralda, parada na Bahía de Caixa D'Aço, tobogã, buffet de frutas, batida de côco e muita animação. Embarque em Porto Belo - SC.">
   <meta name="keywords" content="Angel Tour Brasil, passeio de barco, Costa Esmeralda, Porto Belo, Caixa D'Aço, turismo Santa Catarina, passeio de barco Porto Belo, escuna Porto Belo">
   <meta name="author" content="Angel Tour Brasil">
@@ -1149,6 +1149,7 @@
   let speechSynthesis = window.speechSynthesis;
   let isSpeaking = false;
   let paisUsuario = "DESCONOCIDO"; // Variable para almacenar el país del usuario
+  let codigoIdioma = "BRA"; // Variable para el código de idioma
 
   // ========== TUS 12 IMÁGENES REEMPLAZADAS ==========
   const imagenesGrandes = [
@@ -1169,25 +1170,45 @@
   // Usamos las mismas imágenes para miniaturas (el CSS las ajustará)
   const imagenesChicas = imagenesGrandes;
 
-  // Función para obtener el país del usuario usando ip-api.com (gratuito, sin API key)
+  // Función para obtener el país del usuario usando ipapi.co (HTTPS, más confiable)
   async function obtenerPaisUsuario() {
     try {
-      const respuesta = await fetch('http://ip-api.com/json/');
+      const respuesta = await fetch('https://ipapi.co/json/');
       const datos = await respuesta.json();
-      if (datos && datos.country) {
-        paisUsuario = datos.country.toUpperCase();
+      if (datos && datos.country_name) {
+        paisUsuario = datos.country_name.toUpperCase();
+      } else if (datos && datos.country) {
+        paisUsuario = datos.country;
       } else {
         paisUsuario = "DESCONOCIDO";
       }
     } catch (error) {
       console.error("Error obteniendo país:", error);
-      paisUsuario = "DESCONOCIDO";
+      // Fallback a ip-api.com
+      try {
+        const respuesta2 = await fetch('https://ip-api.com/json/');
+        const datos2 = await respuesta2.json();
+        if (datos2 && datos2.country) {
+          paisUsuario = datos2.country.toUpperCase();
+        } else {
+          paisUsuario = "DESCONOCIDO";
+        }
+      } catch (error2) {
+        console.error("Error en fallback:", error2);
+        paisUsuario = "DESCONOCIDO";
+      }
     }
     return paisUsuario;
   }
 
   function changeLanguage(lang) {
     currentLang = lang;
+    // Actualizar código de idioma para el mensaje
+    if (currentLang === "es") codigoIdioma = "ARG";
+    else if (currentLang === "pt") codigoIdioma = "BRA";
+    else if (currentLang === "en") codigoIdioma = "USA";
+    else codigoIdioma = "???";
+    
     const t = translations[lang];
     document.querySelectorAll('[data-key]').forEach(el => { const key = el.getAttribute('data-key'); if(t[key] !== undefined) el.textContent = t[key]; });
     const els = { textFecha:t.fecha, textHorario:t.horario, textNombre:t.nombre, textEmpresa:t.empresa, textAdultos:t.adultos, textMenores:t.menores, textTotal:t.total, btnText:t.btn, horarioNote:t.horario_note, empresaNote:t.empresa_note, infoNoteText:t.info_text, discountBadge:t.discount_text, precioAdultos:t.precio_adultos, footerBoat:t.footer_boat, footerSecure:t.footer_secure, footerConfirm:t.footer_confirm, horarioTitulo1:t.horario1, horarioTitulo2:t.horario2, horarioTitulo3:t.horario3 };
@@ -1262,7 +1283,7 @@
   
   const fechaInp=document.getElementById('fecha'); if(fechaInp) fechaInp.setAttribute('min',new Date().toISOString().split('T')[0]);
   
-  // Modificación del evento submit para incluir idioma y país
+  // Modificación del evento submit con el orden solicitado
   document.getElementById('dataForm')?.addEventListener('submit', async (e) => { 
     e.preventDefault(); 
     
@@ -1278,22 +1299,15 @@
       return; 
     } 
     
-    // Obtener código de idioma de 3 letras
-    let codigoIdioma = "";
-    if (currentLang === "es") codigoIdioma = "ARG";
-    else if (currentLang === "pt") codigoIdioma = "BRA";
-    else if (currentLang === "en") codigoIdioma = "USA";
-    else codigoIdioma = "???";
-    
-    // Obtener país del usuario (ya se obtiene al cargar)
-    // Asegurar que paisUsuario esté actualizado
+    // Obtener país del usuario si aún no se tiene
     if (paisUsuario === "DESCONOCIDO") {
       await obtenerPaisUsuario();
     }
     
     const total = (parseInt(adultos) * 85) + (parseInt(menores) * 42.5);
     
-    const msg = `🔹 RESERVA ANGEL TOUR 🔹\n\n📅 Fecha: ${fecha.split('-').reverse().join('/')}\n⏰ Horario: ${{'09:30':'9:30','11:10':'11:10','13:00':'13:00'}[horario] || horario} Hs\n👤 Nombre: ${nombre}\n🏢 Empresa: ${empresa || 'No especificada'}\n👥 Adultos: ${adultos}\n🧒 Menores: ${menores}\n💰 Total: ${total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}\n🌐 Idioma: ${codigoIdioma}\n📍 País IP: ${paisUsuario}`;
+    // Construir el mensaje con el orden solicitado
+    const msg = `🔹 RESERVA ANGEL TOUR 🔹\n\n🌐 Idioma: ${codigoIdioma}\n📍 País IP: ${paisUsuario}\n\n📅 Fecha: ${fecha.split('-').reverse().join('/')}\n⏰ Horario: ${{'09:30':'9:30','11:10':'11:10','13:00':'13:00'}[horario] || horario} Hs\n👤 Nombre: ${nombre}\n🏢 Empresa: ${empresa || 'No especificada'}\n👥 Adultos: ${adultos}\n🧒 Menores: ${menores}\n💰 Total: ${total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`;
     
     window.open(`https://wa.me/5493518692251?text=${encodeURIComponent(msg)}`, '_blank'); 
   });
