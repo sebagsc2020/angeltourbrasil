@@ -972,7 +972,7 @@
   </div>
 </div>
 
-<!-- GALERÍA CON VIDEO MP4 9:16 -->
+<!-- GALERÍA CON TUS 12 IMÁGENES -->
 <section id="galeria" class="section">
   <div class="container">
     <h2 class="section-title" data-key="gallery_title">Viva essa aventura</h2>
@@ -1149,23 +1149,24 @@
   let speechSynthesis = window.speechSynthesis;
   let isSpeaking = false;
 
-  // IDs de imágenes para la galería
-  const idsImagenes = [1057, 1043, 1011, 1044, 1050, 1069, 1025, 1035, 1074, 1084, 110, 112];
+  // ========== TUS 12 IMÁGENES REEMPLAZADAS ==========
+  const imagenesGrandes = [
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_01.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_02.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_03.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_04.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_05.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_06.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_07.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_08.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_09.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_10.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_11.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_12.webp"
+  ];
   
-  // Función para mezclar array
-  function shuffleArray(array) {
-    const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled;
-  }
-
-  // Mezclar IDs de imágenes al cargar la página
-  const imagenesMezcladas = shuffleArray(idsImagenes);
-  const imagenesGrandes = imagenesMezcladas.map(id => `https://picsum.photos/1200/900?image=${id}`);
-  const imagenesChicas = imagenesMezcladas.map(id => `https://picsum.photos/400/300?image=${id}`);
+  // Usamos las mismas imágenes para miniaturas (el CSS las ajustará)
+  const imagenesChicas = imagenesGrandes;
 
   function changeLanguage(lang) {
     currentLang = lang;
@@ -1249,7 +1250,7 @@
   document.querySelectorAll('.nav-link').forEach(link=>link.addEventListener('click',e=>{ e.preventDefault(); const href=link.getAttribute('href'); if(href&&href!=='#') scrollToSectionWithOffset(href.substring(1)); if(window.innerWidth<=880) navLinks?.classList.remove('active'); }));
   document.addEventListener('click',e=>{ if(window.innerWidth<=880&&navLinks&&menuToggle&&!navLinks.contains(e.target)&&!menuToggle.contains(e.target)) navLinks.classList.remove('active'); });
 
-  // Inicializar galería con imágenes mezcladas
+  // Inicializar galería con tus 12 imágenes
   const gridGaleria = document.getElementById('gridGaleria');
   let indiceActual = 0;
   let touchStartX = 0;
