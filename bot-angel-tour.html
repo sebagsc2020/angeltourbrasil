@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angel Tour Brasil - Asistente Virtual IA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0A2F6C 0%, #005f8c 50%, #00B4D8 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .preview-info {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        .preview-info h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .preview-info p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .preview-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 30px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* ========== BOT STYLES ========== */
+        #angelBotContainer {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 998;
+            font-family: 'Inter', sans-serif;
+        }
+
+        #angelBotToggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0A2F6C 0%, #00B4D8 100%);
+            color: white;
+            border: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(10, 47, 108, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        #angelBotToggle:hover {
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 10px 25px rgba(10, 47, 108, 0.45);
+        }
+
+        #angelBotToggle .bot-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #FF8C42;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 3px 7px;
+            border-radius: 20px;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            border: 2px solid white;
+        }
+
+        #angelBotWindow {
+            position: absolute;
+            bottom: 75px;
+            right: 0;
+            width: 380px;
+            height: 560px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(10, 47, 108, 0.25);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: bottom right;
+            border: 1px solid rgba(0, 180, 216, 0.15);
+        }
+
+        #angelBotWindow.angel-bot-hidden {
+            opacity: 0;
+            transform: scale(0.85) translateY(20px);
+            pointer-events: none;
+        }
+
+        .angel-bot-header {
+            background: linear-gradient(135deg, #0A2F6C 0%, #005f8c 100%);
+            color: white;
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .angel-bot-header-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .angel-bot-avatar {
+            width: 42px;
+            height: 42px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .angel-bot-header h4 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .angel-bot-status {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 2px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulseDot 2s infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+            50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+        }
+
+        #angelBotClose {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #angelBotClose:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+
+        .angel-bot-messages {
+            flex: 1;
+            padding: 18px;
+            overflow-y: auto;
+            background: linear-gradient(180deg, #F5F7FA 0%, #ffffff 100%);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            scroll-behavior: smooth;
+        }
+
+        .angel-bot-messages::-webkit-scrollbar { width: 6px; }
+        .angel-bot-messages::-webkit-scrollbar-track { background: transparent; }
+        .angel-bot-messages::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
+
+        .angel-bot-message {
+            display: flex;
+            gap: 10px;
+            max-width: 88%;
+            animation: messageSlide 0.3s ease-out;
+        }
+
+        @keyframes messageSlide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .angel-bot-message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .angel-bot-message.bot {
+            align-self: flex-start;
+        }
+
+        .msg-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0A2F6C, #00B4D8);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .angel-bot-message.user .msg-avatar {
+            background: linear-gradient(135deg, #FF8C42, #e0732c);
+        }
+
+        .msg-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .msg-content p {
+            margin: 0;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .angel-bot-message.bot .msg-content p {
+            background: white;
+            color: #1A2C3E;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(10, 47, 108, 0.08);
+            border: 1px solid rgba(0, 180, 216, 0.1);
+        }
+
+        .angel-bot-message.user .msg-content p {
+            background: linear-gradient(135deg, #0A2F6C 0%, #005f8c 100%);
+            color: white;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 2px 8px rgba(10, 47, 108, 0.2);
+        }
+
+        .msg-time {
+            font-size: 0.7rem;
+            color: #94A3B8;
+            padding: 0 4px;
+        }
+
+        .angel-bot-message.user .msg-time {
+            text-align: right;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 14px 16px;
+            background: white;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(10, 47, 108, 0.08);
+            border: 1px solid rgba(0, 180, 216, 0.1);
+            width: fit-content;
+        }
+
+        .typing-indicator span {
+            width: 7px;
+            height: 7px;
+            background: #00B4D8;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+            30% { transform: translateY(-6px); opacity: 1; }
+        }
+
+        .angel-bot-suggestions {
+            padding: 0 14px 10px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            background: white;
+            border-top: 1px solid #F1F5F9;
+            flex-shrink: 0;
+        }
+
+        .suggestion-chip {
+            background: #F5F7FA;
+            border: 1.5px solid #E2E8F0;
+            padding: 7px 14px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #0A2F6C;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .suggestion-chip:hover {
+            background: #00B4D8;
+            color: white;
+            border-color: #00B4D8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 180, 216, 0.25);
+        }
+
+        .angel-bot-input-area {
+            display: flex;
+            padding: 14px;
+            gap: 10px;
+            border-top: 1px solid #E2E8F0;
+            background: white;
+            flex-shrink: 0;
+        }
+
+        #angelBotInput {
+            flex: 1;
+            padding: 11px 16px;
+            border: 1.5px solid #E2E8F0;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: all 0.2s;
+            background: #F8FAFC;
+        }
+
+        #angelBotInput:focus {
+            border-color: #00B4D8;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.1);
+        }
+
+        #angelBotSend {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF8C42, #e0732c);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(255, 140, 66, 0.3);
+        }
+
+        #angelBotSend:hover {
+            transform: scale(1.08) rotate(-10deg);
+            box-shadow: 0 6px 14px rgba(255, 140, 66, 0.4);
+        }
+
+        #angelBotSend:disabled {
+            background: #CBD5E1;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* API KEY MODAL */
+        .api-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .api-modal.active {
+            display: flex;
+        }
+
+        .api-modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .api-modal-content h2 {
+            font-family: 'Poppins', sans-serif;
+            color: #0A2F6C;
+            margin-bottom: 15px;
+        }
+
+        .api-modal-content p {
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .api-modal-content input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .api-modal-content input:focus {
+            outline: none;
+            border-color: #00B4D8;
+        }
+
+        .api-modal-content button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #0A2F6C, #00B4D8);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .api-modal-content button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(10, 47, 108, 0.3);
+        }
+
+        .api-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #00B4D8;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .api-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            #angelBotWindow {
+                width: calc(100vw - 20px);
+                height: calc(100vh - 180px);
+                right: -18px;
+                bottom: 70px;
+            }
+            #angelBotContainer {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="preview-info">
+        <h1>Angel Tour Brasil</h1>
+        <p>Asistente virtual con IA en la nube.<br>Prueba escribir en <b>Português, Español o English</b>.</p>
+        <div class="preview-badge">🌊 IA Qwen 2.5 Activa</div>
+    </div>
+
+    <!-- API KEY MODAL -->
+    <div class="api-modal" id="apiModal">
+        <div class="api-modal-content">
+            <h2>🔑 Configurar API Key de Groq</h2>
+            <p>
+                Para usar la IA en la nube, necesitas una API key gratuita de Groq.<br>
+                <strong>Es 100% gratis y te la dan al instante.</strong>
+            </p>
+            <p>
+                1. Ve a <a href="https://console.groq.com" target="_blank" class="api-link">console.groq.com</a><br>
+                2. Crea una cuenta gratis<br>
+                3. Copia tu API key<br>
+                4. Pégala aquí abajo:
+            </p>
+            <input type="text" id="apiKeyInput" placeholder="gsk_xxxxxxxxxxxxxxxxxxxxx">
+            <button onclick="saveApiKey()">Guardar y Continuar</button>
+        </div>
+    </div>
+
+    <!-- BOT WIDGET -->
+    <div id="angelBotContainer">
+        <button id="angelBotToggle" aria-label="Abrir chat">
+            <i class="fas fa-ship"></i>
+            <span class="bot-badge">IA</span>
+        </button>
+        <div id="angelBotWindow" class="angel-bot-hidden">
+            <div class="angel-bot-header">
+                <div class="angel-bot-header-info">
+                    <div class="angel-bot-avatar">
+                        <i class="fas fa-anchor"></i>
+                    </div>
+                    <div>
+                        <h4>Angel Tour Brasil</h4>
+                        <span class="angel-bot-status"><span class="status-dot"></span> Asistente Virtual</span>
+                    </div>
+                </div>
+                <button id="angelBotClose" aria-label="Cerrar"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div id="angelBotMessages" class="angel-bot-messages">
+                <div class="angel-bot-message bot">
+                    <div class="msg-avatar"><i class="fas fa-anchor"></i></div>
+                    <div class="msg-content">
+                        <p id="angelBotWelcome">Olá! 👋 Sou o assistente virtual da Angel Tour Brasil. Posso ajudar com informações sobre o passeio, preços, horários e reservas. Como posso ajudar?</p>
+                        <span class="msg-time" id="angelBotWelcomeTime"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="angel-bot-suggestions" id="angelBotSuggestions">
+                <button class="suggestion-chip" data-msg="Quais são os preços?">💰 Preços</button>
+                <button class="suggestion-chip" data-msg="Qual o itinerário do passeio?">🗺️ Itinerário</button>
+                <button class="suggestion-chip" data-msg="Quais os horários disponíveis?">⏰ Horários</button>
+                <button class="suggestion-chip" data-msg="Quero fazer uma reserva">🎫 Reservar</button>
+            </div>
+            
+            <div class="angel-bot-input-area">
+                <input type="text" id="angelBotInput" placeholder="Digite sua mensagem..." autocomplete="off">
+                <button id="angelBotSend" aria-label="Enviar"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== CONFIGURACIÓN ==========
+        const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+        const MODEL = 'qwen-2.5-32b'; // Modelo ultra rápido y gratuito
+        
+        // System Prompt con toda la info de Angel Tour
+        const SYSTEM_PROMPT = `Eres el asistente virtual oficial de "Angel Tour Brasil", empresa de paseos en barco en Porto Belo, Santa Catarina, Brasil.
+
+REGLA DE IDIOMA (CRÍTICA): 
+Analiza el mensaje del usuario. Detecta automáticamente si está escrito en PORTUGUÉS, ESPAÑOL o INGLÉS. 
+Tu respuesta DEBE ser exclusivamente en ese mismo idioma. Nunca cambies de idioma a menos que el usuario te lo pida.
+
+INFORMACIÓN DEL NEGOCIO:
+- Ubicación: Trapiche de Porto dos Piratas, Porto Belo - SC (Costa Esmeralda).
+- Duración: Aproximadamente 4 horas.
+- Horarios de salida: 09:30, 11:10 y 13:00 (sujeto a confirmación).
+- Precios: Adultos R$ 85,00 | Niños (6 a 11 años) R$ 42,50 (50% desc.) | Menores de 5 años: Gratis.
+- Incluye: Navegación, parada en Bahía de Caixa D'Aço, tobogán, buffet de frutas frescas y batida de coco.
+- Contacto: WhatsApp (47) 99967-9084 | Instagram @angelportobelo
+
+TONO: Amable, entusiasta, profesional y conciso. Usa emojis relacionados con el mar (🌊⛵🏖️🥥) con moderación.`;
+
+        // ========== ELEMENTOS DEL DOM ==========
+        const toggleBtn = document.getElementById('angelBotToggle');
+        const windowEl = document.getElementById('angelBotWindow');
+        const closeBtn = document.getElementById('angelBotClose');
+        const messagesEl = document.getElementById('angelBotMessages');
+        const inputEl = document.getElementById('angelBotInput');
+        const sendBtn = document.getElementById('angelBotSend');
+        const suggestionsEl = document.getElementById('angelBotSuggestions');
+        const welcomeTimeEl = document.getElementById('angelBotWelcomeTime');
+        const apiModal = document.getElementById('apiModal');
+        const apiKeyInput = document.getElementById('apiKeyInput');
+
+        let apiKey = localStorage.getItem('groq_api_key');
+
+        // ========== VERIFICAR API KEY ==========
+        if (!apiKey) {
+            apiModal.classList.add('active');
+        }
+
+        function saveApiKey() {
+            const key = apiKeyInput.value.trim();
+            if (key && key.startsWith('gsk_')) {
+                localStorage.setItem('groq_api_key', key);
+                apiKey = key;
+                apiModal.classList.remove('active');
+            } else {
+                alert('Por favor, ingresa una API key válida de Groq (debe empezar con "gsk_")');
+            }
+        }
+
+        // ========== FUNCIONES AUXILIARES ==========
+        function formatTime(date) {
+            return new Date(date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        if (welcomeTimeEl) {
+            welcomeTimeEl.textContent = formatTime(new Date());
+        }
+
+        // ========== AGREGAR MENSAJE ==========
+        function addMessage(text, sender) {
+            const div = document.createElement('div');
+            div.className = `angel-bot-message ${sender}`;
+            const avatarIcon = sender === 'bot' ? 'fa-anchor' : 'fa-user';
+            
+            div.innerHTML = `
+                <div class="msg-avatar"><i class="fas ${avatarIcon}"></i></div>
+                <div class="msg-content">
+                    <p>${escapeHtml(text)}</p>
+                    <span class="msg-time">${formatTime(new Date())}</span>
+                </div>
+            `;
+            messagesEl.appendChild(div);
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const div = document.createElement('div');
+            div.className = 'angel-bot-message bot';
+            div.id = 'typingIndicator';
+            div.innerHTML = `
+                <div class="msg-avatar"><i class="fas fa-anchor"></i></div>
+                <div class="msg-content">
+                    <div class="typing-indicator">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+            `;
+            messagesEl.appendChild(div);
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) indicator.remove();
+        }
+
+        // ========== ENVIAR MENSAJE A GROQ API ==========
+        async function sendMessage() {
+            const text = inputEl.value.trim();
+            if (!text) return;
+
+            if (!apiKey) {
+                apiModal.classList.add('active');
+                return;
+            }
+
+            addMessage(text, 'user');
+            inputEl.value = '';
+            sendBtn.disabled = true;
+            showTypingIndicator();
+
+            try {
+                const response = await fetch(GROQ_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: MODEL,
+                        messages: [
+                            { role: 'system', content: SYSTEM_PROMPT },
+                            { role: 'user', content: text }
+                        ],
+                        temperature: 0.7,
+                        max_tokens: 800
+                    })
+                });
+
+                removeTypingIndicator();
+
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                const aiResponse = data.choices[0].message.content;
+                
+                addMessage(aiResponse, 'bot');
+
+            } catch (error) {
+                removeTypingIndicator();
+                console.error('Error:', error);
+                addMessage('Desculpe, tive um problema de conexão. Verifique sua API key ou tente novamente. 🙏', 'bot');
+            } finally {
+                sendBtn.disabled = false;
+                inputEl.focus();
+            }
+        }
+
+        // ========== EVENTOS ==========
+        toggleBtn.addEventListener('click', () => {
+            windowEl.classList.toggle('angel-bot-hidden');
+            if (!windowEl.classList.contains('angel-bot-hidden')) {
+                setTimeout(() => inputEl.focus(), 350);
+            }
+        });
+
+        closeBtn.addEventListener('click', () => {
+            windowEl.classList.add('angel-bot-hidden');
+        });
+
+        sendBtn.addEventListener('click', sendMessage);
+        inputEl.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        suggestionsEl.querySelectorAll('.suggestion-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                const msg = chip.getAttribute('data-msg');
+                inputEl.value = msg;
+                sendMessage();
+            });
+        });
+
+        console.log('🤖 Bot Angel Tour Brasil inicializado con IA Qwen en la nube');
+    </script>
+</body>
+</html>
