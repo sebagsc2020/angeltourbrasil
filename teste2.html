@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
   <!-- ========== METATAGS PRINCIPALES ========== -->
-  <title>AngelTour Brasil | O passeio mais completo da Costa Esmeralda</title>
+  <title>Angel Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
   <meta name="description" content="Conheça o passeio mais completo da região! Passeio pela Costa Esmeralda, parada na Bahía de Caixa D'Aço, tobogã, buffet de frutas, batida de côco e muita animação. Embarque em Porto Belo - SC.">
   <meta name="keywords" content="Angel Tour Brasil, passeio de barco, Costa Esmeralda, Porto Belo, Caixa D'Aço, turismo Santa Catarina, passeio de barco Porto Belo, escuna Porto Belo">
   <meta name="author" content="Angel Tour Brasil">
@@ -1148,10 +1148,10 @@
   let currentStepData = null;
   let speechSynthesis = window.speechSynthesis;
   let isSpeaking = false;
-  let paisUsuario = "DESCONOCIDO"; // Variable para almacenar el país del usuario
-  let codigoIdioma = "BRA"; // Variable para el código de idioma
+  let paisUsuario = "DESCONOCIDO";
+  let codigoIdioma = "POR";
 
-  // ========== TUS 12 IMÁGENES REEMPLAZADAS ==========
+  // ========== TUS 12 IMÁGENES ==========
   const imagenesGrandes = [
     "https://sebagsc2020.github.io/angeltourbrasil/images/atb_01.webp",
     "https://sebagsc2020.github.io/angeltourbrasil/images/atb_02.webp",
@@ -1167,10 +1167,9 @@
     "https://sebagsc2020.github.io/angeltourbrasil/images/atb_12.webp"
   ];
   
-  // Usamos las mismas imágenes para miniaturas (el CSS las ajustará)
   const imagenesChicas = imagenesGrandes;
 
-  // Función para obtener el país del usuario usando ipapi.co (HTTPS, más confiable)
+  // Función para obtener el país del usuario
   async function obtenerPaisUsuario() {
     try {
       const respuesta = await fetch('https://ipapi.co/json/');
@@ -1184,7 +1183,6 @@
       }
     } catch (error) {
       console.error("Error obteniendo país:", error);
-      // Fallback a ip-api.com
       try {
         const respuesta2 = await fetch('https://ip-api.com/json/');
         const datos2 = await respuesta2.json();
@@ -1203,11 +1201,10 @@
 
   function changeLanguage(lang) {
     currentLang = lang;
-    // Actualizar código de idioma para el mensaje
-    if (currentLang === "es") codigoIdioma = "ARG";
-    else if (currentLang === "pt") codigoIdioma = "BRA";
+    // Actualizar código de idioma: ESP para español, POR para portugués, USA para inglés
+    if (currentLang === "es") codigoIdioma = "ESP";
+    else if (currentLang === "pt") codigoIdioma = "POR";
     else if (currentLang === "en") codigoIdioma = "USA";
-    else codigoIdioma = "???";
     
     const t = translations[lang];
     document.querySelectorAll('[data-key]').forEach(el => { const key = el.getAttribute('data-key'); if(t[key] !== undefined) el.textContent = t[key]; });
@@ -1272,7 +1269,7 @@
   document.getElementById('closeModalBtn')?.addEventListener('click',closeModalFunc);
   document.getElementById('closeModalFooterBtn')?.addEventListener('click',closeModalFunc);
   document.getElementById('infoModal')?.addEventListener('click',e=>{if(e.target===document.getElementById('infoModal')) closeModalFunc();});
-  document.getElementById('shareWhatsappBtn')?.addEventListener('click',()=>{if(currentStepData){ window.open(`https://wa.me/?text=${encodeURIComponent(`🌟 ANGEL TOUR BRASIL 🌟\n\n📌 ${currentStepData.title}\n📍 ${currentStepData.desc}\n\n📖 ${currentStepData.longtext}`)}`,'_blank');}});
+  document.getElementById('shareWhatsappBtn')?.addEventListener('click',()=>{if(currentStepData){ window.open(`https://wa.me/?text=${encodeURIComponent(`ANGEL TOUR BRASIL\n\n${currentStepData.title}\n${currentStepData.desc}\n\n${currentStepData.longtext}`)}`,'_blank');}});
   document.getElementById('readAloudBtn')?.addEventListener('click',()=>{if(currentStepData){ if(isSpeaking) stopReading(); else readTextAloud(`${currentStepData.title}. ${currentStepData.desc}. ${currentStepData.longtext}`,currentLang); } });
   document.querySelectorAll('.timeline-step').forEach(step=>step.addEventListener('click',()=>{ openModal({ title:step.getAttribute('data-title')||step.querySelector('h3')?.innerText||'', desc:step.getAttribute('data-desc')||step.querySelector('p')?.innerText||'', longtext:step.getAttribute('data-longtext')||'' }); }));
   
@@ -1283,7 +1280,7 @@
   
   const fechaInp=document.getElementById('fecha'); if(fechaInp) fechaInp.setAttribute('min',new Date().toISOString().split('T')[0]);
   
-  // Modificación del evento submit con el orden solicitado
+  // Evento submit con el formato solicitado SIN ICONOS
   document.getElementById('dataForm')?.addEventListener('submit', async (e) => { 
     e.preventDefault(); 
     
@@ -1295,19 +1292,18 @@
     const menores = document.getElementById('menores')?.value; 
     
     if(!fecha || !horario || !nombre) { 
-      alert('❌ Complete todos los campos'); 
+      alert('Complete todos los campos'); 
       return; 
     } 
     
-    // Obtener país del usuario si aún no se tiene
     if (paisUsuario === "DESCONOCIDO") {
       await obtenerPaisUsuario();
     }
     
     const total = (parseInt(adultos) * 85) + (parseInt(menores) * 42.5);
     
-    // Construir el mensaje con el orden solicitado
-    const msg = `🔹 RESERVA ANGEL TOUR 🔹\n\n🌐 Idioma: ${codigoIdioma}\n📍 País IP: ${paisUsuario}\n\n📅 Fecha: ${fecha.split('-').reverse().join('/')}\n⏰ Horario: ${{'09:30':'9:30','11:10':'11:10','13:00':'13:00'}[horario] || horario} Hs\n👤 Nombre: ${nombre}\n🏢 Empresa: ${empresa || 'No especificada'}\n👥 Adultos: ${adultos}\n🧒 Menores: ${menores}\n💰 Total: ${total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`;
+    // Mensaje SIN ICONOS según el formato solicitado
+    const msg = `RESERVA ANGEL TOUR\n\nIdioma: ${codigoIdioma}\nPaís IP: ${paisUsuario}\n\nFecha: ${fecha.split('-').reverse().join('/')}\nHorario: ${{'09:30':'9:30','11:10':'11:10','13:00':'13:00'}[horario] || horario} Hs\nNombre: ${nombre}\nEmpresa: ${empresa || 'No especificada'}\nAdultos: ${adultos}\nMenores: ${menores}\nTotal: ${total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`;
     
     window.open(`https://wa.me/5493518692251?text=${encodeURIComponent(msg)}`, '_blank'); 
   });
@@ -1318,7 +1314,7 @@
   document.querySelectorAll('.nav-link').forEach(link=>link.addEventListener('click',e=>{ e.preventDefault(); const href=link.getAttribute('href'); if(href&&href!=='#') scrollToSectionWithOffset(href.substring(1)); if(window.innerWidth<=880) navLinks?.classList.remove('active'); }));
   document.addEventListener('click',e=>{ if(window.innerWidth<=880&&navLinks&&menuToggle&&!navLinks.contains(e.target)&&!menuToggle.contains(e.target)) navLinks.classList.remove('active'); });
 
-  // Inicializar galería con tus 12 imágenes
+  // Inicializar galería
   const gridGaleria = document.getElementById('gridGaleria');
   let indiceActual = 0;
   let touchStartX = 0;
@@ -1353,7 +1349,6 @@
   calcularValorTotal();
   setTimeout(() => loadWeatherWidget(currentLang), 100);
   
-  // Obtener el país del usuario al cargar la página
   obtenerPaisUsuario().then(() => {
     console.log("País del usuario detectado:", paisUsuario);
   });
