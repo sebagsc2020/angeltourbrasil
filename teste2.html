@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
   <!-- ========== METATAGS PRINCIPALES ========== -->
-  <title>Angel Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
+  <title>Angel+Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
   <meta name="description" content="Conheça o passeio mais completo da região! Passeio pela Costa Esmeralda, parada na Bahía de Caixa D'Aço, tobogã, buffet de frutas, batida de côco e muita animação. Embarque em Porto Belo - SC.">
   <meta name="keywords" content="Angel Tour Brasil, passeio de barco, Costa Esmeralda, Porto Belo, Caixa D'Aço, turismo Santa Catarina, passeio de barco Porto Belo, escuna Porto Belo">
   <meta name="author" content="Angel Tour Brasil">
@@ -770,10 +770,28 @@
       text-align: center;
       cursor: pointer;
       transition: all 0.2s ease;
+      position: relative;
     }
     .horario-card:hover { border-color: var(--turquoise); background: #F0F9FF; transform: translateY(-2px); }
     .horario-card .horario-titulo { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.25rem; }
     .horario-card .horario-hora { font-size: 1rem; font-weight: 800; }
+    .horario-card .ai-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+      color: white;
+      font-size: 0.55rem;
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(255,107,107,0.3);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
     .info-box {
       background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
       border-radius: 20px;
@@ -847,6 +865,385 @@
       overflow: hidden;
     }
     .weatherwidget-io { border-radius: 16px !important; overflow: hidden !important; }
+    
+    /* ========== 🤖 CHATBOT IA ========== */
+    .ai-chatbot-toggle {
+      position: fixed;
+      bottom: 100px;
+      right: 28px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      animation: float 3s ease-in-out infinite;
+    }
+    .ai-chatbot-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+    }
+    .ai-chatbot-toggle i {
+      font-size: 1.8rem;
+      color: white;
+    }
+    .ai-chatbot-toggle .ai-badge-dot {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 18px;
+      height: 18px;
+      background: #FF4444;
+      border-radius: 50%;
+      border: 3px solid white;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    
+    .ai-chatbot-window {
+      position: fixed;
+      bottom: 180px;
+      right: 28px;
+      width: 380px;
+      max-width: calc(100vw - 40px);
+      height: 520px;
+      max-height: calc(100vh - 220px);
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      z-index: 1001;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      animation: slideUp 0.3s ease;
+    }
+    .ai-chatbot-window.active {
+      display: flex;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .ai-chatbot-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+    }
+    .ai-chatbot-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+    .ai-chatbot-info {
+      flex: 1;
+    }
+    .ai-chatbot-info h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .ai-chatbot-info span {
+      font-size: 0.7rem;
+      opacity: 0.8;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .ai-chatbot-info .online-dot {
+      width: 8px;
+      height: 8px;
+      background: #4ADE80;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .ai-chatbot-close {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .ai-chatbot-close:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    .ai-chatbot-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #F8FAFC;
+    }
+    .ai-chatbot-messages::-webkit-scrollbar {
+      width: 4px;
+    }
+    .ai-chatbot-messages::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 4px;
+    }
+    .ai-msg {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      animation: msgAppear 0.3s ease;
+    }
+    @keyframes msgAppear {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .ai-msg.bot {
+      background: white;
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .ai-msg.user {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+    .ai-msg.typing {
+      background: white;
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      display: flex;
+      gap: 4px;
+      padding: 14px 18px;
+    }
+    .ai-msg.typing span {
+      width: 8px;
+      height: 8px;
+      background: #94A3B8;
+      border-radius: 50%;
+      animation: typing 1.4s infinite;
+    }
+    .ai-msg.typing span:nth-child(2) { animation-delay: 0.2s; }
+    .ai-msg.typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-8px); opacity: 1; }
+    }
+    .ai-quick-replies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 0 16px 12px;
+      background: #F8FAFC;
+    }
+    .ai-quick-reply {
+      background: white;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #475569;
+      font-weight: 500;
+    }
+    .ai-quick-reply:hover {
+      border-color: #667eea;
+      color: #667eea;
+      background: #F0F0FF;
+      transform: translateY(-1px);
+    }
+    .ai-chatbot-input-area {
+      padding: 12px 16px;
+      border-top: 1px solid #E2E8F0;
+      display: flex;
+      gap: 8px;
+      background: white;
+    }
+    .ai-chatbot-input {
+      flex: 1;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 24px;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .ai-chatbot-input:focus {
+      border-color: #667eea;
+    }
+    .ai-chatbot-send {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .ai-chatbot-send:hover {
+      transform: scale(1.05);
+    }
+    .ai-chatbot-send:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    /* ========== AI RECOMMENDATION BADGE ========== */
+    .ai-recommendation {
+      background: linear-gradient(135deg, #FFF7ED 0%, #FFFBEB 100%);
+      border: 1.5px solid #FED7AA;
+      border-radius: 16px;
+      padding: 12px 16px;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.75rem;
+      color: #92400E;
+      animation: slideIn 0.5s ease;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .ai-recommendation i {
+      color: #F59E0B;
+      font-size: 1.1rem;
+    }
+    
+    /* ========== AI AVAILABILITY INDICATOR ========== */
+    .availability-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-top: 6px;
+    }
+    .availability-indicator.high {
+      background: #DCFCE7;
+      color: #166534;
+    }
+    .availability-indicator.medium {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+    .availability-indicator.low {
+      background: #FEE2E2;
+      color: #991B1B;
+    }
+    .availability-indicator .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    
+    /* ========== AI CONTEXTUAL TIP ========== */
+    .ai-contextual-tip {
+      position: fixed;
+      bottom: 180px;
+      left: 28px;
+      max-width: 320px;
+      background: white;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      z-index: 999;
+      display: none;
+      animation: slideInLeft 0.4s ease;
+      border-left: 4px solid #667eea;
+    }
+    .ai-contextual-tip.active {
+      display: block;
+    }
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .ai-contextual-tip .tip-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .ai-contextual-tip .tip-header i {
+      color: #667eea;
+    }
+    .ai-contextual-tip .tip-header strong {
+      font-size: 0.8rem;
+      color: #1E293B;
+    }
+    .ai-contextual-tip .tip-close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: none;
+      border: none;
+      color: #94A3B8;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .ai-contextual-tip p {
+      font-size: 0.8rem;
+      color: #475569;
+      line-height: 1.5;
+      margin: 0;
+    }
+    
+    @media (max-width: 600px) {
+      .ai-chatbot-window {
+        bottom: 100px;
+        right: 10px;
+        left: 10px;
+        width: auto;
+        height: calc(100vh - 140px);
+      }
+      .ai-chatbot-toggle {
+        bottom: 100px;
+        right: 16px;
+        width: 56px;
+        height: 56px;
+      }
+      .ai-contextual-tip {
+        left: 10px;
+        right: 10px;
+        max-width: none;
+        bottom: 170px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1028,18 +1425,41 @@
             </div>
         </div>
         
+        <!-- 🤖 AI RECOMMENDATION BOX -->
+        <div id="aiRecommendationBox" class="ai-recommendation" style="display:none;">
+          <i class="fas fa-robot"></i>
+          <div>
+            <strong data-key="ai_rec_title">🧠 Recomendación IA:</strong>
+            <span id="aiRecText" data-key="ai_rec_text"></span>
+          </div>
+        </div>
+        
         <form id="dataForm">
             <div class="form-grid-2col">
                 <div>
                     <div class="form-label"><i class="far fa-calendar-alt"></i> <span id="textFecha">DATA DO PASSEIO</span></div>
                     <input type="date" id="fecha" name="fecha" required class="form-input">
+                    <!-- AI Availability Indicator -->
+                    <div id="aiAvailability" class="availability-indicator" style="display:none;">
+                      <span class="dot"></span>
+                      <span id="aiAvailText"></span>
+                    </div>
                 </div>
                 <div>
                     <div class="form-label"><i class="far fa-clock"></i> <span id="textHorario">PREFERÊNCIA DE HORÁRIO</span></div>
                     <div class="horarios-group">
-                        <div class="horario-card" data-horario="09:30"><div class="horario-titulo" id="horarioTitulo1">Mañana</div><div class="horario-hora">9:30 Hs</div></div>
-                        <div class="horario-card" data-horario="11:10"><div class="horario-titulo" id="horarioTitulo2">Media Mañana</div><div class="horario-hora">11:10 Hs</div></div>
-                        <div class="horario-card" data-horario="13:00"><div class="horario-titulo" id="horarioTitulo3">Tarde</div><div class="horario-hora">13:00 Hs</div></div>
+                        <div class="horario-card" data-horario="09:30">
+                          <div class="horario-titulo" id="horarioTitulo1">Mañana</div>
+                          <div class="horario-hora">9:30 Hs</div>
+                        </div>
+                        <div class="horario-card" data-horario="11:10">
+                          <div class="horario-titulo" id="horarioTitulo2">Media Mañana</div>
+                          <div class="horario-hora">11:10 Hs</div>
+                        </div>
+                        <div class="horario-card" data-horario="13:00">
+                          <div class="horario-titulo" id="horarioTitulo3">Tarde</div>
+                          <div class="horario-hora">13:00 Hs</div>
+                        </div>
                     </div>
                     <input type="hidden" id="horario" name="horario" required>
                     <div class="form-note" id="horarioNote">⏱️ Sujeito à disponibilidade</div>
@@ -1136,12 +1556,45 @@
   <i class="fab fa-whatsapp"></i>
 </a>
 
+<!-- 🤖 AI CHATBOT -->
+<button class="ai-chatbot-toggle" id="aiChatbotToggle" title="Asistente IA">
+  <i class="fas fa-robot"></i>
+  <span class="ai-badge-dot"></span>
+</button>
+
+<div class="ai-chatbot-window" id="aiChatbotWindow">
+  <div class="ai-chatbot-header">
+    <div class="ai-chatbot-avatar">🤖</div>
+    <div class="ai-chatbot-info">
+      <h4>Angel AI Assistant</h4>
+      <span><span class="online-dot"></span> Online agora</span>
+    </div>
+    <button class="ai-chatbot-close" id="aiChatbotClose"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="ai-chatbot-messages" id="aiChatMessages"></div>
+  <div class="ai-quick-replies" id="aiQuickReplies"></div>
+  <div class="ai-chatbot-input-area">
+    <input type="text" class="ai-chatbot-input" id="aiChatInput" placeholder="Pergunte algo..." autocomplete="off">
+    <button class="ai-chatbot-send" id="aiChatSend"><i class="fas fa-paper-plane"></i></button>
+  </div>
+</div>
+
+<!-- 🧠 AI CONTEXTUAL TIP -->
+<div class="ai-contextual-tip" id="aiContextualTip">
+  <button class="tip-close" id="aiTipClose">&times;</button>
+  <div class="tip-header">
+    <i class="fas fa-lightbulb"></i>
+    <strong>Dica IA</strong>
+  </div>
+  <p id="aiTipText"></p>
+</div>
+
 <script>
   // ========== TRADUCCIONES ==========
   const translations = {
-    es: { nav_home:"Inicio", nav_tour:"El Paseo", nav_gallery:"Galería", nav_book:"Reservar", hero_title:"El paseo más completo de la Costa Esmeralda", hero_sub:"Navegue por paisajes paradisíacos, nade en la Bahía de Caixa D'Aço, disfrute del tobogán, frutas tropicales y mucha animación a bordo.", btn_route:"Ver Itinerario", btn_guarantee:"Asegurar Plaza", why_title:"¿Por qué navegar con Angel Tour?", why_sub:"Experiencia completa, seguridad y diversión para todas las edades", diff1_title:"Seguridad total", diff1_desc:"Chalecos + salvavidas y tripulación entrenada", diff2_title:"Parada en Caixa D'Aço", diff2_desc:"Aguas cristalinas para nadar con tranquilidad", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas y batida de coco a bordo", diff4_title:"Diversión asegurada", diff4_desc:"Tobogán, música y animación para adultos y niños", itinerary_title:"Itinerario de la Experiencia", itinerary_sub:"Embarque en Porto dos Piratas y viva momentos inolvidables", step1_title:"Embarque", step1_desc:"Trapiche en Porto dos Piratas / Porto Belo.", step2_title:"Navegación", step2_desc:"1h30 por la Costa Esmeralda, paisajes de cine.", step3_title:"Parada en la Bahía", step3_desc:"Caixa D'Aço: natación, tobogán y buceo.", step4_title:"Fiesta a bordo", step4_desc:"Frutas, batida tropical y mucha música.", gallery_title:"Vive esta aventura", gallery_sub:"Mira el paseo e inspírate para tu viaje", testimonials_title:"Quienes ya navegaron, recomiendan", test1_text:"¡Paseo fantástico! El equipo es muy atento, el paisaje es un espectáculo aparte. A mis hijos les encantó el tobogán.", test2_text:"Seguridad y diversión. La batida de coco deliciosa y la parada en Caixa D'Aço es un baño inolvidable.", test3_text:"¡El mejor paseo en barco de Porto Belo! Profesionales increíbles, estructura impecable. Volveré sin duda.", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegación", footer_home:"Inicio", footer_route:"Itinerario", footer_gallery:"Galería", footer_follow:"Sigue la aventura", footer_copyright:"© 2026 Angel Tour Brasil – El paseo más completo de la Costa Esmeralda.", map_text:"Abrir en Google Maps", sticky_subtitle:"Reserva tu lugar", sticky_price:"⭐ ¡Precios especiales! ⭐", sticky_btn:"Reservar Ahora", fecha:"FECHA DEL PASEO", horario:"PREFERENCIA DE HORARIO", horario1:"Mañana", horario2:"Media Mañana", horario3:"Tarde", nombre:"NOMBRE", empresa:"EMPRESA", empresa_note:"*Opcional para reservas individuales", adultos:"ADULTOS", menores:"MENORES de 6 a 11 años", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeto a disponibilidad, el horario será confirmado via WhatsApp.", info_text:"💡 El valor mencionado es para grupos cerrados o agencias, en viajes individuales el valor puede sufrir variaciones, ante cualquier duda no deje de consultarnos.", discount_text:"🎯 50% de descuento", precio_adultos:"💰 R$ 85,00 cada adulto", footer_boat:"Paseos en barco", footer_secure:"Confirmación segura", footer_confirm:"Envío por WhatsApp" },
-    pt: { nav_home:"Início", nav_tour:"O Passeio", nav_gallery:"Galeria", nav_book:"Reservar", hero_title:"O passeio mais completo da Costa Esmeralda", hero_sub:"Navegue por paisagens paradisíacas, nade na Bahía de Caixa D'Aço, aproveite tobogã, frutas tropicais e muita animação a bordo.", btn_route:"Ver Roteiro", btn_guarantee:"Garantir Vaga", why_title:"Por que velejar com a Angel Tour?", why_sub:"Experiência completa, segurança e diversão para todas as idades", diff1_title:"Segurança total", diff1_desc:"Coletes + guarda-vidas e tripulação treinada", diff2_title:"Parada em Caixa D'Aço", diff2_desc:"Águas cristalinas para nadar com tranquilidade", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas e batida de coco a bordo", diff4_title:"Diversão garantida", diff4_desc:"Tobogã, música e animação para adultos e crianças", itinerary_title:"Roteiro da Experiência", itinerary_sub:"Embarque em Porto dos Piratas e viva momentos inesquecíveis", step1_title:"Embarque", step1_desc:"Trapiche em Porto dos Piratas / Porto Belo.", step2_title:"Navegação", step2_desc:"1h30 pela Costa Esmeralda, paisagens de cinema.", step3_title:"Parada na Baía", step3_desc:"Caixa D'Aço: natação, tobogã e mergulho.", step4_title:"Festa a bordo", step4_desc:"Frutas, batida tropical e muita música.", gallery_title:"Viva essa aventura", gallery_sub:"Assista ao passeio e inspire-se para sua viagem", testimonials_title:"Quem já navegou, recomenda", test1_text:"Passeio fantástico! A equipe é muito atenciosa, a paisagem é um show à parte. Meus filhos amaram o tobogã.", test2_text:"Segurança e diversão. Batida de coco deliciosa e parada em Caixa D'Aço é um mergulho inesquecível.", test3_text:"Melhor passeio de barco de Porto Belo! Profissionais incríveis, estrutura impecável. Voltarei com certeza.", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegação", footer_home:"Início", footer_route:"Itinerário", footer_gallery:"Galeria", footer_follow:"Siga a aventura", footer_copyright:"© 2026 Angel Tour Brasil – O passeio mais completo da Costa Esmeralda.", map_text:"Abrir no Google Maps", sticky_subtitle:"Reserve seu lugar", sticky_price:"⭐ Preços especiais! ⭐", sticky_btn:"Reservar Agora", fecha:"DATA DO PASSEIO", horario:"PREFERÊNCIA DE HORÁRIO", horario1:"Manhã", horario2:"Meia Manhã", horario3:"Tarde", nombre:"NOME", empresa:"EMPRESA", empresa_note:"*Opcional para reservas individuais", adultos:"ADULTOS", menores:"MENORES de 6 a 11 anos", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeito à disponibilidade, o horário será confirmado via WhatsApp.", info_text:"💡 O valor mencionado é para grupos fechados ou agências, em viagens individuais o valor pode sofrer variações, em caso de dúvida não deixe de nos consultar.", discount_text:"🎯 50% de desconto", precio_adultos:"💰 R$ 85,00 cada adulto", footer_boat:"Passeios de barco", footer_secure:"Confirmação segura", footer_confirm:"Envio por WhatsApp" },
-    en: { nav_home:"Home", nav_tour:"The Tour", nav_gallery:"Gallery", nav_book:"Book Now", hero_title:"The most complete tour of the Emerald Coast", hero_sub:"Sail through stunning landscapes, swim in Caixa D'Aço Bay, enjoy a waterslide, tropical fruits, and lots of fun on board.", btn_route:"See Itinerary", btn_guarantee:"Book Now", why_title:"Why sail with Angel Tour?", why_sub:"Complete experience, safety and fun for all ages", diff1_title:"Total safety", diff1_desc:"Life jackets + lifeguards and trained crew", diff2_title:"Stop at Caixa D'Aço", diff2_desc:"Crystal clear waters for a safe swim", diff3_title:"Buffet & Drinks", diff3_desc:"Fresh fruits and coconut cocktail on board", diff4_title:"Guaranteed fun", diff4_desc:"Waterslide, music and entertainment for all ages", itinerary_title:"Experience Itinerary", itinerary_sub:"Board at Porto dos Piratas and live unforgettable moments", step1_title:"Boarding", step1_desc:"Pier in Porto dos Piratas / Porto Belo.", step2_title:"Cruising", step2_desc:"1h30 along the Emerald Coast, movie-like scenery.", step3_title:"Bay Stop", step3_desc:"Caixa D'Aço: swimming, waterslide and snorkeling.", step4_title:"Party on board", step4_desc:"Fruits, tropical cocktails and great music.", gallery_title:"Live this adventure", gallery_sub:"Watch the tour and get inspired for your trip", testimonials_title:"Those who have sailed, recommend", test1_text:"Fantastic tour! The team is very attentive, the scenery is a show apart. My kids loved the waterslide.", test2_text:"Safety and fun. Delicious coconut drink and the stop at Caixa D'Aço is an unforgettable swim.", test3_text:"Best boat tour in Porto Belo! Incredible professionals, impeccable structure. I'll definitely come back.", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navigation", footer_home:"Home", footer_route:"Itinerary", footer_gallery:"Gallery", footer_follow:"Follow the adventure", footer_copyright:"© 2026 Angel Tour Brasil – The most complete tour of the Emerald Coast.", map_text:"Open in Google Maps", sticky_subtitle:"Book your spot", sticky_price:"⭐ Special prices! ⭐", sticky_btn:"Book Now", fecha:"TOUR DATE", horario:"TIME PREFERENCE", horario1:"Morning", horario2:"Late Morning", horario3:"Afternoon", nombre:"NAME", empresa:"COMPANY", empresa_note:"*Optional for individual reservations", adultos:"ADULTS", menores:"CHILDREN 6 to 11 years", total:"TOTAL VALUE", btn:"SEND RESERVATION", horario_note:"⏱️ Subject to availability, the schedule will be confirmed via WhatsApp.", info_text:"💡 The mentioned price is for closed groups or agencies; for individual trips, the price may vary. If you have any questions, please do not hesitate to contact us.", discount_text:"🎯 50% discount", precio_adultos:"💰 R$ 85.00 per adult", footer_boat:"Boat tours", footer_secure:"Secure confirmation", footer_confirm:"WhatsApp delivery" }
+    es: { nav_home:"Inicio", nav_tour:"El Paseo", nav_gallery:"Galería", nav_book:"Reservar", hero_title:"El paseo más completo de la Costa Esmeralda", hero_sub:"Navegue por paisajes paradisíacos, nade en la Bahía de Caixa D'Aço, disfrute del tobogán, frutas tropicales y mucha animación a bordo.", btn_route:"Ver Itinerario", btn_guarantee:"Asegurar Plaza", why_title:"¿Por qué navegar con Angel Tour?", why_sub:"Experiencia completa, seguridad y diversión para todas las edades", diff1_title:"Seguridad total", diff1_desc:"Chalecos + salvavidas y tripulación entrenada", diff2_title:"Parada en Caixa D'Aço", diff2_desc:"Aguas cristalinas para nadar con tranquilidad", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas y batida de coco a bordo", diff4_title:"Diversión asegurada", diff4_desc:"Tobogán, música y animación para adultos y niños", itinerary_title:"Itinerario de la Experiencia", itinerary_sub:"Embarque en Porto dos Piratas y viva momentos inolvidables", step1_title:"Embarque", step1_desc:"Trapiche en Porto dos Piratas / Porto Belo.", step2_title:"Navegación", step2_desc:"1h30 por la Costa Esmeralda, paisajes de cine.", step3_title:"Parada en la Bahía", step3_desc:"Caixa D'Aço: natación, tobogán y buceo.", step4_title:"Fiesta a bordo", step4_desc:"Frutas, batida tropical y mucha música.", gallery_title:"Vive esta aventura", gallery_sub:"Mira el paseo e inspírate para tu viaje", testimonials_title:"Quienes ya navegaron, recomiendan", test1_text:"¡Paseo fantástico! El equipo es muy atento, el paisaje es un espectáculo aparte. A mis hijos les encantó el tobogán.", test2_text:"Seguridad y diversión. La batida de coco deliciosa y la parada en Caixa D'Aço es un baño inolvidable.", test3_text:"¡El mejor paseo en barco de Porto Belo! Profesionales increíbles, estructura impecable. Volveré sin duda.", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegación", footer_home:"Inicio", footer_route:"Itinerario", footer_gallery:"Galería", footer_follow:"Sigue la aventura", footer_copyright:"© 2026 Angel Tour Brasil – El paseo más completo de la Costa Esmeralda.", map_text:"Abrir en Google Maps", sticky_subtitle:"Reserva tu lugar", sticky_price:"⭐ ¡Precios especiales! ⭐", sticky_btn:"Reservar Ahora", fecha:"FECHA DEL PASEO", horario:"PREFERENCIA DE HORARIO", horario1:"Mañana", horario2:"Media Mañana", horario3:"Tarde", nombre:"NOMBRE", empresa:"EMPRESA", empresa_note:"*Opcional para reservas individuales", adultos:"ADULTOS", menores:"MENORES de 6 a 11 años", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeto a disponibilidad, el horario será confirmado via WhatsApp.", info_text:"💡 El valor mencionado es para grupos cerrados o agencias, en viajes individuales el valor puede sufrir variaciones, ante cualquier duda no deje de consultarnos.", discount_text:"🎯 50% de descuento", precio_adultos:"💰 R$ 85,00 cada adulto", footer_boat:"Paseos en barco", footer_secure:"Confirmación segura", footer_confirm:"Envío por WhatsApp", ai_rec_title:"🧠 Recomendación IA:", ai_chatbot_placeholder:"Pregúntame algo...", ai_greeting:"¡Hola! 👋 Soy el asistente IA de Angel Tour. Puedo ayudarte con información sobre el paseo, precios, horarios y más. ¿En qué te puedo ayudar?" },
+    pt: { nav_home:"Início", nav_tour:"O Passeio", nav_gallery:"Galeria", nav_book:"Reservar", hero_title:"O passeio mais completo da Costa Esmeralda", hero_sub:"Navegue por paisagens paradisíacas, nade na Bahía de Caixa D'Aço, aproveite tobogã, frutas tropicais e muita animação a bordo.", btn_route:"Ver Roteiro", btn_guarantee:"Garantir Vaga", why_title:"Por que velejar com a Angel Tour?", why_sub:"Experiência completa, segurança e diversão para todas as idades", diff1_title:"Segurança total", diff1_desc:"Coletes + guarda-vidas e tripulação treinada", diff2_title:"Parada em Caixa D'Aço", diff2_desc:"Águas cristalinas para nadar com tranquilidade", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas e batida de coco a bordo", diff4_title:"Diversão garantida", diff4_desc:"Tobogã, música e animação para adultos e crianças", itinerary_title:"Roteiro da Experiência", itinerary_sub:"Embarque em Porto dos Piratas e viva momentos inesquecíveis", step1_title:"Embarque", step1_desc:"Trapiche em Porto dos Piratas / Porto Belo.", step2_title:"Navegação", step2_desc:"1h30 pela Costa Esmeralda, paisagens de cinema.", step3_title:"Parada na Baía", step3_desc:"Caixa D'Aço: natação, tobogã e mergulho.", step4_title:"Festa a bordo", step4_desc:"Frutas, batida tropical e muita música.", gallery_title:"Viva essa aventura", gallery_sub:"Assista ao passeio e inspire-se para sua viagem", testimonials_title:"Quem já navegou, recomenda", test1_text:"Passeio fantástico! A equipe é muito atenciosa, a paisagem é um show à parte. Meus filhos amaram o tobogã.", test2_text:"Segurança e diversão. Batida de coco deliciosa e parada em Caixa D'Aço é um mergulho inesquecível.", test3_text:"Melhor passeio de barco de Porto Belo! Profissionais incríveis, estrutura impecável. Voltarei com certeza.", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegação", footer_home:"Início", footer_route:"Itinerário", footer_gallery:"Galeria", footer_follow:"Siga a aventura", footer_copyright:"© 2026 Angel Tour Brasil – O passeio mais completo da Costa Esmeralda.", map_text:"Abrir no Google Maps", sticky_subtitle:"Reserve seu lugar", sticky_price:"⭐ Preços especiais! ⭐", sticky_btn:"Reservar Agora", fecha:"DATA DO PASSEIO", horario:"PREFERÊNCIA DE HORÁRIO", horario1:"Manhã", horario2:"Meia Manhã", horario3:"Tarde", nombre:"NOME", empresa:"EMPRESA", empresa_note:"*Opcional para reservas individuais", adultos:"ADULTOS", menores:"MENORES de 6 a 11 anos", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeito à disponibilidade, o horário será confirmado via WhatsApp.", info_text:"💡 O valor mencionado é para grupos fechados ou agências, em viagens individuais o valor pode sofrer variações, em caso de dúvida não deixe de nos consultar.", discount_text:"🎯 50% de desconto", precio_adultos:"💰 R$ 85,00 cada adulto", footer_boat:"Passeios de barco", footer_secure:"Confirmação segura", footer_confirm:"Envio por WhatsApp", ai_rec_title:"🧠 Recomendação IA:", ai_chatbot_placeholder:"Pergunte algo...", ai_greeting:"Olá! 👋 Sou o assistente IA da Angel Tour. Posso te ajudar com informações sobre o passeio, preços, horários e mais. Como posso ajudar?" },
+    en: { nav_home:"Home", nav_tour:"The Tour", nav_gallery:"Gallery", nav_book:"Book Now", hero_title:"The most complete tour of the Emerald Coast", hero_sub:"Sail through stunning landscapes, swim in Caixa D'Aço Bay, enjoy a waterslide, tropical fruits, and lots of fun on board.", btn_route:"See Itinerary", btn_guarantee:"Book Now", why_title:"Why sail with Angel Tour?", why_sub:"Complete experience, safety and fun for all ages", diff1_title:"Total safety", diff1_desc:"Life jackets + lifeguards and trained crew", diff2_title:"Stop at Caixa D'Aço", diff2_desc:"Crystal clear waters for a safe swim", diff3_title:"Buffet & Drinks", diff3_desc:"Fresh fruits and coconut cocktail on board", diff4_title:"Guaranteed fun", diff4_desc:"Waterslide, music and entertainment for all ages", itinerary_title:"Experience Itinerary", itinerary_sub:"Board at Porto dos Piratas and live unforgettable moments", step1_title:"Boarding", step1_desc:"Pier in Porto dos Piratas / Porto Belo.", step2_title:"Cruising", step2_desc:"1h30 along the Emerald Coast, movie-like scenery.", step3_title:"Bay Stop", step3_desc:"Caixa D'Aço: swimming, waterslide and snorkeling.", step4_title:"Party on board", step4_desc:"Fruits, tropical cocktails and great music.", gallery_title:"Live this adventure", gallery_sub:"Watch the tour and get inspired for your trip", testimonials_title:"Those who have sailed, recommend", test1_text:"Fantastic tour! The team is very attentive, the scenery is a show apart. My kids loved the waterslide.", test2_text:"Safety and fun. Delicious coconut drink and the stop at Caixa D'Aço is an unforgettable swim.", test3_text:"Best boat tour in Porto Belo! Incredible professionals, impeccable structure. I'll definitely come back.", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navigation", footer_home:"Home", footer_route:"Itinerary", footer_gallery:"Gallery", footer_follow:"Follow the adventure", footer_copyright:"© 2026 Angel Tour Brasil – The most complete tour of the Emerald Coast.", map_text:"Open in Google Maps", sticky_subtitle:"Book your spot", sticky_price:"⭐ Special prices! ⭐", sticky_btn:"Book Now", fecha:"TOUR DATE", horario:"TIME PREFERENCE", horario1:"Morning", horario2:"Late Morning", horario3:"Afternoon", nombre:"NAME", empresa:"COMPANY", empresa_note:"*Optional for individual reservations", adultos:"ADULTS", menores:"CHILDREN 6 to 11 years", total:"TOTAL VALUE", btn:"SEND RESERVATION", horario_note:"⏱️ Subject to availability, the schedule will be confirmed via WhatsApp.", info_text:"💡 The mentioned price is for closed groups or agencies; for individual trips, the price may vary. If you have any questions, please do not hesitate to contact us.", discount_text:"🎯 50% discount", precio_adultos:"💰 R$ 85.00 per adult", footer_boat:"Boat tours", footer_secure:"Secure confirmation", footer_confirm:"WhatsApp delivery", ai_rec_title:"🧠 AI Recommendation:", ai_chatbot_placeholder:"Ask me something...", ai_greeting:"Hello! 👋 I'm the Angel Tour AI assistant. I can help you with information about the tour, prices, schedules and more. How can I help you?" }
   };
 
   let currentLang = 'pt';
@@ -1150,6 +1603,619 @@
   let isSpeaking = false;
   let paisUsuario = "DESCONOCIDO";
   let codigoIdioma = "POR";
+
+  // ========== 🤖 AI CHATBOT KNOWLEDGE BASE ==========
+  const aiKnowledgeBase = {
+    pt: {
+      intents: [
+        {
+          keywords: ['preço', 'preco', 'valor', 'quanto', 'custa', 'custo', 'tarifa', 'pagar', 'caro', 'barato'],
+          response: '💰 Nossos preços:\n\n👨 Adultos: R$ 85,00\n👶 Crianças (6-11 anos): R$ 42,50 (50% desconto)\n👶 Menores de 5 anos: Gratuito\n\n📌 Grupos fechados e agências têm condições especiais. Entre em contato para mais detalhes!',
+          followUp: ['Como reservar?', 'Quais formas de pagamento?']
+        },
+        {
+          keywords: ['horário', 'horario', 'hora', 'horarios', 'expediente', 'funciona', 'atendimento', 'saída', 'saida'],
+          response: '⏰ Temos 3 horários de saída diários:\n\n🌅 9:30 - Passeio da manhã\n☀️ 11:10 - Passeio de media manhã\n🌇 13:00 - Passeio da tarde\n\nO passeio dura aproximadamente 3h30. O horário será confirmado via WhatsApp após a reserva.',
+          followUp: ['Quanto dura o passeio?', 'Qual o melhor horário?']
+        },
+        {
+          keywords: ['duração', 'duracao', 'tempo', 'quanto tempo', 'demora', 'horas'],
+          response: '⏱️ O passeio completo dura aproximadamente 3h30, sendo:\n\n🚢 1h30 de navegação pela Costa Esmeralda\n🏖️ Parada na Baía de Caixa D\'Aço para banho\n🍹 Festa a bordo com frutas e batidas\n\nÉ uma experiência completa e inesquecível!',
+          followUp: ['O que está incluído?', 'Qual o roteiro?']
+        },
+        {
+          keywords: ['inclui', 'incluído', 'incluido', 'incluso', 'compreende', 'contempla', 'oferece'],
+          response: '✅ O passeio inclui:\n\n🚢 Navegação pela Costa Esmeralda\n🏊 Parada na Baía de Caixa D\'Aço\n🎢 Tobogã aquático\n🍉 Buffet de frutas frescas\n🥥 Batida de coco (drink típico)\n🎵 Música e animação a bordo\n🦺 Equipamentos de segurança\n👨‍✈️ Tripulação treinada',
+          followUp: ['Posso levar comida?', 'Tem estacionamento?']
+        },
+        {
+          keywords: ['reservar', 'reserva', 'agendar', 'marcar', 'booking', 'book', 'comprar'],
+          response: '📝 Para reservar é muito fácil!\n\n1️⃣ Preencha o formulário de reserva aqui no site\n2️⃣ Ou entre em contato pelo WhatsApp: (47) 99967-9084\n3️⃣ Informe: data, horário, nome e número de pessoas\n4️⃣ Pronto! Sua vaga está garantida! 🎉\n\n👇 Quer que eu te leve ao formulário de reserva?',
+          followUp: ['Ir para reserva', 'Preciso pagar antes?']
+        },
+        {
+          keywords: ['local', 'onde', 'endereço', 'endereco', 'localização', 'localizacao', 'chegar', 'como chegar', 'porto'],
+          response: '📍 O embarque é no Trapiche de Porto dos Piratas, em Porto Belo - SC.\n\n🗺️ Endereço: Porto dos Piratas, Porto Belo - SC\n\n🚗 Tem estacionamento na região. Você pode abrir no Google Maps pelo link no rodapé do site!',
+          followUp: ['Tem estacionamento?', 'Qual o melhor caminho?']
+        },
+        {
+          keywords: ['criança', 'crianca', 'crianças', 'criancas', 'filhos', 'kids', 'infantil', 'menor', 'bebê', 'bebe'],
+          response: '👶 Crianças são muito bem-vindas!\n\n✅ Menores de 5 anos: GRATUITO\n✅ Crianças de 6 a 11 anos: R$ 42,50 (50% de desconto)\n✅ Acima de 12 anos: valor adulto\n\n🦺 Temos coletes salva-vidas de todos os tamanhos. O passeio é seguro e divertido para toda a família!',
+          followUp: ['É seguro para crianças?', 'Tem tobogã para crianças?']
+        },
+        {
+          keywords: ['segurança', 'seguranca', 'seguro', 'risco', 'perigo', 'colete', 'salva-vidas'],
+          response: '🛡️ Segurança é nossa prioridade!\n\n✅ Coletes salva-vidas para todos os tamanhos\n✅ Tripulação treinada e experiente\n✅ Embarcação com todas as autorizações\n✅ Seguro de passageiros\n✅ Equipamentos de emergência a bordo\n\nPode navegar tranquilo! 😊',
+          followUp: ['A embarcação é grande?', 'Cabe quantas pessoas?']
+        },
+        {
+          keywords: ['chuva', 'chover', 'clima', 'tempo', 'previsão', 'previsao', 'weather', 'sol', 'ensolarado'],
+          response: '🌤️ O passeio acontece na maioria das condições climáticas!\n\n✅ O passeio só é cancelado em caso de mau tempo severo que comprometa a segurança\n🔄 Em caso de cancelamento, oferecemos reagendamento ou reembolso total\n📱 Você pode conferir a previsão do tempo no widget acima do formulário de reserva!',
+          followUp: ['E se chover?', 'Posso remarcar?']
+        },
+        {
+          keywords: ['pagamento', 'pagar', 'pix', 'cartão', 'cartao', 'dinheiro', 'transferência', 'transferencia'],
+          response: '💳 Formas de pagamento:\n\n✅ PIX (transferência instantânea)\n✅ Cartão de crédito/débito\n✅ Dinheiro\n✅ Transferência bancária\n\n📌 O pagamento pode ser feito no dia do passeio ou antecipadamente. Entre em contato para combinar a melhor forma!',
+          followUp: ['Preciso pagar sinal?', 'Posso parcelar?']
+        },
+        {
+          keywords: ['cancelar', 'cancelamento', 'desistir', 'reembolso', 'devolver', 'devolução'],
+          response: '🔄 Política de cancelamento:\n\n✅ Cancelamentos com antecedência: reembolso total\n⚠️ Cancelamentos em cima da hora: sujeito a análise\n🌧️ Cancelamento por mau tempo: reagendamento ou reembolso total\n\n📱 Entre em contato pelo WhatsApp (47) 99967-9084 para solicitar cancelamento.',
+          followUp: ['Posso remarcar?', 'E se chover?']
+        },
+        {
+          keywords: ['caixa d\'aço', 'caixa da aço', 'caixadaaco', 'baía', 'baia', 'praia', 'nadar', 'mergulho', 'mergulhar'],
+          response: '🏖️ A Baía de Caixa D\'Aço é um verdadeiro paraíso!\n\n💎 Águas cristalinas e transparentes\n🐟 Peixes coloridos para observar\n🏊 Perfeita para nado e snorkeling\n📸 Cenário incrível para fotos\n\nÉ uma das paradas mais aguardadas do passeio!',
+          followUp: ['Preciso levar snorkel?', 'A água é funda?']
+        },
+        {
+          keywords: ['tobogã', 'toboga', 'escorregador', 'slide', 'diversão', 'diversao'],
+          response: '🎢 O tobogã aquático é uma das atrações mais divertidas!\n\n✅ Escorregador direto para a água\n✅ Seguro para adultos e crianças\n✅ Monitorado pela tripulação\n😄 Diversão garantida!\n\nÉ o ponto alto da festa a bordo!',
+          followUp: ['Crianças podem usar?', 'É seguro?']
+        },
+        {
+          keywords: ['estacionamento', 'estacionar', 'parking', 'carro', 'veículo', 'veiculo'],
+          response: '🚗 Sobre estacionamento:\n\n✅ Há opções de estacionamento nas proximidades do Trapiche de Porto dos Piratas\n💰 O valor varia conforme o período\n📍 Recomendamos chegar com 30 minutos de antecedência\n\n🗺️ Use o link do Google Maps no rodapé para navegar até o local!',
+          followUp: ['Quanto custa o estacionamento?', 'Qual o endereço exato?']
+        },
+        {
+          keywords: ['grupo', 'agência', 'agencia', 'empresa', 'corporativo', 'evento', 'aniversário', 'aniversario'],
+          response: '👥 Temos condições especiais para:\n\n✅ Grupos fechados\n✅ Agências de turismo\n✅ Empresas (confraternizações)\n✅ Aniversários e eventos\n\n📞 Entre em contato pelo WhatsApp (47) 99967-9084 para uma cotação personalizada com descontos exclusivos!',
+          followUp: ['Qual o desconto para grupos?', 'Posso fechar o barco?']
+        },
+        {
+          keywords: ['contato', 'contato', 'whatsapp', 'telefone', 'falar', 'ligar', 'mensagem'],
+          response: '📞 Nossos canais de atendimento:\n\n📱 WhatsApp: (47) 99967-9084\n📧 Email: angelportobelo@gmail.com\n📸 Instagram: @angelportobelo\n\n⏰ Respondemos rapidamente! Pode nos chamar a qualquer momento.',
+          followUp: ['Qual o horário de atendimento?', 'Posso ligar?']
+        },
+        {
+          keywords: ['melhor horário', 'melhor horario', 'recomenda', 'sugere', 'qual horário', 'qual horario', 'dica'],
+          response: '💡 Nossa recomendação de horário:\n\n🌅 9:30 - Ideal para quem gosta de manhã cedo, mar mais calmo e menos movimento\n☀️ 11:10 - ⭐ MAIS POPULAR! Melhor luz solar para fotos e água mais aquecida\n🌇 13:00 - Perfeito para quem quer aproveitar a manhã em outro lugar\n\n☀️ O horário das 11:10 é o preferido dos nossos clientes!',
+          followUp: ['Quero reservar', 'Qual dia é melhor?']
+        },
+        {
+          keywords: ['olá', 'ola', 'oi', 'hey', 'bom dia', 'boa tarde', 'boa noite', 'hello', 'hi'],
+          response: 'Olá! 😊 Que bom ter você aqui!\n\nEstou aqui para te ajudar com todas as informações sobre o passeio de barco da Angel Tour. Pode perguntar sobre:\n\n💰 Preços e formas de pagamento\n⏰ Horários e duração\n📍 Localização e como chegar\n👶 Informações para crianças\n🌤️ Clima e cancelamentos\n📝 Como reservar\n\nO que gostaria de saber?',
+          followUp: ['Quanto custa?', 'Qual o horário?', 'Como reservar?']
+        },
+        {
+          keywords: ['obrigado', 'obrigada', 'valeu', 'thanks', 'thank', 'agradeço', 'agraco'],
+          response: 'De nada! 😊 Foi um prazer ajudar!\n\nSe tiver mais alguma dúvida, estou aqui. E quando quiser reservar, é só preencher o formulário ou nos chamar no WhatsApp!\n\n🌊 Até breve no passeio! ⛵',
+          followUp: ['Quero reservar', 'Ver preços']
+        },
+        {
+          keywords: ['roteiro', 'itinerário', 'itinerario', 'passeio', 'tour', 'programa'],
+          response: '🗺️ Nosso roteiro completo:\n\n1️⃣ Embarque no Trapiche de Porto dos Piratas\n2️⃣ Navegação de 1h30 pela Costa Esmeralda (paisagens incríveis!)\n3️⃣ Parada na Baía de Caixa D\'Aço para banho\n4️⃣ Festa a bordo com frutas, batida de coco, tobogã e música\n5️⃣ Retorno ao trapiche\n\n⏱️ Duração total: aproximadamente 3h30',
+          followUp: ['Quanto custa?', 'Qual o melhor horário?']
+        }
+      ],
+      fallback: '🤔 Ainda não tenho essa informação, mas posso te ajudar com:\n\n💰 Preços e valores\n⏰ Horários do passeio\n📍 Localização\n👶 Crianças e família\n🌤️ Clima\n📝 Reservas\n\nOu se preferir, fale diretamente conosco pelo WhatsApp: (47) 99967-9084 📱',
+      quickReplies: ['💰 Preços', '⏰ Horários', '📍 Localização', '📝 Reservar', '👶 Crianças', '🗺️ Roteiro', '🌤️ Clima']
+    },
+    es: {
+      intents: [
+        {
+          keywords: ['precio', 'valor', 'cuanto', 'cuesta', 'costo', 'tarifa', 'caro', 'barato'],
+          response: '💰 Nuestros precios:\n\n👨 Adultos: R$ 85,00\n👶 Niños (6-11 años): R$ 42,50 (50% descuento)\n👶 Menores de 5 años: Gratuito\n\n📌 Grupos cerrados y agencias tienen condiciones especiales. ¡Contáctanos para más detalles!',
+          followUp: ['¿Cómo reservar?', '¿Formas de pago?']
+        },
+        {
+          keywords: ['horario', 'hora', 'horarios', 'sale', 'salida', 'atienden'],
+          response: '⏰ Tenemos 3 horarios de salida diarios:\n\n🌅 9:30 - Paseo de la mañana\n☀️ 11:10 - Paseo de media mañana\n🌇 13:00 - Paseo de la tarde\n\nEl paseo dura aproximadamente 3h30. El horario se confirmará por WhatsApp después de la reserva.',
+          followUp: ['¿Cuánto dura?', '¿Cuál es el mejor horario?']
+        },
+        {
+          keywords: ['duración', 'duracion', 'tiempo', 'cuanto tiempo', 'demora', 'horas'],
+          response: '⏱️ El paseo completo dura aproximadamente 3h30, siendo:\n\n🚢 1h30 de navegación por la Costa Esmeralda\n🏖️ Parada en la Bahía de Caixa D\'Aço para baño\n🍹 Fiesta a bordo con frutas y batidas\n\n¡Es una experiencia completa e inolvidable!',
+          followUp: ['¿Qué incluye?', '¿Cuál es el itinerario?']
+        },
+        {
+          keywords: ['incluye', 'incluido', 'incluso', 'contempla', 'ofrece'],
+          response: '✅ El paseo incluye:\n\n🚢 Navegación por la Costa Esmeralda\n🏊 Parada en la Bahía de Caixa D\'Aço\n🎢 Tobogán acuático\n🍉 Buffet de frutas frescas\n🥥 Batida de coco (drink típico)\n🎵 Música y animación a bordo\n🦺 Equipos de seguridad\n👨‍✈️ Tripulación entrenada',
+          followUp: ['¿Puedo llevar comida?', '¿Hay estacionamiento?']
+        },
+        {
+          keywords: ['reservar', 'reserva', 'agendar', 'marcar', 'booking', 'comprar'],
+          response: '📝 ¡Reservar es muy fácil!\n\n1️⃣ Completa el formulario de reserva aquí en el sitio\n2️⃣ O contáctanos por WhatsApp: (47) 99967-9084\n3️⃣ Informa: fecha, horario, nombre y número de personas\n4️⃣ ¡Listo! ¡Tu lugar está garantizado! 🎉\n\n👇 ¿Quieres que te lleve al formulario de reserva?',
+          followUp: ['Ir a reserva', '¿Necesito pagar antes?']
+        },
+        {
+          keywords: ['donde', 'dónde', 'dirección', 'direccion', 'ubicación', 'ubicacion', 'llegar', 'como llegar', 'puerto'],
+          response: '📍 El embarque es en el Trapiche de Porto dos Piratas, en Porto Belo - SC.\n\n🗺️ Dirección: Porto dos Piratas, Porto Belo - SC\n\n🚗 Hay estacionamiento en la región. ¡Puedes abrir en Google Maps por el link en el pie de página del sitio!',
+          followUp: ['¿Hay estacionamiento?', '¿Cuál es el mejor camino?']
+        },
+        {
+          keywords: ['niño', 'nino', 'niños', 'ninos', 'hijos', 'kids', 'infantil', 'menor', 'bebé', 'bebe'],
+          response: '👶 ¡Los niños son muy bienvenidos!\n\n✅ Menores de 5 años: GRATUITO\n✅ Niños de 6 a 11 años: R$ 42,50 (50% de descuento)\n✅ Mayores de 12 años: valor adulto\n\n🦺 Tenemos chalecos salvavidas de todos los tamaños. ¡El paseo es seguro y divertido para toda la familia!',
+          followUp: ['¿Es seguro para niños?', '¿Hay tobogán para niños?']
+        },
+        {
+          keywords: ['seguridad', 'seguro', 'riesgo', 'peligro', 'chaleco', 'salvavidas'],
+          response: '🛡️ ¡La seguridad es nuestra prioridad!\n\n✅ Chalecos salvavidas para todos los tamaños\n✅ Tripulación entrenada y experimentada\n✅ Embarcación con todas las autorizaciones\n✅ Seguro de pasajeros\n✅ Equipos de emergencia a bordo\n\n¡Puedes navegar tranquilo! 😊',
+          followUp: ['¿La embarcación es grande?', '¿Cuántas personas caben?']
+        },
+        {
+          keywords: ['lluvia', 'llover', 'clima', 'tiempo', 'previsión', 'prevision', 'weather', 'sol'],
+          response: '🌤️ ¡El paseo se realiza en la mayoría de las condiciones climáticas!\n\n✅ El paseo solo se cancela en caso de mal tiempo severo que comprometa la seguridad\n🔄 En caso de cancelación, ofrecemos reprogramación o reembolso total\n📱 ¡Puedes consultar el pronóstico del tiempo en el widget arriba del formulario de reserva!',
+          followUp: ['¿Y si llueve?', '¿Puedo reprogramar?']
+        },
+        {
+          keywords: ['pago', 'pagar', 'pix', 'tarjeta', 'dinero', 'transferencia'],
+          response: '💳 Formas de pago:\n\n✅ PIX (transferencia instantánea)\n✅ Tarjeta de crédito/débito\n✅ Efectivo\n✅ Transferencia bancaria\n\n📌 El pago puede hacerse el día del paseo o por adelantado. ¡Contáctanos para acordar la mejor forma!',
+          followUp: ['¿Necesito pagar seña?', '¿Puedo pagar en cuotas?']
+        },
+        {
+          keywords: ['cancelar', 'cancelación', 'cancelacion', 'desistir', 'reembolso', 'devolver'],
+          response: '🔄 Política de cancelación:\n\n✅ Cancelaciones con anticipación: reembolso total\n⚠️ Cancelaciones de último momento: sujeto a análisis\n🌧️ Cancelación por mal tiempo: reprogramación o reembolso total\n\n📱 Contáctanos por WhatsApp (47) 99967-9084 para solicitar cancelación.',
+          followUp: ['¿Puedo reprogramar?', '¿Y si llueve?']
+        },
+        {
+          keywords: ['caixa d\'aço', 'caixa da aço', 'bahía', 'bahia', 'playa', 'nadar', 'buceo'],
+          response: '🏖️ ¡La Bahía de Caixa D\'Aço es un verdadero paraíso!\n\n💎 Aguas cristalinas y transparentes\n🐟 Peces coloridos para observar\n🏊 Perfecta para nadar y snorkel\n📸 Escenario increíble para fotos\n\n¡Es una de las paradas más esperadas del paseo!',
+          followUp: ['¿Necesito llevar snorkel?', '¿El agua es profunda?']
+        },
+        {
+          keywords: ['tobogán', 'tobogan', 'resbaladilla', 'diversión', 'diversion'],
+          response: '🎢 ¡El tobogán acuático es una de las atracciones más divertidas!\n\n✅ Resbalador directo al agua\n✅ Seguro para adultos y niños\n✅ Monitorizado por la tripulación\n😄 ¡Diversión garantizada!\n\n¡Es el punto alto de la fiesta a bordo!',
+          followUp: ['¿Los niños pueden usar?', '¿Es seguro?']
+        },
+        {
+          keywords: ['contacto', 'whatsapp', 'teléfono', 'telefono', 'hablar', 'llamar', 'mensaje'],
+          response: '📞 Nuestros canales de atención:\n\n📱 WhatsApp: (47) 99967-9084\n📧 Email: angelportobelo@gmail.com\n📸 Instagram: @angelportobelo\n\n⏰ ¡Respondemos rápidamente! Puedes llamarnos en cualquier momento.',
+          followUp: ['¿Cuál es el horario de atención?', '¿Puedo llamar?']
+        },
+        {
+          keywords: ['mejor horario', 'recomienda', 'sugiere', 'consejo', 'tip'],
+          response: '💡 Nuestra recomendación de horario:\n\n🌅 9:30 - Ideal para quienes prefieren la mañana temprano, mar más calmo\n☀️ 11:10 - ⭐ ¡MÁS POPULAR! Mejor luz solar para fotos y agua más cálida\n🌇 13:00 - Perfecto para quienes quieren aprovechar la mañana en otro lugar\n\n☀️ ¡El horario de las 11:10 es el preferido de nuestros clientes!',
+          followUp: ['Quiero reservar', '¿Qué día es mejor?']
+        },
+        {
+          keywords: ['hola', 'ola', 'hey', 'buenos días', 'buenos dias', 'buenas tardes', 'buenas noches', 'hello', 'hi'],
+          response: '¡Hola! 😊 ¡Qué bueno tenerte aquí!\n\nEstoy aquí para ayudarte con toda la información sobre el paseo en barco de Angel Tour. Puedes preguntar sobre:\n\n💰 Precios y formas de pago\n⏰ Horarios y duración\n📍 Ubicación y cómo llegar\n👶 Información para niños\n🌤️ Clima y cancelaciones\n📝 Cómo reservar\n\n¿Qué te gustaría saber?',
+          followUp: ['¿Cuánto cuesta?', '¿Cuál horario?', '¿Cómo reservar?']
+        },
+        {
+          keywords: ['gracias', 'thank', 'agradezco'],
+          response: '¡De nada! 😊 ¡Fue un placer ayudarte!\n\nSi tienes más alguna duda, estoy aquí. Y cuando quieras reservar, solo completa el formulario o llámanos por WhatsApp.\n\n🌊 ¡Hasta pronto en el paseo! ⛵',
+          followUp: ['Quiero reservar', 'Ver precios']
+        },
+        {
+          keywords: ['itinerario', 'recorrido', 'paseo', 'tour', 'programa', 'ruta'],
+          response: '🗺️ Nuestro itinerario completo:\n\n1️⃣ Embarque en el Trapiche de Porto dos Piratas\n2️⃣ Navegación de 1h30 por la Costa Esmeralda (¡paisajes increíbles!)\n3️⃣ Parada en la Bahía de Caixa D\'Aço para baño\n4️⃣ Fiesta a bordo con frutas, batida de coco, tobogán y música\n5️⃣ Regreso al trapiche\n\n⏱️ Duración total: aproximadamente 3h30',
+          followUp: ['¿Cuánto cuesta?', '¿Cuál es el mejor horario?']
+        }
+      ],
+      fallback: '🤔 Aún no tengo esa información, pero puedo ayudarte con:\n\n💰 Precios y valores\n⏰ Horarios del paseo\n📍 Ubicación\n👶 Niños y familia\n🌤️ Clima\n📝 Reservas\n\nO si prefieres, habla directamente con nosotros por WhatsApp: (47) 99967-9084 📱',
+      quickReplies: ['💰 Precios', '⏰ Horarios', '📍 Ubicación', '📝 Reservar', '👶 Niños', '🗺️ Itinerario', '🌤️ Clima']
+    },
+    en: {
+      intents: [
+        {
+          keywords: ['price', 'cost', 'how much', 'value', 'rate', 'expensive', 'cheap'],
+          response: '💰 Our prices:\n\n👨 Adults: R$ 85.00\n👶 Children (6-11 years): R$ 42.50 (50% discount)\n👶 Under 5 years: Free\n\n📌 Closed groups and agencies have special conditions. Contact us for more details!',
+          followUp: ['How to book?', 'Payment methods?']
+        },
+        {
+          keywords: ['schedule', 'time', 'hours', 'departure', 'when', 'opening'],
+          response: '⏰ We have 3 daily departure times:\n\n🌅 9:30 - Morning tour\n☀️ 11:10 - Late morning tour\n🌇 13:00 - Afternoon tour\n\nThe tour lasts approximately 3h30. The time will be confirmed via WhatsApp after booking.',
+          followUp: ['How long is the tour?', 'What\'s the best time?']
+        },
+        {
+          keywords: ['duration', 'how long', 'time', 'hours', 'lasts'],
+          response: '⏱️ The complete tour lasts approximately 3h30, including:\n\n🚢 1h30 sailing along the Emerald Coast\n🏖️ Stop at Caixa D\'Aço Bay for swimming\n🍹 Onboard party with fruits and cocktails\n\nIt\'s a complete and unforgettable experience!',
+          followUp: ['What\'s included?', 'What\'s the itinerary?']
+        },
+        {
+          keywords: ['include', 'included', 'includes', 'offer', 'comprises'],
+          response: '✅ The tour includes:\n\n🚢 Sailing along the Emerald Coast\n🏊 Stop at Caixa D'Aço Bay\n🎢 Water slide\n🍉 Fresh fruit buffet\n🥥 Coconut cocktail (typical drink)\n🎵 Music and entertainment on board\n🦺 Safety equipment\n👨‍✈️ Trained crew',
+          followUp: ['Can I bring food?', 'Is there parking?']
+        },
+        {
+          keywords: ['book', 'booking', 'reserve', 'reservation', 'buy'],
+          response: '📝 Booking is very easy!\n\n1️⃣ Fill out the booking form on the website\n2️⃣ Or contact us via WhatsApp: (47) 99967-9084\n3️⃣ Provide: date, time, name and number of people\n4️⃣ Done! Your spot is guaranteed! 🎉\n\n👇 Want me to take you to the booking form?',
+          followUp: ['Go to booking', 'Do I need to pay first?']
+        },
+        {
+          keywords: ['where', 'location', 'address', 'directions', 'how to get', 'port'],
+          response: '📍 Boarding is at Porto dos Piratas Pier, in Porto Belo - SC.\n\n🗺️ Address: Porto dos Piratas, Porto Belo - SC\n\n🚗 There is parking in the area. You can open Google Maps using the link in the site footer!',
+          followUp: ['Is there parking?', 'What\'s the best route?']
+        },
+        {
+          keywords: ['child', 'children', 'kids', 'baby', 'infant', 'family'],
+          response: '👶 Children are very welcome!\n\n✅ Under 5 years: FREE\n✅ Children 6-11 years: R$ 42.50 (50% discount)\n✅ Over 12 years: adult price\n\n🦺 We have life jackets in all sizes. The tour is safe and fun for the whole family!',
+          followUp: ['Is it safe for children?', 'Is there a slide for kids?']
+        },
+        {
+          keywords: ['safety', 'safe', 'risk', 'danger', 'life jacket', 'insurance'],
+          response: '🛡️ Safety is our priority!\n\n✅ Life jackets for all sizes\n✅ Trained and experienced crew\n✅ Vessel with all authorizations\n✅ Passenger insurance\n✅ Emergency equipment on board\n\nYou can sail with peace of mind! 😊',
+          followUp: ['Is the boat big?', 'How many people fit?']
+        },
+        {
+          keywords: ['rain', 'weather', 'climate', 'forecast', 'sun', 'storm'],
+          response: '🌤️ The tour operates in most weather conditions!\n\n✅ The tour is only cancelled in case of severe weather that compromises safety\n🔄 In case of cancellation, we offer rescheduling or full refund\n📱 You can check the weather forecast in the widget above the booking form!',
+          followUp: ['What if it rains?', 'Can I reschedule?']
+        },
+        {
+          keywords: ['payment', 'pay', 'pix', 'card', 'cash', 'transfer'],
+          response: '💳 Payment methods:\n\n✅ PIX (instant transfer)\n✅ Credit/debit card\n✅ Cash\n✅ Bank transfer\n\n📌 Payment can be made on the day of the tour or in advance. Contact us to arrange the best way!',
+          followUp: ['Do I need to pay a deposit?', 'Can I pay in installments?']
+        },
+        {
+          keywords: ['cancel', 'cancellation', 'refund', 'return'],
+          response: '🔄 Cancellation policy:\n\n✅ Cancellations in advance: full refund\n⚠️ Last-minute cancellations: subject to analysis\n🌧️ Cancellation due to bad weather: rescheduling or full refund\n\n📱 Contact us via WhatsApp (47) 99967-9084 to request cancellation.',
+          followUp: ['Can I reschedule?', 'What if it rains?']
+        },
+        {
+          keywords: ['caixa d\'aço', 'bay', 'beach', 'swim', 'snorkel', 'dive'],
+          response: '🏖️ Caixa D\'Aço Bay is a true paradise!\n\n💎 Crystal clear and transparent waters\n🐟 Colorful fish to observe\n🏊 Perfect for swimming and snorkeling\n📸 Incredible scenery for photos\n\nIt\'s one of the most awaited stops of the tour!',
+          followUp: ['Do I need to bring snorkel?', 'Is the water deep?']
+        },
+        {
+          keywords: ['slide', 'waterslide', 'fun', 'entertainment'],
+          response: '🎢 The water slide is one of the most fun attractions!\n\n✅ Slide directly into the water\n✅ Safe for adults and children\n✅ Monitored by the crew\n😄 Guaranteed fun!\n\nIt\'s the highlight of the onboard party!',
+          followUp: ['Can children use it?', 'Is it safe?']
+        },
+        {
+          keywords: ['contact', 'whatsapp', 'phone', 'call', 'message'],
+          response: '📞 Our contact channels:\n\n📱 WhatsApp: (47) 99967-9084\n📧 Email: angelportobelo@gmail.com\n📸 Instagram: @angelportobelo\n\n⏰ We respond quickly! You can call us anytime.',
+          followUp: ['What are the hours?', 'Can I call?']
+        },
+        {
+          keywords: ['best time', 'recommend', 'suggest', 'tip', 'advice'],
+          response: '💡 Our time recommendation:\n\n🌅 9:30 - Ideal for early morning lovers, calmer sea\n☀️ 11:10 - ⭐ MOST POPULAR! Best sunlight for photos and warmer water\n🌇 13:00 - Perfect for those who want to enjoy the morning elsewhere\n\n☀️ The 11:10 time is our customers\' favorite!',
+          followUp: ['I want to book', 'What day is best?']
+        },
+        {
+          keywords: ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening'],
+          response: 'Hello! 😊 Great to have you here!\n\nI\'m here to help you with all information about the Angel Tour boat tour. You can ask about:\n\n💰 Prices and payment methods\n⏰ Schedules and duration\n📍 Location and directions\n👶 Children information\n🌤️ Weather and cancellations\n📝 How to book\n\nWhat would you like to know?',
+          followUp: ['How much?', 'What time?', 'How to book?']
+        },
+        {
+          keywords: ['thanks', 'thank you', 'appreciate'],
+          response: 'You\'re welcome! 😊 It was a pleasure helping!\n\nIf you have any more questions, I\'m here. And when you want to book, just fill out the form or call us on WhatsApp!\n\n🌊 See you soon on the tour! ⛵',
+          followUp: ['I want to book', 'See prices']
+        },
+        {
+          keywords: ['itinerary', 'tour', 'route', 'program', 'schedule'],
+          response: '🗺️ Our complete itinerary:\n\n1️⃣ Boarding at Porto dos Piratas Pier\n2️⃣ 1h30 sailing along the Emerald Coast (amazing scenery!)\n3️⃣ Stop at Caixa D\'Aço Bay for swimming\n4️⃣ Onboard party with fruits, coconut cocktail, water slide and music\n5️⃣ Return to the pier\n\n⏱️ Total duration: approximately 3h30',
+          followUp: ['How much?', 'What\'s the best time?']
+        }
+      ],
+      fallback: '🤔 I don\'t have that information yet, but I can help you with:\n\n💰 Prices and values\n⏰ Tour schedules\n📍 Location\n👶 Children and family\n🌤️ Weather\n📝 Bookings\n\nOr if you prefer, talk directly to us via WhatsApp: (47) 99967-9084 📱',
+      quickReplies: ['💰 Prices', '⏰ Schedules', '📍 Location', '📝 Book', '👶 Children', '🗺️ Itinerary', '🌤️ Weather']
+    }
+  };
+
+  // 🤖 AI Chatbot Functions
+  let chatHistory = [];
+  let chatbotOpen = false;
+
+  function initChatbot() {
+    const toggle = document.getElementById('aiChatbotToggle');
+    const window_ = document.getElementById('aiChatbotWindow');
+    const close = document.getElementById('aiChatbotClose');
+    const input = document.getElementById('aiChatInput');
+    const send = document.getElementById('aiChatSend');
+
+    toggle.addEventListener('click', () => {
+      chatbotOpen = !chatbotOpen;
+      window_.classList.toggle('active', chatbotOpen);
+      if (chatbotOpen && chatHistory.length === 0) {
+        const t = translations[currentLang];
+        addBotMessage(t.ai_greeting);
+        showQuickReplies(aiKnowledgeBase[currentLang].quickReplies);
+        input.focus();
+      }
+    });
+
+    close.addEventListener('click', () => {
+      chatbotOpen = false;
+      window_.classList.remove('active');
+    });
+
+    send.addEventListener('click', () => sendMessage());
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+  }
+
+  function sendMessage() {
+    const input = document.getElementById('aiChatInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    addUserMessage(text);
+    input.value = '';
+    showTyping();
+
+    setTimeout(() => {
+      removeTyping();
+      const response = getAIResponse(text);
+      addBotMessage(response.text);
+      if (response.followUp && response.followUp.length > 0) {
+        showQuickReplies(response.followUp);
+      }
+    }, 800 + Math.random() * 700);
+  }
+
+  function addUserMessage(text) {
+    const container = document.getElementById('aiChatMessages');
+    const msg = document.createElement('div');
+    msg.className = 'ai-msg user';
+    msg.textContent = text;
+    container.appendChild(msg);
+    container.scrollTop = container.scrollHeight;
+    chatHistory.push({ role: 'user', text });
+  }
+
+  function addBotMessage(text) {
+    const container = document.getElementById('aiChatMessages');
+    const msg = document.createElement('div');
+    msg.className = 'ai-msg bot';
+    msg.innerHTML = text.replace(/\n/g, '<br>');
+    container.appendChild(msg);
+    container.scrollTop = container.scrollHeight;
+    chatHistory.push({ role: 'bot', text });
+  }
+
+  function showTyping() {
+    const container = document.getElementById('aiChatMessages');
+    const typing = document.createElement('div');
+    typing.className = 'ai-msg typing';
+    typing.id = 'typingIndicator';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    container.appendChild(typing);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function removeTyping() {
+    const typing = document.getElementById('typingIndicator');
+    if (typing) typing.remove();
+  }
+
+  function showQuickReplies(replies) {
+    const container = document.getElementById('aiQuickReplies');
+    container.innerHTML = '';
+    replies.forEach(reply => {
+      const btn = document.createElement('button');
+      btn.className = 'ai-quick-reply';
+      btn.textContent = reply;
+      btn.addEventListener('click', () => {
+        document.getElementById('aiChatInput').value = reply;
+        sendMessage();
+      });
+      container.appendChild(btn);
+    });
+  }
+
+  // 🧠 NLP-based Intent Matching
+  function getAIResponse(userText) {
+    const text = userText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const kb = aiKnowledgeBase[currentLang];
+    
+    let bestMatch = null;
+    let bestScore = 0;
+
+    for (const intent of kb.intents) {
+      let score = 0;
+      for (const keyword of intent.keywords) {
+        const kw = keyword.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        if (text.includes(kw)) {
+          score += kw.length; // Longer matches score higher
+          if (text === kw) score += 10; // Exact match bonus
+        }
+      }
+      if (score > bestScore) {
+        bestScore = score;
+        bestMatch = intent;
+      }
+    }
+
+    if (bestMatch && bestScore > 0) {
+      return {
+        text: bestMatch.response,
+        followUp: bestMatch.followUp || []
+      };
+    }
+
+    return {
+      text: kb.fallback,
+      followUp: kb.quickReplies
+    };
+  }
+
+  // 🧠 AI RECOMMENDATION ENGINE
+  function generateAIRecommendation() {
+    const now = new Date();
+    const hour = now.getHours();
+    const dayOfWeek = now.getDay();
+    const month = now.getMonth();
+    
+    const recBox = document.getElementById('aiRecommendationBox');
+    const recText = document.getElementById('aiRecText');
+    
+    let recommendation = '';
+    
+    // Time-based recommendation
+    if (hour >= 6 && hour < 10) {
+      recommendation = currentLang === 'pt' ? 'Bom dia! ☀️ O horário das 9:30 é perfeito para aproveitar o dia todo.' :
+                       currentLang === 'es' ? '¡Buen día! ☀️ El horario de las 9:30 es perfecto para aprovechar todo el día.' :
+                       'Good morning! ☀️ The 9:30 time is perfect to enjoy the whole day.';
+    } else if (hour >= 10 && hour < 13) {
+      recommendation = currentLang === 'pt' ? '☀️ Horário nobre! O passeio das 11:10 é o mais procurado - garanta sua vaga!' :
+                       currentLang === 'es' ? '☀️ ¡Horario premium! El paseo de las 11:10 es el más buscado - ¡asegura tu lugar!' :
+                       '☀️ Prime time! The 11:10 tour is the most popular - secure your spot!';
+    } else if (hour >= 13 && hour < 17) {
+      recommendation = currentLang === 'pt' ? '🌅 Boa tarde! O passeio das 13:00 tem a melhor luz para fotos incríveis.' :
+                       currentLang === 'es' ? '🌅 ¡Buenas tardes! El paseo de las 13:00 tiene la mejor luz para fotos increíbles.' :
+                       '🌅 Good afternoon! The 13:00 tour has the best light for amazing photos.';
+    } else {
+      recommendation = currentLang === 'pt' ? '🌙 Reserve agora e garanta o melhor horário para amanhã!' :
+                       currentLang === 'es' ? '🌙 ¡Reserva ahora y asegura el mejor horario para mañana!' :
+                       '🌙 Book now and secure the best time for tomorrow!';
+    }
+    
+    // Season-based additions
+    if (month >= 11 || month <= 2) { // Summer
+      recommendation += currentLang === 'pt' ? ' 🏖️ Alta temporada - reserve com antecedência!' :
+                        currentLang === 'es' ? ' 🏖️ Temporada alta - ¡reserva con anticipación!' :
+                        ' 🏖️ High season - book in advance!';
+    }
+    
+    // Weekend warning
+    if (dayOfWeek === 0 || dayOfWeek === 6) {
+      recommendation += currentLang === 'pt' ? ' 📅 Fim de semana tem alta demanda!' :
+                        currentLang === 'es' ? ' 📅 ¡Fin de semana con alta demanda!' :
+                        ' 📅 Weekend has high demand!';
+    }
+    
+    recText.textContent = recommendation;
+    recBox.style.display = 'flex';
+  }
+
+  // 🔮 AI AVAILABILITY PREDICTION
+  function predictAvailability() {
+    const fechaInput = document.getElementById('fecha');
+    if (!fechaInput || !fechaInput.value) return;
+    
+    const selectedDate = new Date(fechaInput.value + 'T12:00:00');
+    const dayOfWeek = selectedDate.getDay();
+    const month = selectedDate.getMonth();
+    const today = new Date();
+    const daysUntil = Math.ceil((selectedDate - today) / (1000 * 60 * 60 * 24));
+    
+    const availIndicator = document.getElementById('aiAvailability');
+    const availText = document.getElementById('aiAvailText');
+    
+    let level, text;
+    
+    // Calculate availability score
+    let score = 100;
+    
+    // Weekend penalty
+    if (dayOfWeek === 0 || dayOfWeek === 6) score -= 30;
+    
+    // Summer penalty (high season)
+    if (month >= 11 || month <= 2) score -= 25;
+    
+    // Close date penalty
+    if (daysUntil <= 2) score -= 35;
+    else if (daysUntil <= 7) score -= 15;
+    
+    // Holiday months penalty
+    if (month === 0 || month === 6 || month === 11) score -= 15;
+    
+    if (score >= 70) {
+      level = 'high';
+      text = currentLang === 'pt' ? '✅ Boa disponibilidade' :
+             currentLang === 'es' ? '✅ Buena disponibilidad' :
+             '✅ Good availability';
+    } else if (score >= 40) {
+      level = 'medium';
+      text = currentLang === 'pt' ? '⚠️ Disponibilidade limitada' :
+             currentLang === 'es' ? '⚠️ Disponibilidad limitada' :
+             '⚠️ Limited availability';
+    } else {
+      level = 'low';
+      text = currentLang === 'pt' ? '🔴 Última vaga - reserve agora!' :
+             currentLang === 'es' ? '🔴 ¡Último lugar - reserva ahora!' :
+             '🔴 Last spot - book now!';
+    }
+    
+    availIndicator.className = `availability-indicator ${level}`;
+    availText.textContent = text;
+    availIndicator.style.display = 'inline-flex';
+  }
+
+  // 💡 AI CONTEXTUAL TIPS
+  const contextualTips = {
+    pt: [
+      { section: 'galeria', tip: '📸 Dica: As fotos foram tiradas durante o passeio das 11:10, o horário com a melhor luz natural!' },
+      { section: 'itinerario', tip: '🗺️ Clique em cada etapa do roteiro para ver detalhes completos e compartilhar com amigos!' },
+      { section: 'reserva', tip: '💡 Dica: Reserve com pelo menos 24h de antecedência para garantir seu horário preferido!' },
+      { section: 'inicio', tip: '⛵ Mais de 5.000 turistas já navegaram conosco! Leia os depoimentos abaixo.' }
+    ],
+    es: [
+      { section: 'galeria', tip: '📸 Consejo: ¡Las fotos fueron tomadas durante el paseo de las 11:10, el horario con la mejor luz natural!' },
+      { section: 'itinerario', tip: '🗺️ ¡Haz clic en cada etapa del itinerario para ver detalles completos y compartir con amigos!' },
+      { section: 'reserva', tip: '💡 Consejo: ¡Reserva con al menos 24h de anticipación para asegurar tu horario preferido!' },
+      { section: 'inicio', tip: '⛵ ¡Más de 5.000 turistas ya navegaron con nosotros! Lee los testimonios abajo.' }
+    ],
+    en: [
+      { section: 'galeria', tip: '📸 Tip: The photos were taken during the 11:10 tour, the time with the best natural light!' },
+      { section: 'itinerario', tip: '🗺️ Click on each step of the itinerary to see full details and share with friends!' },
+      { section: 'reserva', tip: '💡 Tip: Book at least 24h in advance to secure your preferred time!' },
+      { section: 'inicio', tip: '⛵ Over 5,000 tourists have already sailed with us! Read the testimonials below.' }
+    ]
+  };
+
+  let currentTipIndex = 0;
+  let tipShown = false;
+
+  function showContextualTip() {
+    if (tipShown) return;
+    
+    const scrollPos = window.scrollY;
+    const sections = ['inicio', 'itinerario', 'galeria', 'reserva'];
+    let currentSection = 'inicio';
+    
+    for (const section of sections) {
+      const el = document.getElementById(section);
+      if (el && scrollPos >= el.offsetTop - 200) {
+        currentSection = section;
+      }
+    }
+    
+    const tips = contextualTips[currentLang];
+    const tip = tips.find(t => t.section === currentSection);
+    
+    if (tip) {
+      const tipEl = document.getElementById('aiContextualTip');
+      const tipText = document.getElementById('aiTipText');
+      tipText.textContent = tip.tip;
+      tipEl.classList.add('active');
+      tipShown = true;
+      
+      setTimeout(() => {
+        tipEl.classList.remove('active');
+      }, 8000);
+    }
+  }
+
+  // 🌍 AUTO LANGUAGE DETECTION
+  function detectBrowserLanguage() {
+    const saved = localStorage.getItem('preferred_language');
+    if (saved && translations[saved]) return saved;
+    
+    const browserLang = navigator.language || navigator.userLanguage;
+    if (browserLang) {
+      const lang = browserLang.toLowerCase();
+      if (lang.startsWith('es')) return 'es';
+      if (lang.startsWith('pt')) return 'pt';
+      if (lang.startsWith('en')) return 'en';
+    }
+    return 'pt'; // default
+  }
 
   // ========== TUS 12 IMÁGENES ==========
   const imagenesGrandes = [
@@ -1212,7 +2278,13 @@
     for(const [id,val] of Object.entries(els)){ const el=document.getElementById(id); if(el) el.textContent=val; }
     document.querySelectorAll('.timeline-step').forEach(step => { const title = step.getAttribute(`data-key-${lang}`); const desc = step.getAttribute(`data-desc-${lang}`); const longtext = step.getAttribute(`data-longtext-${lang}`); if(title){ step.setAttribute('data-title',title); step.setAttribute('data-desc',desc); step.setAttribute('data-longtext',longtext); const h3=step.querySelector('h3'); const p=step.querySelector('p'); if(h3) h3.textContent=title; if(p) p.textContent=desc; } });
     document.querySelectorAll('.lang-btn-header').forEach(btn => { btn.classList.remove('active'); if(btn.getAttribute('data-lang')===lang) btn.classList.add('active'); });
+    
+    // Update AI chatbot placeholder
+    const chatInput = document.getElementById('aiChatInput');
+    if (chatInput) chatInput.placeholder = t.ai_chatbot_placeholder;
+    
     loadWeatherWidget(lang);
+    generateAIRecommendation();
     localStorage.setItem('preferred_language', lang);
   }
 
@@ -1278,7 +2350,43 @@
   if(adultosInput) adultosInput.addEventListener('input', calcularValorTotal);
   if(menoresInput) menoresInput.addEventListener('input', calcularValorTotal);
   
-  const fechaInp=document.getElementById('fecha'); if(fechaInp) fechaInp.setAttribute('min',new Date().toISOString().split('T')[0]);
+  const fechaInp=document.getElementById('fecha'); 
+  if(fechaInp) {
+    fechaInp.setAttribute('min',new Date().toISOString().split('T')[0]);
+    fechaInp.addEventListener('change', predictAvailability);
+  }
+  
+  // 🤖 AI: Smart message generator
+  function generateSmartMessage(fecha, horario, nombre, empresa, adultos, menores, total) {
+    const horarioMap = {'09:30':'9:30','11:10':'11:10','13:00':'13:00'};
+    const horarioTexto = horarioMap[horario] || horario;
+    
+    // Add AI-generated context
+    const selectedDate = new Date(fecha + 'T12:00:00');
+    const dayOfWeek = selectedDate.getDay();
+    const dayNames = {
+      pt: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+      es: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+      en: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
+    };
+    const dayName = dayNames[currentLang][dayOfWeek];
+    
+    let profileType = '';
+    const totalPessoas = parseInt(adultos) + parseInt(menores);
+    if (parseInt(menores) > 0 && parseInt(adultos) > 0) {
+      profileType = currentLang === 'pt' ? '👨‍👩‍👧‍👦 Família' : currentLang === 'es' ? '👨‍👩‍👧‍👦 Familia' : '👨‍👩‍👧‍👦 Family';
+    } else if (totalPessoas >= 6) {
+      profileType = currentLang === 'pt' ? '👥 Grupo' : currentLang === 'es' ? '👥 Grupo' : '👥 Group';
+    } else if (totalPessoas === 2) {
+      profileType = currentLang === 'pt' ? '💑 Casal' : currentLang === 'es' ? '💑 Pareja' : '💑 Couple';
+    } else {
+      profileType = currentLang === 'pt' ? '👤 Individual' : currentLang === 'es' ? '👤 Individual' : '👤 Individual';
+    }
+    
+    const msg = `RESERVA ANGEL TOUR\n\nIdioma: ${codigoIdioma}\nPaís IP: ${paisUsuario}\nPerfil: ${profileType}\n\n📅 Data: ${fecha.split('-').reverse().join('/')} (${dayName})\n⏰ Horário: ${horarioTexto} Hs\n👤 Nome: ${nombre}\n🏢 Empresa: ${empresa || 'Não especificada'}\n👨 Adultos: ${adultos}\n👶 Menores: ${menores}\n💰 Total: ${total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}\n\n🤖 Reserva gerada com assistência IA`;
+    
+    return msg;
+  }
   
   // Evento submit con el formato solicitado SIN ICONOS
   document.getElementById('dataForm')?.addEventListener('submit', async (e) => { 
@@ -1292,7 +2400,12 @@
     const menores = document.getElementById('menores')?.value; 
     
     if(!fecha || !horario || !nombre) { 
-      alert('Complete todos los campos'); 
+      const alertMsg = {
+        pt: 'Complete todos os campos obrigatórios',
+        es: 'Complete todos los campos obligatorios',
+        en: 'Fill in all required fields'
+      };
+      alert(alertMsg[currentLang]); 
       return; 
     } 
     
@@ -1302,10 +2415,10 @@
     
     const total = (parseInt(adultos) * 85) + (parseInt(menores) * 42.5);
     
-    // Mensaje SIN ICONOS según el formato solicitado
-    const msg = `RESERVA ANGEL TOUR\n\nIdioma: ${codigoIdioma}\nPaís IP: ${paisUsuario}\n\nFecha: ${fecha.split('-').reverse().join('/')}\nHorario: ${{'09:30':'9:30','11:10':'11:10','13:00':'13:00'}[horario] || horario} Hs\nNombre: ${nombre}\nEmpresa: ${empresa || 'No especificada'}\nAdultos: ${adultos}\nMenores: ${menores}\nTotal: ${total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`;
+    // 🤖 AI: Generate smart message
+    const msg = generateSmartMessage(fecha, horario, nombre, empresa, adultos, menores, total);
     
-    window.open(`https://wa.me/5493518692251?text=${encodeURIComponent(msg)}`, '_blank'); 
+    window.open(`https://wa.me/5547999679084?text=${encodeURIComponent(msg)}`, '_blank'); 
   });
   
   document.querySelectorAll('.horario-card').forEach(card=>{ card.addEventListener('click',function(){ document.querySelectorAll('.horario-card').forEach(c=>c.classList.remove('selected')); this.classList.add('selected'); document.getElementById('horario').value=this.getAttribute('data-horario'); }); });
@@ -1343,11 +2456,75 @@
   document.getElementById('closeLightboxBtn')?.addEventListener('click', cerrarLightbox);
   document.addEventListener('keydown', e => { if(document.getElementById('lightboxModern')?.classList.contains('active')) { if(e.key === 'Escape') cerrarLightbox(); if(e.key === 'ArrowRight') cambiarImagen(1); if(e.key === 'ArrowLeft') cambiarImagen(-1); } });
 
+  // 🧠 AI Contextual tip close button
+  document.getElementById('aiTipClose')?.addEventListener('click', () => {
+    document.getElementById('aiContextualTip').classList.remove('active');
+  });
+
+  // Show contextual tips on scroll
+  let tipTimeout;
+  window.addEventListener('scroll', () => {
+    clearTimeout(tipTimeout);
+    tipShown = false;
+    tipTimeout = setTimeout(showContextualTip, 2000);
+  });
+
+  // 🤖 AI: Mark best schedule with AI badge
+  function markBestSchedule() {
+    const hour = new Date().getHours();
+    const cards = document.querySelectorAll('.horario-card');
+    
+    // Remove existing badges
+    cards.forEach(card => {
+      const existingBadge = card.querySelector('.ai-badge');
+      if (existingBadge) existingBadge.remove();
+    });
+    
+    let bestIndex = 1; // Default: 11:10 is most popular
+    
+    // Time-based recommendation
+    if (hour >= 6 && hour < 10) bestIndex = 0; // Morning recommendation
+    else if (hour >= 10 && hour < 14) bestIndex = 1; // Late morning
+    else bestIndex = 2; // Afternoon
+    
+    if (cards[bestIndex]) {
+      const badge = document.createElement('div');
+      badge.className = 'ai-badge';
+      badge.textContent = '🤖 IA';
+      badge.title = currentLang === 'pt' ? 'Recomendado pela IA' : currentLang === 'es' ? 'Recomendado por IA' : 'AI Recommended';
+      cards[bestIndex].appendChild(badge);
+    }
+  }
+
   // Inicializar todo
   const savedLang = localStorage.getItem('preferred_language');
-  changeLanguage(savedLang && translations[savedLang] ? savedLang : 'pt');
+  const detectedLang = detectBrowserLanguage();
+  const initialLang = savedLang && translations[savedLang] ? savedLang : detectedLang;
+  
+  changeLanguage(initialLang);
   calcularValorTotal();
   setTimeout(() => loadWeatherWidget(currentLang), 100);
+  
+  // Initialize AI features
+  initChatbot();
+  generateAIRecommendation();
+  markBestSchedule();
+  
+  // Show welcome tip after 5 seconds
+  setTimeout(() => {
+    if (!chatbotOpen) {
+      const tipEl = document.getElementById('aiContextualTip');
+      const tipText = document.getElementById('aiTipText');
+      const tips = {
+        pt: '👋 Olá! Posso te ajudar. Clique no robô 🤖 para conversar com nosso assistente IA!',
+        es: '👋 ¡Hola! Puedo ayudarte. ¡Haz clic en el robot 🤖 para chatear con nuestro asistente IA!',
+        en: '👋 Hello! I can help you. Click the robot 🤖 to chat with our AI assistant!'
+      };
+      tipText.textContent = tips[currentLang];
+      tipEl.classList.add('active');
+      setTimeout(() => tipEl.classList.remove('active'), 6000);
+    }
+  }, 5000);
   
   obtenerPaisUsuario().then(() => {
     console.log("País del usuario detectado:", paisUsuario);
