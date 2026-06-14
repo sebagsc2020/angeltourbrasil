@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Angel+Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
+<title>Angel Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
 <meta name="description" content="Conheça o passeio mais completo da região! Passeio pela Costa Esmeralda, parada na Bahía de Caixa D'Aço, tobogã, buffet de frutas, batida de côco e muita animação. Embarque em Porto Belo - SC.">
 <meta name="keywords" content="Angel Tour Brasil, passeio de barco, Costa Esmeralda, Porto Belo, Caixa D'Aço, turismo Santa Catarina, passeio de barco Porto Belo, escuna Porto Belo">
 <meta name="author" content="Angel Tour Brasil">
@@ -518,12 +518,10 @@ let voiceSupported = false;
 function initVoiceRecognition() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const voiceBtn = document.getElementById('aiVoiceBtn');
-    const voiceStatus = document.getElementById('aiVoiceStatus');
     if (!SpeechRecognition) {
         voiceBtn.classList.add('unsupported');
         voiceBtn.title = translations[currentLang].voice_unsupported;
         voiceBtn.innerHTML = '<i class="fas fa-microphone-slash"></i>';
-        console.warn('Reconocimiento de voz no soportado en este navegador');
         return;
     }
     voiceSupported = true;
@@ -546,9 +544,7 @@ function initVoiceRecognition() {
             transcript += event.results[i][0].transcript;
         }
         const input = document.getElementById('aiChatInput');
-        if (input) {
-            input.value = transcript;
-        }
+        if (input) input.value = transcript;
         if (event.results[event.results.length - 1].isFinal) {
             stopVoiceRecognition();
             setTimeout(() => sendMessage(), 300);
@@ -556,57 +552,26 @@ function initVoiceRecognition() {
     };
     
     recognition.onerror = (event) => {
-        console.error('Error de reconocimiento de voz:', event.error);
         stopVoiceRecognition();
         let errorMsg = translations[currentLang].voice_error;
-        if (event.error === 'not-allowed') {
-            errorMsg = '🚫 Permiso de micrófono denegado';
-        } else if (event.error === 'no-speech') {
-            errorMsg = '🔇 No se detectó voz';
-        }
+        if (event.error === 'not-allowed') errorMsg = '🚫 Permiso denegado';
+        else if (event.error === 'no-speech') errorMsg = '🔇 No se detectó voz';
         showVoiceStatus(errorMsg);
         setTimeout(() => hideVoiceStatus(), 3000);
     };
     
-    recognition.onend = () => {
-        if (isListening) {
-            stopVoiceRecognition();
-        }
-    };
-    
-    voiceBtn.addEventListener('click', toggleVoiceRecognition);
+    recognition.onend = () => { if (isListening) stopVoiceRecognition(); };
+    voiceBtn.addEventListener('click', () => isListening ? stopVoiceRecognition() : startVoiceRecognition());
     updateVoiceBtnTitle();
-}
-
-function toggleVoiceRecognition() {
-    if (!voiceSupported) {
-        alert(translations[currentLang].voice_unsupported);
-        return;
-    }
-    if (isListening) {
-        stopVoiceRecognition();
-    } else {
-        startVoiceRecognition();
-    }
 }
 
 function startVoiceRecognition() {
     if (!recognition) return;
-    try {
-        recognition.lang = getVoiceLang();
-        recognition.start();
-    } catch (error) {
-        console.error('Error al iniciar reconocimiento:', error);
-    }
+    try { recognition.lang = getVoiceLang(); recognition.start(); } catch (e) { console.error(e); }
 }
-
 function stopVoiceRecognition() {
     if (!recognition) return;
-    try {
-        recognition.stop();
-    } catch (error) {
-        console.error('Error al detener reconocimiento:', error);
-    }
+    try { recognition.stop(); } catch (e) { console.error(e); }
     isListening = false;
     const voiceBtn = document.getElementById('aiVoiceBtn');
     if (voiceBtn) {
@@ -616,36 +581,21 @@ function stopVoiceRecognition() {
     }
     hideVoiceStatus();
 }
-
 function getVoiceLang() {
-    const langMap = {
-        'es': 'es-ES',
-        'pt': 'pt-BR',
-        'en': 'en-US'
-    };
-    return langMap[currentLang] || 'es-ES';
+    const map = { 'es': 'es-ES', 'pt': 'pt-BR', 'en': 'en-US' };
+    return map[currentLang] || 'es-ES';
 }
-
 function updateVoiceBtnTitle() {
     const voiceBtn = document.getElementById('aiVoiceBtn');
-    if (voiceBtn && voiceSupported) {
-        voiceBtn.title = translations[currentLang].voice_start;
-    }
+    if (voiceBtn && voiceSupported) voiceBtn.title = translations[currentLang].voice_start;
 }
-
 function showVoiceStatus(text) {
-    const voiceStatus = document.getElementById('aiVoiceStatus');
-    if (voiceStatus) {
-        voiceStatus.textContent = text;
-        voiceStatus.classList.add('show');
-    }
+    const el = document.getElementById('aiVoiceStatus');
+    if (el) { el.textContent = text; el.classList.add('show'); }
 }
-
 function hideVoiceStatus() {
-    const voiceStatus = document.getElementById('aiVoiceStatus');
-    if (voiceStatus) {
-        voiceStatus.classList.remove('show');
-    }
+    const el = document.getElementById('aiVoiceStatus');
+    if (el) el.classList.remove('show');
 }
 
 // ========== 🤖 BASE DE CONOCIMIENTO ==========
@@ -946,6 +896,7 @@ function stripHtml(html) {
     return tmp.textContent || tmp.innerText || "";
 }
 
+// ✅ FUNCIÓN CORREGIDA (Sin saltos de línea reales dentro de las comillas)
 function htmlToWhatsAppFormat(html) {
     let text = html;
     text = text.replace(/<h3[^>]*>(.*?)<\/h3>/gi, '\n🔹 *$1*\n');
