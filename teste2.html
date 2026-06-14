@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Angel Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
+<title>Angel+Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
 <meta name="description" content="Conheça o passeio mais completo da região! Passeio pela Costa Esmeralda, parada na Bahía de Caixa D'Aço, tobogã, buffet de frutas, batida de côco e muita animação. Embarque em Porto Belo - SC.">
 <meta name="keywords" content="Angel Tour Brasil, passeio de barco, Costa Esmeralda, Porto Belo, Caixa D'Aço, turismo Santa Catarina, passeio de barco Porto Belo, escuna Porto Belo">
 <meta name="author" content="Angel Tour Brasil">
@@ -41,7 +41,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 .lang-buttons-header { display: flex; gap: 0.5rem; align-items: center; }
 .lang-btn-header { background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 40px; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
 .lang-btn-header:hover { background: #0EA5E9; border-color: #0EA5E9; transform: translateY(-2px); }
-.lang-btn-header.active { background: #E2E8F0; border-color: #CBD5E1; box-shadow: 0 0 0 2px rgba(100, 116, 139, 0.2); width: 50px; height: 50px; transform: scale(1.02); }
+.lang-btn-header.active { background: #E2E8F0; border-color: #CBD5E1; box-shadow: 0 0 0 2px rgba(100, 116, 139, 0.2); }
 .lang-btn-header.active img { width: 28px; height: 28px; }
 .lang-btn-header img { width: 20px; height: 20px; object-fit: contain; transition: all 0.3s ease; }
 .menu-icon { font-size: 1.8rem; cursor: pointer; color: var(--deep-blue); display: flex; align-items: center; }
@@ -896,7 +896,6 @@ function stripHtml(html) {
     return tmp.textContent || tmp.innerText || "";
 }
 
-// ✅ FUNCIÓN CORREGIDA (Sin saltos de línea reales dentro de las comillas)
 function htmlToWhatsAppFormat(html) {
     let text = html;
     text = text.replace(/<h3[^>]*>(.*?)<\/h3>/gi, '\n🔹 *$1*\n');
@@ -964,14 +963,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('preferred_language');
     changeLanguage(savedLang && translations[savedLang] ? savedLang : 'pt');
     
-    // 2. Inicializar componentes
+    // ✅ 2. Event listeners para botones de idioma (CORREGIDO)
+    document.querySelectorAll('.lang-btn-header').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const lang = this.getAttribute('data-lang');
+            if (lang && translations[lang]) {
+                changeLanguage(lang);
+            }
+        });
+    });
+    
+    // 3. Inicializar componentes
     calcularValorTotal();
     setTimeout(() => loadWeatherWidget(currentLang), 100);
     initChatbot();
     initVoiceRecognition();
     initGallery();
     
-    // 3. Configurar eventos de Galería/Lightbox
+    // 4. Configurar eventos de Galería/Lightbox
     const lightboxModern = document.getElementById('lightboxModern');
     if(lightboxModern) {
         lightboxModern.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
@@ -991,7 +1001,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } 
     });
     
-    // 4. Eventos del Formulario
+    // 5. Eventos del Formulario
     document.querySelectorAll('.horario-card').forEach(card => {
         card.addEventListener('click', function() {
             document.querySelectorAll('.horario-card').forEach(c => c.classList.remove('selected'));
@@ -1025,7 +1035,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(adultosInput) adultosInput.addEventListener('input', calcularValorTotal);
     if(menoresInput) menoresInput.addEventListener('input', calcularValorTotal);
     
-    // 5. Eventos de Navegación y Menú
+    // 6. Eventos de Navegación y Menú
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -1052,7 +1062,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // 6. Eventos de Modales
+    // 7. Eventos de Modales
     document.getElementById('closeModalBtn')?.addEventListener('click', closeModalFunc);
     document.getElementById('closeModalFooterBtn')?.addEventListener('click', closeModalFunc);
     document.getElementById('infoModal')?.addEventListener('click', e => { if(e.target === document.getElementById('infoModal')) closeModalFunc(); });
@@ -1087,7 +1097,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // 7. Barra Sticky
+    // 8. Barra Sticky
     const stickyBar = document.getElementById('stickyBookingBar');
     const heroSec = document.getElementById('inicio');
     const stickyBtn = document.getElementById('stickyBookBtn');
@@ -1105,7 +1115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(stickyBtn) stickyBtn.addEventListener('click', () => scrollToSectionWithOffset('reserva'));
     document.querySelector('.garantia-link')?.addEventListener('click', e => { e.preventDefault(); scrollToSectionWithOffset('reserva'); });
     
-    // 8. Detectar país
+    // 9. Detectar país
     obtenerPaisUsuario().then(() => { console.log("País del usuario detectado:", paisUsuario); });
     
     console.log('✅ Angel AI, Galería e Idiomas inicializados correctamente');
