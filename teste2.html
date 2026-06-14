@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>+Angel Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
+  <title>Angel Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
   <meta name="description" content="Conheça o passeio mais completo da região! Passeio pela Costa Esmeralda, parada na Bahía de Caixa D'Aço, tobogã, buffet de frutas, batida de côco e muita animação. Embarque em Porto Belo - SC.">
   <meta name="keywords" content="Angel Tour Brasil, passeio de barco, Costa Esmeralda, Porto Belo, Caixa D'Aço, turismo Santa Catarina, passeio de barco Porto Belo, escuna Porto Belo">
   <meta name="author" content="Angel Tour Brasil">
@@ -158,7 +158,6 @@
       .timeline { flex-direction: column; }
     }
     
-    /* ========== BOTONES FLOTANTES - POSICIONES CORREGIDAS ========== */
     .whatsapp-float {
       position: fixed;
       bottom: 28px;
@@ -177,7 +176,6 @@
       transition: all 0.3s ease;
     }
     
-    /* Chatbot: siempre por encima del WhatsApp */
     .ai-chatbot-toggle {
       position: fixed;
       bottom: 100px;
@@ -197,7 +195,6 @@
       animation: float 3s ease-in-out infinite;
     }
     
-    /* En móvil: ajustar posiciones cuando sticky bar está visible */
     @media (max-width: 880px) {
       .whatsapp-float {
         bottom: 80px !important;
@@ -236,7 +233,6 @@
     }
     .ai-chatbot-window.active { display: flex; }
     
-    /* En móvil: ventana ocupa casi toda la pantalla */
     @media (max-width: 880px) {
       .ai-chatbot-window {
         right: 10px;
@@ -270,10 +266,88 @@
     .ai-quick-replies { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 16px 12px; background: #F8FAFC; }
     .ai-quick-reply { background: white; border: 1.5px solid #E2E8F0; border-radius: 20px; padding: 6px 14px; font-size: 0.75rem; cursor: pointer; transition: all 0.2s; color: #475569; font-weight: 500; }
     .ai-quick-reply:hover { border-color: #667eea; color: #667eea; background: #F0F0FF; }
-    .ai-chatbot-input-area { padding: 12px 16px; border-top: 1px solid #E2E8F0; display: flex; gap: 8px; background: white; }
+    .ai-chatbot-input-area { padding: 12px 16px; border-top: 1px solid #E2E8F0; display: flex; gap: 8px; background: white; align-items: center; }
     .ai-chatbot-input { flex: 1; border: 1.5px solid #E2E8F0; border-radius: 24px; padding: 10px 16px; font-size: 0.85rem; font-family: 'Inter', sans-serif; outline: none; }
     .ai-chatbot-input:focus { border-color: #667eea; }
     .ai-chatbot-send { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; width: 40px; height: 40px; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    
+    /* ========== 🎤 BOTÓN DE MICRÓFONO ========== */
+    .ai-voice-btn {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .ai-voice-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    }
+    
+    .ai-voice-btn.listening {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      animation: voicePulse 1.5s infinite;
+    }
+    
+    .ai-voice-btn.listening::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: rgba(239, 68, 68, 0.3);
+      animation: voiceRipple 1.5s infinite;
+    }
+    
+    .ai-voice-btn.unsupported {
+      background: #94a3b8;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+    
+    .ai-voice-btn.unsupported:hover {
+      transform: none;
+      box-shadow: none;
+    }
+    
+    @keyframes voicePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    @keyframes voiceRipple {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+    
+    .ai-voice-status {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    
+    .ai-voice-status.show {
+      opacity: 1;
+    }
     
     .horario-card.selected { border-color: #0EA5E9 !important; background: #0EA5E9 !important; color: white !important; }
     .form-wrapper-simple { background: #FFFFFF; border-radius: 32px; box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.15); overflow: hidden; padding: 2.5rem; }
@@ -579,15 +653,19 @@
   <div class="ai-quick-replies" id="aiQuickReplies"></div>
   <div class="ai-chatbot-input-area">
     <input type="text" class="ai-chatbot-input" id="aiChatInput" placeholder="Pergunte algo..." autocomplete="off">
+    <button class="ai-voice-btn" id="aiVoiceBtn" title="🎤 Hablar">
+      <i class="fas fa-microphone"></i>
+    </button>
     <button class="ai-chatbot-send" id="aiChatSend"><i class="fas fa-paper-plane"></i></button>
+    <div class="ai-voice-status" id="aiVoiceStatus">🎤 Escuchando...</div>
   </div>
 </div>
 
 <script>
   const translations = {
-    es: { nav_home:"Inicio", nav_tour:"El Paseo", nav_gallery:"Galería", nav_book:"Reservar", hero_title:"El paseo más completo de la Costa Esmeralda", hero_sub:"Navegue por paisajes paradisíacos, nade en la Bahía de Caixa D'Aço, disfrute del tobogán, frutas tropicales y mucha animación a bordo.", btn_route:"Ver Itinerario", btn_guarantee:"Asegurar Plaza", why_title:"¿Por qué navegar con Angel Tour?", why_sub:"Experiencia completa, seguridad y diversión para todas las edades", diff1_title:"Seguridad total", diff1_desc:"Chalecos + salvavidas y tripulación entrenada", diff2_title:"Parada en Caixa D'Aço", diff2_desc:"Aguas cristalinas para nadar con tranquilidad", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas y batida de coco a bordo", diff4_title:"Diversión asegurada", diff4_desc:"Tobogán, música y animación para adultos y niños", itinerary_title:"Itinerario de la Experiencia", itinerary_sub:"Embarque en Porto dos Piratas y viva momentos inolvidables", step1_title:"Embarque", step1_desc:"Trapiche en Porto dos Piratas / Porto Belo.", step2_title:"Navegación", step2_desc:"1h30 por la Costa Esmeralda.", step3_title:"Parada en la Bahía", step3_desc:"Caixa D'Aço: natación.", step4_title:"Fiesta a bordo", step4_desc:"Frutas, batida tropical.", gallery_title:"Vive esta aventura", gallery_sub:"Mira el paseo e inspírate para tu viaje", testimonials_title:"Quienes ya navegaron, recomiendan", test1_text:"¡Paseo fantástico! El equipo es muy atento.", test2_text:"Seguridad y diversión. Batida de coco deliciosa.", test3_text:"¡El mejor paseo en barco de Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegación", footer_home:"Inicio", footer_route:"Itinerario", footer_gallery:"Galería", footer_follow:"Sigue la aventura", footer_copyright:"© 2026 Angel Tour Brasil – El paseo más completo de la Costa Esmeralda.", map_text:"Abrir en Google Maps", sticky_subtitle:"Reserva tu lugar", sticky_price:"⭐ ¡Precios especiales! ⭐", sticky_btn:"Reservar Ahora", fecha:"FECHA DEL PASEO", horario:"PREFERENCIA DE HORARIO", horario1:"Mañana", horario2:"Media Mañana", horario3:"Tarde", nombre:"NOMBRE", empresa:"EMPRESA", empresa_note:"*Opcional", adultos:"ADULTOS", menores:"MENORES de 6 a 11 años", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeto a disponibilidad", info_text:"💡 El valor es para grupos cerrados o agencias.", discount_text:"🎯 50% de descuento", precio_adultos:"💰 R$ 85,00 cada adulto", footer_boat:"Paseos en barco", footer_secure:"Confirmación segura", footer_confirm:"Envío por WhatsApp", ai_chatbot_placeholder:"Pregúntame algo...", ai_online:"Online agora", ai_greeting:"¡Hola! 👋 Soy <b>Angel AI</b>, tu asistente virtual. Tengo información sobre el paseo. ¿En qué te puedo ayudar?" },
-    pt: { nav_home:"Início", nav_tour:"O Passeio", nav_gallery:"Galeria", nav_book:"Reservar", hero_title:"O passeio mais completo da Costa Esmeralda", hero_sub:"Navegue por paisagens paradisíacas, nade na Bahía de Caixa D'Aço, aproveite tobogã, frutas tropicais e muita animação a bordo.", btn_route:"Ver Roteiro", btn_guarantee:"Garantir Vaga", why_title:"Por que velejar com a Angel Tour?", why_sub:"Experiência completa, segurança e diversão para todas as idades", diff1_title:"Segurança total", diff1_desc:"Coletes + guarda-vidas e tripulação treinada", diff2_title:"Parada em Caixa D'Aço", diff2_desc:"Águas cristalinas para nadar com tranquilidade", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas e batida de coco a bordo", diff4_title:"Diversão garantida", diff4_desc:"Tobogã, música e animação para adultos e crianças", itinerary_title:"Roteiro da Experiência", itinerary_sub:"Embarque em Porto dos Piratas e viva momentos inesquecíveis", step1_title:"Embarque", step1_desc:"Trapiche em Porto dos Piratas / Porto Belo.", step2_title:"Navegação", step2_desc:"1h30 pela Costa Esmeralda.", step3_title:"Parada na Baía", step3_desc:"Caixa D'Aço: natação.", step4_title:"Festa a bordo", step4_desc:"Frutas, batida tropical.", gallery_title:"Viva essa aventura", gallery_sub:"Assista ao passeio e inspire-se para sua viagem", testimonials_title:"Quem já navegou, recomenda", test1_text:"Passeio fantástico! A equipe é muito atenciosa.", test2_text:"Segurança e diversão. Batida de coco deliciosa.", test3_text:"Melhor passeio de barco de Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegação", footer_home:"Início", footer_route:"Itinerário", footer_gallery:"Galeria", footer_follow:"Siga a aventura", footer_copyright:"© 2026 Angel Tour Brasil – O passeio mais completo da Costa Esmeralda.", map_text:"Abrir no Google Maps", sticky_subtitle:"Reserve seu lugar", sticky_price:"⭐ Preços especiais! ⭐", sticky_btn:"Reservar Agora", fecha:"DATA DO PASSEIO", horario:"PREFERÊNCIA DE HORÁRIO", horario1:"Manhã", horario2:"Meia Manhã", horario3:"Tarde", nombre:"NOME", empresa:"EMPRESA", empresa_note:"*Opcional", adultos:"ADULTOS", menores:"MENORES de 6 a 11 anos", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeito à disponibilidade", info_text:"💡 O valor é para grupos fechados ou agências.", discount_text:"🎯 50% de desconto", precio_adultos:"💰 R$ 85,00 cada adulto", footer_boat:"Passeios de barco", footer_secure:"Confirmação segura", footer_confirm:"Envio por WhatsApp", ai_chatbot_placeholder:"Pergunte algo...", ai_online:"Online agora", ai_greeting:"Olá! 👋 Sou o <b>Angel AI</b>, seu assistente virtual. Tenho informações sobre o passeio. Como posso ajudar?" },
-    en: { nav_home:"Home", nav_tour:"The Tour", nav_gallery:"Gallery", nav_book:"Book Now", hero_title:"The most complete tour of the Emerald Coast", hero_sub:"Sail through stunning landscapes, swim in Caixa D'Aço Bay, enjoy a waterslide, tropical fruits, and lots of fun on board.", btn_route:"See Itinerary", btn_guarantee:"Book Now", why_title:"Why sail with Angel Tour?", why_sub:"Complete experience, safety and fun for all ages", diff1_title:"Total safety", diff1_desc:"Life jackets + lifeguards and trained crew", diff2_title:"Stop at Caixa D'Aço", diff2_desc:"Crystal clear waters for a safe swim", diff3_title:"Buffet & Drinks", diff3_desc:"Fresh fruits and coconut cocktail on board", diff4_title:"Guaranteed fun", diff4_desc:"Waterslide, music and entertainment for all ages", itinerary_title:"Experience Itinerary", itinerary_sub:"Board at Porto dos Piratas and live unforgettable moments", step1_title:"Boarding", step1_desc:"Pier in Porto dos Piratas / Porto Belo.", step2_title:"Cruising", step2_desc:"1h30 along the Emerald Coast.", step3_title:"Bay Stop", step3_desc:"Caixa D'Aço: swimming.", step4_title:"Party on board", step4_desc:"Fruits, tropical cocktails.", gallery_title:"Live this adventure", gallery_sub:"Watch the tour and get inspired for your trip", testimonials_title:"Those who have sailed, recommend", test1_text:"Fantastic tour! The team is very attentive.", test2_text:"Safety and fun. Delicious coconut drink.", test3_text:"Best boat tour in Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navigation", footer_home:"Home", footer_route:"Itinerary", footer_gallery:"Gallery", footer_follow:"Follow the adventure", footer_copyright:"© 2026 Angel Tour Brasil – The most complete tour of the Emerald Coast.", map_text:"Open in Google Maps", sticky_subtitle:"Book your spot", sticky_price:"⭐ Special prices! ⭐", sticky_btn:"Book Now", fecha:"TOUR DATE", horario:"TIME PREFERENCE", horario1:"Morning", horario2:"Late Morning", horario3:"Afternoon", nombre:"NAME", empresa:"COMPANY", empresa_note:"*Optional", adultos:"ADULTS", menores:"CHILDREN 6 to 11 years", total:"TOTAL VALUE", btn:"SEND RESERVATION", horario_note:"⏱️ Subject to availability", info_text:"💡 The price is for closed groups or agencies.", discount_text:"🎯 50% discount", precio_adultos:"💰 R$ 85.00 per adult", footer_boat:"Boat tours", footer_secure:"Secure confirmation", footer_confirm:"WhatsApp delivery", ai_chatbot_placeholder:"Ask me something...", ai_online:"Online now", ai_greeting:"Hello! 👋 I'm <b>Angel AI</b>, your virtual assistant. I have information about the tour. How can I help you?" }
+    es: { nav_home:"Inicio", nav_tour:"El Paseo", nav_gallery:"Galería", nav_book:"Reservar", hero_title:"El paseo más completo de la Costa Esmeralda", hero_sub:"Navegue por paisajes paradisíacos, nade en la Bahía de Caixa D'Aço, disfrute del tobogán, frutas tropicales y mucha animación a bordo.", btn_route:"Ver Itinerario", btn_guarantee:"Asegurar Plaza", why_title:"¿Por qué navegar con Angel Tour?", why_sub:"Experiencia completa, seguridad y diversión para todas las edades", diff1_title:"Seguridad total", diff1_desc:"Chalecos + salvavidas y tripulación entrenada", diff2_title:"Parada en Caixa D'Aço", diff2_desc:"Aguas cristalinas para nadar con tranquilidad", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas y batida de coco a bordo", diff4_title:"Diversión asegurada", diff4_desc:"Tobogán, música y animación para adultos y niños", itinerary_title:"Itinerario de la Experiencia", itinerary_sub:"Embarque en Porto dos Piratas y viva momentos inolvidables", step1_title:"Embarque", step1_desc:"Trapiche en Porto dos Piratas / Porto Belo.", step2_title:"Navegación", step2_desc:"1h30 por la Costa Esmeralda.", step3_title:"Parada en la Bahía", step3_desc:"Caixa D'Aço: natación.", step4_title:"Fiesta a bordo", step4_desc:"Frutas, batida tropical.", gallery_title:"Vive esta aventura", gallery_sub:"Mira el paseo e inspírate para tu viaje", testimonials_title:"Quienes ya navegaron, recomiendan", test1_text:"¡Paseo fantástico! El equipo es muy atento.", test2_text:"Seguridad y diversión. Batida de coco deliciosa.", test3_text:"¡El mejor paseo en barco de Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegación", footer_home:"Inicio", footer_route:"Itinerario", footer_gallery:"Galería", footer_follow:"Sigue la aventura", footer_copyright:"© 2026 Angel Tour Brasil – El paseo más completo de la Costa Esmeralda.", map_text:"Abrir en Google Maps", sticky_subtitle:"Reserva tu lugar", sticky_price:"⭐ ¡Precios especiales! ⭐", sticky_btn:"Reservar Ahora", fecha:"FECHA DEL PASEO", horario:"PREFERENCIA DE HORARIO", horario1:"Mañana", horario2:"Media Mañana", horario3:"Tarde", nombre:"NOMBRE", empresa:"EMPRESA", empresa_note:"*Opcional", adultos:"ADULTOS", menores:"MENORES de 6 a 11 años", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeto a disponibilidad", info_text:"💡 El valor es para grupos cerrados o agencias.", discount_text:"🎯 50% de descuento", precio_adultos:"💰 R$ 85,00 cada adulto", footer_boat:"Paseos en barco", footer_secure:"Confirmación segura", footer_confirm:"Envío por WhatsApp", ai_chatbot_placeholder:"Pregúntame algo...", ai_online:"Online agora", ai_greeting:"¡Hola! 👋 Soy <b>Angel AI</b>, tu asistente virtual. Tengo información sobre el paseo. ¿En qué te puedo ayudar?", voice_listening:"🎤 Escuchando...", voice_stop:"🛑 Detener", voice_error:"❌ Error de micrófono", voice_unsupported:"🎤 No soportado", voice_start:"🎤 Toca para hablar" },
+    pt: { nav_home:"Início", nav_tour:"O Passeio", nav_gallery:"Galeria", nav_book:"Reservar", hero_title:"O passeio mais completo da Costa Esmeralda", hero_sub:"Navegue por paisagens paradisíacas, nade na Bahía de Caixa D'Aço, aproveite tobogã, frutas tropicais e muita animação a bordo.", btn_route:"Ver Roteiro", btn_guarantee:"Garantir Vaga", why_title:"Por que velejar com a Angel Tour?", why_sub:"Experiência completa, segurança e diversão para todas as idades", diff1_title:"Segurança total", diff1_desc:"Coletes + guarda-vidas e tripulação treinada", diff2_title:"Parada em Caixa D'Aço", diff2_desc:"Águas cristalinas para nadar com tranquilidade", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas e batida de coco a bordo", diff4_title:"Diversão garantida", diff4_desc:"Tobogã, música e animação para adultos e crianças", itinerary_title:"Roteiro da Experiência", itinerary_sub:"Embarque em Porto dos Piratas e viva momentos inesquecíveis", step1_title:"Embarque", step1_desc:"Trapiche em Porto dos Piratas / Porto Belo.", step2_title:"Navegação", step2_desc:"1h30 pela Costa Esmeralda.", step3_title:"Parada na Baía", step3_desc:"Caixa D'Aço: natação.", step4_title:"Festa a bordo", step4_desc:"Frutas, batida tropical.", gallery_title:"Viva essa aventura", gallery_sub:"Assista ao passeio e inspire-se para sua viagem", testimonials_title:"Quem já navegou, recomenda", test1_text:"Passeio fantástico! A equipe é muito atenciosa.", test2_text:"Segurança e diversão. Batida de coco deliciosa.", test3_text:"Melhor passeio de barco de Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegação", footer_home:"Início", footer_route:"Itinerário", footer_gallery:"Galeria", footer_follow:"Siga a aventura", footer_copyright:"© 2026 Angel Tour Brasil – O passeio mais completo da Costa Esmeralda.", map_text:"Abrir no Google Maps", sticky_subtitle:"Reserve seu lugar", sticky_price:"⭐ Preços especiais! ⭐", sticky_btn:"Reservar Agora", fecha:"DATA DO PASSEIO", horario:"PREFERÊNCIA DE HORÁRIO", horario1:"Manhã", horario2:"Meia Manhã", horario3:"Tarde", nombre:"NOME", empresa:"EMPRESA", empresa_note:"*Opcional", adultos:"ADULTOS", menores:"MENORES de 6 a 11 anos", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeito à disponibilidade", info_text:"💡 O valor é para grupos fechados ou agências.", discount_text:"🎯 50% de desconto", precio_adultos:"💰 R$ 85,00 cada adulto", footer_boat:"Passeios de barco", footer_secure:"Confirmação segura", footer_confirm:"Envio por WhatsApp", ai_chatbot_placeholder:"Pergunte algo...", ai_online:"Online agora", ai_greeting:"Olá! 👋 Sou o <b>Angel AI</b>, seu assistente virtual. Tenho informações sobre o passeio. Como posso ajudar?", voice_listening:"🎤 Ouvindo...", voice_stop:"🛑 Parar", voice_error:"❌ Erro de microfone", voice_unsupported:"🎤 Não suportado", voice_start:"🎤 Toque para falar" },
+    en: { nav_home:"Home", nav_tour:"The Tour", nav_gallery:"Gallery", nav_book:"Book Now", hero_title:"The most complete tour of the Emerald Coast", hero_sub:"Sail through stunning landscapes, swim in Caixa D'Aço Bay, enjoy a waterslide, tropical fruits, and lots of fun on board.", btn_route:"See Itinerary", btn_guarantee:"Book Now", why_title:"Why sail with Angel Tour?", why_sub:"Complete experience, safety and fun for all ages", diff1_title:"Total safety", diff1_desc:"Life jackets + lifeguards and trained crew", diff2_title:"Stop at Caixa D'Aço", diff2_desc:"Crystal clear waters for a safe swim", diff3_title:"Buffet & Drinks", diff3_desc:"Fresh fruits and coconut cocktail on board", diff4_title:"Guaranteed fun", diff4_desc:"Waterslide, music and entertainment for all ages", itinerary_title:"Experience Itinerary", itinerary_sub:"Board at Porto dos Piratas and live unforgettable moments", step1_title:"Boarding", step1_desc:"Pier in Porto dos Piratas / Porto Belo.", step2_title:"Cruising", step2_desc:"1h30 along the Emerald Coast.", step3_title:"Bay Stop", step3_desc:"Caixa D'Aço: swimming.", step4_title:"Party on board", step4_desc:"Fruits, tropical cocktails.", gallery_title:"Live this adventure", gallery_sub:"Watch the tour and get inspired for your trip", testimonials_title:"Those who have sailed, recommend", test1_text:"Fantastic tour! The team is very attentive.", test2_text:"Safety and fun. Delicious coconut drink.", test3_text:"Best boat tour in Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navigation", footer_home:"Home", footer_route:"Itinerary", footer_gallery:"Gallery", footer_follow:"Follow the adventure", footer_copyright:"© 2026 Angel Tour Brasil – The most complete tour of the Emerald Coast.", map_text:"Open in Google Maps", sticky_subtitle:"Book your spot", sticky_price:"⭐ Special prices! ⭐", sticky_btn:"Book Now", fecha:"TOUR DATE", horario:"TIME PREFERENCE", horario1:"Morning", horario2:"Late Morning", horario3:"Afternoon", nombre:"NAME", empresa:"COMPANY", empresa_note:"*Optional", adultos:"ADULTS", menores:"CHILDREN 6 to 11 years", total:"TOTAL VALUE", btn:"SEND RESERVATION", horario_note:"⏱️ Subject to availability", info_text:"💡 The price is for closed groups or agencies.", discount_text:"🎯 50% discount", precio_adultos:"💰 R$ 85.00 per adult", footer_boat:"Boat tours", footer_secure:"Secure confirmation", footer_confirm:"WhatsApp delivery", ai_chatbot_placeholder:"Ask me something...", ai_online:"Online now", ai_greeting:"Hello! 👋 I'm <b>Angel AI</b>, your virtual assistant. I have information about the tour. How can I help you?", voice_listening:"🎤 Listening...", voice_stop:"🛑 Stop", voice_error:"❌ Microphone error", voice_unsupported:"🎤 Not supported", voice_start:"🎤 Tap to speak" }
   };
 
   let currentLang = 'pt';
@@ -596,6 +674,155 @@
   let isSpeaking = false;
   let paisUsuario = "DESCONOCIDO";
   let codigoIdioma = "POR";
+
+  // ========== 🎤 RECONOCIMIENTO DE VOZ ==========
+  let recognition = null;
+  let isListening = false;
+  let voiceSupported = false;
+
+  function initVoiceRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const voiceBtn = document.getElementById('aiVoiceBtn');
+    const voiceStatus = document.getElementById('aiVoiceStatus');
+    
+    if (!SpeechRecognition) {
+      voiceBtn.classList.add('unsupported');
+      voiceBtn.title = translations[currentLang].voice_unsupported;
+      voiceBtn.innerHTML = '<i class="fas fa-microphone-slash"></i>';
+      console.warn('Reconocimiento de voz no soportado en este navegador');
+      return;
+    }
+    
+    voiceSupported = true;
+    recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.lang = getVoiceLang();
+    
+    recognition.onstart = () => {
+      isListening = true;
+      voiceBtn.classList.add('listening');
+      voiceBtn.innerHTML = '<i class="fas fa-stop"></i>';
+      voiceBtn.title = translations[currentLang].voice_stop;
+      showVoiceStatus(translations[currentLang].voice_listening);
+    };
+    
+    recognition.onresult = (event) => {
+      let transcript = '';
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
+      
+      const input = document.getElementById('aiChatInput');
+      if (input) {
+        input.value = transcript;
+      }
+      
+      if (event.results[event.results.length - 1].isFinal) {
+        stopVoiceRecognition();
+        setTimeout(() => sendMessage(), 300);
+      }
+    };
+    
+    recognition.onerror = (event) => {
+      console.error('Error de reconocimiento de voz:', event.error);
+      stopVoiceRecognition();
+      
+      let errorMsg = translations[currentLang].voice_error;
+      if (event.error === 'not-allowed') {
+        errorMsg = '🚫 Permiso de micrófono denegado';
+      } else if (event.error === 'no-speech') {
+        errorMsg = '🔇 No se detectó voz';
+      }
+      
+      showVoiceStatus(errorMsg);
+      setTimeout(() => hideVoiceStatus(), 3000);
+    };
+    
+    recognition.onend = () => {
+      if (isListening) {
+        stopVoiceRecognition();
+      }
+    };
+    
+    voiceBtn.addEventListener('click', toggleVoiceRecognition);
+    updateVoiceBtnTitle();
+  }
+
+  function toggleVoiceRecognition() {
+    if (!voiceSupported) {
+      alert(translations[currentLang].voice_unsupported);
+      return;
+    }
+    
+    if (isListening) {
+      stopVoiceRecognition();
+    } else {
+      startVoiceRecognition();
+    }
+  }
+
+  function startVoiceRecognition() {
+    if (!recognition) return;
+    
+    try {
+      recognition.lang = getVoiceLang();
+      recognition.start();
+    } catch (error) {
+      console.error('Error al iniciar reconocimiento:', error);
+    }
+  }
+
+  function stopVoiceRecognition() {
+    if (!recognition) return;
+    
+    try {
+      recognition.stop();
+    } catch (error) {
+      console.error('Error al detener reconocimiento:', error);
+    }
+    
+    isListening = false;
+    const voiceBtn = document.getElementById('aiVoiceBtn');
+    if (voiceBtn) {
+      voiceBtn.classList.remove('listening');
+      voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+      updateVoiceBtnTitle();
+    }
+    
+    hideVoiceStatus();
+  }
+
+  function getVoiceLang() {
+    const langMap = {
+      'es': 'es-ES',
+      'pt': 'pt-BR',
+      'en': 'en-US'
+    };
+    return langMap[currentLang] || 'es-ES';
+  }
+
+  function updateVoiceBtnTitle() {
+    const voiceBtn = document.getElementById('aiVoiceBtn');
+    if (voiceBtn && voiceSupported) {
+      voiceBtn.title = translations[currentLang].voice_start;
+    }
+  }
+
+  function showVoiceStatus(text) {
+    const voiceStatus = document.getElementById('aiVoiceStatus');
+    if (voiceStatus) {
+      voiceStatus.textContent = text;
+      voiceStatus.classList.add('show');
+    }
+  }
+
+  function hideVoiceStatus() {
+    const voiceStatus = document.getElementById('aiVoiceStatus');
+    if (voiceStatus) {
+      voiceStatus.classList.remove('show');
+    }
+  }
 
   // ========== 🤖 BASE DE CONOCIMIENTO ==========
   const aiKnowledgeBase = {
@@ -1045,6 +1272,7 @@
     document.querySelectorAll('.lang-btn-header').forEach(btn => { btn.classList.remove('active'); if(btn.getAttribute('data-lang')===lang) btn.classList.add('active'); });
     const chatInput = document.getElementById('aiChatInput');
     if (chatInput) chatInput.placeholder = t.ai_chatbot_placeholder;
+    updateVoiceBtnTitle();
     loadWeatherWidget(lang);
     localStorage.setItem('preferred_language', lang);
   }
@@ -1169,7 +1397,8 @@
   
   document.addEventListener('DOMContentLoaded', () => {
     initChatbot();
-    console.log('🤖 Angel AI listo');
+    initVoiceRecognition();
+    console.log('🤖 Angel AI listo con reconocimiento de voz');
   });
   
   obtenerPaisUsuario().then(() => { console.log("País del usuario detectado:", paisUsuario); });
