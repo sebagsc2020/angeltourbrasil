@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>++Angel Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
+<title>Angel Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
 <meta name="description" content="Conheça o passeio mais completo da região! Passeio pela Costa Esmeralda, parada na Bahía de Caixa D'Aço, tobogã, buffet de frutas, batida de côco e muita animação. Embarque em Porto Belo - SC.">
 <meta name="keywords" content="Angel Tour Brasil, passeio de barco, Costa Esmeralda, Porto Belo, Caixa D'Aço, turismo Santa Catarina, passeio de barco Porto Belo, escuna Porto Belo">
 <meta name="author" content="Angel Tour Brasil">
@@ -127,6 +127,8 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 .gallery-grid { grid-template-columns: repeat(2, 1fr); }
 .modal-footer { flex-direction: column; }
 .btn-share-wa, .btn-read-aloud, .btn-modal-close { width: 100%; justify-content: center; }
+/* MODIFICADO: El video ahora ocupa el ancho de las 2 columnas de la galería en móvil */
+.video-container-9-16 { max-width: 100%; width: 100%; }
 }
 .testimonial-card { background: white; border-radius: 32px; padding: 32px; max-width: 380px; flex: 1; box-shadow: 0 12px 24px rgba(0,0,0,0.05); }
 .stars { color: #FFB800; margin-bottom: 16px; }
@@ -1432,16 +1434,24 @@ const menores = document.getElementById('menores')?.value;
 if(!fecha || !horario || !nombre) { alert('Complete todos los campos'); return; }
 if (paisUsuario === "DESCONOCIDO") await obtenerPaisUsuario();
 const total = (parseInt(adultos) * 85) + (parseInt(menores) * 42.5);
-const msg = `RESERVA ANGEL TOUR
-Idioma: ${codigoIdioma}
-País IP: ${paisUsuario}
-Fecha: ${fecha.split('-').reverse().join('/')}
-Horario: ${{'09:30':'9:30','11:10':'11:10','13:00':'13:00'}[horario] || horario} Hs
-Nombre: ${nombre}
-Empresa: ${empresa || 'No especificada'}
+
+// MODIFICADO: Nuevo formato de mensaje de WhatsApp
+const ipOrigen = (paisUsuario === "DESCONOCIDO") ? "No registrado" : paisUsuario;
+const msg = `🏴‍☠️ DETALLE DE RESERVA ⚓
+
+📅 Fecha : ${fecha.split('-').reverse().join('/')}
+⏰ Salida: ${horario} Hs
+🗣️ Idioma: ${codigoIdioma}
+👤 Nombre: ${nombre}
+🏢 Empresa / Agencia: ${empresa || 'No especificada'}
+🌐 Origen IP: ${ipOrigen}
+
+👥 Pasajeros:
 Adultos: ${adultos}
-Menores: ${menores}
-Total: ${total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`;
+Menores : ${menores}
+
+💰 TOTAL: ${total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`;
+
 window.open(`https://wa.me/5493518692251?text=${encodeURIComponent(msg)}`, '_blank');
 });
 document.querySelectorAll('.horario-card').forEach(card=>{ card.addEventListener('click',function(){ document.querySelectorAll('.horario-card').forEach(c=>c.classList.remove('selected')); this.classList.add('selected'); document.getElementById('horario').value=this.getAttribute('data-horario'); }); });
