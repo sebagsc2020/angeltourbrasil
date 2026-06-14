@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Angel Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
+<title>Angel+Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
 <meta name="description" content="Conheça o passeio mais completo da região! Passeio pela Costa Esmeralda, parada na Bahía de Caixa D'Aço, tobogã, buffet de frutas, batida de côco e muita animação. Embarque em Porto Belo - SC.">
 <meta name="keywords" content="Angel Tour Brasil, passeio de barco, Costa Esmeralda, Porto Belo, Caixa D'Aço, turismo Santa Catarina, passeio de barco Porto Belo, escuna Porto Belo">
 <meta name="author" content="Angel Tour Brasil">
@@ -1342,6 +1342,28 @@ tmp.innerHTML = html;
 return tmp.textContent || tmp.innerText || "";
 }
 
+// NUEVA FUNCIÓN: Convierte el HTML del itinerario a formato compatible con WhatsApp
+function htmlToWhatsAppFormat(html) {
+    let text = html;
+    // Convertir títulos h3 a negrita con viñeta y saltos de línea
+    text = text.replace(/<h3[^>]*>(.*?)<\/h3>/gi, '\n\n🔹 *$1*\n');
+    // Convertir strong a negrita
+    text = text.replace(/<strong>(.*?)<\/strong>/gi, '*$1*');
+    // Convertir saltos de línea
+    text = text.replace(/<br\s*\/?>/gi, '\n');
+    // Convertir párrafos
+    text = text.replace(/<p[^>]*>(.*?)<\/p>/gi, '\n$1\n');
+    // Eliminar cualquier otra etiqueta HTML restante
+    text = text.replace(/<[^>]+>/g, '');
+    // Decodificar entidades HTML (como &nbsp;)
+    const txt = document.createElement("textarea");
+    txt.innerHTML = text;
+    text = txt.value;
+    // Limpiar saltos de línea excesivos
+    text = text.replace(/\n{3,}/g, '\n\n');
+    return text.trim();
+}
+
 function openModal(stepData){ 
 currentStepData = stepData; 
 document.getElementById('modalTitle').textContent = stepData.title; 
@@ -1406,13 +1428,16 @@ document.getElementById('closeModalBtn')?.addEventListener('click',closeModalFun
 document.getElementById('closeModalFooterBtn')?.addEventListener('click',closeModalFunc);
 document.getElementById('infoModal')?.addEventListener('click',e=>{if(e.target===document.getElementById('infoModal')) closeModalFunc();});
 
+// MODIFICADO: Usa el nuevo formato compatible con WhatsApp
 document.getElementById('shareWhatsappBtn')?.addEventListener('click', () => {
 if(currentStepData){ 
-const cleanText = stripHtml(currentStepData.longtext);
-window.open(`https://wa.me/?text=${encodeURIComponent(`ANGEL TOUR BRASIL\n\n📍 ${currentStepData.title}\n\n${cleanText}`)}`,'_blank');
+const formattedText = htmlToWhatsAppFormat(currentStepData.longtext);
+const message = `🏴‍☠️ *ITINERARIO COMPLETO* ⚓\n\n${formattedText}`;
+window.open(`https://wa.me/?text=${encodeURIComponent(message)}`,'_blank');
 }
 });
 
+// El botón de leer en voz alta sigue usando stripHtml para que el sintetizador de voz no lea los asteriscos
 document.getElementById('readAloudBtn')?.addEventListener('click', () => {
 if(currentStepData){ 
 if(isSpeaking) stopReading(); 
