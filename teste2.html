@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Angel Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
+<title>++Angel Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
 <meta name="description" content="Conheça o passeio mais completo da região! Passeio pela Costa Esmeralda, parada na Bahía de Caixa D'Aço, tobogã, buffet de frutas, batida de côco e muita animação. Embarque em Porto Belo - SC.">
 <meta name="keywords" content="Angel Tour Brasil, passeio de barco, Costa Esmeralda, Porto Belo, Caixa D'Aço, turismo Santa Catarina, passeio de barco Porto Belo, escuna Porto Belo">
 <meta name="author" content="Angel Tour Brasil">
@@ -107,6 +107,9 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 .modal-header h3 { font-size: 1.3rem; font-weight: 700; color: var(--deep-blue); }
 .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #94A3B8; }
 .modal-body { padding: 1.5rem; max-height: 45vh; overflow-y: auto; line-height: 1.6; color: #334155; }
+.modal-body h3 { font-size: 1.1rem; color: var(--deep-blue); margin-top: 1.5rem; margin-bottom: 0.5rem; }
+.modal-body h3:first-child { margin-top: 0; }
+.modal-body p { margin-bottom: 1rem; }
 .modal-footer { padding: 1rem 1.5rem; border-top: 1px solid #E2E8F0; display: flex; gap: 0.8rem; justify-content: flex-end; flex-wrap: wrap; }
 .btn-share-wa { background: #25D366; border: none; padding: 0.7rem 1.2rem; border-radius: 50px; color: white; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
 .btn-read-aloud { background: #3B82F6; border: none; padding: 0.7rem 1.2rem; border-radius: 50px; color: white; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
@@ -187,23 +190,24 @@ bottom: 155px !important;
 width: 54px;
 height: 54px;
 }
+.ai-chatbot-window {
+bottom: 225px !important;
+}
 }
 .ai-chatbot-toggle:hover { transform: scale(1.1); box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6); }
 .ai-chatbot-toggle i { font-size: 1.6rem; color: white; }
 .ai-chatbot-toggle .ai-badge-dot { position: absolute; top: -2px; right: -2px; width: 16px; height: 16px; background: #FF4444; border-radius: 50%; border: 2px solid white; animation: pulse 1.5s infinite; }
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-
-/* === CAMBIOS APLICADOS AQUÍ === */
 .ai-chatbot-window {
 position: fixed;
-top: 60px; /* Comienza 60px desde arriba */
-bottom: 225px; /* Termina 225px antes del fondo */
+top: 60px;
+bottom: 225px;
 right: 28px;
 width: 380px;
 max-width: calc(100vw - 40px);
-height: auto; /* Permite que top y bottom controlen la altura */
-max-height: calc(100vh - 285px); /* 100vh menos la suma de top (60) + bottom (225) = 285px */
+height: auto;
+max-height: calc(100vh - 285px);
 background: white;
 border-radius: 24px;
 box-shadow: 0 20px 60px rgba(0,0,0,0.2);
@@ -213,11 +217,10 @@ flex-direction: column;
 overflow: hidden;
 }
 .ai-chatbot-window.active { display: flex; }
-
 @media (max-width: 880px) {
 .ai-chatbot-window {
-top: 60px !important; /* Asegura el espacio superior también en móviles */
-bottom: 225px !important; /* Asegura el espacio para los botones flotantes en móviles */
+top: 60px !important;
+bottom: 225px !important;
 right: 10px;
 left: 10px;
 width: auto;
@@ -226,8 +229,6 @@ height: auto !important;
 max-height: calc(100vh - 285px) !important;
 }
 }
-/* ================================ */
-
 .ai-chatbot-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 16px 20px; display: flex; align-items: center; gap: 12px; color: white; }
 .ai-chatbot-avatar { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
 .ai-chatbot-info { flex: 1; }
@@ -419,25 +420,21 @@ opacity: 1;
 <h2 class="section-title" data-key="itinerary_title">Roteiro da Experiência</h2>
 <p class="section-sub" data-key="itinerary_sub">Embarque em Porto dos Piratas e viva momentos inesquecíveis</p>
 <div class="timeline" id="timelineContainer">
-<div class="timeline-step" data-step="1" data-key-es="Embarque" data-key-pt="Embarque" data-key-en="Boarding" data-desc-es="Trapiche en Porto dos Piratas / Porto Belo." data-desc-pt="Trapiche em Porto dos Piratas / Porto Belo." data-desc-en="Pier in Porto dos Piratas / Porto Belo." data-longtext-es="El embarque se realiza en el pintoresco Trapiche de Porto dos Piratas." data-longtext-pt="O embarque é realizado no pitoresco Trapiche de Porto dos Piratas." data-longtext-en="Boarding takes place at the picturesque Trapiche de Porto dos Piratas.">
+<div class="timeline-step" data-step="1" data-key-es="Embarque" data-key-pt="Embarque" data-key-en="Boarding">
 <div class="step-number">1</div>
 <h3 data-key="step1_title">Embarque</h3>
-<p data-key="step1_desc">Trapiche em Porto dos Piratas / Porto Belo.</p>
 </div>
-<div class="timeline-step" data-step="2" data-key-es="Navegación" data-key-pt="Navegação" data-key-en="Cruising" data-desc-es="1h30 por la Costa Esmeralda" data-desc-pt="1h30 pela Costa Esmeralda" data-desc-en="1h30 along the Emerald Coast" data-longtext-es="Navegamos por la deslumbrante Costa Esmeralda." data-longtext-pt="Navegamos pela deslumbrante Costa Esmeralda." data-longtext-en="We sail along the stunning Emerald Coast.">
+<div class="timeline-step" data-step="2" data-key-es="Navegación" data-key-pt="Navegação" data-key-en="Navigation">
 <div class="step-number">2</div>
-<h3 data-key="step2_title">Navegação</h3>
-<p data-key="step2_desc">1h30 pela Costa Esmeralda</p>
+<h3 data-key="step2_title">Navegación</h3>
 </div>
-<div class="timeline-step" data-step="3" data-key-es="Parada en la Bahía" data-key-pt="Parada na Baía" data-key-en="Bay Stop" data-desc-es="Caixa D'Aço: natación" data-desc-pt="Caixa D'Aço: natação" data-desc-en="Caixa D'Aço: swimming" data-longtext-es="Llegamos a la deslumbrante Bahía de Caixa D'Aço." data-longtext-pt="Chegamos à deslumbrante Baía de Caixa D'Aço." data-longtext-en="We arrive at the stunning Caixa D'Aço Bay.">
+<div class="timeline-step" data-step="3" data-key-es="Parada para Baño" data-key-pt="Parada para Banho" data-key-en="Swimming Stop">
 <div class="step-number">3</div>
-<h3 data-key="step3_title">Parada na Baía</h3>
-<p data-key="step3_desc">Caixa D'Aço: natação</p>
+<h3 data-key="step3_title">Parada para Baño</h3>
 </div>
-<div class="timeline-step" data-step="4" data-key-es="Fiesta a bordo" data-key-pt="Festa a bordo" data-key-en="Party on board" data-desc-es="Frutas, batida tropical" data-desc-pt="Frutas, batida tropical" data-desc-en="Fruits, tropical cocktails" data-longtext-es="Buffet de frutas frescas y batida de coco." data-longtext-pt="Buffet de frutas frescas e batida de coco." data-longtext-en="Fresh fruit buffet and coconut cocktail.">
+<div class="timeline-step" data-step="4" data-key-es="Fiesta a bordo" data-key-pt="Festa a bordo" data-key-en="Party on board">
 <div class="step-number">4</div>
-<h3 data-key="step4_title">Festa a bordo</h3>
-<p data-key="step4_desc">Frutas, batida tropical</p>
+<h3 data-key="step4_title">Fiesta a bordo</h3>
 </div>
 </div>
 </div>
@@ -618,16 +615,24 @@ opacity: 1;
 </div>
 <script>
 const translations = {
-es: { nav_home:"Inicio", nav_tour:"El Paseo", nav_gallery:"Galería", nav_book:"Reservar", hero_title:"El paseo más completo de la Costa Esmeralda", hero_sub:"Navegue por paisajes paradisíacos, nade en la Bahía de Caixa D'Aço, disfrute del tobogán, frutas tropicales y mucha animación a bordo.", btn_route:"Ver Itinerario", btn_guarantee:"Asegurar Plaza", why_title:"¿Por qué navegar con Angel Tour?", why_sub:"Experiencia completa, seguridad y diversión para todas las edades", diff1_title:"Seguridad total", diff1_desc:"Chalecos + salvavidas y tripulación entrenada", diff2_title:"Parada en Caixa D'Aço", diff2_desc:"Aguas cristalinas para nadar con tranquilidad", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas y batida de coco a bordo", diff4_title:"Diversión asegurada", diff4_desc:"Tobogán, música y animación para adultos y niños", itinerary_title:"Itinerario de la Experiencia", itinerary_sub:"Embarque en Porto dos Piratas y viva momentos inolvidables", step1_title:"Embarque", step1_desc:"Trapiche en Porto dos Piratas / Porto Belo.", step2_title:"Navegación", step2_desc:"1h30 por la Costa Esmeralda.", step3_title:"Parada en la Bahía", step3_desc:"Caixa D'Aço: natación.", step4_title:"Fiesta a bordo", step4_desc:"Frutas, batida tropical.", gallery_title:"Vive esta aventura", gallery_sub:"Mira el paseo e inspírate para tu viaje", testimonials_title:"Quienes ya navegaron, recomiendan", test1_text:"¡Paseo fantástico! El equipo es muy atento.", test2_text:"Seguridad y diversión. Batida de coco deliciosa.", test3_text:"¡El mejor paseo en barco de Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegación", footer_home:"Inicio", footer_route:"Itinerario", footer_gallery:"Galería", footer_follow:"Sigue la aventura", footer_copyright:"© 2026 Angel Tour Brasil – El paseo más completo de la Costa Esmeralda.", map_text:"Abrir en Google Maps", sticky_subtitle:"Reserva tu lugar", sticky_price:"⭐ ¡Precios especiales! ⭐", sticky_btn:"Reservar Ahora", fecha:"FECHA DEL PASEO", horario:"PREFERENCIA DE HORARIO", horario1:"Mañana", horario2:"Media Mañana", horario3:"Tarde", nombre:"NOMBRE", empresa:"EMPRESA", empresa_note:"*Opcional", adultos:"ADULTOS", menores:"MENORES de 6 a 11 años", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeto a disponibilidad", info_text:"💡 El valor es para grupos cerrados o agencias.", discount_text:"🎯 50% de descuento", precio_adultos:"💰 R$ 85,00 cada adulto", footer_boat:"Paseos en barco", footer_secure:"Confirmación segura", footer_confirm:"Envío por WhatsApp", ai_chatbot_placeholder:"Pregúntame algo...", ai_online:"Online agora", ai_greeting:"¡Hola! 👋 Soy <b>Angel AI</b>, tu asistente virtual. Tengo información sobre el paseo. ¿En qué te puedo ayudar?", voice_listening:"🎤 Escuchando...", voice_stop:"🛑 Detener", voice_error:"❌ Error de micrófono", voice_unsupported:"🎤 No soportado", voice_start:"🎤 Toca para hablar" },
-pt: { nav_home:"Início", nav_tour:"O Passeio", nav_gallery:"Galeria", nav_book:"Reservar", hero_title:"O passeio mais completo da Costa Esmeralda", hero_sub:"Navegue por paisagens paradisíacas, nade na Bahía de Caixa D'Aço, aproveite tobogã, frutas tropicais e muita animação a bordo.", btn_route:"Ver Roteiro", btn_guarantee:"Garantir Vaga", why_title:"Por que velejar com a Angel Tour?", why_sub:"Experiência completa, segurança e diversão para todas as idades", diff1_title:"Segurança total", diff1_desc:"Coletes + guarda-vidas e tripulação treinada", diff2_title:"Parada em Caixa D'Aço", diff2_desc:"Águas cristalinas para nadar com tranquilidade", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas e batida de coco a bordo", diff4_title:"Diversão garantida", diff4_desc:"Tobogã, música e animação para adultos e crianças", itinerary_title:"Roteiro da Experiência", itinerary_sub:"Embarque em Porto dos Piratas e viva momentos inesquecíveis", step1_title:"Embarque", step1_desc:"Trapiche em Porto dos Piratas / Porto Belo.", step2_title:"Navegação", step2_desc:"1h30 pela Costa Esmeralda.", step3_title:"Parada na Baía", step3_desc:"Caixa D'Aço: natação.", step4_title:"Festa a bordo", step4_desc:"Frutas, batida tropical.", gallery_title:"Viva essa aventura", gallery_sub:"Assista ao passeio e inspire-se para sua viagem", testimonials_title:"Quem já navegou, recomenda", test1_text:"Passeio fantástico! A equipe é muito atenciosa.", test2_text:"Segurança e diversão. Batida de coco deliciosa.", test3_text:"Melhor passeio de barco de Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegação", footer_home:"Início", footer_route:"Itinerário", footer_gallery:"Galeria", footer_follow:"Siga a aventura", footer_copyright:"© 2026 Angel Tour Brasil – O passeio mais completo da Costa Esmeralda.", map_text:"Abrir no Google Maps", sticky_subtitle:"Reserve seu lugar", sticky_price:"⭐ Preços especiais! ⭐", sticky_btn:"Reservar Agora", fecha:"DATA DO PASSEIO", horario:"PREFERÊNCIA DE HORÁRIO", horario1:"Manhã", horario2:"Meia Manhã", horario3:"Tarde", nombre:"NOME", empresa:"EMPRESA", empresa_note:"*Opcional", adultos:"ADULTOS", menores:"MENORES de 6 a 11 anos", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeito à disponibilidade", info_text:"💡 O valor é para grupos fechados ou agências.", discount_text:"🎯 50% de desconto", precio_adultos:"💰 R$ 85,00 cada adulto", footer_boat:"Passeios de barco", footer_secure:"Confirmação segura", footer_confirm:"Envio por WhatsApp", ai_chatbot_placeholder:"Pergunte algo...", ai_online:"Online agora", ai_greeting:"Olá! 👋 Sou o <b>Angel AI</b>, seu assistente virtual. Tenho informações sobre o passeio. Como posso ajudar?", voice_listening:"🎤 Ouvindo...", voice_stop:"🛑 Parar", voice_error:"❌ Erro de microfone", voice_unsupported:"🎤 Não suportado", voice_start:"🎤 Toque para falar" },
-en: { nav_home:"Home", nav_tour:"The Tour", nav_gallery:"Gallery", nav_book:"Book Now", hero_title:"The most complete tour of the Emerald Coast", hero_sub:"Sail through stunning landscapes, swim in Caixa D'Aço Bay, enjoy a waterslide, tropical fruits, and lots of fun on board.", btn_route:"See Itinerary", btn_guarantee:"Book Now", why_title:"Why sail with Angel Tour?", why_sub:"Complete experience, safety and fun for all ages", diff1_title:"Total safety", diff1_desc:"Life jackets + lifeguards and trained crew", diff2_title:"Stop at Caixa D'Aço", diff2_desc:"Crystal clear waters for a safe swim", diff3_title:"Buffet & Drinks", diff3_desc:"Fresh fruits and coconut cocktail on board", diff4_title:"Guaranteed fun", diff4_desc:"Waterslide, music and entertainment for all ages", itinerary_title:"Experience Itinerary", itinerary_sub:"Board at Porto dos Piratas and live unforgettable moments", step1_title:"Boarding", step1_desc:"Pier in Porto dos Piratas / Porto Belo.", step2_title:"Cruising", step2_desc:"1h30 along the Emerald Coast.", step3_title:"Bay Stop", step3_desc:"Caixa D'Aço: swimming.", step4_title:"Party on board", step4_desc:"Fruits, tropical cocktails.", gallery_title:"Live this adventure", gallery_sub:"Watch the tour and get inspired for your trip", testimonials_title:"Those who have sailed, recommend", test1_text:"Fantastic tour! The team is very attentive.", test2_text:"Safety and fun. Delicious coconut drink.", test3_text:"Best boat tour in Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navigation", footer_home:"Home", footer_route:"Itinerary", footer_gallery:"Gallery", footer_follow:"Follow the adventure", footer_copyright:"© 2026 Angel Tour Brasil – The most complete tour of the Emerald Coast.", map_text:"Open in Google Maps", sticky_subtitle:"Book your spot", sticky_price:"⭐ Special prices! ⭐", sticky_btn:"Book Now", fecha:"TOUR DATE", horario:"TIME PREFERENCE", horario1:"Morning", horario2:"Late Morning", horario3:"Afternoon", nombre:"NAME", empresa:"COMPANY", empresa_note:"*Optional", adultos:"ADULTS", menores:"CHILDREN 6 to 11 years", total:"TOTAL VALUE", btn:"SEND RESERVATION", horario_note:"⏱️ Subject to availability", info_text:"💡 The price is for closed groups or agencies.", discount_text:"🎯 50% discount", precio_adultos:"💰 R$ 85.00 per adult", footer_boat:"Boat tours", footer_secure:"Secure confirmation", footer_confirm:"WhatsApp delivery", ai_chatbot_placeholder:"Ask me something...", ai_online:"Online now", ai_greeting:"Hello! 👋 I'm <b>Angel AI</b>, your virtual assistant. I have information about the tour. How can I help you?", voice_listening:"🎤 Listening...", voice_stop:"🛑 Stop", voice_error:"❌ Microphone error", voice_unsupported:"🎤 Not supported", voice_start:"🎤 Tap to speak" }
+es: { nav_home:"Inicio", nav_tour:"El Paseo", nav_gallery:"Galería", nav_book:"Reservar", hero_title:"El paseo más completo de la Costa Esmeralda", hero_sub:"Navegue por paisajes paradisíacos, nade en la Bahía de Caixa D'Aço, disfrute del tobogán, frutas tropicales y mucha animación a bordo.", btn_route:"Ver Itinerario", btn_guarantee:"Asegurar Plaza", why_title:"¿Por qué navegar con Angel Tour?", why_sub:"Experiencia completa, seguridad y diversión para todas las edades", diff1_title:"Seguridad total", diff1_desc:"Chalecos + salvavidas y tripulación entrenada", diff2_title:"Parada en Caixa D'Aço", diff2_desc:"Aguas cristalinas para nadar con tranquilidad", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas y batida de coco a bordo", diff4_title:"Diversión asegurada", diff4_desc:"Tobogán, música y animación para adultos y niños", itinerary_title:"Itinerario de la Experiencia", itinerary_sub:"Embarque en Porto dos Piratas y viva momentos inolvidables", step1_title:"Embarque", step2_title:"Navegación", step3_title:"Parada para Baño", step4_title:"Fiesta a bordo", gallery_title:"Vive esta aventura", gallery_sub:"Mira el paseo e inspírate para tu viaje", testimonials_title:"Quienes ya navegaron, recomiendan", test1_text:"¡Paseo fantástico! El equipo es muy atento.", test2_text:"Seguridad y diversión. Batida de coco deliciosa.", test3_text:"¡El mejor paseo en barco de Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegación", footer_home:"Inicio", footer_route:"Itinerario", footer_gallery:"Galería", footer_follow:"Sigue la aventura", footer_copyright:"© 2026 Angel Tour Brasil – El paseo más completo de la Costa Esmeralda.", map_text:"Abrir en Google Maps", sticky_subtitle:"Reserva tu lugar", sticky_price:"⭐ ¡Precios especiales! ⭐", sticky_btn:"Reservar Ahora", fecha:"FECHA DEL PASEO", horario:"PREFERENCIA DE HORARIO", horario1:"Mañana", horario2:"Media Mañana", horario3:"Tarde", nombre:"NOMBRE", empresa:"EMPRESA", empresa_note:"*Opcional", adultos:"ADULTOS", menores:"MENORES de 6 a 11 años", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeto a disponibilidad", info_text:"💡 El valor es para grupos cerrados o agencias.", discount_text:"🎯 50% de descuento", precio_adultos:"💰 R$ 85,00 cada adulto", footer_boat:"Paseos en barco", footer_secure:"Confirmación segura", footer_confirm:"Envío por WhatsApp", ai_chatbot_placeholder:"Pregúntame algo...", ai_online:"Online agora", ai_greeting:"¡Hola! 👋 Soy <b>Angel AI</b>, tu asistente virtual. Tengo información sobre el paseo. ¿En qué te puedo ayudar?", voice_listening:"🎤 Escuchando...", voice_stop:"🛑 Detener", voice_error:"❌ Error de micrófono", voice_unsupported:"🎤 No soportado", voice_start:"🎤 Toca para hablar" },
+pt: { nav_home:"Início", nav_tour:"O Passeio", nav_gallery:"Galeria", nav_book:"Reservar", hero_title:"O passeio mais completo da Costa Esmeralda", hero_sub:"Navegue por paisagens paradisíacas, nade na Bahía de Caixa D'Aço, aproveite tobogã, frutas tropicais e muita animação a bordo.", btn_route:"Ver Roteiro", btn_guarantee:"Garantir Vaga", why_title:"Por que velejar com a Angel Tour?", why_sub:"Experiência completa, segurança e diversão para todas as idades", diff1_title:"Segurança total", diff1_desc:"Coletes + guarda-vidas e tripulação treinada", diff2_title:"Parada em Caixa D'Aço", diff2_desc:"Águas cristalinas para nadar com tranquilidade", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas e batida de coco a bordo", diff4_title:"Diversão garantida", diff4_desc:"Tobogã, música e animação para adultos e crianças", itinerary_title:"Roteiro da Experiência", itinerary_sub:"Embarque em Porto dos Piratas e viva momentos inesquecíveis", step1_title:"Embarque", step2_title:"Navegação", step3_title:"Parada para Banho", step4_title:"Festa a bordo", gallery_title:"Viva essa aventura", gallery_sub:"Assista ao passeio e inspire-se para sua viagem", testimonials_title:"Quem já navegou, recomenda", test1_text:"Passeio fantástico! A equipe é muito atenciosa.", test2_text:"Segurança e diversão. Batida de coco deliciosa.", test3_text:"Melhor passeio de barco de Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegação", footer_home:"Início", footer_route:"Itinerário", footer_gallery:"Galeria", footer_follow:"Siga a aventura", footer_copyright:"© 2026 Angel Tour Brasil – O passeio mais completo da Costa Esmeralda.", map_text:"Abrir no Google Maps", sticky_subtitle:"Reserve seu lugar", sticky_price:"⭐ Preços especiais! ⭐", sticky_btn:"Reservar Agora", fecha:"DATA DO PASSEIO", horario:"PREFERÊNCIA DE HORÁRIO", horario1:"Manhã", horario2:"Meia Manhã", horario3:"Tarde", nombre:"NOME", empresa:"EMPRESA", empresa_note:"*Opcional", adultos:"ADULTOS", menores:"MENORES de 6 a 11 anos", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeito à disponibilidade", info_text:"💡 O valor é para grupos fechados ou agências.", discount_text:"🎯 50% de desconto", precio_adultos:"💰 R$ 85,00 cada adulto", footer_boat:"Passeios de barco", footer_secure:"Confirmação segura", footer_confirm:"Envio por WhatsApp", ai_chatbot_placeholder:"Pergunte algo...", ai_online:"Online agora", ai_greeting:"Olá! 👋 Sou o <b>Angel AI</b>, seu assistente virtual. Tenho informações sobre o passeio. Como posso ajudar?", voice_listening:"🎤 Ouvindo...", voice_stop:"🛑 Parar", voice_error:"❌ Erro de microfone", voice_unsupported:"🎤 Não suportado", voice_start:"🎤 Toque para falar" },
+en: { nav_home:"Home", nav_tour:"The Tour", nav_gallery:"Gallery", nav_book:"Book Now", hero_title:"The most complete tour of the Emerald Coast", hero_sub:"Sail through stunning landscapes, swim in Caixa D'Aço Bay, enjoy a waterslide, tropical fruits, and lots of fun on board.", btn_route:"See Itinerary", btn_guarantee:"Book Now", why_title:"Why sail with Angel Tour?", why_sub:"Complete experience, safety and fun for all ages", diff1_title:"Total safety", diff1_desc:"Life jackets + lifeguards and trained crew", diff2_title:"Stop at Caixa D'Aço", diff2_desc:"Crystal clear waters for a safe swim", diff3_title:"Buffet & Drinks", diff3_desc:"Fresh fruits and coconut cocktail on board", diff4_title:"Guaranteed fun", diff4_desc:"Waterslide, music and entertainment for all ages", itinerary_title:"Experience Itinerary", itinerary_sub:"Board at Porto dos Piratas and live unforgettable moments", step1_title:"Boarding", step2_title:"Navigation", step3_title:"Swimming Stop", step4_title:"Party on board", gallery_title:"Live this adventure", gallery_sub:"Watch the tour and get inspired for your trip", testimonials_title:"Those who have sailed, recommend", test1_text:"Fantastic tour! The team is very attentive.", test2_text:"Safety and fun. Delicious coconut drink.", test3_text:"Best boat tour in Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navigation", footer_home:"Home", footer_route:"Itinerary", footer_gallery:"Gallery", footer_follow:"Follow the adventure", footer_copyright:"© 2026 Angel Tour Brasil – The most complete tour of the Emerald Coast.", map_text:"Open in Google Maps", sticky_subtitle:"Book your spot", sticky_price:"⭐ Special prices! ⭐", sticky_btn:"Book Now", fecha:"TOUR DATE", horario:"TIME PREFERENCE", horario1:"Morning", horario2:"Late Morning", horario3:"Afternoon", nombre:"NAME", empresa:"COMPANY", empresa_note:"*Optional", adultos:"ADULTS", menores:"CHILDREN 6 to 11 years", total:"TOTAL VALUE", btn:"SEND RESERVATION", horario_note:"⏱️ Subject to availability", info_text:"💡 The price is for closed groups or agencies.", discount_text:"🎯 50% discount", precio_adultos:"💰 R$ 85.00 per adult", footer_boat:"Boat tours", footer_secure:"Secure confirmation", footer_confirm:"WhatsApp delivery", ai_chatbot_placeholder:"Ask me something...", ai_online:"Online now", ai_greeting:"Hello! 👋 I'm <b>Angel AI</b>, your virtual assistant. I have information about the tour. How can I help you?", voice_listening:"🎤 Listening...", voice_stop:"🛑 Stop", voice_error:"❌ Microphone error", voice_unsupported:"🎤 Not supported", voice_start:"🎤 Tap to speak" }
 };
+
+const fullItinerary = {
+es: `<h3>1. Embarque Ordenado y Exclusivo</h3><p><strong>Punto de encuentro:</strong> Los pasajeros se concentran de manera organizada en nuestro muelle privado ubicado en Porto Belo.<br><strong>Infraestructura de espera:</strong> Antes de subir a bordo, el grupo puede disfrutar de las comodidades del predio Porto dos Piratas, como sanitarios, duchas de agua dulce y estaciones para recargar celulares.<br><strong>Control de capacidad:</strong> El personal y los guías realizan el chequeo estricto del listado de pasajeros (incluyendo niños y bebés) para cumplir con los estándares de seguridad de la Marina Brasileña antes de habilitar el ingreso a las modernas embarcaciones de la flota.</p><h3>2. Navegación por la Costa Esmeralda y Relato Cultural</h3><p><strong>Zarpada:</strong> Las embarcaciones (con capacidades de 150, 170 o 240 pasajeros) inician la travesía náutica adentrándose en el océano Atlántico.<br><strong>Recorrido panorámico:</strong> Se navega por las aguas calmas y cristalinas de la "Ensenada das Garoupas", contemplando los majestuosos paisajes de la sofisticada Costa Esmeralda, zona habitual de cruceros de lujo.<br><strong>Bloque cultural:</strong> Durante esta etapa del viaje, se comparten relatos históricos fascinantes sobre la región y los orígenes de la fundación portuguesa del tradicional barrio "Arazá".</p><h3>3. Parada para Baño y Relax en Caixa d'Aço</h3><p><strong>Llegada al refugio natural:</strong> El barco se posiciona en la famosa bahía de Caixa d’Aço ("Caja Fuerte"), reconocida internacionalmente por sus icónicos bares flotantes.<br><strong>Momento de natación y clavados:</strong> Se realiza una parada libre de 30 minutos para que los pasajeros disfruten y se refresquen en el mar.<br><strong>Diversión en el tobogán:</strong> Tanto adultos como niños tienen acceso al tobogán acuático del barco, diseñado especialmente para garantizar una caída suave, controlada y segura directamente al agua.<br><strong>Seguridad constante:</strong> Todo el tiempo de fondeo permanece bajo la atenta supervisión de marineros guardavidas profesionales y con chalecos salvavidas a disposición.</p><h3>4. Fiesta a Bordo y Regreso al Predio</h3><p><strong>Show pirata interactivo:</strong> Tras el baño, se enciende la energía a bordo con la animación en vivo de nuestros piratas, donde los pasajeros pasan a ser los protagonistas del espectáculo.<br><strong>Música y baile:</strong> El barco se convierte en una pista festiva con distintos estilos musicales para bailar mientras se inicia el regreso al muelle.<br><strong>Servicio de bar y buffet:</strong> Los pasajeros pueden complementar la fiesta disfrutando de un refrescante buffet de frutas tropicales o adquiriendo tragos y snacks en el bar a bordo.<br><strong>Cierre de la jornada:</strong> Arribo al muelle propio para continuar disfrutando del restaurante, las delicias del bar de playa o los combos estudiantiles en el predio Porto dos Piratas.</p>`,
+pt: `<h3>1. Embarque Ordenado e Exclusivo</h3><p><strong>Ponto de encontro:</strong> Os passageiros se concentram de maneira organizada em nosso píer privado localizado em Porto Belo.<br><strong>Infraestrutura de espera:</strong> Antes de embarcar, o grupo pode desfrutar das comodidades do complexo Porto dos Piratas, como banheiros, chuveiros de água doce e estações para recarregar celulares.<br><strong>Controle de capacidade:</strong> A equipe e os guias realizam a conferência rigorosa da lista de passageiros (incluindo crianças e bebês) para cumprir os padrões de segurança da Marinha Brasileira antes de permitir o acesso às modernas embarcações da frota.</p><h3>2. Navegação pela Costa Esmeralda e Relato Cultural</h3><p><strong>Zarpada:</strong> As embarcações (com capacidades de 150, 170 ou 240 passageiros) iniciam a travessia náutica adentrando o oceano Atlântico.<br><strong>Percorrido panorâmico:</strong> Navega-se pelas águas calmas e cristalinas da "Enseada das Garoupas", contemplando as majestosas paisagens da sofisticada Costa Esmeralda, zona habitual de cruzeiros de luxo.<br><strong>Bloco cultural:</strong> Durante esta etapa da viagem, são compartilhados relatos históricos fascinantes sobre a região e as origens da fundação portuguesa do tradicional bairro "Arazá".</p><h3>3. Parada para Banho e Relax em Caixa d'Aço</h3><p><strong>Chegada ao refúgio natural:</strong> O barco se posiciona na famosa baía de Caixa d’Aço ("Cofre Forte"), reconhecida internacionalmente por seus icônicos bares flutuantes.<br><strong>Momento de natação e mergulhos:</strong> Realiza-se uma parada livre de 30 minutos para que os passageiros aproveitem e se refresquem no mar.<br><strong>Diversão no tobogã:</strong> Tanto adultos quanto crianças têm acesso ao tobogã aquático do barco, projetado especialmente para garantir uma queda suave, controlada e segura diretamente na água.<br><strong>Segurança constante:</strong> Todo o tempo de fundeio permanece sob a atenta supervisão de marinheiros salva-vidas profissionais e com coletes salva-vidas à disposição.</p><h3>4. Festa a Bordo e Retorno ao Complexo</h3><p><strong>Show pirata interativo:</strong> Após o banho, a energia a bordo se acende com a animação ao vivo de nossos piratas, onde os passageiros passam a ser os protagonistas do espetáculo.<br><strong>Música e dança:</strong> O barco se transforma em uma pista festiva com distintos estilos musicais para dançar enquanto se inicia o retorno ao píer.<br><strong>Serviço de bar e buffet:</strong> Os passageiros podem complementar a festa desfrutando de um refrescante buffet de frutas tropicais ou adquirindo drinks e lanches no bar a bordo.<br><strong>Fechamento da jornada:</strong> Chegada ao píer próprio para continuar desfrutando do restaurante, das delícias do bar de praia ou dos combos estudantis no complexo Porto dos Piratas.</p>`,
+en: `<h3>1. Orderly and Exclusive Boarding</h3><p><strong>Meeting point:</strong> Passengers gather in an organized manner at our private pier located in Porto Belo.<br><strong>Waiting infrastructure:</strong> Before boarding, the group can enjoy the facilities of the Porto dos Piratas complex, such as restrooms, fresh water showers, and cell phone charging stations.<br><strong>Capacity control:</strong> Staff and guides strictly check the passenger list (including children and babies) to comply with Brazilian Navy safety standards before allowing entry to the modern fleet vessels.</p><h3>2. Navigation along the Emerald Coast and Cultural Storytelling</h3><p><strong>Departure:</strong> The vessels (with capacities of 150, 170, or 240 passengers) begin the nautical journey into the Atlantic Ocean.<br><strong>Panoramic route:</strong> We sail through the calm and crystal-clear waters of "Ensenada das Garoupas", contemplating the majestic landscapes of the sophisticated Emerald Coast, a usual area for luxury cruises.<br><strong>Cultural block:</strong> During this stage of the trip, fascinating historical stories about the region and the origins of the Portuguese foundation of the traditional "Arazá" neighborhood are shared.</p><h3>3. Swimming Stop and Relaxation in Caixa d'Aço</h3><p><strong>Arrival at the natural refuge:</strong> The boat positions itself in the famous Caixa d’Aço bay ("Strongbox"), internationally recognized for its iconic floating bars.<br><strong>Swimming and diving moment:</strong> A free 30-minute stop is made for passengers to enjoy and refresh themselves in the sea.<br><strong>Waterslide fun:</strong> Both adults and children have access to the boat's waterslide, specially designed to guarantee a soft, controlled, and safe drop directly into the water.<br><strong>Constant safety:</strong> The entire anchoring time remains under the attentive supervision of professional lifeguard sailors and with life jackets available.</p><h3>4. Party on Board and Return to the Complex</h3><p><strong>Interactive pirate show:</strong> After swimming, the energy on board lights up with the live animation of our pirates, where passengers become the protagonists of the show.<br><strong>Music and dancing:</strong> The boat turns into a festive dance floor with different musical styles to dance while starting the return to the pier.<br><strong>Bar and buffet service:</strong> Passengers can complement the party by enjoying a refreshing tropical fruit buffet or purchasing drinks and snacks at the on-board bar.<br><strong>End of the journey:</strong> Arrival at the private pier to continue enjoying the restaurant, the delights of the beach bar, or the student combos at the Porto dos Piratas complex.</p>`
+};
+
 let currentLang = 'pt';
 let currentStepData = null;
 let speechSynthesis = window.speechSynthesis;
 let isSpeaking = false;
 let paisUsuario = "DESCONOCIDO";
 let codigoIdioma = "POR";
+
 // ========== 🎤 RECONOCIMIENTO DE VOZ ==========
 let recognition = null;
 let isListening = false;
@@ -752,10 +757,12 @@ if (voiceStatus) {
 voiceStatus.classList.remove('show');
 }
 }
+
 // ========== 🤖 BASE DE CONOCIMIENTO ==========
 const aiKnowledgeBase = {
 es: {
 intents: [
+{ keywords: ['itinerario', 'recorrido', 'etapas', 'pasos', 'que hacemos', 'como es el paseo', 'detalles', 'roteiro', 'itinerary'], response: '🗺️ <b>Itinerario Completo:</b><br><br>1️⃣ <b>Embarque:</b> Muelle privado en Porto dos Piratas con comodidades.<br>2️⃣ <b>Navegación:</b> Travesía por la Costa Esmeralda y Ensenada das Garoupas con relatos culturales.<br>3️⃣ <b>Parada para Baño:</b> 30 min en la bahía de Caixa d\'Aço con tobogán y guardavidas.<br>4️⃣ <b>Fiesta a Bordo:</b> Show pirata, música, buffet de frutas y bar.<br><br>¿Quieres saber más sobre alguna etapa en particular?', followUp: [] },
 { keywords: ['horarios', 'salida', 'hora', 'sale', 'programado', '9:30', '11:30', '13:00'], response: '⏰ <b>Horarios de salida:</b><br><br>9:30 Hs, 11:30 Hs y 13:00 Hs.', followUp: [] },
 { keywords: ['kiosko', 'kiosco', 'tienda', 'comprar rapido', 'comercio cerca'], response: '🏪 <b>Kiosko cercano:</b><br><br>Sí, hay un kiosko disponible cerca de las instalaciones.', followUp: [] },
 { keywords: ['duracion total', 'travesia', 'tiempo total', '1:30', '1 hora 30'], response: '⏱️ <b>Duración total:</b><br><br>1 hora y 30 minutos (1:30 Hs).', followUp: [] },
@@ -894,6 +901,7 @@ quickReplies: []
 },
 pt: {
 intents: [
+{ keywords: ['itinerario', 'recorrido', 'etapas', 'pasos', 'que hacemos', 'como es el paseo', 'detalles', 'roteiro', 'itinerary'], response: '🗺️ <b>Roteiro Completo:</b><br><br>1️⃣ <b>Embarque:</b> Píer privado em Porto dos Piratas com comodidades.<br>2️⃣ <b>Navegação:</b> Travessia pela Costa Esmeralda e Enseada das Garoupas com relatos culturais.<br>3️⃣ <b>Parada para Banho:</b> 30 min na baía de Caixa d\'Aço com tobogã e salva-vidas.<br>4️⃣ <b>Festa a Bordo:</b> Show pirata, música, buffet de frutas e bar.<br><br>Quer saber mais sobre alguma etapa em particular?', followUp: [] },
 { keywords: ['horarios', 'horarios saida', 'hora', 'sai', 'programado', '9:30', '11:30', '13:00'], response: '⏰ <b>Horários de saída:</b><br><br>9:30 Hs, 11:30 Hs e 13:00 Hs.', followUp: [] },
 { keywords: ['kiosko', 'kiosk', 'loja', 'comprar rapido'], response: '🏪 <b>Kiosko:</b><br><br>Sim, há um kiosko disponível perto das instalações.', followUp: [] },
 { keywords: ['duracao total', 'travessia', 'tempo total', '1:30'], response: '⏱️ <b>Duração total:</b><br><br>1 hora e 30 minutos (1:30 Hs).', followUp: [] },
@@ -1032,6 +1040,7 @@ quickReplies: []
 },
 en: {
 intents: [
+{ keywords: ['itinerario', 'recorrido', 'etapas', 'pasos', 'que hacemos', 'como es el paseo', 'detalles', 'roteiro', 'itinerary'], response: '🗺️ <b>Complete Itinerary:</b><br><br>1️⃣ <b>Boarding:</b> Private pier at Porto dos Piratas with facilities.<br>2️⃣ <b>Navigation:</b> Crossing the Emerald Coast and Ensenada das Garoupas with cultural stories.<br>3️⃣ <b>Swimming Stop:</b> 30 min at Caixa d\'Aço bay with waterslide and lifeguards.<br>4️⃣ <b>Party on Board:</b> Pirate show, music, fruit buffet and bar.<br><br>Do you want to know more about any specific stage?', followUp: [] },
 { keywords: ['schedule', 'departure', 'time', 'leaves', 'programmed', '9:30', '11:30', '13:00'], response: '⏰ <b>Departure times:</b><br><br>9:30 Hs, 11:30 Hs and 13:00 Hs.', followUp: [] },
 { keywords: ['kiosk', 'shop', 'buy fast'], response: '🏪 <b>Kiosk:</b><br><br>Yes, there is a kiosk available near the facilities.', followUp: [] },
 { keywords: ['total duration', 'crossing', 'total time', '1:30'], response: '⏱️ <b>Total duration:</b><br><br>1 hour and 30 minutes (1:30 Hs).', followUp: [] },
@@ -1169,6 +1178,7 @@ fallback: '🤔 I don\'t have that specific information.<br><br>Try asking about
 quickReplies: []
 }
 };
+
 // ========== 🤖 ANGEL AI CHATBOT FUNCTIONS ==========
 let chatHistory = [];
 let chatbotOpen = false;
@@ -1268,6 +1278,7 @@ return { text: bestMatch.response, followUp: bestMatch.followUp || [] };
 }
 return { text: kb.fallback, followUp: kb.quickReplies };
 }
+
 // ========== IMÁGENES ==========
 const imagenesGrandes = [
 "https://sebagsc2020.github.io/angeltourbrasil/images/atb_01.webp",
@@ -1310,7 +1321,6 @@ const t = translations[lang];
 document.querySelectorAll('[data-key]').forEach(el => { const key = el.getAttribute('data-key'); if(t[key] !== undefined) el.textContent = t[key]; });
 const els = { textFecha:t.fecha, textHorario:t.horario, textNombre:t.nombre, textEmpresa:t.empresa, textAdultos:t.adultos, textMenores:t.menores, textTotal:t.total, btnText:t.btn, horarioNote:t.horario_note, empresaNote:t.empresa_note, infoNoteText:t.info_text, discountBadge:t.discount_text, precioAdultos:t.precio_adultos, footerBoat:t.footer_boat, footerSecure:t.footer_secure, footerConfirm:t.footer_confirm, horarioTitulo1:t.horario1, horarioTitulo2:t.horario2, horarioTitulo3:t.horario3 };
 for(const [id,val] of Object.entries(els)){ const el=document.getElementById(id); if(el) el.textContent=val; }
-document.querySelectorAll('.timeline-step').forEach(step => { const title = step.getAttribute(`data-key-${lang}`); const desc = step.getAttribute(`data-desc-${lang}`); const longtext = step.getAttribute(`data-longtext-${lang}`); if(title){ step.setAttribute('data-title',title); step.setAttribute('data-desc',desc); step.setAttribute('data-longtext',longtext); const h3=step.querySelector('h3'); const p=step.querySelector('p'); if(h3) h3.textContent=title; if(p) p.textContent=desc; } });
 document.querySelectorAll('.lang-btn-header').forEach(btn => { btn.classList.remove('active'); if(btn.getAttribute('data-lang')===lang) btn.classList.add('active'); });
 const chatInput = document.getElementById('aiChatInput');
 if (chatInput) chatInput.placeholder = t.ai_chatbot_placeholder;
@@ -1320,9 +1330,26 @@ localStorage.setItem('preferred_language', lang);
 }
 function stopReading() { if(speechSynthesis){ speechSynthesis.cancel(); isSpeaking=false; const btn=document.getElementById('readAloudBtn'); if(btn){ btn.innerHTML='<i class="fas fa-volume-up"></i> Leer'; btn.classList.remove('stop'); } } }
 function readTextAloud(text,lang){ if(!speechSynthesis) return; stopReading(); const utterance=new SpeechSynthesisUtterance(text); utterance.lang=lang==='es'?'es-ES':(lang==='pt'?'pt-BR':'en-US'); utterance.rate=0.9; speechSynthesis.speak(utterance); }
-function openModal(stepData){ currentStepData=stepData; document.getElementById('modalTitle').textContent=stepData.title; document.getElementById('modalBody').innerHTML=`<p><strong>${stepData.desc}</strong></p><p>${stepData.longtext}</p>`; document.getElementById('infoModal').style.display='flex'; document.body.style.overflow='hidden'; stopReading(); }
+
+function stripHtml(html) {
+let tmp = document.createElement("DIV");
+tmp.innerHTML = html;
+return tmp.textContent || tmp.innerText || "";
+}
+
+function openModal(stepData){ 
+currentStepData=stepData; 
+document.getElementById('modalTitle').textContent=stepData.title; 
+document.getElementById('modalBody').innerHTML=stepData.longtext; 
+document.getElementById('infoModal').style.display='flex'; 
+document.body.style.overflow='hidden'; 
+stopReading(); 
+}
+
 function closeModalFunc(){ stopReading(); document.getElementById('infoModal').style.display='none'; document.body.style.overflow=''; currentStepData=null; }
+
 async function loadWeatherWidget(lang) { const container=document.getElementById('weatherWidgetPlaceholder'); if(!container) return; const widgetLang={es:'es',pt:'pt',en:'en'}[lang]||'es'; const titles={es:{label1:'PORTO BELO',label2:'Previsión 3 días'},pt:{label1:'PORTO BELO',label2:'Previsão 3 dias'},en:{label1:'PORTO BELO',label2:'3-Day Forecast'}}; const title=titles[lang]||titles.es; const link=document.createElement('a'); link.className='weatherwidget-io'; link.href=`https://forecast7.com/${widgetLang}/n27d16n48d58/porto-belo/`; link.setAttribute('data-label_1',title.label1); link.setAttribute('data-label_2',title.label2); link.setAttribute('data-theme','original'); link.setAttribute('data-days','3'); link.style.cssText='pointer-events:none;cursor:default;width:100%;display:block'; link.textContent=`${title.label1} ${title.label2}`; container.innerHTML=''; container.appendChild(link); const oldScript=document.getElementById('weatherwidget-io-js'); if(oldScript) oldScript.remove(); const script=document.createElement('script'); script.id='weatherwidget-io-js'; script.src='https://weatherwidget.io/js/widget.min.js'; document.head.appendChild(script); }
+
 function calcularValorTotal() {
 const adultos = parseInt(document.getElementById('adultos')?.value || 0);
 const menores = parseInt(document.getElementById('menores')?.value || 0);
@@ -1360,12 +1387,35 @@ document.querySelector('.garantia-link')?.addEventListener('click',e=>{e.prevent
 document.getElementById('closeModalBtn')?.addEventListener('click',closeModalFunc);
 document.getElementById('closeModalFooterBtn')?.addEventListener('click',closeModalFunc);
 document.getElementById('infoModal')?.addEventListener('click',e=>{if(e.target===document.getElementById('infoModal')) closeModalFunc();});
-document.getElementById('shareWhatsappBtn')?.addEventListener('click',()=>{if(currentStepData){ window.open(`https://wa.me/?text=${encodeURIComponent(`ANGEL TOUR BRASIL
-${currentStepData.title}
-${currentStepData.desc}
-${currentStepData.longtext}`)}`,'_blank');}});
-document.getElementById('readAloudBtn')?.addEventListener('click',()=>{if(currentStepData){ if(isSpeaking) stopReading(); else readTextAloud(`${currentStepData.title}. ${currentStepData.desc}. ${currentStepData.longtext}`,currentLang); } });
-document.querySelectorAll('.timeline-step').forEach(step=>step.addEventListener('click',()=>{ openModal({ title:step.getAttribute('data-title')||step.querySelector('h3')?.innerText||'', desc:step.getAttribute('data-desc')||step.querySelector('p')?.innerText||'', longtext:step.getAttribute('data-longtext')||'' }); }));
+
+document.getElementById('shareWhatsappBtn')?.addEventListener('click', () => {
+if(currentStepData){ 
+const cleanText = stripHtml(currentStepData.longtext);
+window.open(`https://wa.me/?text=${encodeURIComponent(`ANGEL TOUR BRASIL\n\n📍 ${currentStepData.title}\n\n${cleanText}`)}`,'_blank');
+}
+});
+
+document.getElementById('readAloudBtn')?.addEventListener('click', () => {
+if(currentStepData){ 
+if(isSpeaking) stopReading(); 
+else {
+const cleanText = stripHtml(currentStepData.longtext);
+readTextAloud(`${currentStepData.title}. ${cleanText}`, currentLang); 
+}
+} 
+});
+
+document.querySelectorAll('.timeline-step').forEach(step => {
+step.addEventListener('click', () => {
+const titles = { es: "Itinerario Completo de la Excursión", pt: "Roteiro Completo da Excursão", en: "Complete Tour Itinerary" };
+openModal({
+title: titles[currentLang] || titles['es'],
+desc: "Detalles de las 4 etapas del paseo",
+longtext: fullItinerary[currentLang] || fullItinerary['es']
+});
+});
+});
+
 const adultosInput = document.getElementById('adultos');
 const menoresInput = document.getElementById('menores');
 if(adultosInput) adultosInput.addEventListener('input', calcularValorTotal);
