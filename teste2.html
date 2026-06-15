@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
-<title>Angel+Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
+<title>+Angel Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
 
 <!-- 📱 PWA & APP META TAGS -->
 <meta name="theme-color" content="#0A2F6C">
@@ -553,7 +553,6 @@ let isSpeaking = false;
 let paisUsuario = "DESCONOCIDO";
 let codigoIdioma = "POR";
 
-// ========== 🎤 RECONOCIMIENTO DE VOZ ==========
 let recognition = null;
 let isListening = false;
 let voiceSupported = false;
@@ -641,7 +640,6 @@ function hideVoiceStatus() {
     if (el) el.classList.remove('show');
 }
 
-// ========== 🤖 BASE DE CONOCIMIENTO ==========
 const aiKnowledgeBase = {
 es: {
 intents: [
@@ -932,7 +930,6 @@ function showTyping() {
 }
 function removeTyping() { const typing = document.getElementById('typingIndicator'); if (typing) typing.remove(); }
 
-// ========== GALERÍA Y LIGHTBOX ==========
 const imagenesGrandes = [
     "images/atb_01.webp", "images/atb_02.webp", "images/atb_03.webp", "images/atb_04.webp",
     "images/atb_05.webp", "images/atb_06.webp", "images/atb_07.webp", "images/atb_08.webp",
@@ -971,7 +968,6 @@ function cerrarLightbox() {
     if(lb) { lb.classList.remove('active'); document.body.style.overflow = ''; } 
 }
 
-// ========== UTILIDADES Y EVENTOS ==========
 function changeLanguage(lang) {
     currentLang = lang;
     if (currentLang === "es") codigoIdioma = "ESP";
@@ -1041,7 +1037,6 @@ async function loadWeatherWidget(lang) {
     const script=document.createElement('script'); script.id='weatherwidget-io-js'; script.src='https://weatherwidget.io/js/widget.min.js'; document.head.appendChild(script); 
 }
 
-// ========== INICIALIZACIÓN ==========
 document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('preferred_language');
     changeLanguage(savedLang && translations[savedLang] ? savedLang : 'pt');
@@ -1132,7 +1127,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     obtenerPaisUsuario().then(() => { console.log("País del usuario detectado:", paisUsuario); });
     
-    // 📱 LÓGICA DE INSTALACIÓN PWA
     let deferredPrompt;
     const installBtn = document.getElementById('installAppBtn');
     window.addEventListener('beforeinstallprompt', (e) => {
@@ -1150,7 +1144,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // 📱 REGISTRAR SERVICE WORKER
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('/sw.js')
