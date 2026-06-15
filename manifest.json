@@ -2,7 +2,7 @@
   "name": "Angel Tour Brasil",
   "short_name": "Angel Tour",
   "description": "O passeio mais completo da Costa Esmeralda. Reserve seu passeio de barco em Porto Belo.",
-  "start_url": "/teste2.html",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0A2F6C",
