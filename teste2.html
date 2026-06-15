@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Angel+Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
+<title>Angel Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
 <meta name="description" content="Conheça o passeio mais completo da região! Passeio pela Costa Esmeralda, parada na Bahía de Caixa D'Aço, tobogã, buffet de frutas, batida de côco e muita animação. Embarque em Porto Belo - SC.">
 <meta name="keywords" content="Angel Tour Brasil, passeio de barco, Costa Esmeralda, Porto Belo, Caixa D'Aço, turismo Santa Catarina, passeio de barco Porto Belo, escuna Porto Belo">
 <meta name="author" content="Angel Tour Brasil">
@@ -181,13 +181,15 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 .ai-msg.typing span:nth-child(2) { animation-delay: 0.2s; }
 .ai-msg.typing span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-8px); opacity: 1; } }
-/* 🆕 QUICK REPLIES MEJORADOS */
+/* 🆕 AI LOADING INDICATOR */
+.ai-msg.loading-ai { background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); align-self: flex-start; border-bottom-left-radius: 4px; display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #F59E0B; }
+.ai-msg.loading-ai i { animation: spin 1s linear infinite; color: #D97706; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 .ai-quick-replies { padding: 8px 12px; border-top: 1px solid #E2E8F0; background: #F8FAFC; display: flex; flex-wrap: wrap; gap: 6px; max-height: 100px; overflow-y: auto; }
 .ai-quick-replies.hidden { display: none; }
 .quick-reply-btn { background: white; border: 1.5px solid #E2E8F0; color: #475569; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; font-weight: 500; }
 .quick-reply-btn:hover { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-color: transparent; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3); }
 .quick-reply-btn i { margin-right: 4px; }
-/* 🆕 FALLBACK CATEGORÍAS */
 .fallback-categories { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .category-chip { background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%); border: 1px solid #CBD5E1; color: #334155; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 4px; }
 .category-chip:hover { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-color: transparent; transform: translateY(-1px); }
@@ -499,6 +501,20 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 
+<script type="module">
+// 🆕 IMPORTAR TRANSFORMERS.JS (solo se carga cuando se necesita)
+import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';
+
+// Configurar Transformers.js para usar caché del navegador
+env.allowLocalModels = false;
+env.useBrowserCache = true;
+
+// Hacer disponible globalmente
+window.TransformersPipeline = pipeline;
+window.TransformersEnv = env;
+console.log('✅ Transformers.js importado correctamente');
+</script>
+
 <script>
 const translations = {
 es: { nav_home:"Inicio", nav_tour:"El Paseo", nav_gallery:"Galería", nav_book:"Reservar", hero_title:"El paseo más completo de la Costa Esmeralda", hero_sub:"Navegue por paisajes paradisíacos, nade en la Bahía de Caixa D'Aço, disfrute del tobogán, frutas tropicales y mucha animación a bordo.", btn_route:"Ver Itinerario", btn_guarantee:"Asegurar Plaza", why_title:"¿Por qué navegar con Angel Tour?", why_sub:"Experiencia completa, seguridad y diversión para todas las edades", diff1_title:"Seguridad total", diff1_desc:"Chalecos + salvavidas y tripulación entrenada", diff2_title:"Parada en Caixa D'Aço", diff2_desc:"Aguas cristalinas para nadar con tranquilidad", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas y batida de coco a bordo", diff4_title:"Diversión asegurada", diff4_desc:"Tobogán, música y animación para adultos y niños", itinerary_title:"Itinerario de la Experiencia", itinerary_sub:"Embarque en Porto dos Piratas y viva momentos inolvidables", step1_title:"Embarque", step2_title:"Navegación", step3_title:"Parada para Baño", step4_title:"Fiesta a bordo", gallery_title:"Vive esta aventura", gallery_sub:"Mira el paseo e inspírate para tu viaje", testimonials_title:"Quienes ya navegaron, recomiendan", test1_text:"¡Paseo fantástico! El equipo es muy atento.", test2_text:"Seguridad y diversión. Buffet de frutas delicioso.", test3_text:"¡El mejor paseo en barco de Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegación", footer_home:"Inicio", footer_route:"Itinerario", footer_gallery:"Galería", footer_follow:"Sigue la aventura", footer_copyright:"© 2026 Angel Tour Brasil – El paseo más completo de la Costa Esmeralda.", map_text:"Abrir en Google Maps", sticky_subtitle:"Reserva tu lugar", sticky_price:"⭐ ¡Precios especiales! ⭐", sticky_btn:"Reservar Ahora", fecha:"FECHA DEL PASEO", horario:"PREFERENCIA DE HORARIO", horario1:"Mañana", horario2:"Media Mañana", horario3:"Tarde", nombre:"NOMBRE", empresa:"EMPRESA", empresa_note:"*Opcional", adultos:"ADULTOS", menores:"MENORES de 6 a 11 años", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeto a disponibilidad", info_text:"💡 Precio de venta al público.", discount_text:"🎯 50% de descuento", precio_adultos:"💰 R$ 100,00 cada adulto", footer_boat:"Paseos en barco", footer_secure:"Confirmación segura", footer_confirm:"Envío por WhatsApp", ai_chatbot_placeholder:"Pregúntame algo...", ai_online:"Online agora", ai_greeting:"¡Hola! 👋 Soy <b>Angel AI</b>, tu asistente virtual. Tengo información sobre el paseo. ¿En qué te puedo ayudar?", voice_listening:"🎤 Escuchando...", voice_stop:"🛑 Detener", voice_error:"❌ Error de micrófono", voice_unsupported:"🎤 No soportado", voice_start:"🎤 Toca para hablar" },
@@ -607,7 +623,7 @@ function hideVoiceStatus() {
     if (el) el.classList.remove('show');
 }
 
-// ========== 🤖 BASE DE CONOCIMIENTO AMPLIADA ==========
+// ========== 🤖 BASE DE CONOCIMIENTO ==========
 const aiKnowledgeBase = {
 es: {
 intents: [
@@ -615,7 +631,7 @@ intents: [
 { id:'bebes', keywords: ['bebes', 'bebe', '0 a 5', 'menor 5', 'gratuito', 'gratis', 'infantes', 'recien nacido'], response: '👶 <b>Bebés 0-5 años:</b><br>Son completamente GRATIS. ⚠️ IMPORTANTE: La Marina Brasileña exige registrar sus nombres y edades exactos por seguridad.' },
 { id:'ninos', keywords: ['ninos', 'niños', '6 a 11', 'menor 6', 'mitad', 'descuento', 'criancas', 'hijos'], response: '🧒 <b>Niños 6-11 años:</b><br>Tienen 50% de descuento. Pagan R$ 50,00.' },
 { id:'reserva', keywords: ['reserva', 'reservar', 'agendar', 'book', 'whatsapp', 'contacto', 'angel', 'comunicar', 'llamar', 'numero'], response: '📱 <b>Reservas:</b><br>Puedes reservar directamente por WhatsApp al <b>+55 47 99967-048</b> o rellenando el formulario al final de esta página. Contacto: Ángel.' },
-{ id:'lluvia', keywords: ['lluvia', 'clima', 'mal tiempo', 'suspende', 'cancela', 'si llueve', 'tormenta', 'lluvia', 'llover'], response: '⛵ <b>¿Se suspende por lluvia?</b><br>NO. El paseo NO se suspende por lluvia. Nuestros barcos cuentan con cubierta hermética y seguimos navegando con total seguridad.' },
+{ id:'lluvia', keywords: ['lluvia', 'clima', 'mal tiempo', 'suspende', 'cancela', 'si llueve', 'tormenta', 'llover'], response: '⛵ <b>¿Se suspende por lluvia?</b><br>NO. El paseo NO se suspende por lluvia. Nuestros barcos cuentan con cubierta hermética y seguimos navegando con total seguridad.' },
 { id:'itinerario', keywords: ['itinerario', 'ruta', 'recorrido', 'paradas', 'que incluye', 'paseo', 'duracion', 'tiempo', 'horario', 'horarios', 'sale', 'hora'], response: '🗺️ <b>Itinerario (1h30):</b><br>1. Embarque en Porto dos Piratas.<br>2. Navegación por Costa Esmeralda.<br>3. Parada de 30 min en Caixa d\'Aço (tobogán y baño).<br>4. Fiesta a bordo con buffet de frutas y animación pirata.<br><br>🕐 <b>Horarios:</b> 9:30, 11:10 y 13:00 Hs.' },
 { id:'comida', keywords: ['comida', 'comer', 'buffet', 'fruta', 'almuerzo', 'restaurante', 'snack', 'mate', 'alimentos', 'hambre', 'beber', 'bebida', 'conservadora'], response: '🍉 <b>Comida y Bebida:</b><br>Incluimos un delicioso buffet de frutas tropicales a bordo. En el predio hay restaurante (hamburguesas, sándwiches) y bar. ¡Puedes traer tu propia conservadora y mate!' },
 { id:'isla', keywords: ['isla', 'desembarco', 'porto belo isla', 'ilha'], response: '🏝️ <b>Isla de Porto Belo:</b><br>No, el recorrido no contempla desembarcar en la isla. Nos enfocamos en la navegación por la Costa Esmeralda y la parada en Caixa d\'Aço.' },
@@ -707,6 +723,20 @@ categories: [
 }
 };
 
+// 🆕 LABELS PARA ZERO-SHOT CLASSIFICATION (Transformers.js)
+const zeroShotLabels = {
+es: ['precios y costos', 'bebés y niños pequeños', 'niños y descuentos', 'reservas y contacto', 'clima y lluvia', 'itinerario y horarios', 'comida y bebidas', 'playa y entretenimiento', 'accesibilidad y discapacidad', 'seguridad y salvavidas', 'baños e instalaciones', 'ubicación y distancia', 'mascotas y animales', 'formas de pago', 'sol y sombra', 'actividades acuáticas', 'capacidad de barcos', 'saludo'],
+pt: ['preços e custos', 'bebês e crianças pequenas', 'crianças e descontos', 'reservas e contato', 'clima e chuva', 'itinerário e horários', 'comida e bebidas', 'praia e entretenimento', 'acessibilidade e deficiência', 'segurança e salva-vidas', 'banheiros e instalações', 'localização e distância', 'mascotes e animais', 'formas de pagamento', 'sol e sombra', 'atividades aquáticas', 'capacidade de barcos', 'saudação'],
+en: ['prices and costs', 'babies and infants', 'children and discounts', 'reservations and contact', 'weather and rain', 'itinerary and schedule', 'food and drinks', 'beach and entertainment', 'accessibility and disability', 'safety and lifeguards', 'bathrooms and facilities', 'location and distance', 'pets and animals', 'payment methods', 'sun and shade', 'water activities', 'boat capacity', 'greeting']
+};
+
+// 🆕 MAPEO DE LABELS A INTENT IDS
+const labelToIntentId = {
+es: { 'precios y costos':'precio', 'bebés y niños pequeños':'bebes', 'niños y descuentos':'ninos', 'reservas y contacto':'reserva', 'clima y lluvia':'lluvia', 'itinerario y horarios':'itinerario', 'comida y bebidas':'comida', 'playa y entretenimiento':'playa', 'accesibilidad y discapacidad':'accesibilidad', 'seguridad y salvavidas':'seguridad', 'baños e instalaciones':'banos', 'ubicación y distancia':'ubicacion', 'mascotas y animales':'mascotas', 'formas de pago':'pagos', 'sol y sombra':'sol', 'actividades acuáticas':'snorkel', 'capacidad de barcos':'capacidad', 'saludo':'hola' },
+pt: { 'preços e custos':'precio', 'bebês e crianças pequenas':'bebes', 'crianças e descontos':'ninos', 'reservas e contato':'reserva', 'clima e chuva':'lluvia', 'itinerário e horários':'itinerario', 'comida e bebidas':'comida', 'praia e entretenimiento':'playa', 'acessibilidade e deficiência':'accesibilidad', 'segurança e salva-vidas':'seguridad', 'banheiros e instalações':'banos', 'localização e distância':'ubicacion', 'mascotes e animais':'mascotas', 'formas de pagamento':'pagos', 'sol e sombra':'sol', 'atividades aquáticas':'snorkel', 'capacidade de barcos':'capacidad', 'saudação':'hola' },
+en: { 'prices and costs':'precio', 'babies and infants':'bebes', 'children and discounts':'ninos', 'reservations and contact':'reserva', 'weather and rain':'lluvia', 'itinerary and schedule':'itinerario', 'food and drinks':'comida', 'beach and entertainment':'playa', 'accessibility and disability':'accesibilidad', 'safety and lifeguards':'seguridad', 'bathrooms and facilities':'banos', 'location and distance':'ubicacion', 'pets and animals':'mascotas', 'payment methods':'pagos', 'sun and shade':'sol', 'water activities':'snorkel', 'boat capacity':'capacidad', 'greeting':'hola' }
+};
+
 // 🆕 QUICK REPLIES CONFIGURACIÓN
 const quickRepliesConfig = {
 es: [
@@ -735,12 +765,100 @@ en: [
 ]
 };
 
-// ========== 🧠 MOTOR DE IA MEJORADO ==========
+// ========== 🧠 MOTOR HÍBRIDO: KEYWORDS + TRANSFORMERS.JS ==========
 let chatHistory = [];
 let chatbotOpen = false;
 let conversationContext = { lastIntent: null, lastQuery: null };
 
-// 🆕 Algoritmo de Levenshtein para fuzzy matching
+// 🆕 ESTADO DE TRANSFORMERS.JS
+let transformersClassifier = null;
+let transformersLoading = false;
+let transformersLoaded = false;
+let transformersError = false;
+
+// 🆕 Cargar Transformers.js bajo demanda (lazy loading)
+async function loadTransformersClassifier() {
+    if (transformersLoaded && transformersClassifier) {
+        return transformersClassifier;
+    }
+    
+    if (transformersLoading) {
+        // Ya se está cargando, esperar
+        return new Promise((resolve) => {
+            const checkInterval = setInterval(() => {
+                if (transformersLoaded) {
+                    clearInterval(checkInterval);
+                    resolve(transformersClassifier);
+                }
+            }, 100);
+        });
+    }
+    
+    transformersLoading = true;
+    
+    try {
+        console.log('🧠 Cargando Transformers.js (zero-shot classifier)...');
+        
+        // Verificar que Transformers está disponible
+        if (!window.TransformersPipeline) {
+            throw new Error('Transformers.js no está disponible');
+        }
+        
+        // Cargar el modelo de zero-shot classification
+        transformersClassifier = await window.TransformersPipeline(
+            'zero-shot-classification',
+            'Xenova/distilbert-base-uncased-mnli',
+            { progress_callback: (progress) => {
+                if (progress.status === 'downloading') {
+                    const percent = progress.progress ? Math.round(progress.progress) : 0;
+                    console.log(`📥 Descargando modelo: ${percent}%`);
+                }
+            }}
+        );
+        
+        transformersLoaded = true;
+        transformersLoading = false;
+        console.log('✅ Transformers.js cargado correctamente');
+        return transformersClassifier;
+        
+    } catch (error) {
+        console.error('❌ Error cargando Transformers.js:', error);
+        transformersError = true;
+        transformersLoading = false;
+        return null;
+    }
+}
+
+// 🆕 Clasificar texto con Transformers.js
+async function classifyWithTransformers(text) {
+    if (!transformersClassifier) {
+        const classifier = await loadTransformersClassifier();
+        if (!classifier) return null;
+    }
+    
+    try {
+        const labels = zeroShotLabels[currentLang] || zeroShotLabels['es'];
+        const result = await transformersClassifier(text, labels, {
+            hypothesisTemplate: "Este texto es sobre {}"
+        });
+        
+        // Retornar el label con mayor score
+        if (result && result.labels && result.labels.length > 0) {
+            return {
+                label: result.labels[0],
+                score: result.scores[0],
+                allLabels: result.labels,
+                allScores: result.scores
+            };
+        }
+        return null;
+    } catch (error) {
+        console.error('❌ Error clasificando con Transformers:', error);
+        return null;
+    }
+}
+
+// Algoritmo de Levenshtein para fuzzy matching
 function levenshteinDistance(a, b) {
     if (a.length === 0) return b.length;
     if (b.length === 0) return a.length;
@@ -763,75 +881,45 @@ function levenshteinDistance(a, b) {
     return matrix[b.length][a.length];
 }
 
-// 🆕 Normalización avanzada de texto
+// Normalización avanzada de texto
 function normalizeText(text) {
     return text
         .toLowerCase()
         .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "") // Remover acentos
-        .replace(/[¿?¡!.,;:]/g, "") // Remover puntuación
-        .replace(/\s+/g, " ") // Espacios múltiples
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[¿?¡!.,;:]/g, "")
+        .replace(/\s+/g, " ")
         .trim();
 }
 
-// 🆕 Detección automática de idioma del usuario
-function detectLanguage(text) {
-    const normalized = normalizeText(text);
-    const indicators = {
-        es: ['que', 'como', 'cuanto', 'precio', 'hola', 'buenos', 'tarde', 'dia', 'noche', 'quiero', 'necesito', 'paseo', 'barco', 'playa'],
-        pt: ['que', 'como', 'quanto', 'preco', 'ola', 'bom', 'tarde', 'dia', 'noite', 'quero', 'preciso', 'passeio', 'barco', 'praia', 'vc', 'voce'],
-        en: ['what', 'how', 'how much', 'price', 'hello', 'good', 'afternoon', 'morning', 'evening', 'want', 'need', 'tour', 'boat', 'beach']
-    };
-    
-    const words = normalized.split(' ');
-    const scores = { es: 0, pt: 0, en: 0 };
-    
-    for (const word of words) {
-        for (const [lang, list] of Object.entries(indicators)) {
-            if (list.includes(word)) scores[lang]++;
-        }
-    }
-    
-    const maxScore = Math.max(...Object.values(scores));
-    if (maxScore === 0) return currentLang;
-    
-    const detected = Object.entries(scores).find(([_, s]) => s === maxScore)?.[0];
-    return detected || currentLang;
-}
-
-// 🆕 Algoritmo de matching mejorado con múltiples técnicas
+// Algoritmo de matching mejorado
 function calculateMatchScore(userText, keyword) {
     const normalizedUser = normalizeText(userText);
     const normalizedKeyword = normalizeText(keyword);
     const userWords = normalizedUser.split(' ');
     let score = 0;
     
-    // 1. Match exacto completo (máximo puntaje)
     if (normalizedUser === normalizedKeyword) return 1000;
     
-    // 2. Match exacto de palabra completa
     if (userWords.includes(normalizedKeyword)) {
         score += normalizedKeyword.length * 10;
     }
     
-    // 3. Match parcial (keyword está contenida en el texto)
     if (normalizedUser.includes(normalizedKeyword)) {
         score += normalizedKeyword.length * 5;
     }
     
-    // 4. Fuzzy matching (tolerante a errores de escritura)
     for (const userWord of userWords) {
         if (userWord.length >= 3 && normalizedKeyword.length >= 3) {
             const distance = levenshteinDistance(userWord, normalizedKeyword);
             const maxLen = Math.max(userWord.length, normalizedKeyword.length);
             const similarity = 1 - (distance / maxLen);
-            if (similarity > 0.75) { // 75% de similitud
+            if (similarity > 0.75) {
                 score += normalizedKeyword.length * 3 * similarity;
             }
         }
     }
     
-    // 5. Match de palabras clave individuales
     const keywordWords = normalizedKeyword.split(' ');
     for (const kw of keywordWords) {
         if (userWords.includes(kw) && kw.length > 2) {
@@ -842,11 +930,12 @@ function calculateMatchScore(userText, keyword) {
     return score;
 }
 
-// 🆕 Detección de múltiples intenciones
-function detectMultipleIntents(userText) {
+// 🆕 SISTEMA HÍBRIDO: Primero keywords, luego Transformers si falla
+async function getAIResponseHybrid(userText) {
     const kb = aiKnowledgeBase[currentLang] || aiKnowledgeBase['es'];
-    const matches = [];
     
+    // FASE 1: Intentar con keywords (rápido, 50ms)
+    const matches = [];
     for (const intent of kb.intents) {
         let totalScore = 0;
         for (const keyword of intent.keywords) {
@@ -857,9 +946,79 @@ function detectMultipleIntents(userText) {
         }
     }
     
-    // Ordenar por score descendente
     matches.sort((a, b) => b.score - a.score);
-    return matches;
+    
+    // Si keywords encuentra algo con score alto, usar eso
+    if (matches.length > 0 && matches[0].score > 15) {
+        console.log('✅ Match encontrado con keywords:', matches[0].intent.id, 'score:', matches[0].score);
+        return {
+            text: matches[0].intent.response,
+            isFallback: false,
+            intentId: matches[0].intent.id,
+            method: 'keywords'
+        };
+    }
+    
+    // FASE 2: Keywords falló o score bajo, intentar con Transformers.js
+    console.log('🧠 Keywords no encontró match claro, usando Transformers.js...');
+    
+    // Mostrar indicador de carga de IA
+    showAILoadingIndicator();
+    
+    try {
+        const classification = await classifyWithTransformers(userText);
+        removeAILoadingIndicator();
+        
+        if (classification && classification.score > 0.4) { // Umbral de confianza
+            const intentId = labelToIntentId[currentLang]?.[classification.label] || 
+                           labelToIntentId['es']?.[classification.label];
+            
+            if (intentId) {
+                const intent = kb.intents.find(i => i.id === intentId);
+                if (intent) {
+                    console.log('✅ Match encontrado con Transformers.js:', intentId, 'score:', classification.score.toFixed(3));
+                    return {
+                        text: intent.response,
+                        isFallback: false,
+                        intentId: intentId,
+                        method: 'transformers',
+                        confidence: classification.score
+                    };
+                }
+            }
+        }
+        
+        console.log('⚠️ Transformers.js tampoco encontró match claro');
+    } catch (error) {
+        removeAILoadingIndicator();
+        console.error('❌ Error en Transformers.js:', error);
+    }
+    
+    // FASE 3: Ambos fallaron, mostrar fallback
+    return {
+        text: kb.fallback,
+        isFallback: true,
+        intentId: null,
+        method: 'fallback'
+    };
+}
+
+// 🆕 Indicador de carga de IA
+function showAILoadingIndicator() {
+    const container = document.getElementById('aiChatMessages');
+    if (!container) return;
+    
+    const loading = document.createElement('div');
+    loading.className = 'ai-msg loading-ai';
+    loading.id = 'aiLoadingIndicator';
+    loading.innerHTML = '<i class="fas fa-brain"></i> <span>🧠 Analizando con IA...</span>';
+    container.appendChild(loading);
+    container.scrollTop = container.scrollHeight;
+}
+
+function removeAILoadingIndicator() {
+    const loading = document.getElementById('aiLoadingIndicator');
+    if (loading) loading.remove();
 }
 
 function initChatbot() {
@@ -887,7 +1046,6 @@ function initChatbot() {
     if (input) input.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
 }
 
-// 🆕 Mostrar Quick Replies
 function showQuickReplies() {
     const container = document.getElementById('aiQuickReplies');
     if (!container) return;
@@ -911,13 +1069,12 @@ function showQuickReplies() {
     });
 }
 
-// 🆕 Ocultar Quick Replies
 function hideQuickReplies() {
     const container = document.getElementById('aiQuickReplies');
     if (container) container.classList.add('hidden');
 }
 
-function sendMessage() {
+async function sendMessage() {
     const input = document.getElementById('aiChatInput');
     const text = input?.value.trim();
     if (!text) return;
@@ -927,68 +1084,36 @@ function sendMessage() {
     hideQuickReplies();
     showTyping();
     
-    // 🆕 Detectar idioma del usuario automáticamente
-    const detectedLang = detectLanguage(text);
-    if (detectedLang !== currentLang && translations[detectedLang]) {
-        console.log('🌍 Idioma detectado:', detectedLang);
+    const startTime = performance.now();
+    
+    // 🆕 USAR SISTEMA HÍBRIDO
+    const response = await getAIResponseHybrid(text);
+    
+    const endTime = performance.now();
+    const responseTime = Math.round(endTime - startTime);
+    
+    removeTyping();
+    
+    // Agregar indicador del método usado (solo en modo test)
+    let methodBadge = '';
+    if (response.method === 'keywords') {
+        methodBadge = '<div style="font-size:0.65rem;color:#94A3B8;margin-top:4px;">⚡ Keywords (' + responseTime + 'ms)</div>';
+    } else if (response.method === 'transformers') {
+        methodBadge = '<div style="font-size:0.65rem;color:#10B981;margin-top:4px;">🧠 IA Semántica (' + responseTime + 'ms, ' + Math.round((response.confidence || 0) * 100) + '% confianza)</div>';
     }
     
-    setTimeout(() => {
-        const response = getAIResponse(text);
-        removeTyping();
-        addBotMessage(response.text);
-        
-        // 🆕 Mostrar categorías si es fallback
-        if (response.isFallback) {
-            showFallbackCategories();
-        } else {
-            // Mostrar quick replies relacionados
-            setTimeout(() => showQuickReplies(), 500);
-        }
-        
-        // 🆕 Actualizar contexto
-        conversationContext.lastQuery = text;
-        if (response.intentId) conversationContext.lastIntent = response.intentId;
-    }, 600 + Math.random() * 400);
-}
-
-// 🆕 Respuesta mejorada con múltiples intenciones
-function getAIResponse(userText) {
-    const matches = detectMultipleIntents(userText);
-    const kb = aiKnowledgeBase[currentLang] || aiKnowledgeBase['es'];
+    addBotMessage(response.text + methodBadge);
     
-    // Si hay matches, combinar las respuestas
-    if (matches.length > 0 && matches[0].score > 5) {
-        // Tomar hasta 2 intenciones si son relevantes
-        const topMatches = matches.slice(0, 2).filter(m => m.score > 5);
-        
-        if (topMatches.length === 1) {
-            return {
-                text: topMatches[0].intent.response,
-                isFallback: false,
-                intentId: topMatches[0].intent.id
-            };
-        } else if (topMatches.length > 1) {
-            // Combinar múltiples respuestas
-            const combined = topMatches.map(m => m.intent.response).join('<br><br>');
-            return {
-                text: combined,
-                isFallback: false,
-                intentId: topMatches[0].intent.id
-            };
-        }
+    if (response.isFallback) {
+        showFallbackCategories();
+    } else {
+        setTimeout(() => showQuickReplies(), 500);
     }
     
-    // 🆕 Fallback inteligente con categorías
-    let fallbackText = kb.fallback;
-    return {
-        text: fallbackText,
-        isFallback: true,
-        intentId: null
-    };
+    conversationContext.lastQuery = text;
+    if (response.intentId) conversationContext.lastIntent = response.intentId;
 }
 
-// 🆕 Mostrar categorías en el fallback
 function showFallbackCategories() {
     const kb = aiKnowledgeBase[currentLang] || aiKnowledgeBase['es'];
     const container = document.getElementById('aiChatMessages');
@@ -1276,11 +1401,9 @@ async function loadWeatherWidget(lang) {
 
 // ========== INICIALIZACIÓN ==========
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Inicializar idioma
     const savedLang = localStorage.getItem('preferred_language');
     changeLanguage(savedLang && translations[savedLang] ? savedLang : 'pt');
     
-    // ✅ 2. Event listeners para botones de idioma (CORREGIDO)
     document.querySelectorAll('.lang-btn-header').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -1291,14 +1414,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // 3. Inicializar componentes
     calcularValorTotal();
     setTimeout(() => loadWeatherWidget(currentLang), 100);
     initChatbot();
     initVoiceRecognition();
     initGallery();
     
-    // 4. Configurar eventos de Galería/Lightbox
     const lightboxModern = document.getElementById('lightboxModern');
     if(lightboxModern) {
         lightboxModern.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
@@ -1318,7 +1439,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } 
     });
     
-    // 5. Eventos del Formulario
     document.querySelectorAll('.horario-card').forEach(card => {
         card.addEventListener('click', function() {
             document.querySelectorAll('.horario-card').forEach(c => c.classList.remove('selected'));
@@ -1352,7 +1472,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if(adultosInput) adultosInput.addEventListener('input', calcularValorTotal);
     if(menoresInput) menoresInput.addEventListener('input', calcularValorTotal);
     
-    // 6. Eventos de Navegación y Menú
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -1379,7 +1498,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // 7. Eventos de Modales
     document.getElementById('closeModalBtn')?.addEventListener('click', closeModalFunc);
     document.getElementById('closeModalFooterBtn')?.addEventListener('click', closeModalFunc);
     document.getElementById('infoModal')?.addEventListener('click', e => { if(e.target === document.getElementById('infoModal')) closeModalFunc(); });
@@ -1414,7 +1532,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // 8. Barra Sticky
     const stickyBar = document.getElementById('stickyBookingBar');
     const heroSec = document.getElementById('inicio');
     const stickyBtn = document.getElementById('stickyBookBtn');
@@ -1432,10 +1549,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if(stickyBtn) stickyBtn.addEventListener('click', () => scrollToSectionWithOffset('reserva'));
     document.querySelector('.garantia-link')?.addEventListener('click', e => { e.preventDefault(); scrollToSectionWithOffset('reserva'); });
     
-    // 9. Detectar país
     obtenerPaisUsuario().then(() => { console.log("País del usuario detectado:", paisUsuario); });
     
-    console.log('✅ Angel AI con mejoras de IA implementadas correctamente');
+    console.log('✅ Sistema Híbrido (Keywords + Transformers.js) inicializado correctamente');
 });
 </script>
 </body>
