@@ -2,7 +2,7 @@
   "name": "Angel Tour Brasil",
   "short_name": "Angel Tour",
   "description": "O passeio mais completo da Costa Esmeralda",
-  "start_url": "/index.html",
+  "start_url": "/angeltourbrasil/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0A2F6C",
