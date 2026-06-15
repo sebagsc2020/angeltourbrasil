@@ -51,9 +51,8 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 .lang-buttons-header { display: flex; gap: 0.5rem; align-items: center; }
 .lang-btn-header { background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 40px; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
 .lang-btn-header:hover { background: #0EA5E9; border-color: #0EA5E9; transform: translateY(-2px); }
-.lang-btn-header.active { background: #E2E8F0; border-color: #CBD5E1; box-shadow: 0 0 0 2px rgba(100, 116, 139, 0.2); width: 50px; height: 50px; transform: scale(1.02); }
-.lang-btn-header.active img { width: 28px; height: 28px; }
-.lang-btn-header img { width: 20px; height: 20px; object-fit: contain; transition: all 0.3s ease; }
+.lang-btn-header.active { background: #0EA5E9; border-color: #0EA5E9; box-shadow: 0 0 0 2px rgba(14,165,233,0.3); }
+.lang-btn-header img { width: 22px; height: 22px; object-fit: contain; transition: all 0.3s ease; }
 .menu-icon { font-size: 1.8rem; cursor: pointer; color: var(--deep-blue); display: flex; align-items: center; }
 .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; margin: 0; padding: 0; transition: all 0.3s ease; width: 100%; }
 .nav-links a { text-decoration: none; font-weight: 600; color: #2C3E50; transition: 0.3s; cursor: pointer; }
@@ -191,7 +190,6 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 .ai-msg.typing span:nth-child(2) { animation-delay: 0.2s; }
 .ai-msg.typing span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-8px); opacity: 1; } }
-.ai-quick-replies { display: none; }
 .ai-chatbot-input-area { padding: 12px 16px; border-top: 1px solid #E2E8F0; display: flex; gap: 8px; background: white; align-items: center; }
 .ai-chatbot-input { flex: 1; border: 1.5px solid #E2E8F0; border-radius: 24px; padding: 10px 16px; font-size: 0.85rem; font-family: 'Inter', sans-serif; outline: none; }
 .ai-chatbot-input:focus { border-color: #667eea; }
@@ -621,47 +619,428 @@ function hideVoiceStatus() {
     if (el) el.classList.remove('show');
 }
 
-// ========== 🤖 BASE DE CONOCIMIENTO ==========
+// ========== 🤖 BASE DE CONOCIMIENTO COMPLETA ==========
 const aiKnowledgeBase = {
 es: {
 intents: [
-{ keywords: ['precio', 'costo', 'valor', 'cuanto', 'tarifa'], response: '💰 <b>Precios:</b><br>Adultos: R$ 100,00<br>Menores 6-11 años: 50% (R$ 50,00)<br>Bebés 0-5 años: GRATIS' },
-{ keywords: ['bebes', 'bebe', '0 a 5', 'menor 5', 'gratuito', 'gratis'], response: '👶 <b>Bebés 0-5 años:</b><br>Son completamente GRATIS. ⚠️ IMPORTANTE: La Marina Brasileña exige registrar sus nombres y edades exactos por seguridad.' },
-{ keywords: ['ninos', 'niños', '6 a 11', 'menor 6', 'mitad', 'descuento'], response: '🧒 <b>Niños 6-11 años:</b><br>Tienen 50% de descuento. Pagan R$ 50,00.' },
-{ keywords: ['reserva', 'reservar', 'agendar', 'book', 'whatsapp'], response: '📱 <b>Reservas:</b><br>Puedes reservar directamente por WhatsApp al +55 47 99967-048 o rellenando el formulario al final de esta página.' },
-{ keywords: ['lluvia', 'clima', 'mal tiempo', 'suspende', 'cancela', 'si llueve'], response: '⛵ <b>¿Se suspende por lluvia?</b><br>NO. El paseo NO se suspende por lluvia. Nuestros barcos cuentan con cubierta hermética y seguimos navegando con total seguridad.' },
-{ keywords: ['itinerario', 'ruta', 'recorrido', 'paradas', 'que incluye', 'paseo'], response: '🗺️ <b>Itinerario:</b><br>1. Embarque en Porto dos Piratas.<br>2. Navegación por Costa Esmeralda.<br>3. Parada de 30 min en Caixa d\'Aço (tobogán y baño).<br>4. Fiesta a bordo con buffet de frutas y animación pirata.' },
-{ keywords: ['hola', 'oi', 'hello', 'buenos dias', 'buenas tardes'], response: '👋 ¡Hola! Soy Angel AI, tu asistente virtual. Pregúntame lo que quieras sobre precios, itinerario, seguridad o cómo reservar.' }
+{ keywords: ['itinerario', 'recorrido', 'etapas', 'pasos', 'que hacemos', 'como es el paseo', 'detalles', 'roteiro', 'itinerary'], response: '🗺️ <b>Itinerario Completo:</b><br><br>1️⃣ <b>Embarque:</b> Muelle privado en Porto dos Piratas con comodidades.<br>2️⃣ <b>Navegación:</b> Travesía por la Costa Esmeralda y Ensenada das Garoupas con relatos culturales.<br>3️⃣ <b>Parada para Baño:</b> 30 min en la bahía de Caixa d\'Aço con tobogán y guardavidas.<br>4️⃣ <b>Fiesta a Bordo:</b> Show pirata, música, buffet de frutas y bar.<br><br>¿Quieres saber más sobre alguna etapa en particular?', followUp: [] },
+{ keywords: ['horarios', 'salida', 'hora', 'sale', 'programado', '9:30', '11:30', '13:00'], response: '⏰ <b>Horarios de salida:</b><br><br>9:30 Hs, 11:30 Hs y 13:00 Hs.', followUp: [] },
+{ keywords: ['kiosko', 'kiosco', 'tienda', 'comprar rapido', 'comercio cerca'], response: '🏪 <b>Kiosko cercano:</b><br><br>Sí, hay un kiosko disponible cerca de las instalaciones.', followUp: [] },
+{ keywords: ['duracion total', 'travesia', 'tiempo total', '1:30', '1 hora 30'], response: '⏱️ <b>Duración total:</b><br><br>1 hora y 30 minutos (1:30 Hs).', followUp: [] },
+{ keywords: ['oceano', 'océano', 'atlantico', 'atlántico', 'mar abierto'], response: '🌊 <b>Océano:</b><br><br>Navegamos en las aguas del océano Atlántico.', followUp: [] },
+{ keywords: ['cruceros', 'crucero', 'barco grande', 'lujo'], response: '🚢 <b>Cruceros:</b><br><br>La Costa Esmeralda es destino de grandes cruceros de lujo.', followUp: [] },
+{ keywords: ['caja fuerte', 'caixa forte', 'traduccion', 'alternativo'], response: '💎 <b>Traducción de Caixa d\'Aço:</b><br><br>Se la conoce como bahía "Caja Fuerte".', followUp: [] },
+{ keywords: ['videoclips', 'videoclip', 'video musical', 'artistas graban'], response: '🎬 <b>Videoclips:</b><br><br>Grandes artistas eligen Caixa d\'Aço para grabar sus videoclips.', followUp: [] },
+{ keywords: ['tobogan caida', 'caida fuerte', 'caida suave', 'tobogan seguro'], response: '🎢 <b>Caída del tobogán:</b><br><br>Es suave, divertida y segura. No es fuerte.', followUp: [] },
+{ keywords: ['marina brasileira', 'marina brasileña', 'organismo', 'regula', 'respalda'], response: '⚓ <b>Regulación:</b><br><br>Toda navegación está regulada por la Marina Brasileña.', followUp: [] },
+{ keywords: ['temporada 2026', 'tarifas actuales', 'condiciones actuales'], response: '📅 <b>Temporada:</b><br><br>Los valores corresponden a la Temporada 2026.', followUp: [] },
+{ keywords: ['sandwiches bar', 'comidas rapidas', 'minutas', 'bar playa'], response: '🥪 <b>Comidas del bar:</b><br><br>Sándwiches ligeros y hamburguesas con papas fritas.', followUp: [] },
+{ keywords: ['bebidas especiales', 'tragos tropicales', 'bebidas bar', 'refrescar'], response: '🍹 <b>Bebidas especiales:</b><br><br>Bebidas tradicionales y tragos tropicales.', followUp: [] },
+{ keywords: ['participacion show', 'show pirata', 'interactivo', 'bailar piratas'], response: '🎭 <b>Show pirata:</b><br><br>Los pasajeros son protagonistas, interactúan y bailan con los piratas.', followUp: [] },
+{ keywords: ['muelle propio', 'muelle complejo', 'muelle pertenece'], response: '⚓ <b>Muelle:</b><br><br>Sí, zarpan desde nuestro muelle propio en Porto Belo.', followUp: [] },
+{ keywords: ['ritmos musica', 'generos musicales', 'estilos musica', 'tipo musica'], response: '🎵 <b>Géneros musicales:</b><br><br>Música muy variada con diferentes estilos para todos.', followUp: [] },
+{ keywords: ['guias conteo', 'coordinadores reserva', 'incluir guias'], response: '📋 <b>Guías en reserva:</b><br><br>Sí, se debe incluir pasajeros, guías, niños e infantes.', followUp: [] },
+{ keywords: ['exceso capacidad', 'mas personas', 'sobrepasar reserva'], response: '⚠️ <b>Exceso de capacidad:</b><br><br>No se permiten excesos bajo ninguna circunstancia por seguridad.', followUp: [] },
+{ keywords: ['barrio araza', 'fundacion araza', 'origen araza', 'portugues araza'], response: '📚 <b>Barrio Arazá:</b><br><br>De origen portugués, se explica su fundación en el viaje.', followUp: [] },
+{ keywords: ['costo cargadores', 'cargadores gratis', 'cobrar cargadores'], response: '🔌 <b>Cargadores:</b><br><br>Sin costo. La energía eléctrica es gratuita.', followUp: [] },
+{ keywords: ['capacidades barcos', 'tres barcos', 'diferentes capacidades', '240 170 150'], response: '🚢 <b>Capacidades:</b><br><br>Tres barcos: 240, 170 y 150 pasajeros.', followUp: [] },
+{ keywords: ['duchas templada', 'duchas agua caliente', 'duchas fria', 'duchas porto dos piratas'], response: '🚿 <b>Duchas:</b><br><br>Agua dulce y templada para mayor comodidad.', followUp: [] },
+{ keywords: ['combos estudiantes', 'combos individuales', 'beneficio estudiantes'], response: '🍟 <b>Combos estudiantiles:</b><br><br>Exclusivos para contingentes estudiantiles, no individuales.', followUp: [] },
+{ keywords: ['banderas agencia', 'promocionar marca', 'fotos virales'], response: '🚩 <b>Banderas de agencias:</b><br><br>Para promocionar su marca en fotos virales en redes.', followUp: [] },
+{ keywords: ['restaurante platos', 'platos principales', 'almuerzos restaurante'], response: '🍽️ <b>Restaurante:</b><br><br>Ofrece almuerzos completos además de opciones rápidas.', followUp: [] },
+{ keywords: ['animacion playa', 'juegos arena', 'animacion solo barco'], response: '🎭 <b>Animación:</b><br><br>La diversión es tanto a bordo como en la playa.', followUp: [] },
+{ keywords: ['banos genero', 'banos divididos', 'banos compartidos', 'damas caballeros'], response: '🚻 <b>Baños:</b><br><br>Independientes para hombres y mujeres.', followUp: [] },
+{ keywords: ['flotacion experiencia', 'no sabe nadar', 'sin experiencia agua'], response: '🦺 <b>Flotación:</b><br><br>Chalecos y flotadores gratuitos para quien los solicite.', followUp: [] },
+{ keywords: ['reservar anticipacion', 'grupo especial', 'salida especial'], response: '📝 <b>Reservas especiales:</b><br><br>Recomendamos contactarnos lo antes posible para coordinar.', followUp: [] },
+{ keywords: ['limite agua caliente', 'cuanta agua caliente', 'uso agua caliente'], response: '♨️ <b>Agua caliente:</b><br><br>Sin límite. Libre y sin costo para todos.', followUp: [] },
+{ keywords: ['parada 30 minutos', 'que esperar parada', 'entorno natural'], response: '🏊 <b>Parada en el mar:</b><br><br>30 minutos de natación y relax en aguas calmas y cristalinas.', followUp: [] },
+{ keywords: ['rango edad descuento', '6 a 11', '50% descuento edad'], response: '🧒 <b>Edad descuento 50%:</b><br><br>Niños entre 6 y 11 años.', followUp: [] },
+{ keywords: ['bebes 0 5', 'menores un ano', 'bebes pagan'], response: '👶 <b>Bebés:</b><br><br>De 0 a 5 años es completamente gratis.', followUp: [] },
+{ keywords: ['whatsapp directo', 'canal mensajeria', 'reservar angel'], response: '📱 <b>WhatsApp:</b><br><br>El canal más directo es el WhatsApp oficial de Ángel.', followUp: [] },
+{ keywords: ['email oficial', 'correo electronico', 'solicitudes comerciales'], response: '📧 <b>Email:</b><br><br>angelportobelo@gmail.com', followUp: [] },
+{ keywords: ['bar separado', 'bar navegacion', 'bar tierra'], response: '🍹 <b>Bar:</b><br><br>Cada embarcación tiene su propio bar a bordo.', followUp: [] },
+{ keywords: ['exclusivo agencias', 'porto belo beach', 'espacio agencias'], response: '⭐ <b>Exclusivo para agencias:</b><br><br>Comodidad, gastronomía, shows y seguridad internacional.', followUp: [] },
+{ keywords: ['buffet barco', 'buffet playa', 'donde buffet'], response: '🍉 <b>Buffet:</b><br><br>Se sirve a bordo de la embarcación.', followUp: [] },
+{ keywords: ['marineros rescate', 'primeros auxilios', 'preparacion marineros'], response: '👨‍✈️ <b>Marineros:</b><br><br>Incluyen marineros guardavidas capacitados.', followUp: [] },
+{ keywords: ['ambiente fiesta', 'fiesta arena', 'ambiente pirata'], response: '🎉 <b>Ambiente:</b><br><br>Espectacular, con energía, música y diversión para todas las edades.', followUp: [] },
+{ keywords: ['precio incluye playa', '100 pesos incluye', 'acceso infraestructura'], response: '💰 <b>Precio R$ 100:</b><br><br>Incluye día de playa y paseo náutico completo.', followUp: [] },
+{ keywords: ['tarifa adulta edad', '12 anos adulto', 'mayor paga completo'], response: '👨 <b>Tarifa adulta:</b><br><br>A partir de los 12 años cumplidos.', followUp: [] },
+{ keywords: ['ensenada mar abierto', 'ensenada das garoupas', 'zona navega'], response: '🗺️ <b>Ensenada:</b><br><br>Aguas calmas y protegidas de la "Ensenada das Garoupas".', followUp: [] },
+{ keywords: ['registrar ninos 0 5', 'bebes lista', 'marina exige'], response: '⚠️ <b>Registro de bebés:</b><br><br>La Marina Brasileña exige control exacto de personas a bordo.', followUp: [] },
+{ keywords: ['banos separados', 'sectores damas', 'banos independientes'], response: '🚻 <b>Baños separados:</b><br><br>Sí, independientes para hombres y mujeres.', followUp: [] },
+{ keywords: ['combos individuales', 'hamburguesas individual', 'comprar momento'], response: '🍔 <b>Combos individuales:</b><br><br>Exclusivos para contingentes estudiantiles reservados.', followUp: [] },
+{ keywords: ['contenido educativo', 'educativo recreativo', 'bloque cultural'], response: '📚 <b>Contenido:</b><br><br>Combina diversión con relatos culturales e históricos.', followUp: [] },
+{ keywords: ['calzado tobogan', 'calzado ideal', 'que calzado'], response: '🩴 <b>Calzado:</b><br><br>Playero o deportivo liviano, fácil de quitar.', followUp: [] },
+{ keywords: ['techado playa', 'infraestructura techada', 'sombra complejo'], response: '⛱️ <b>Áreas techadas:</b><br><br>El bar y restaurante tienen excelente infraestructura techada.', followUp: [] },
+{ keywords: ['prefijo brasil', '55 whatsapp', 'codigo internacional'], response: '📱 <b>Prefijo:</b><br><br>Sí, el WhatsApp tiene el prefijo +55 de Brasil.', followUp: [] },
+{ keywords: ['aventura vidas', 'calificado paseo', 'magia pirata'], response: '✨ <b>La aventura:</b><br><br>Magia pirata, playa exclusiva, navegación sofisticada y diversión.', followUp: [] },
+{ keywords: ['buffet', 'fruta', 'comida', 'recepcion', 'alimentacion', 'incluye comida'], response: '🍉 <b>Buffet:</b><br><br>Incluye buffet de frutas tropicales frescas a bordo.', followUp: [] },
+{ keywords: ['isla', 'desembarca', 'desembarco', 'ilha', 'porto belo ilha'], response: '🏝️ <b>Desembarco:</b><br><br>No hay desembarco en la isla de Porto Belo.', followUp: [] },
+{ keywords: ['animacion playa', 'animación playa', 'arena', 'entretenimiento playa'], response: '🎭 <b>Animación en playa:</b><br><br>Animación en vivo directamente en la playa.', followUp: [] },
+{ keywords: ['silla ruedas', 'wheelchair', 'discapacidad movil'], response: '🦽 <b>Silla de ruedas:</b><br><br>Instalaciones preparadas. Equipo entrenado para asistir.', followUp: [] },
+{ keywords: ['musica playa', 'parlantes playa', 'ambientacion playa'], response: '🔊 <b>Música en playa:</b><br><br>Parlantes con excelente música todo el día.', followUp: [] },
+{ keywords: ['puesto sanitario', 'centro salud', 'salud'], response: '🏥 <b>Puesto sanitario:</b><br><br>Puesto sanitario de fácil acceso en las cercanías.', followUp: [] },
+{ keywords: ['llegar', 'acceso', 'como llegar', 'facil acceso'], response: '📍 <b>Cómo llegar:</b><br><br>Muy fácil acceso, conectado para vehículos y buses.', followUp: [] },
+{ keywords: ['playa segura', 'segura bañistas'], response: '🏖️ <b>Playa segura:</b><br><br>Aguas tranquilas con supervisión constante.', followUp: [] },
+{ keywords: ['distancia', 'balneario', 'camboriu', 'km'], response: '📍 <b>Distancia:</b><br><br>25-26 km de Balneario Camboriú.', followUp: [] },
+{ keywords: ['tiempo', 'demora', 'tarda', 'minutos'], response: '🚗 <b>Tiempo:</b><br><br>30 a 40 minutos desde Balneario Camboriú.', followUp: [] },
+{ keywords: ['repetir', 'volver', 'otra vez', 'particular'], response: '🔄 <b>Repetir paseo:</b><br><br>¡Claro! Encantados de recibirte nuevamente.', followUp: [] },
+{ keywords: ['pago', 'pagar', 'formas', 'pix', 'efectivo'], response: '💳 <b>Formas de pago:</b><br><br>Pix y efectivo.', followUp: [] },
+{ keywords: ['mate', 'termo', 'yerba'], response: '🧉 <b>Mate:</b><br><br>¡Sí! Agua caliente gratuita para prepararlo.', followUp: [] },
+{ keywords: ['sombra', 'sol', 'techo', 'cubierto'], response: '☂️ <b>Sombra:</b><br><br>Zonas techadas en barco y playa.', followUp: [] },
+{ keywords: ['lluvia', 'llover', 'clima', 'mal tiempo'], response: '🌧️ <b>Lluvia:</b><br><br>No se suspende. Barcos con resguardo hermético.', followUp: [] },
+{ keywords: ['musica', 'baile', 'parlantes barco'], response: '🎵 <b>Música a bordo:</b><br><br>Sistema de sonido excelente con diversos estilos.', followUp: [] },
+{ keywords: ['baño', 'sanitario', 'wc'], response: '🚻 <b>Baños:</b><br><br>Individuales divididos para hombres y mujeres.', followUp: [] },
+{ keywords: ['niños', 'ninos', 'hijos', 'familia'], response: '👨‍👩‍👧‍👦 <b>Niños:</b><br><br>Entorno seguro. Menores de 5: GRATIS. 6-11: 50% off.', followUp: [] },
+{ keywords: ['adultos mayores', 'ancianos', 'tercera edad'], response: '👴 <b>Adultos mayores:</b><br><br>Experiencia agradable, cómoda y tranquila.', followUp: [] },
+{ keywords: ['discapacidad', 'discapacidades', 'necesidades especiales'], response: '♿ <b>Discapacidades:</b><br><br>Complejo perfectamente preparado.', followUp: [] },
+{ keywords: ['incluye', 'incluido', 'contempla'], response: '🏖️ <b>Incluye:</b><br><br>Baños, duchas, animación, restaurante, bar, agua caliente, carga.', followUp: [] },
+{ keywords: ['suspende', 'cancela', 'mal clima'], response: '⛵ <b>Suspensión:</b><br><br>NO se suspende por lluvia.', followUp: [] },
+{ keywords: ['entretenimiento', 'animacion', 'actividades', 'show'], response: '🎭 <b>Entretenimiento:</b><br><br>Animación en vivo con piratas. Juegos y premios.', followUp: [] },
+{ keywords: ['mascota', 'perro', 'gato', 'animal'], response: '🐾 <b>Mascotas:</b><br><br>No permitidas. ✅ Perros guía sí.', followUp: [] },
+{ keywords: ['perro guia', 'lazarillo', 'asistencia'], response: '🦮 <b>Perros guía:</b><br><br>Plenamente permitidos.', followUp: [] },
+{ keywords: ['movilidad reducida', 'silla ruedas'], response: '🦽 <b>Movilidad reducida:</b><br><br>Instalaciones acondicionadas. Equipo asiste.', followUp: [] },
+{ keywords: ['conservadora', 'hielera', 'cooler'], response: '🧊 <b>Conservadoras:</b><br><br>Permitidas.', followUp: [] },
+{ keywords: ['alimentos', 'comida', 'sandwich', 'llevar comida'], response: '🥪 <b>Alimentos propios:</b><br><br>Permitidos. También hay restaurante.', followUp: [] },
+{ keywords: ['almorzar', 'cenar', 'restaurante', 'comer'], response: '🍔 <b>Comer:</b><br><br>Bar y restaurante con almuerzos, sándwiches, tragos.', followUp: [] },
+{ keywords: ['comercios', 'comprar comida', 'alrededores'], response: '🏪 <b>Comercios:</b><br><br>Diversas opciones en las inmediaciones.', followUp: [] },
+{ keywords: ['guardavidas', 'salvavidas', 'socorrista'], response: '🏊 <b>Guardavidas:</b><br><br>Profesionales en playa y marinero guardavidas a bordo.', followUp: [] },
+{ keywords: ['seguridad', 'pertenencias', 'camaras'], response: '🔒 <b>Seguridad:</b><br><br>Monitoreo constante con cámaras.', followUp: [] },
+{ keywords: ['acceso', 'llegar', 'caminar', 'arena'], response: '🚶 <b>Acceso:</b><br><br>Muy fácil, cómodo, plano y directo.', followUp: [] },
+{ keywords: ['embarque', 'ingreso barco', 'subir'], response: '🚢 <b>Embarque:</b><br><br>Ordenado, seguro y ágil desde muelle propio.', followUp: [] },
+{ keywords: ['tripulacion', 'personal', 'capitan'], response: '👨‍✈️ <b>Tripulación:</b><br><br>Profesional, entrenada y calificada.', followUp: [] },
+{ keywords: ['flotacion', 'chaleco', 'salvavidas'], response: '🦺 <b>Flotación:</b><br><br>Chalecos y flotadores gratuitos. Tallas para niños.', followUp: [] },
+{ keywords: ['snorkel', 'mascara', 'buceo'], response: '🤿 <b>Snorkel:</b><br><br>¡Excelente idea traer tu propia máscara!', followUp: [] },
+{ keywords: ['protector solar', 'bloqueador', 'bronceador'], response: '🧴 <b>Protector solar:</b><br><br>Tiendas cercanas para comprarlo.', followUp: [] },
+{ keywords: ['idioma', 'habla', 'ingles', 'español'], response: '🗣️ <b>Idiomas:</b><br><br>Equipo preparado para comprender su idioma.', followUp: [] },
+{ keywords: ['medica', 'medico', 'emergencia'], response: '🏥 <b>Emergencia:</b><br><br>Coordinación inmediata con servicio de emergencia.', followUp: [] },
+{ keywords: ['estacionamiento', 'parking', 'auto'], response: '🅿️ <b>Estacionamiento:</b><br><br>Área propia disponible.', followUp: [] },
+{ keywords: ['sombrilla', 'guardasol'], response: '⛱️ <b>Sombrillas:</b><br><br>Permitidas.', followUp: [] },
+{ keywords: ['reposera', 'silla playa'], response: '🪑 <b>Reposeras:</b><br><br>Permitidas.', followUp: [] },
+{ keywords: ['agua caliente', 'mate', 'infusion'], response: '♨️ <b>Agua caliente:</b><br><br>GRATIS. Puedes rellenar las veces que necesites.', followUp: [] },
+{ keywords: ['cargar', 'celular', 'bateria'], response: '🔌 <b>Cargar celular:</b><br><br>Energía gratuita. Múltiples puntos de conexión.', followUp: [] },
+{ keywords: ['malla', 'traje bano', 'ropa'], response: '👙 <b>Ropa de baño:</b><br><br>Locales cercanos venden indumentaria de playa.', followUp: [] },
+{ keywords: ['duracion', 'dura', 'tiempo paseo'], response: '⏱️ <b>Duración:</b><br><br>1 hora y 30 minutos exactos.', followUp: [] },
+{ keywords: ['zonas', 'navega', 'recorrido', 'ensenada'], response: '🗺️ <b>Zonas:</b><br><br>"Ensenada das Garoupas" y bahía "Caixa d\'Aço".', followUp: [] },
+{ keywords: ['caixa d\'aco', 'famosa', 'bahia'], response: '💎 <b>Caixa d\'Aço:</b><br><br>Refugio natural de aguas calmas con bares flotantes.', followUp: [] },
+{ keywords: ['parada', 'nadar', 'agua', 'refrescar'], response: '🏊 <b>Parada:</b><br><br>30 minutos para nadar y refrescarse.', followUp: [] },
+{ keywords: ['tobogan', 'tirarse', 'resbalar'], response: '🎢 <b>Tobogán:</b><br><br>Seguro incluso para niños. No hay que saber nadar con chaleco.', followUp: [] },
+{ keywords: ['cultura', 'historia', 'aprender'], response: '📚 <b>Cultura:</b><br><br>Historia regional y fundación del barrio "Arazá".', followUp: [] },
+{ keywords: ['capacidad', 'pasajeros', 'barcos'], response: '🚢 <b>Capacidad:</b><br><br>240, 170 y 150 pasajeros.', followUp: [] },
+{ keywords: ['agencia', 'publicidad', 'bandera'], response: '🚩 <b>Agencias:</b><br><br>Pueden traer banderas para fotos promocionales.', followUp: [] },
+{ keywords: ['precio', 'valor', 'cuanto', 'tarifa'], response: '💰 <b>Precios:</b><br><br>General: R$ 100. Menores 5: GRATIS. 6-11: 50% off. 12+: adulto.', followUp: [] },
+{ keywords: ['descuento', 'agencia', 'guia'], response: '🏢 <b>Grupos y Agencias:</b><br><br>Consultar tarifas especiales para grupos cerrados o agencias.', followUp: [] },
+{ keywords: ['bebe', 'menor 5', 'gratis'], response: '👶 <b>Menores 5:</b><br><br>GRATIS. Deben registrarse por Marina Brasileña.', followUp: [] },
+{ keywords: ['ninos 6', 'menor 11', 'mitad'], response: '🧒 <b>6-11 años:</b><br><br>50% descuento.', followUp: [] },
+{ keywords: ['tarifa adulta', '12 anos'], response: '👨 <b>Adulto:</b><br><br>Desde 12 años cumplidos.', followUp: [] },
+{ keywords: ['escolar', 'escuela', 'hamburguesa', 'combo'], response: '🍟 <b>Escolares:</b><br><br>Combos hamburguesa+papas+bebida. Avisar al reservar.', followUp: [] },
+{ keywords: ['reserva grupal', 'listado', 'grupos'], response: '📋 <b>Grupos:</b><br><br>Reservar número total absoluto de personas.', followUp: [] },
+{ keywords: ['bebe reserva', 'registrar bebe', 'marina'], response: '⚠️ <b>Bebés en reserva:</b><br><br>Exigencia de Marina Brasileña para control de peso.', followUp: [] },
+{ keywords: ['sin reserva', 'lugar libre'], response: '🎫 <b>Sin reserva:</b><br><br>Reservar antes. Ley prohíbe superar cupo.', followUp: [] },
+{ keywords: ['contacto', 'angel', 'encargado'], response: '👤 <b>Contacto:</b><br><br>Ángel: WhatsApp +55 47 99967-048. Email: angelportobelo@gmail.com', followUp: [] },
+{ keywords: ['whatsapp', 'telefono', 'email'], response: '📞 <b>Contacto Ángel:</b><br><br>WhatsApp: +55 47 99967-048<br>Email: angelportobelo@gmail.com', followUp: [] },
+{ keywords: ['muelle', 'privado', 'salida'], response: '⚓ <b>Muelle:</b><br><br>Muelle privado propio en Porto Belo.', followUp: [] },
+{ keywords: ['ducha', 'duchas', 'agua dulce'], response: '🚿 <b>Duchas:</b><br><br>Agua dulce.', followUp: [] },
+{ keywords: ['bar a bordo', 'bebidas barco'], response: '🍹 <b>Bar a bordo:</b><br><br>Servicio de bar en todas las embarcaciones.', followUp: [] },
+{ keywords: ['sandwiches', 'hamburguesa'], response: '🥪 <b>Sándwiches:</b><br><br>Ligeros, calientes y hamburguesas con papas.', followUp: [] },
+{ keywords: ['animacion pirata', 'interactivo', 'piratas'], response: '🏴‍☠️ <b>Animación pirata:</b><br><br>Interactiva. Juegos y premios en playa y barco.', followUp: [] },
+{ keywords: ['mar picado', 'aguas calmas'], response: '🌊 <b>Mar:</b><br><br>Aguas muy calmas y transparentes. Costa Esmeralda.', followUp: [] },
+{ keywords: ['experiencia', 'primera vez'], response: '⛵ <b>Experiencia:</b><br><br>No necesaria. Paseo súper tranquilo.', followUp: [] },
+{ keywords: ['costa esmeralda', 'region', 'santa catarina'], response: '🌴 <b>Región:</b><br><br>Costa Esmeralda, polo turístico de Santa Catarina.', followUp: [] },
+{ keywords: ['calzado', 'zapato', 'ojotas'], response: '🩴 <b>Calzado:</b><br><br>Playero cómodo que se pueda mojar.', followUp: [] },
+{ keywords: ['saber nadar', 'nadar tobogan'], response: '🏊 <b>Nadar:</b><br><br>No obligatorio con chalecos.', followUp: [] },
+{ keywords: ['dias', 'opera', 'temporada'], response: '📅 <b>Días:</b><br><br>Todo el año. Consultar horarios con Ángel.', followUp: [] },
+{ keywords: ['prioridad', 'agencia embarque'], response: '🚢 <b>Embarque agencias:</b><br><br>Respetando horarios de reservas.', followUp: [] },
+{ keywords: ['alcohol', 'tragos', 'cocteles'], response: '🍸 <b>Alcohol:</b><br><br>Variada carta de tragos y cócteles.', followUp: [] },
+{ keywords: ['playa exclusiva', 'porto dos piratas'], response: '🏖️ <b>Playa:</b><br><br>Zona adaptada especialmente para visitantes.', followUp: [] },
+{ keywords: ['sobreventa', 'cupos', 'marina'], response: '🎫 <b>Sobreventa:</b><br><br>Sistema riguroso. Sin riesgo.', followUp: [] },
+{ keywords: ['hola', 'ola', 'oi', 'hey', 'buenos dias'], response: '¡Hola! 😊 Soy <b>Angel AI</b>. Pregúntame sobre precios, horarios, ubicación, niños, clima, reservas y más.', followUp: [] },
+{ keywords: ['gracias', 'thank'], response: '¡De nada! 😊 ¡Hasta pronto en el paseo! ⛵', followUp: [] }
 ],
-fallback: '🤔 No estoy seguro de entender tu pregunta. Intenta preguntar sobre: precios, itinerario, bebés, lluvia o reservas. También puedes escribirnos por WhatsApp.'
+fallback: '🤔 No tengo esa información específica.<br><br>Prueba preguntar sobre precios, horarios, ubicación, niños, clima o reservas.<br><br>📱 WhatsApp Ángel: <b>+55 47 99967-048</b>',
+quickReplies: []
 },
 pt: {
 intents: [
-{ keywords: ['preco', 'custo', 'valor', 'quanto', 'tarifa'], response: '💰 <b>Preços:</b><br>Adultos: R$ 100,00<br>Menores 6-11 anos: 50% (R$ 50,00)<br>Bebês 0-5 anos: GRÁTIS' },
-{ keywords: ['bebes', 'bebe', '0 a 5', 'menor 5', 'gratuito', 'gratis'], response: '👶 <b>Bebês 0-5 anos:</b><br>São completamente GRÁTIS. ⚠️ IMPORTANTE: A Marinha Brasileira exige registrar seus nomes e idades exatos por segurança.' },
-{ keywords: ['criancas', 'crianças', '6 a 11', 'menor 6', 'metade', 'desconto'], response: '🧒 <b>Crianças 6-11 anos:</b><br>Têm 50% de desconto. Pagam R$ 50,00.' },
-{ keywords: ['reserva', 'reservar', 'agendar', 'whatsapp'], response: '📱 <b>Reservas:</b><br>Você pode reservar diretamente pelo WhatsApp +55 47 99967-048 ou preenchendo o formulário no final desta página.' },
-{ keywords: ['chuva', 'clima', 'mau tempo', 'suspende', 'cancela', 'se chover'], response: '⛵ <b>Suspende por chuva?</b><br>NÃO. O passeio NÃO é suspenso por chuva. Nossos barcos possuem cobertura hermética e navegamos com total segurança.' },
-{ keywords: ['itinerario', 'rota', 'paradas', 'que inclui', 'passeio'], response: '🗺️ <b>Itinerário:</b><br>1. Embarque em Porto dos Piratas.<br>2. Navegação pela Costa Esmeralda.<br>3. Parada de 30 min em Caixa d\'Aço (tobogã e banho).<br>4. Festa a bordo com buffet de frutas e animação pirata.' },
-{ keywords: ['ola', 'oi', 'bom dia', 'boa tarde'], response: '👋 Olá! Sou o Angel AI, seu assistente virtual. Pergunte o que quiser sobre preços, itinerário, segurança ou como reservar.' }
+{ keywords: ['itinerario', 'recorrido', 'etapas', 'pasos', 'que hacemos', 'como es el paseo', 'detalles', 'roteiro', 'itinerary'], response: '🗺️ <b>Roteiro Completo:</b><br><br>1️⃣ <b>Embarque:</b> Píer privado em Porto dos Piratas com comodidades.<br>2️⃣ <b>Navegação:</b> Travessia pela Costa Esmeralda e Enseada das Garoupas com relatos culturais.<br>3️⃣ <b>Parada para Banho:</b> 30 min na baía de Caixa d\'Aço com tobogã e salva-vidas.<br>4️⃣ <b>Festa a Bordo:</b> Show pirata, música, buffet de frutas e bar.<br><br>Quer saber mais sobre alguma etapa em particular?', followUp: [] },
+{ keywords: ['horarios', 'horarios saida', 'hora', 'sai', 'programado', '9:30', '11:30', '13:00'], response: '⏰ <b>Horários de saída:</b><br><br>9:30 Hs, 11:30 Hs e 13:00 Hs.', followUp: [] },
+{ keywords: ['kiosko', 'kiosk', 'loja', 'comprar rapido'], response: '🏪 <b>Kiosko:</b><br><br>Sim, há um kiosko disponível perto das instalações.', followUp: [] },
+{ keywords: ['duracao total', 'travessia', 'tempo total', '1:30'], response: '⏱️ <b>Duração total:</b><br><br>1 hora e 30 minutos (1:30 Hs).', followUp: [] },
+{ keywords: ['oceano', 'atlantico', 'mar aberto'], response: '🌊 <b>Oceano:</b><br><br>Navegamos nas águas do oceano Atlântico.', followUp: [] },
+{ keywords: ['cruzeiros', 'cruzeiro', 'barco grande', 'luxo'], response: '🚢 <b>Cruzeiros:</b><br><br>A Costa Esmeralda é destino de grandes cruzeiros de luxo.', followUp: [] },
+{ keywords: ['caixa forte', 'traducao', 'alternativo'], response: '💎 <b>Tradução de Caixa d\'Aço:</b><br><br>Conhecida como baía "Caja Fuerte".', followUp: [] },
+{ keywords: ['videoclipes', 'videoclipe', 'video musical', 'artistas gravam'], response: '🎬 <b>Videoclipes:</b><br><br>Grandes artistas escolhem Caixa d\'Aço para gravar videoclipes.', followUp: [] },
+{ keywords: ['toboga queda', 'queda forte', 'queda suave', 'toboga seguro'], response: '🎢 <b>Queda do tobogã:</b><br><br>Suave, divertida e segura. Não é forte.', followUp: [] },
+{ keywords: ['marinha brasileira', 'organismo', 'regula', 'respalda'], response: '⚓ <b>Regulação:</b><br><br>Toda navegação é regulada pela Marinha Brasileira.', followUp: [] },
+{ keywords: ['temporada 2026', 'tarifas atuais', 'condicoes atuais'], response: '📅 <b>Temporada:</b><br><br>Os valores correspondem à Temporada 2026.', followUp: [] },
+{ keywords: ['sanduiches bar', 'comidas rapidas', 'minutas', 'bar praia'], response: '🥪 <b>Comidas do bar:</b><br><br>Sanduíches leves e hambúrgueres com batata frita.', followUp: [] },
+{ keywords: ['bebidas especiais', 'drinks tropicais', 'bebidas bar', 'refrescar'], response: '🍹 <b>Bebidas especiais:</b><br><br>Bebidas tradicionais e drinks tropicais.', followUp: [] },
+{ keywords: ['participacao show', 'show pirata', 'interativo', 'bailar piratas'], response: '🎭 <b>Show pirata:</b><br><br>Passageiros são protagonistas, interagem e dançam com os piratas.', followUp: [] },
+{ keywords: ['muelle proprio', 'muelle complexo', 'muelle pertence'], response: '⚓ <b>Muelle:</b><br><br>Sim, zarpan do nosso muelle próprio em Porto Belo.', followUp: [] },
+{ keywords: ['ritmos musica', 'generos musicais', 'estilos musica', 'tipo musica'], response: '🎵 <b>Gêneros musicais:</b><br><br>Música muito variada com diferentes estilos para todos.', followUp: [] },
+{ keywords: ['guias contagem', 'coordenadores reserva', 'incluir guias'], response: '📋 <b>Guias na reserva:</b><br><br>Sim, deve incluir passageiros, guias, crianças e bebês.', followUp: [] },
+{ keywords: ['excesso capacidade', 'mais pessoas', 'sobrepasar reserva'], response: '⚠️ <b>Excesso de capacidade:</b><br><br>Não são permitidos excessos sob nenhuma circunstância.', followUp: [] },
+{ keywords: ['bairro araza', 'fundacao araza', 'origem araza', 'portugues araza'], response: '📚 <b>Bairro Arazá:</b><br><br>De origem portuguesa, sua fundação é explicada na viagem.', followUp: [] },
+{ keywords: ['custo carregadores', 'carregadores gratis', 'cobrar carregadores'], response: '🔌 <b>Carregadores:</b><br><br>Sem custo. Energia elétrica gratuita.', followUp: [] },
+{ keywords: ['capacidades barcos', 'tres barcos', 'diferentes capacidades', '240 170 150'], response: '🚢 <b>Capacidades:</b><br><br>Três barcos: 240, 170 e 150 passageiros.', followUp: [] },
+{ keywords: ['duchas templada', 'duchas agua quente', 'duchas fria', 'duchas porto dos piratas'], response: '🚿 <b>Duchas:</b><br><br>Água doce e morna para maior conforto.', followUp: [] },
+{ keywords: ['combos estudantes', 'combos individuais', 'beneficio estudantes'], response: '🍟 <b>Combos estudantis:</b><br><br>Exclusivos para contingentes estudantis, não individuais.', followUp: [] },
+{ keywords: ['bandeiras agencia', 'promocionar marca', 'fotos virais'], response: '🚩 <b>Bandeiras de agências:</b><br><br>Para promover sua marca em fotos virais nas redes.', followUp: [] },
+{ keywords: ['restaurante pratos', 'pratos principais', 'almocos restaurante'], response: '🍽️ <b>Restaurante:</b><br><br>Oferece almoços completos além de opções rápidas.', followUp: [] },
+{ keywords: ['animacao praia', 'jogos areia', 'animacao so barco'], response: '🎭 <b>Animação:</b><br><br>Diversão tanto a bordo quanto na praia.', followUp: [] },
+{ keywords: ['banhos genero', 'banhos divididos', 'banhos compartilhados', 'damas cavalheiros'], response: '🚻 <b>Banheiros:</b><br><br>Independentes para homens e mulheres.', followUp: [] },
+{ keywords: ['flutuacao experiencia', 'nao sabe nadar', 'sem experiencia agua'], response: '🦺 <b>Flutuação:</b><br><br>Coletes e flutuadores gratuitos para quem solicitar.', followUp: [] },
+{ keywords: ['reservar antecipacao', 'grupo especial', 'saida especial'], response: '📝 <b>Reservas especiais:</b><br><br>Recomendamos entrar em contato o antes possível.', followUp: [] },
+{ keywords: ['limite agua quente', 'quanta agua quente', 'uso agua quente'], response: '♨️ <b>Água quente:</b><br><br>Sem limite. Livre e sem custo para todos.', followUp: [] },
+{ keywords: ['parada 30 minutos', 'que esperar parada', 'entorno natural'], response: '🏊 <b>Parada no mar:</b><br><br>30 minutos de natação e relax em águas calmas e cristalinas.', followUp: [] },
+{ keywords: ['faixa idade desconto', '6 a 11', '50% desconto idade'], response: '🧒 <b>Idade desconto 50%:</b><br><br>Crianças entre 6 e 11 anos.', followUp: [] },
+{ keywords: ['bebes 0 5', 'menores um ano', 'bebes pagam'], response: '👶 <b>Bebês:</b><br><br>De 0 a 5 anos é completamente grátis.', followUp: [] },
+{ keywords: ['whatsapp direto', 'canal mensageria', 'reservar angel'], response: '📱 <b>WhatsApp:</b><br><br>O canal mais direto é o WhatsApp oficial de Ángel.', followUp: [] },
+{ keywords: ['email oficial', 'correo eletronico', 'solicitacoes comerciais'], response: '📧 <b>Email:</b><br><br>angelportobelo@gmail.com', followUp: [] },
+{ keywords: ['bar separado', 'bar navegacao', 'bar terra'], response: '🍹 <b>Bar:</b><br><br>Cada embarcação tem seu próprio bar a bordo.', followUp: [] },
+{ keywords: ['exclusivo agencias', 'porto belo beach', 'espaco agencias'], response: '⭐ <b>Exclusivo para agências:</b><br><br>Conforto, gastronomia, shows e segurança internacional.', followUp: [] },
+{ keywords: ['buffet barco', 'buffet praia', 'onde buffet'], response: '🍉 <b>Buffet:</b><br><br>Servido a bordo da embarcação.', followUp: [] },
+{ keywords: ['marinheiros resgate', 'primeiros socorros', 'preparacao marinheiros'], response: '👨‍✈️ <b>Marinheiros:</b><br><br>Incluem marinheiros salva-vidas capacitados.', followUp: [] },
+{ keywords: ['ambiente festa', 'festa areia', 'ambiente pirata'], response: '🎉 <b>Ambiente:</b><br><br>Espetacular, com energia, música e diversão para todas as idades.', followUp: [] },
+{ keywords: ['preco inclui praia', '100 pesos inclui', 'acesso infraestrutura'], response: '💰 <b>Preço R$ 100:</b><br><br>Inclui dia de praia e passeio náutico completo.', followUp: [] },
+{ keywords: ['tarifa adulta idade', '12 anos adulto', 'maior paga completo'], response: '👨 <b>Tarifa adulta:</b><br><br>A partir dos 12 anos completos.', followUp: [] },
+{ keywords: ['ensenada mar aberto', 'ensenada das garoupas', 'zona navega'], response: '🗺️ <b>Ensenada:</b><br><br>Águas calmas e protegidas da "Ensenada das Garoupas".', followUp: [] },
+{ keywords: ['registrar criancas 0 5', 'bebes lista', 'marinha exige'], response: '⚠️ <b>Registro de bebês:</b><br><br>A Marinha Brasileira exige controle exato de pessoas a bordo.', followUp: [] },
+{ keywords: ['banhos separados', 'setores damas', 'banhos independentes'], response: '🚻 <b>Banheiros separados:</b><br><br>Sim, independentes para homens e mulheres.', followUp: [] },
+{ keywords: ['combos individuais', 'hamburguesas individual', 'comprar momento'], response: '🍔 <b>Combos individuais:</b><br><br>Exclusivos para contingentes estudantis reservados.', followUp: [] },
+{ keywords: ['conteudo educativo', 'educativo recreativo', 'bloco cultural'], response: '📚 <b>Conteúdo:</b><br><br>Combina diversão com relatos culturais e históricos.', followUp: [] },
+{ keywords: ['calcado toboga', 'calcado ideal', 'que calcado'], response: '🩴 <b>Calçado:</b><br><br>Playero ou esportivo leve, fácil de tirar.', followUp: [] },
+{ keywords: ['techado praia', 'infraestrutura techada', 'sombra complexo'], response: '⛱️ <b>Áreas techadas:</b><br><br>O bar e restaurante têm excelente infraestrutura techada.', followUp: [] },
+{ keywords: ['prefixo brasil', '55 whatsapp', 'codigo internacional'], response: '📱 <b>Prefixo:</b><br><br>Sim, o WhatsApp tem o prefixo +55 do Brasil.', followUp: [] },
+{ keywords: ['aventura vidas', 'qualificado passeio', 'magia pirata'], response: '✨ <b>A aventura:</b><br><br>Magia pirata, praia exclusiva, navegação sofisticada e diversão.', followUp: [] },
+{ keywords: ['buffet', 'fruta', 'comida', 'recepcion', 'alimentacao', 'inclui comida'], response: '🍉 <b>Buffet:</b><br><br>Inclui buffet de frutas tropicais frescas a bordo.', followUp: [] },
+{ keywords: ['ilha', 'desembarca', 'desembarque', 'porto belo ilha'], response: '🏝️ <b>Desembarque:</b><br><br>Não há desembarque na ilha de Porto Belo.', followUp: [] },
+{ keywords: ['animacao praia', 'areia', 'entretenimento praia'], response: '🎭 <b>Animação na praia:</b><br><br>Animação ao vivo diretamente na praia.', followUp: [] },
+{ keywords: ['cadeira rodas', 'deficiencia movil'], response: '🦽 <b>Cadeira de rodas:</b><br><br>Instalações preparadas. Equipe treinada para assistir.', followUp: [] },
+{ keywords: ['musica praia', 'parlantes praia', 'ambientacao praia'], response: '🔊 <b>Música na praia:</b><br><br>Parlantes com excelente música todo o dia.', followUp: [] },
+{ keywords: ['posto sanitario', 'centro saude', 'saude'], response: '🏥 <b>Posto sanitário:</b><br><br>Posto sanitário de fácil acesso nas cercanias.', followUp: [] },
+{ keywords: ['chegar', 'acesso', 'como chegar', 'facil acesso'], response: '📍 <b>Como chegar:</b><br><br>Muito fácil acesso, conectado para veículos e ônibus.', followUp: [] },
+{ keywords: ['praia segura', 'segura banhistas'], response: '🏖️ <b>Praia segura:</b><br><br>Águas tranquilas com supervisão constante.', followUp: [] },
+{ keywords: ['distancia', 'balneario', 'camboriu', 'km'], response: '📍 <b>Distância:</b><br><br>25-26 km de Balneario Camboriú.', followUp: [] },
+{ keywords: ['tempo', 'demora', 'minutos'], response: '🚗 <b>Tempo:</b><br><br>30 a 40 minutos desde Balneario Camboriú.', followUp: [] },
+{ keywords: ['repetir', 'voltar', 'outra vez', 'particular'], response: '🔄 <b>Repetir passeio:</b><br><br>Claro! Encantados em recebê-lo novamente.', followUp: [] },
+{ keywords: ['pagamento', 'pagar', 'formas', 'pix', 'dinheiro'], response: '💳 <b>Formas de pagamento:</b><br><br>Pix e dinheiro.', followUp: [] },
+{ keywords: ['mate', 'termo', 'erva'], response: '🧉 <b>Mate:</b><br><br>Sim! Água quente gratuita para prepará-lo.', followUp: [] },
+{ keywords: ['sombra', 'sol', 'teto', 'coberto'], response: '☂️ <b>Sombra:</b><br><br>Zonas cobertas em barco e praia.', followUp: [] },
+{ keywords: ['chuva', 'chover', 'clima', 'tempo ruim'], response: '🌧️ <b>Chuva:</b><br><br>Não se suspende. Barcos com proteção hermética.', followUp: [] },
+{ keywords: ['musica', 'danca', 'parlantes barco'], response: '🎵 <b>Música a bordo:</b><br><br>Sistema de som excelente com diversos estilos.', followUp: [] },
+{ keywords: ['banheiro', 'wc', 'sanitario'], response: '🚻 <b>Banheiros:</b><br><br>Individuais divididos para homens e mulheres.', followUp: [] },
+{ keywords: ['crianca', 'filhos', 'familia'], response: '👨‍👩‍👧‍👦 <b>Crianças:</b><br><br>Ambiente seguro. Menores de 5: GRÁTIS. 6-11: 50% off.', followUp: [] },
+{ keywords: ['idosos', 'terceira idade', 'avos'], response: '👴 <b>Idosos:</b><br><br>Experiência agradável, confortável e tranquila.', followUp: [] },
+{ keywords: ['deficiencia', 'deficientes', 'necessidades especiais'], response: '♿ <b>Deficiências:</b><br><br>Complexo perfeitamente preparado.', followUp: [] },
+{ keywords: ['inclui', 'incluso', 'compreende'], response: '🏖️ <b>Inclui:</b><br><br>Banheiros, duchas, animação, restaurante, bar, água quente, carga.', followUp: [] },
+{ keywords: ['suspende', 'cancela', 'mal tempo'], response: '⛵ <b>Suspensão:</b><br><br>NÃO se suspende por chuva.', followUp: [] },
+{ keywords: ['entretenimento', 'animacao', 'atividades', 'show'], response: '🎭 <b>Entretenimento:</b><br><br>Animação ao vivo com piratas. Jogos e prêmios.', followUp: [] },
+{ keywords: ['animal', 'mascote', 'cachorro', 'gato'], response: '🐾 <b>Mascotes:</b><br><br>Não permitidos. ✅ Cães-guia sim.', followUp: [] },
+{ keywords: ['cao guia', 'lazarillo', 'assistencia'], response: '🦮 <b>Cães-guia:</b><br><br>Plenamente permitidos.', followUp: [] },
+{ keywords: ['mobilidade reduzida', 'cadeira rodas'], response: '🦽 <b>Mobilidade reduzida:</b><br><br>Instalações condicionadas. Equipe assiste.', followUp: [] },
+{ keywords: ['caixa termica', 'bolsa termica', 'cooler'], response: '🧊 <b>Caixas térmicas:</b><br><br>Permitidas.', followUp: [] },
+{ keywords: ['alimentos', 'comida', 'sanduiche', 'levar comida'], response: '🥪 <b>Alimentos próprios:</b><br><br>Permitidos. Também há restaurante.', followUp: [] },
+{ keywords: ['almocar', 'jantar', 'restaurante', 'comer'], response: '🍔 <b>Comer:</b><br><br>Bar e restaurante com almoços, sanduíches, drinks.', followUp: [] },
+{ keywords: ['comercios', 'comprar comida', 'arredores'], response: '🏪 <b>Comércios:</b><br><br>Diversas opções nas imediações.', followUp: [] },
+{ keywords: ['salva-vidas', 'guarda-vidas', 'socorrista'], response: '🏊 <b>Salva-vidas:</b><br><br>Profissionais na praia e marinheiro salva-vidas a bordo.', followUp: [] },
+{ keywords: ['seguranca', 'pertences', 'cameras'], response: '🔒 <b>Segurança:</b><br><br>Monitoramento constante com câmeras.', followUp: [] },
+{ keywords: ['acesso', 'chegar', 'caminhar', 'areia'], response: '🚶 <b>Acesso:</b><br><br>Muito fácil, cómodo, plano e direto.', followUp: [] },
+{ keywords: ['embarque', 'ingresso barco', 'subir'], response: '🚢 <b>Embarque:</b><br><br>Ordenado, seguro e ágil desde muelle próprio.', followUp: [] },
+{ keywords: ['tripulacao', 'pessoal', 'capitao'], response: '👨‍✈️ <b>Tripulação:</b><br><br>Profissional, treinada e qualificada.', followUp: [] },
+{ keywords: ['flutuacao', 'colete', 'salva-vidas'], response: '🦺 <b>Flutuação:</b><br><br>Coletes e flutuadores gratuitos. Tamanhos para crianças.', followUp: [] },
+{ keywords: ['snorkel', 'mascara', 'mergulho'], response: '🤿 <b>Snorkel:</b><br><br>Excelente ideia trazer sua própria máscara!', followUp: [] },
+{ keywords: ['protetor solar', 'bloqueador', 'bronzeador'], response: '🧴 <b>Protetor solar:</b><br><br>Lojas próximas para comprar.', followUp: [] },
+{ keywords: ['idioma', 'fala', 'ingles', 'espanhol'], response: '🗣️ <b>Idiomas:</b><br><br>Equipe preparada para compreender seu idioma.', followUp: [] },
+{ keywords: ['medica', 'medico', 'emergencia'], response: '🏥 <b>Emergência:</b><br><br>Coordenação imediata com serviço de emergência.', followUp: [] },
+{ keywords: ['estacionamento', 'parking', 'carro'], response: '🅿️ <b>Estacionamento:</b><br><br>Área própria disponível.', followUp: [] },
+{ keywords: ['guarda-sol', 'sombrinha'], response: '⛱️ <b>Guarda-sóis:</b><br><br>Permitidos.', followUp: [] },
+{ keywords: ['espreguicadeira', 'cadeira praia'], response: '🪑 <b>Espreguiçadeiras:</b><br><br>Permitidas.', followUp: [] },
+{ keywords: ['agua quente', 'mate', 'infusao'], response: '♨️ <b>Água quente:</b><br><br>GRÁTIS. Pode reabastecer quantas vezes precisar.', followUp: [] },
+{ keywords: ['carregar', 'celular', 'bateria'], response: '🔌 <b>Carregar celular:</b><br><br>Energia gratuita. Múltiplos pontos de conexão.', followUp: [] },
+{ keywords: ['maio', 'roupa banho', 'roupa'], response: '👙 <b>Roupa de banho:</b><br><br>Lojas próximas vendem vestuário de praia.', followUp: [] },
+{ keywords: ['duracao', 'dura', 'tempo passeio'], response: '⏱️ <b>Duração:</b><br><br>1 hora e 30 minutos exatos.', followUp: [] },
+{ keywords: ['zonas', 'navega', 'percurso', 'ensenada'], response: '🗺️ <b>Zonas:</b><br><br>"Ensenada das Garoupas" e baía "Caixa d\'Aço".', followUp: [] },
+{ keywords: ['caixa d\'aco', 'famosa', 'baia'], response: '💎 <b>Caixa d\'Aço:</b><br><br>Refúgio natural de águas calmas com bares flutuantes.', followUp: [] },
+{ keywords: ['parada', 'nadar', 'agua', 'refrescar'], response: '🏊 <b>Parada:</b><br><br>30 minutos para nadar e refrescar-se.', followUp: [] },
+{ keywords: ['toboga', 'escorregador', 'diversao agua'], response: '🎢 <b>Tobogã:</b><br><br>Seguro inclusive para crianças. Não precisa saber nadar com colete.', followUp: [] },
+{ keywords: ['cultura', 'historia', 'aprender'], response: '📚 <b>Cultura:</b><br><br>História regional e fundação do bairro "Arazá".', followUp: [] },
+{ keywords: ['capacidade', 'passageiros', 'barcos'], response: '🚢 <b>Capacidade:</b><br><br>240, 170 e 150 passageiros.', followUp: [] },
+{ keywords: ['agencia', 'publicidade', 'bandeira'], response: '🚩 <b>Agências:</b><br><br>Podem trazer bandeiras para fotos promocionais.', followUp: [] },
+{ keywords: ['preco', 'valor', 'quanto', 'tarifa'], response: '💰 <b>Preços:</b><br><br>Geral: R$ 100. Menores 5: GRÁTIS. 6-11: 50% off. 12+: adulto.', followUp: [] },
+{ keywords: ['desconto', 'agencia', 'guia'], response: '🏢 <b>Grupos e Agências:</b><br><br>Consultar tarifas especiais para grupos fechados ou agências.', followUp: [] },
+{ keywords: ['bebe', 'menor 5', 'gratis'], response: '👶 <b>Menores 5:</b><br><br>GRÁTIS. Devem ser registrados por Marinha Brasileira.', followUp: [] },
+{ keywords: ['criancas 6', 'menor 11', 'metade'], response: '🧒 <b>6-11 anos:</b><br><br>50% desconto.', followUp: [] },
+{ keywords: ['tarifa adulta', '12 anos'], response: '👨 <b>Adulto:</b><br><br>A partir de 12 anos completos.', followUp: [] },
+{ keywords: ['escolar', 'escola', 'hamburguer', 'combo'], response: '🍟 <b>Estudantis:</b><br><br>Combos hambúrguer+batata+bebida. Avisar ao reservar.', followUp: [] },
+{ keywords: ['reserva grupal', 'listado', 'grupos'], response: '📋 <b>Grupos:</b><br><br>Reservar número total absoluto de pessoas.', followUp: [] },
+{ keywords: ['bebe reserva', 'registrar bebe', 'marinha'], response: '⚠️ <b>Bebês na reserva:</b><br><br>Exigência de Marinha Brasileira para controle de peso.', followUp: [] },
+{ keywords: ['sem reserva', 'lugar livre'], response: '🎫 <b>Sem reserva:</b><br><br>Reservar antes. Lei proíbe superar cupo.', followUp: [] },
+{ keywords: ['contato', 'angel', 'encarregado'], response: '👤 <b>Contato:</b><br><br>Ángel: WhatsApp +55 47 99967-048. Email: angelportobelo@gmail.com', followUp: [] },
+{ keywords: ['whatsapp', 'telefone', 'email'], response: '📞 <b>Contato Ángel:</b><br><br>WhatsApp: +55 47 99967-048<br>Email: angelportobelo@gmail.com', followUp: [] },
+{ keywords: ['muelle', 'privado', 'saida'], response: '⚓ <b>Muelle:</b><br><br>Muelle privado próprio em Porto Belo.', followUp: [] },
+{ keywords: ['ducha', 'duchas', 'agua doce'], response: '🚿 <b>Duchas:</b><br><br>Água doce.', followUp: [] },
+{ keywords: ['bar a bordo', 'bebidas barco'], response: '🍹 <b>Bar a bordo:</b><br><br>Serviço de bar em todas as embarcações.', followUp: [] },
+{ keywords: ['sanduiches', 'hamburguer'], response: '🥪 <b>Sanduíches:</b><br><br>Leves, quentes e hambúrgueres com batata.', followUp: [] },
+{ keywords: ['animacao pirata', 'interativo', 'piratas'], response: '🏴‍☠️ <b>Animação pirata:</b><br><br>Interativa. Jogos e prêmios na praia e barco.', followUp: [] },
+{ keywords: ['mar agitado', 'aguas calmas'], response: '🌊 <b>Mar:</b><br><br>Águas muito calmas e transparentes. Costa Esmeralda.', followUp: [] },
+{ keywords: ['experiencia', 'primeira vez'], response: '⛵ <b>Experiência:</b><br><br>Não necessária. Passeio súper tranquilo.', followUp: [] },
+{ keywords: ['costa esmeralda', 'regiao', 'santa catarina'], response: '🌴 <b>Região:</b><br><br>Costa Esmeralda, polo turístico de Santa Catarina.', followUp: [] },
+{ keywords: ['calcado', 'sapato', 'chinelos'], response: '🩴 <b>Calçado:</b><br><br>Playero cómodo que possa molhar.', followUp: [] },
+{ keywords: ['saber nadar', 'nadar toboga'], response: '🏊 <b>Nadar:</b><br><br>Não obrigatório com coletes.', followUp: [] },
+{ keywords: ['dias', 'opera', 'temporada'], response: '📅 <b>Dias:</b><br><br>Todo o ano. Consultar horários com Ángel.', followUp: [] },
+{ keywords: ['prioridade', 'agencia embarque'], response: '🚢 <b>Embarque agências:</b><br><br>Respeitando horários de reservas.', followUp: [] },
+{ keywords: ['alcool', 'drinks', 'coqueteis'], response: '🍸 <b>Álcool:</b><br><br>Variada carta de drinks e coquetéis.', followUp: [] },
+{ keywords: ['praia exclusiva', 'porto dos piratas'], response: '🏖️ <b>Praia:</b><br><br>Zona adaptada especialmente para visitantes.', followUp: [] },
+{ keywords: ['sobreventa', 'cupos', 'marinha'], response: '🎫 <b>Sobreventa:</b><br><br>Sistema rigoroso. Sem risco.', followUp: [] },
+{ keywords: ['ola', 'oi', 'hey', 'bom dia'], response: 'Olá! 😊 Sou <b>Angel AI</b>. Pergunte-me sobre preços, horários, localização, crianças, clima, reservas e mais.', followUp: [] },
+{ keywords: ['obrigado', 'obrigada', 'valeu'], response: 'De nada! 😊 Até breve no passeio! ⛵', followUp: [] }
 ],
-fallback: '🤔 Não tenho certeza da sua pergunta. Tente perguntar sobre: preços, itinerário, bebês, chuva ou reservas. Ou nos chame no WhatsApp.'
+fallback: '🤔 Não tenho essa informação específica.<br><br>Tente perguntar sobre preços, horários, localização, crianças, clima ou reservas.<br><br>📱 WhatsApp Ángel: <b>+55 47 99967-048</b>',
+quickReplies: []
 },
 en: {
 intents: [
-{ keywords: ['price', 'cost', 'how much', 'rate', 'ticket'], response: '💰 <b>Prices:</b><br>Adults: R$ 100.00<br>Children 6-11 years: 50% off (R$ 50.00)<br>Babies 0-5 years: FREE' },
-{ keywords: ['babies', 'baby', '0 to 5', 'under 5', 'free'], response: '👶 <b>Babies 0-5 years:</b><br>Completely FREE. ⚠️ IMPORTANT: Brazilian Navy requires registering their exact names and ages for safety.' },
-{ keywords: ['children', 'kids', '6 to 11', 'discount', 'half price'], response: '🧒 <b>Children 6-11 years:</b><br>Get 50% discount. Pay R$ 50.00.' },
-{ keywords: ['book', 'reservation', 'reserve', 'whatsapp'], response: '📱 <b>Reservations:</b><br>You can book directly via WhatsApp at +55 47 99967-048 or by filling out the form at the bottom of this page.' },
-{ keywords: ['rain', 'weather', 'cancel', 'suspend', 'bad weather'], response: '⛵ <b>Cancelled due to rain?</b><br>NO. The tour is NOT suspended by rain. Our boats have waterproof covers and we sail safely in all weather.' },
-{ keywords: ['itinerary', 'route', 'stops', 'includes', 'tour'], response: '🗺️ <b>Itinerary:</b><br>1. Boarding at Porto dos Piratas.<br>2. Navigation along the Emerald Coast.<br>3. 30-min stop at Caixa d\'Aço Bay (waterslide & swimming).<br>4. On-board party with fruit buffet & pirate show.' },
-{ keywords: ['hello', 'hi', 'good morning', 'good afternoon'], response: '👋 Hello! I\'m Angel AI, your virtual assistant. Ask me anything about prices, itinerary, safety, or how to book.' }
+{ keywords: ['itinerario', 'recorrido', 'etapas', 'pasos', 'que hacemos', 'como es el paseo', 'detalles', 'roteiro', 'itinerary'], response: '🗺️ <b>Complete Itinerary:</b><br><br>1️⃣ <b>Boarding:</b> Private pier at Porto dos Piratas with facilities.<br>2️⃣ <b>Navigation:</b> Crossing the Emerald Coast and Ensenada das Garoupas with cultural stories.<br>3️⃣ <b>Swimming Stop:</b> 30 min at Caixa d\'Aço bay with waterslide and lifeguards.<br>4️⃣ <b>Party on Board:</b> Pirate show, music, fruit buffet and bar.<br><br>Do you want to know more about any specific stage?', followUp: [] },
+{ keywords: ['schedule', 'departure', 'time', 'leaves', 'programmed', '9:30', '11:30', '13:00'], response: '⏰ <b>Departure times:</b><br><br>9:30 Hs, 11:30 Hs and 13:00 Hs.', followUp: [] },
+{ keywords: ['kiosk', 'shop', 'buy fast'], response: '🏪 <b>Kiosk:</b><br><br>Yes, there is a kiosk available near the facilities.', followUp: [] },
+{ keywords: ['total duration', 'crossing', 'total time', '1:30'], response: '⏱️ <b>Total duration:</b><br><br>1 hour and 30 minutes (1:30 Hs).', followUp: [] },
+{ keywords: ['ocean', 'atlantic', 'open sea'], response: '🌊 <b>Ocean:</b><br><br>We sail in the waters of the Atlantic Ocean.', followUp: [] },
+{ keywords: ['cruises', 'cruise', 'big boat', 'luxury'], response: '🚢 <b>Cruises:</b><br><br>The Emerald Coast is a destination for large luxury cruises.', followUp: [] },
+{ keywords: ['strongbox', 'translation', 'alternative'], response: '💎 <b>Caixa d\'Aço translation:</b><br><br>Also known as "Strongbox" bay.', followUp: [] },
+{ keywords: ['music videos', 'music video', 'artists record'], response: '🎬 <b>Music videos:</b><br><br>Great artists choose Caixa d\'Aço to record their music videos.', followUp: [] },
+{ keywords: ['slide fall', 'strong fall', 'soft fall', 'safe slide'], response: '🎢 <b>Slide fall:</b><br><br>It\'s soft, fun and safe. Not strong.', followUp: [] },
+{ keywords: ['brazilian navy', 'organism', 'regulates', 'backs'], response: '⚓ <b>Regulation:</b><br><br>All navigation is regulated by the Brazilian Navy.', followUp: [] },
+{ keywords: ['season 2026', 'current rates', 'current conditions'], response: '📅 <b>Season:</b><br><br>Values correspond to the 2026 Season.', followUp: [] },
+{ keywords: ['bar sandwiches', 'fast food', 'bar beach'], response: '🥪 <b>Bar food:</b><br><br>Light sandwiches and burgers with fries.', followUp: [] },
+{ keywords: ['special drinks', 'tropical drinks', 'bar drinks', 'refresh'], response: '🍹 <b>Special drinks:</b><br><br>Traditional drinks and tropical cocktails.', followUp: [] },
+{ keywords: ['show participation', 'pirate show', 'interactive', 'dance pirates'], response: '🎭 <b>Pirate show:</b><br><br>Passengers are protagonists, interact and dance with pirates.', followUp: [] },
+{ keywords: ['own pier', 'complex pier', 'pier belongs'], response: '⚓ <b>Pier:</b><br><br>Yes, they depart from our own pier in Porto Belo.', followUp: [] },
+{ keywords: ['music rhythms', 'music genres', 'music styles', 'type music'], response: '🎵 <b>Music genres:</b><br><br>Very varied music with different styles for everyone.', followUp: [] },
+{ keywords: ['guides count', 'coordinators reservation', 'include guides'], response: '📋 <b>Guides in reservation:</b><br><br>Yes, must include passengers, guides, children and infants.', followUp: [] },
+{ keywords: ['excess capacity', 'more people', 'exceed reservation'], response: '⚠️ <b>Excess capacity:</b><br><br>No excess allowed under any circumstances for safety.', followUp: [] },
+{ keywords: ['araza neighborhood', 'araza foundation', 'araza origin', 'portuguese araza'], response: '📚 <b>Arazá neighborhood:</b><br><br>Of Portuguese origin, its foundation is explained on the trip.', followUp: [] },
+{ keywords: ['charger cost', 'free chargers', 'charge chargers'], response: '🔌 <b>Chargers:</b><br><br>No cost. Electrical energy is free.', followUp: [] },
+{ keywords: ['boat capacities', 'three boats', 'different capacities', '240 170 150'], response: '🚢 <b>Capacities:</b><br><br>Three boats: 240, 170 and 150 passengers.', followUp: [] },
+{ keywords: ['warm showers', 'hot water showers', 'cold showers', 'porto dos piratas showers'], response: '🚿 <b>Showers:</b><br><br>Fresh and warm water for greater comfort.', followUp: [] },
+{ keywords: ['student combos', 'individual combos', 'student benefit'], response: '🍟 <b>Student combos:</b><br><br>Exclusive for student groups, not individual.', followUp: [] },
+{ keywords: ['agency flags', 'promote brand', 'viral photos'], response: '🚩 <b>Agency flags:</b><br><br>To promote your brand in viral photos on social media.', followUp: [] },
+{ keywords: ['restaurant dishes', 'main dishes', 'restaurant lunches'], response: '🍽️ <b>Restaurant:</b><br><br>Offers complete lunches in addition to quick options.', followUp: [] },
+{ keywords: ['beach animation', 'sand games', 'animation only boat'], response: '🎭 <b>Animation:</b><br><br>Fun both on board and on the beach.', followUp: [] },
+{ keywords: ['gender bathrooms', 'divided bathrooms', 'shared bathrooms', 'ladies gentlemen'], response: '🚻 <b>Bathrooms:</b><br><br>Independent for men and women.', followUp: [] },
+{ keywords: ['flotation experience', 'don\'t know swim', 'no water experience'], response: '🦺 <b>Flotation:</b><br><br>Free life jackets and floaters for anyone who requests them.', followUp: [] },
+{ keywords: ['book in advance', 'special group', 'special departure'], response: '📝 <b>Special reservations:</b><br><br>We recommend contacting us as soon as possible to coordinate.', followUp: [] },
+{ keywords: ['hot water limit', 'how much hot water', 'hot water use'], response: '♨️ <b>Hot water:</b><br><br>No limit. Free and at no cost for everyone.', followUp: [] },
+{ keywords: ['30 minute stop', 'what to expect stop', 'natural environment'], response: '🏊 <b>Sea stop:</b><br><br>30 minutes of swimming and relaxation in calm and crystal clear waters.', followUp: [] },
+{ keywords: ['discount age range', '6 to 11', '50% discount age'], response: '🧒 <b>50% discount age:</b><br><br>Children between 6 and 11 years old.', followUp: [] },
+{ keywords: ['babies 0 5', 'under one year', 'babies pay'], response: '👶 <b>Babies:</b><br><br>From 0 to 5 years it\'s completely free.', followUp: [] },
+{ keywords: ['direct whatsapp', 'messaging channel', 'book angel'], response: '📱 <b>WhatsApp:</b><br><br>The most direct channel is Ángel\'s official WhatsApp.', followUp: [] },
+{ keywords: ['official email', 'electronic mail', 'commercial requests'], response: '📧 <b>Email:</b><br><br>angelportobelo@gmail.com', followUp: [] },
+{ keywords: ['separate bar', 'navigation bar', 'land bar'], response: '🍹 <b>Bar:</b><br><br>Each boat has its own bar on board.', followUp: [] },
+{ keywords: ['exclusive agencies', 'porto belo beach', 'agency space'], response: '⭐ <b>Exclusive for agencies:</b><br><br>Comfort, gastronomy, shows and international security.', followUp: [] },
+{ keywords: ['buffet boat', 'buffet beach', 'where buffet'], response: '🍉 <b>Buffet:</b><br><br>Served on board the boat.', followUp: [] },
+{ keywords: ['sailors rescue', 'first aid', 'sailor preparation'], response: '👨‍✈️ <b>Sailors:</b><br><br>Include trained lifeguard sailors.', followUp: [] },
+{ keywords: ['party atmosphere', 'sand party', 'pirate atmosphere'], response: '🎉 <b>Atmosphere:</b><br><br>Spectacular, with energy, music and fun for all ages.', followUp: [] },
+{ keywords: ['price includes beach', '100 pesos includes', 'infrastructure access'], response: '💰 <b>Price R$ 100:</b><br><br>Includes beach day and complete nautical tour.', followUp: [] },
+{ keywords: ['adult rate age', '12 years adult', 'older pays full'], response: '👨 <b>Adult rate:</b><br><br>From 12 years old completed.', followUp: [] },
+{ keywords: ['inlet open sea', 'ensenada das garoupas', 'navigation zone'], response: '🗺️ <b>Inlet:</b><br><br>Calm and protected waters of "Ensenada das Garoupas".', followUp: [] },
+{ keywords: ['register children 0 5', 'babies list', 'navy requires'], response: '⚠️ <b>Baby registration:</b><br><br>Brazilian Navy requires exact control of people on board.', followUp: [] },
+{ keywords: ['separate bathrooms', 'ladies sectors', 'independent bathrooms'], response: '🚻 <b>Separate bathrooms:</b><br><br>Yes, independent for men and women.', followUp: [] },
+{ keywords: ['individual combos', 'individual burgers', 'buy moment'], response: '🍔 <b>Individual combos:</b><br><br>Exclusive for previously reserved student groups.', followUp: [] },
+{ keywords: ['educational content', 'educational recreational', 'cultural block'], response: '📚 <b>Content:</b><br><br>Combines fun with cultural and historical stories.', followUp: [] },
+{ keywords: ['slide footwear', 'ideal footwear', 'what footwear'], response: '🩴 <b>Footwear:</b><br><br>Beach or light sports, easy to remove.', followUp: [] },
+{ keywords: ['roofed beach', 'roofed infrastructure', 'complex shade'], response: '⛱️ <b>Roofed areas:</b><br><br>The bar and restaurant have excellent roofed infrastructure.', followUp: [] },
+{ keywords: ['brazil prefix', '55 whatsapp', 'international code'], response: '📱 <b>Prefix:</b><br><br>Yes, WhatsApp has Brazil\'s +55 prefix.', followUp: [] },
+{ keywords: ['adventure lives', 'qualified tour', 'pirate magic'], response: '✨ <b>The adventure:</b><br><br>Pirate magic, exclusive beach, sophisticated navigation and fun.', followUp: [] },
+{ keywords: ['buffet', 'fruit', 'food', 'reception', 'includes food'], response: '🍉 <b>Buffet:</b><br><br>Includes fresh tropical fruit buffet on board.', followUp: [] },
+{ keywords: ['island', 'disembark', 'landing', 'porto belo island'], response: '🏝️ <b>Disembarkation:</b><br><br>No disembarkation on Porto Belo island.', followUp: [] },
+{ keywords: ['beach animation', 'sand', 'beach entertainment'], response: '🎭 <b>Beach animation:</b><br><br>Live animation directly on the beach.', followUp: [] },
+{ keywords: ['wheelchair', 'disability', 'mobility'], response: '🦽 <b>Wheelchair:</b><br><br>Prepared facilities. Trained team to assist.', followUp: [] },
+{ keywords: ['beach music', 'speakers beach', 'beach ambiance'], response: '🔊 <b>Beach music:</b><br><br>Speakers with excellent music all day.', followUp: [] },
+{ keywords: ['health post', 'health center', 'medical'], response: '🏥 <b>Health post:</b><br><br>Easily accessible health post nearby.', followUp: [] },
+{ keywords: ['arrive', 'access', 'how to get', 'easy access'], response: '📍 <b>How to get there:</b><br><br>Very easy access, connected for vehicles and buses.', followUp: [] },
+{ keywords: ['safe beach', 'safe swimmers'], response: '🏖️ <b>Safe beach:</b><br><br>Calm waters with constant supervision.', followUp: [] },
+{ keywords: ['distance', 'balneario', 'camboriu', 'km'], response: '📍 <b>Distance:</b><br><br>25-26 km from Balneario Camboriú.', followUp: [] },
+{ keywords: ['time', 'duration', 'minutes'], response: '🚗 <b>Time:</b><br><br>30 to 40 minutes from Balneario Camboriú.', followUp: [] },
+{ keywords: ['repeat', 'again', 'particular'], response: '🔄 <b>Repeat tour:</b><br><br>Of course! Delighted to welcome you again.', followUp: [] },
+{ keywords: ['payment', 'pay', 'pix', 'cash'], response: '💳 <b>Payment methods:</b><br><br>Pix and cash.', followUp: [] },
+{ keywords: ['mate', 'thermos'], response: '🧉 <b>Mate:</b><br><br>Yes! Free hot water to prepare it.', followUp: [] },
+{ keywords: ['shade', 'sun', 'roof', 'covered'], response: '☂️ <b>Shade:</b><br><br>Covered areas on boat and beach.', followUp: [] },
+{ keywords: ['rain', 'weather', 'storm'], response: '🌧️ <b>Rain:</b><br><br>Not suspended. Boats with hermetic shelter.', followUp: [] },
+{ keywords: ['music', 'dance', 'speakers boat'], response: '🎵 <b>Music on board:</b><br><br>Excellent sound system with various styles.', followUp: [] },
+{ keywords: ['bathroom', 'toilet', 'wc'], response: '🚻 <b>Bathrooms:</b><br><br>Individual divided for men and women.', followUp: [] },
+{ keywords: ['children', 'kids', 'family'], response: '👨‍👩‍👧‍👦 <b>Children:</b><br><br>Safe environment. Under 5: FREE. 6-11: 50% off.', followUp: [] },
+{ keywords: ['elderly', 'seniors', 'older'], response: '👴 <b>Seniors:</b><br><br>Pleasant, comfortable and quiet experience.', followUp: [] },
+{ keywords: ['disability', 'disabled', 'special needs'], response: '♿ <b>Disabilities:</b><br><br>Perfectly prepared complex.', followUp: [] },
+{ keywords: ['include', 'included', 'includes'], response: '🏖️ <b>Includes:</b><br><br>Bathrooms, showers, animation, restaurant, bar, hot water, charging.', followUp: [] },
+{ keywords: ['suspend', 'cancel', 'bad weather'], response: '⛵ <b>Suspension:</b><br><br>NOT suspended for rain.', followUp: [] },
+{ keywords: ['entertainment', 'animation', 'activities', 'show'], response: '🎭 <b>Entertainment:</b><br><br>Live animation with pirates. Games and prizes.', followUp: [] },
+{ keywords: ['pet', 'dog', 'cat', 'animal'], response: '🐾 <b>Pets:</b><br><br>Not allowed. ✅ Guide dogs yes.', followUp: [] },
+{ keywords: ['guide dog', 'assistance dog'], response: '🦮 <b>Guide dogs:</b><br><br>Fully permitted.', followUp: [] },
+{ keywords: ['reduced mobility', 'wheelchair'], response: '🦽 <b>Reduced mobility:</b><br><br>Equipped facilities. Team assists.', followUp: [] },
+{ keywords: ['cooler', 'ice chest'], response: '🧊 <b>Coolers:</b><br><br>Allowed.', followUp: [] },
+{ keywords: ['food', 'sandwich', 'bring food'], response: '🥪 <b>Own food:</b><br><br>Allowed. Also has restaurant.', followUp: [] },
+{ keywords: ['lunch', 'dinner', 'restaurant', 'eat'], response: '🍔 <b>Eat:</b><br><br>Bar and restaurant with lunches, sandwiches, cocktails.', followUp: [] },
+{ keywords: ['shops', 'buy food', 'nearby'], response: '🏪 <b>Shops:</b><br><br>Various options nearby.', followUp: [] },
+{ keywords: ['lifeguard', 'beach safety'], response: '🏊 <b>Lifeguards:</b><br><br>Professionals on beach and lifeguard sailor on board.', followUp: [] },
+{ keywords: ['security', 'belongings', 'cameras'], response: '🔒 <b>Security:</b><br><br>Constant monitoring with cameras.', followUp: [] },
+{ keywords: ['access', 'walk', 'beach access'], response: '🚶 <b>Access:</b><br><br>Very easy, comfortable, flat and direct.', followUp: [] },
+{ keywords: ['boarding', 'embark', 'pier'], response: '🚢 <b>Boarding:</b><br><br>Orderly, safe and agile from own pier.', followUp: [] },
+{ keywords: ['crew', 'staff', 'captain'], response: '👨‍✈️ <b>Crew:</b><br><br>Professional, trained and qualified.', followUp: [] },
+{ keywords: ['flotation', 'life jacket', 'vest'], response: '🦺 <b>Flotation:</b><br><br>Free life jackets and floaters. Sizes for children.', followUp: [] },
+{ keywords: ['snorkel', 'mask', 'diving'], response: '🤿 <b>Snorkel:</b><br><br>Excellent idea to bring your own mask!', followUp: [] },
+{ keywords: ['sunscreen', 'sunblock'], response: '🧴 <b>Sunscreen:</b><br><br>Nearby shops to buy it.', followUp: [] },
+{ keywords: ['language', 'speak', 'english', 'spanish'], response: '🗣️ <b>Languages:</b><br><br>Team prepared to understand your language.', followUp: [] },
+{ keywords: ['medical', 'doctor', 'emergency'], response: '🏥 <b>Emergency:</b><br><br>Immediate coordination with emergency service.', followUp: [] },
+{ keywords: ['parking', 'car', 'vehicle'], response: '🅿️ <b>Parking:</b><br><br>Own area available.', followUp: [] },
+{ keywords: ['umbrella', 'parasol'], response: '⛱️ <b>Umbrellas:</b><br><br>Allowed.', followUp: [] },
+{ keywords: ['beach chair', 'lounger'], response: '🪑 <b>Beach chairs:</b><br><br>Allowed.', followUp: [] },
+{ keywords: ['hot water', 'mate', 'tea', 'coffee'], response: '♨️ <b>Hot water:</b><br><br>FREE. Can refill as many times as needed.', followUp: [] },
+{ keywords: ['charge', 'cellphone', 'battery'], response: '🔌 <b>Charge phone:</b><br><br>Free energy. Multiple connection points.', followUp: [] },
+{ keywords: ['swimsuit', 'bathing suit', 'clothes'], response: '👙 <b>Swimwear:</b><br><br>Nearby shops sell beachwear.', followUp: [] },
+{ keywords: ['duration', 'how long', 'hours'], response: '⏱️ <b>Duration:</b><br><br>Exactly 1 hour and 30 minutes.', followUp: [] },
+{ keywords: ['zones', 'navigate', 'route', 'bay'], response: '🗺️ <b>Zones:</b><br><br>"Ensenada das Garoupas" and "Caixa d\'Aço" bay.', followUp: [] },
+{ keywords: ['caixa d\'aco', 'famous', 'bay'], response: '💎 <b>Caixa d\'Aço:</b><br><br>Natural refuge of calm waters with floating bars.', followUp: [] },
+{ keywords: ['stop', 'swim', 'water', 'refresh'], response: '🏊 <b>Stop:</b><br><br>30 minutes to swim and refresh.', followUp: [] },
+{ keywords: ['slide', 'waterslide', 'fun'], response: '🎢 <b>Slide:</b><br><br>Safe even for children. Don\'t need to swim with vest.', followUp: [] },
+{ keywords: ['culture', 'history', 'learn'], response: '📚 <b>Culture:</b><br><br>Regional history and foundation of "Arazá" neighborhood.', followUp: [] },
+{ keywords: ['capacity', 'passengers', 'boats'], response: '🚢 <b>Capacity:</b><br><br>240, 170 and 150 passengers.', followUp: [] },
+{ keywords: ['agency', 'advertising', 'flag'], response: '🚩 <b>Agencies:</b><br><br>Can bring flags for promotional photos.', followUp: [] },
+{ keywords: ['price', 'cost', 'how much', 'rate'], response: '💰 <b>Prices:</b><br><br>General: R$ 100. Under 5: FREE. 6-11: 50% off. 12+: adult.', followUp: [] },
+{ keywords: ['discount', 'agency', 'guide'], response: '🏢 <b>Groups and Agencies:</b><br><br>Consult special rates for closed groups or agencies.', followUp: [] },
+{ keywords: ['baby', 'under 5', 'free'], response: '👶 <b>Under 5:</b><br><br>FREE. Must register for Brazilian Navy.', followUp: [] },
+{ keywords: ['children 6', 'under 11', 'half'], response: '🧒 <b>6-11 years:</b><br><br>50% discount.', followUp: [] },
+{ keywords: ['adult rate', '12 years'], response: '👨 <b>Adult:</b><br><br>From 12 years old completed.', followUp: [] },
+{ keywords: ['school', 'burger', 'combo', 'students'], response: '🍟 <b>Students:</b><br><br>Burger+fries+drink combos. Notify when booking.', followUp: [] },
+{ keywords: ['group reservation', 'list', 'groups'], response: '📋 <b>Groups:</b><br><br>Reserve total absolute number of people.', followUp: [] },
+{ keywords: ['baby reservation', 'register baby', 'navy'], response: '⚠️ <b>Babies in reservation:</b><br><br>Brazilian Navy requirement for weight control.', followUp: [] },
+{ keywords: ['no reservation', 'free spot'], response: '🎫 <b>No reservation:</b><br><br>Book before. Law prohibits exceeding capacity.', followUp: [] },
+{ keywords: ['contact', 'angel', 'manager'], response: '👤 <b>Contact:</b><br><br>Ángel: WhatsApp +55 47 99967-048. Email: angelportobelo@gmail.com', followUp: [] },
+{ keywords: ['whatsapp', 'phone', 'email'], response: '📞 <b>Contact Ángel:</b><br><br>WhatsApp: +55 47 99967-048<br>Email: angelportobelo@gmail.com', followUp: [] },
+{ keywords: ['pier', 'private', 'departure'], response: '⚓ <b>Pier:</b><br><br>Own private pier in Porto Belo.', followUp: [] },
+{ keywords: ['shower', 'fresh water'], response: '🚿 <b>Showers:</b><br><br>Fresh water.', followUp: [] },
+{ keywords: ['bar on board', 'drinks boat'], response: '🍹 <b>Bar on board:</b><br><br>Bar service on all boats.', followUp: [] },
+{ keywords: ['sandwiches', 'burger'], response: '🥪 <b>Sandwiches:</b><br><br>Light, hot and burgers with fries.', followUp: [] },
+{ keywords: ['pirate animation', 'interactive', 'pirates'], response: '🏴‍☠️ <b>Pirate animation:</b><br><br>Interactive. Games and prizes on beach and boat.', followUp: [] },
+{ keywords: ['rough sea', 'calm waters'], response: '🌊 <b>Sea:</b><br><br>Very calm and transparent waters. Emerald Coast.', followUp: [] },
+{ keywords: ['experience', 'first time'], response: '⛵ <b>Experience:</b><br><br>Not necessary. Super quiet tour.', followUp: [] },
+{ keywords: ['emerald coast', 'region', 'santa catarina'], response: '🌴 <b>Region:</b><br><br>Emerald Coast, tourist pole of Santa Catarina.', followUp: [] },
+{ keywords: ['footwear', 'shoes', 'flip flops'], response: '🩴 <b>Footwear:</b><br><br>Comfortable beach that can get wet.', followUp: [] },
+{ keywords: ['know swim', 'swim slide'], response: '🏊 <b>Swim:</b><br><br>Not mandatory with vests.', followUp: [] },
+{ keywords: ['days', 'operates', 'season'], response: '📅 <b>Days:</b><br><br>All year. Check schedules with Ángel.', followUp: [] },
+{ keywords: ['priority', 'agency boarding'], response: '🚢 <b>Agency boarding:</b><br><br>Respecting reservation schedules.', followUp: [] },
+{ keywords: ['alcohol', 'drinks', 'cocktails'], response: '🍸 <b>Alcohol:</b><br><br>Varied menu of cocktails and drinks.', followUp: [] },
+{ keywords: ['exclusive beach', 'porto dos piratas'], response: '🏖️ <b>Beach:</b><br><br>Specially adapted area for visitors.', followUp: [] },
+{ keywords: ['oversell', 'capacity', 'navy'], response: '🎫 <b>Overselling:</b><br><br>Rigorous system. No risk.', followUp: [] },
+{ keywords: ['hello', 'hi', 'hey', 'good morning'], response: 'Hello! 😊 I\'m <b>Angel AI</b>. Ask me about prices, schedules, location, children, weather, reservations and more.', followUp: [] },
+{ keywords: ['thanks', 'thank you'], response: 'You\'re welcome! 😊 See you soon on the tour! ⛵', followUp: [] }
 ],
-fallback: '🤔 I\'m not sure I understand. Try asking about: prices, itinerary, babies, rain, or reservations. Or contact us on WhatsApp.'
+fallback: '🤔 I don\'t have that specific information.<br><br>Try asking about prices, schedules, location, children, weather or reservations.<br><br>📱 WhatsApp Ángel: <b>+55 47 99967-048</b>',
+quickReplies: []
 }
 };
 
-// ========== FUNCIONES DEL CHATBOT LOCAL ==========
+// ========== 🤖 ANGEL AI CHATBOT FUNCTIONS ==========
 let chatHistory = [];
 let chatbotOpen = false;
 
@@ -672,7 +1051,10 @@ function initChatbot() {
     const input = document.getElementById('aiChatInput');
     const send = document.getElementById('aiChatSend');
     
-    if (!toggle || !chatWindow) return;
+    if (!toggle || !chatWindow) {
+        console.error('Elementos del chatbot no encontrados');
+        return;
+    }
     
     toggle.addEventListener('click', () => {
         chatbotOpen = !chatbotOpen;
@@ -682,9 +1064,17 @@ function initChatbot() {
             addBotMessage(t.ai_greeting || 'Olá! Sou o Angel AI. Como posso ajudar?');
         }
     });
-    if (close) close.addEventListener('click', () => { chatbotOpen = false; chatWindow.classList.remove('active'); });
-    if (send) send.addEventListener('click', sendMessage);
+    
+    if (close) {
+        close.addEventListener('click', () => {
+            chatbotOpen = false;
+            chatWindow.classList.remove('active');
+        });
+    }
+    
+    if (send) send.addEventListener('click', () => sendMessage());
     if (input) input.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
+    console.log('✅ Angel AI inicializado');
 }
 
 function sendMessage() {
@@ -693,37 +1083,14 @@ function sendMessage() {
     if (!text) return;
     
     addUserMessage(text);
-    input.value = '';
+    if (input) input.value = '';
     showTyping();
     
     setTimeout(() => {
-        const response = getAIResponse(text);
         removeTyping();
-        addBotMessage(response);
+        const response = getAIResponse(text);
+        addBotMessage(response.text);
     }, 600 + Math.random() * 400);
-}
-
-function getAIResponse(userText) {
-    const normalizedText = userText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    const kb = aiKnowledgeBase[currentLang] || aiKnowledgeBase['es'];
-    let bestMatch = null;
-    let bestScore = 0;
-
-    for (const intent of kb.intents) {
-        let score = 0;
-        for (const keyword of intent.keywords) {
-            const normalizedKeyword = keyword.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            if (normalizedText.includes(normalizedKeyword)) {
-                score += normalizedKeyword.length * 2;
-            }
-        }
-        if (score > bestScore) {
-            bestScore = score;
-            bestMatch = intent;
-        }
-    }
-    
-    return bestMatch ? bestMatch.response : kb.fallback;
 }
 
 function addUserMessage(text) {
@@ -764,7 +1131,31 @@ function removeTyping() {
     if (typing) typing.remove();
 }
 
-// ========== GALERÍA Y LIGHTBOX ==========
+function getAIResponse(userText) {
+    const text = userText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const kb = aiKnowledgeBase[currentLang] || aiKnowledgeBase['es'];
+    let bestMatch = null;
+    let bestScore = 0;
+
+    for (const intent of kb.intents) {
+        let score = 0;
+        for (const keyword of intent.keywords) {
+            const kw = keyword.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            if (text.includes(kw)) {
+                score += kw.length;
+                if (text === kw) score += 10;
+            }
+        }
+        if (score > bestScore) { bestScore = score; bestMatch = intent; }
+    }
+    
+    if (bestMatch && bestScore > 0) {
+        return { text: bestMatch.response, followUp: bestMatch.followUp || [] };
+    }
+    return { text: kb.fallback, followUp: kb.quickReplies };
+}
+
+// ========== IMÁGENES ==========
 const imagenesGrandes = [
     "https://sebagsc2020.github.io/angeltourbrasil/images/atb_01.webp",
     "https://sebagsc2020.github.io/angeltourbrasil/images/atb_02.webp",
@@ -780,68 +1171,42 @@ const imagenesGrandes = [
     "https://sebagsc2020.github.io/angeltourbrasil/images/atb_12.webp"
 ];
 const imagenesChicas = imagenesGrandes;
-let indiceActual = 0;
-let touchStartX = 0;
-let touchEndX = 0;
 
-function initGallery() {
-    const gridGaleria = document.getElementById('gridGaleria');
-    if(!gridGaleria) return;
-    
-    gridGaleria.innerHTML = '';
-    imagenesChicas.forEach((urlMini, indice) => {
-        const item = document.createElement('div');
-        item.className = 'gallery-item';
-        item.onclick = () => abrirLightbox(indice);
-        const img = document.createElement('img');
-        img.src = urlMini;
-        img.alt = `Foto ${indice + 1}`;
-        img.loading = 'lazy';
-        item.appendChild(img);
-        gridGaleria.appendChild(item);
-    });
+async function obtenerPaisUsuario() {
+    try {
+        const respuesta = await fetch('https://ipapi.co/json/');
+        const datos = await respuesta.json();
+        if (datos && datos.country_name) paisUsuario = datos.country_name.toUpperCase();
+        else if (datos && datos.country) paisUsuario = datos.country;
+        else paisUsuario = "DESCONOCIDO";
+    } catch (error) {
+        try {
+            const respuesta2 = await fetch('https://ip-api.com/json/');
+            const datos2 = await respuesta2.json();
+            if (datos2 && datos2.country) paisUsuario = datos2.country.toUpperCase();
+            else paisUsuario = "DESCONOCIDO";
+        } catch (error2) { paisUsuario = "DESCONOCIDO"; }
+    }
+    return paisUsuario;
 }
 
-window.abrirLightbox = function(indice) { 
-    indiceActual = indice; 
-    actualizarLightbox(); 
-    const lb = document.getElementById('lightboxModern'); 
-    if(lb) { 
-        lb.classList.add('active'); 
-        document.body.style.overflow = 'hidden'; 
-    } 
-};
-
-function actualizarLightbox() { 
-    const img = document.getElementById('lightboxImg'); 
-    const counter = document.getElementById('fotoContador'); 
-    if(img) img.src = imagenesGrandes[indiceActual]; 
-    if(counter) counter.innerText = `${indiceActual + 1} / ${imagenesGrandes.length}`; 
+// ✅ FUNCIÓN PARA ACTUALIZAR EL ENLACE DE WHATSAPP SEGÚN IDIOMA
+function updateWhatsAppLink(event) {
+    const t = translations[currentLang];
+    const waBtn = document.getElementById('whatsappFloat');
+    if (waBtn && t.wa_message) {
+        waBtn.href = `https://wa.me/5547999679084?text=${encodeURIComponent(t.wa_message)}`;
+    }
 }
 
-function cambiarImagen(direccion) { 
-    indiceActual += direccion; 
-    if(indiceActual < 0) indiceActual = imagenesGrandes.length - 1; 
-    else if(indiceActual >= imagenesGrandes.length) indiceActual = 0; 
-    actualizarLightbox(); 
-}
-
-function cerrarLightbox() { 
-    const lb = document.getElementById('lightboxModern'); 
-    if(lb) { 
-        lb.classList.remove('active'); 
-        document.body.style.overflow = ''; 
-    } 
-}
-
-// ========== UTILIDADES Y EVENTOS ==========
 function changeLanguage(lang) {
     currentLang = lang;
     if (currentLang === "es") codigoIdioma = "ESP";
     else if (currentLang === "pt") codigoIdioma = "POR";
     else if (currentLang === "en") codigoIdioma = "USA";
     
-    const t = translations[lang];
+    const t = translations[lang] || translations['pt'];
+    
     document.querySelectorAll('[data-key]').forEach(el => { 
         const key = el.getAttribute('data-key'); 
         if(t[key] !== undefined) el.textContent = t[key]; 
@@ -860,55 +1225,17 @@ function changeLanguage(lang) {
     
     const chatInput = document.getElementById('aiChatInput');
     if (chatInput) chatInput.placeholder = t.ai_chatbot_placeholder;
+    
     updateVoiceBtnTitle();
     loadWeatherWidget(lang);
     
-    // ✅ ACTUALIZAR MENSAJE DE WHATSAPP FLOTANTE AL CAMBIAR IDIOMA
     const waBtn = document.getElementById('whatsappFloat');
     if (waBtn && t.wa_message) {
         waBtn.href = `https://wa.me/5547999679084?text=${encodeURIComponent(t.wa_message)}`;
     }
     
     localStorage.setItem('preferred_language', lang);
-}
-
-// ✅ FUNCIÓN PARA ACTUALIZAR EL ENLACE DE WHATSAPP SEGÚN IDIOMA
-function updateWhatsAppLink(event) {
-    const t = translations[currentLang];
-    const waBtn = document.getElementById('whatsappFloat');
-    if (waBtn && t.wa_message) {
-        waBtn.href = `https://wa.me/5547999679084?text=${encodeURIComponent(t.wa_message)}`;
-    }
-}
-
-function calcularValorTotal() {
-    const adultos = parseInt(document.getElementById('adultos')?.value || 0);
-    const menores = parseInt(document.getElementById('menores')?.value || 0);
-    const total = (adultos * 100) + (menores * 50);
-    const valorTotalInput = document.getElementById('valorTotal');
-    if (valorTotalInput) valorTotalInput.value = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    return total;
-}
-
-function scrollToSectionWithOffset(id) {
-    const element = document.getElementById(id);
-    if (element) {
-        const header = document.querySelector('.header');
-        const headerHeight = header ? header.offsetHeight : 80;
-        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-        window.scrollTo({ top: elementPosition - headerHeight, behavior: 'smooth' });
-    }
-}
-
-async function obtenerPaisUsuario() {
-    try {
-        const res = await fetch('https://ipapi.co/json/');
-        const data = await res.json();
-        if (data?.country_name) paisUsuario = data.country_name.toUpperCase();
-        else if (data?.country) paisUsuario = data.country;
-    } catch (e) { 
-        paisUsuario = "DESCONOCIDO"; 
-    }
+    console.log('✅ Idioma cambiado a:', lang);
 }
 
 function stopReading() { 
@@ -935,7 +1262,6 @@ function stripHtml(html) {
     return tmp.textContent || tmp.innerText || "";
 }
 
-// ✅ FUNCIÓN CORREGIDA (sin saltos de línea reales dentro de comillas)
 function htmlToWhatsAppFormat(html) {
     let text = html;
     text = text.replace(/<h3[^>]*>(.*?)<\/h3>/gi, '\n🔹 *$1*\n');
@@ -960,7 +1286,9 @@ function openModal(stepData){
     if (stepData.step) {
         setTimeout(() => {
             const targetElement = document.getElementById(`step-${stepData.step}`);
-            if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }, 100);
     }
 }
@@ -997,21 +1325,68 @@ async function loadWeatherWidget(lang) {
     document.head.appendChild(script); 
 }
 
-// ========== INICIALIZACIÓN ==========
+function calcularValorTotal() {
+    const adultos = parseInt(document.getElementById('adultos')?.value || 0);
+    const menores = parseInt(document.getElementById('menores')?.value || 0);
+    const total = (adultos * 100) + (menores * 50);
+    const valorTotalInput = document.getElementById('valorTotal');
+    if (valorTotalInput) valorTotalInput.value = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    return total;
+}
+
+function scrollToSectionWithOffset(id) {
+    const element = document.getElementById(id);
+    if (element) {
+        const header = document.querySelector('.header');
+        const headerHeight = header ? header.offsetHeight : 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
+}
+
+// ========== INICIALIZACIÓN SEGURA ==========
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Inicializar idioma
     const savedLang = localStorage.getItem('preferred_language');
     changeLanguage(savedLang && translations[savedLang] ? savedLang : 'pt');
+    
+    // ========== EVENTOS DE BOTONES DE IDIOMA (CORREGIDO) ==========
+    document.querySelectorAll('.lang-btn-header').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const lang = btn.getAttribute('data-lang');
+            if (lang && translations[lang]) {
+                changeLanguage(lang);
+            }
+        });
+    });
     
     // 2. Inicializar componentes
     calcularValorTotal();
     setTimeout(() => loadWeatherWidget(currentLang), 100);
     initChatbot();
     initVoiceRecognition();
-    initGallery();
     
     // 3. Configurar eventos de Galería/Lightbox
+    const gridGaleria = document.getElementById('gridGaleria');
+    if(gridGaleria){
+        gridGaleria.innerHTML = '';
+        imagenesChicas.forEach((urlMini, indice) => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.onclick = () => window.abrirLightbox(indice);
+            const img = document.createElement('img');
+            img.src = urlMini;
+            img.alt = `Foto ${indice + 1}`;
+            img.loading = 'lazy';
+            item.appendChild(img);
+            gridGaleria.appendChild(item);
+        });
+    }
+    
     const lightboxModern = document.getElementById('lightboxModern');
+    let touchStartX, touchEndX;
     if(lightboxModern) {
         lightboxModern.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
         lightboxModern.addEventListener('touchend', e => { 
@@ -1149,6 +1524,41 @@ document.addEventListener('DOMContentLoaded', () => {
     
     console.log('✅ Angel AI, Galería e Idiomas inicializados correctamente');
 });
+
+// Variables globales para Lightbox
+let indiceActual = 0;
+
+window.abrirLightbox = function(indice) { 
+    indiceActual = indice; 
+    actualizarLightbox(); 
+    const lb = document.getElementById('lightboxModern'); 
+    if(lb) { 
+        lb.classList.add('active'); 
+        document.body.style.overflow = 'hidden'; 
+    } 
+};
+
+function actualizarLightbox() { 
+    const img = document.getElementById('lightboxImg'); 
+    const counter = document.getElementById('fotoContador'); 
+    if(img) img.src = imagenesGrandes[indiceActual]; 
+    if(counter) counter.innerText = `${indiceActual + 1} / ${imagenesGrandes.length}`; 
+}
+
+function cambiarImagen(direccion) { 
+    indiceActual += direccion; 
+    if(indiceActual < 0) indiceActual = imagenesGrandes.length - 1; 
+    else if(indiceActual >= imagenesGrandes.length) indiceActual = 0; 
+    actualizarLightbox(); 
+}
+
+function cerrarLightbox() { 
+    const lb = document.getElementById('lightboxModern'); 
+    if(lb) { 
+        lb.classList.remove('active'); 
+        document.body.style.overflow = ''; 
+    } 
+}
 </script>
 </body>
 </html>
