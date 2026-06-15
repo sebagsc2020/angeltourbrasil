@@ -2,30 +2,33 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Angel Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<title>Angel+Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
+
+<!-- 📱 PWA & APP META TAGS -->
+<meta name="theme-color" content="#0A2F6C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Angel Tour">
+<link rel="apple-touch-icon" href="images/logoangel-pb.png">
+<link rel="manifest" href="manifest.json">
+
 <meta name="description" content="Conheça o passeio mais completo da região! Passeio pela Costa Esmeralda, parada na Bahía de Caixa D'Aço, tobogã, buffet de frutas, batida de côco e muita animação. Embarque em Porto Belo - SC.">
-<meta name="keywords" content="Angel Tour Brasil, passeio de barco, Costa Esmeralda, Porto Belo, Caixa D'Aço, turismo Santa Catarina, passeio de barco Porto Belo, escuna Porto Belo">
+<meta name="keywords" content="Angel Tour Brasil, passeio de barco, Costa Esmeralda, Porto Belo, Caixa D'Aço, turismo Santa Catarina">
 <meta name="author" content="Angel Tour Brasil">
 <meta name="robots" content="index, follow">
-<meta name="geo.region" content="BR-SC">
-<meta name="geo.placename" content="Porto Belo">
-<meta name="geo.position" content="-27.158333;-48.566667">
-<meta name="ICBM" content="-27.158333, -48.566667">
 <meta property="og:title" content="Angel Tour Brasil | O passeio mais completo da Costa Esmeralda">
-<meta property="og:description" content="Passeio náutico pela Costa Esmeralda com parada para nadar na Bahía de Caixa D'Aço, tobogã, frutas e batidas. Segurança e diversão para toda a família em Porto Belo - SC.">
+<meta property="og:description" content="Passeio náutico pela Costa Esmeralda com parada para nadar na Bahía de Caixa D'Aço.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.angeltourbrasil.com.br/">
-<meta property="og:image" content="https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/logoangel-pb.png">
-<meta property="og:site_name" content="Angel Tour Brasil">
-<meta property="og:locale" content="pt_BR">
+<meta property="og:image" content="images/logoangel-pb.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Angel Tour Brasil | O passeio mais completo da Costa Esmeralda">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/logoangel-pb.png">
-<meta name="theme-color" content="#0A2F6C">
+<meta name="twitter:image" content="images/logoangel-pb.png">
 <link rel="canonical" href="https://www.angeltourbrasil.com.br/">
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 90px; }
@@ -181,7 +184,6 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 .ai-msg.typing span:nth-child(2) { animation-delay: 0.2s; }
 .ai-msg.typing span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-8px); opacity: 1; } }
-/* 🆕 AI LOADING INDICATOR */
 .ai-msg.loading-ai { background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); align-self: flex-start; border-bottom-left-radius: 4px; display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #F59E0B; }
 .ai-msg.loading-ai i { animation: spin 1s linear infinite; color: #D97706; }
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -234,9 +236,19 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 .footer-form { flex-wrap: wrap; gap: 0.75rem; }
 }
 .weather-widget-container { margin-bottom: 2rem; padding: 0.5rem; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; min-height: 220px; display: flex; justify-content: center; align-items: center; }
+.install-app-btn {
+    position: fixed; bottom: 170px; right: 28px; background: linear-gradient(135deg, #0A2F6C 0%, #005f8c 100%);
+    color: white; border: none; padding: 12px 20px; border-radius: 50px; font-weight: 700; font-size: 0.85rem;
+    box-shadow: 0 4px 15px rgba(10, 47, 108, 0.4); cursor: pointer; display: none; align-items: center; gap: 8px;
+    z-index: 96; transition: all 0.3s ease; animation: float 3s ease-in-out infinite;
+}
+.install-app-btn:hover { transform: translateY(-3px) scale(1.05); }
+.install-app-btn i { font-size: 1.1rem; }
+@media (max-width: 880px) { .install-app-btn { bottom: 235px !important; right: 15px; padding: 10px 16px; font-size: 0.8rem; } }
 </style>
 </head>
 <body>
+
 <header class="header">
 <div class="container">
 <div class="navbar">
@@ -244,9 +256,9 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 <div class="logo-text">Angel Tour <span>Brasil</span></div>
 <div class="header-right">
 <div class="lang-buttons-header">
-<button class="lang-btn-header" data-lang="es" title="Español"><img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-es.png" alt="Español"></button>
-<button class="lang-btn-header" data-lang="pt" title="Português"><img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-pt.png" alt="Português"></button>
-<button class="lang-btn-header" data-lang="en" title="English"><img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-us.png" alt="English"></button>
+<button class="lang-btn-header" data-lang="es" title="Español"><img src="images/bt-es.png" alt="Español"></button>
+<button class="lang-btn-header" data-lang="pt" title="Português"><img src="images/bt-pt.png" alt="Português"></button>
+<button class="lang-btn-header" data-lang="en" title="English"><img src="images/bt-us.png" alt="English"></button>
 </div>
 <div class="menu-icon" id="menuToggle"><i class="fas fa-bars"></i></div>
 </div>
@@ -260,6 +272,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 </header>
+
 <div id="stickyBookingBar" class="sticky-booking-bar">
 <div class="sticky-booking-content">
 <div class="sticky-booking-info">
@@ -271,12 +284,13 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </button>
 </div>
 </div>
+
 <section id="inicio" class="hero">
 <div class="container">
 <div class="hero-content">
 <div class="hero-left">
 <div class="hero-logo">
-<img src="https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/logoangel-pb.png" alt="Angel Tour Brasil Logo">
+<img src="images/logoangel-pb.png" alt="Angel Tour Brasil Logo">
 </div>
 </div>
 <div class="hero-right">
@@ -290,6 +304,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 </section>
+
 <div class="section">
 <div class="container">
 <h2 class="section-title" data-key="why_title">¿Por qué navegar con Angel Tour?</h2>
@@ -302,30 +317,28 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 </div>
+
 <section id="itinerario" class="section section-bg-light">
 <div class="container">
 <h2 class="section-title" data-key="itinerary_title">Roteiro da Experiência</h2>
 <p class="section-sub" data-key="itinerary_sub">Embarque em Porto dos Piratas e viva momentos inesquecíveis</p>
 <div class="timeline" id="timelineContainer">
 <div class="timeline-step" data-step="1" data-key-es="Embarque" data-key-pt="Embarque" data-key-en="Boarding" data-desc-es="Trapiche en Porto dos Piratas / Porto Belo." data-desc-pt="Trapiche em Porto dos Piratas / Porto Belo." data-desc-en="Pier in Porto dos Piratas / Porto Belo." data-longtext-es="El embarque se realiza en el pintoresco Trapiche de Porto dos Piratas." data-longtext-pt="O embarque é realizado no pitoresco Trapiche de Porto dos Piratas." data-longtext-en="Boarding takes place at the picturesque Trapiche de Porto dos Piratas.">
-<div class="step-number">1</div>
-<h3 data-key="step1_title">Embarque</h3>
+<div class="step-number">1</div><h3 data-key="step1_title">Embarque</h3>
 </div>
 <div class="timeline-step" data-step="2" data-key-es="Navegación" data-key-pt="Navegação" data-key-en="Cruising" data-desc-es="1h30 por la Costa Esmeralda" data-desc-pt="1h30 pela Costa Esmeralda" data-desc-en="1h30 along the Emerald Coast" data-longtext-es="Navegamos por la deslumbrante Costa Esmeralda." data-longtext-pt="Navegamos pela deslumbrante Costa Esmeralda." data-longtext-en="We sail along the stunning Emerald Coast.">
-<div class="step-number">2</div>
-<h3 data-key="step2_title">Navegación</h3>
+<div class="step-number">2</div><h3 data-key="step2_title">Navegación</h3>
 </div>
 <div class="timeline-step" data-step="3" data-key-es="Parada para Baño" data-key-pt="Parada para Banho" data-key-en="Swimming Stop" data-desc-es="Caixa D'Aço: natación" data-desc-pt="Caixa D'Aço: natação" data-desc-en="Caixa D'Aço: swimming" data-longtext-es="Llegamos a la deslumbrante Bahía de Caixa D'Aço." data-longtext-pt="Chegamos à deslumbrante Baía de Caixa D'Aço." data-longtext-en="We arrive at the stunning Caixa D'Aço Bay.">
-<div class="step-number">3</div>
-<h3 data-key="step3_title">Parada para Baño</h3>
+<div class="step-number">3</div><h3 data-key="step3_title">Parada para Baño</h3>
 </div>
 <div class="timeline-step" data-step="4" data-key-es="Fiesta a bordo" data-key-pt="Festa a bordo" data-key-en="Party on board" data-desc-es="Frutas, batida tropical" data-desc-pt="Frutas, batida tropical" data-desc-en="Fruits, tropical cocktails" data-longtext-es="Buffet de frutas frescas y batida de coco." data-longtext-pt="Buffet de frutas frescas e batida de coco." data-longtext-en="Fresh fruit buffet and coconut cocktail.">
-<div class="step-number">4</div>
-<h3 data-key="step4_title">Fiesta a bordo</h3>
+<div class="step-number">4</div><h3 data-key="step4_title">Fiesta a bordo</h3>
 </div>
 </div>
 </div>
 </section>
+
 <div id="infoModal" class="info-modal">
 <div class="modal-card">
 <div class="modal-header">
@@ -340,6 +353,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 </div>
+
 <section id="galeria" class="section">
 <div class="container">
 <h2 class="section-title" data-key="gallery_title">Viva essa aventura</h2>
@@ -347,8 +361,8 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 <div style="display: flex; justify-content: center; margin-bottom: 3rem;">
 <div class="video-container-9-16">
 <div class="video-aspect">
-<video controls playsinline poster="https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_01.webp">
-<source src="https://sebagsc2020.github.io/angeltourbrasil/images/atv_video_1.mp4" type="video/mp4">
+<video controls playsinline poster="images/atb_01.webp">
+<source src="images/atv_video_1.mp4" type="video/mp4">
 </video>
 </div>
 </div>
@@ -358,6 +372,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 </section>
+
 <div id="lightboxModern" class="lightbox-modern">
 <div class="lightbox-content">
 <button class="close-btn" id="closeLightboxBtn">&times;</button>
@@ -365,6 +380,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 <div class="lightbox-counter" id="fotoContador">1 / 12</div>
 </div>
 </div>
+
 <div class="section section-bg-light">
 <div class="container">
 <h2 class="section-title" data-key="testimonials_title">Quem já navegou, recomenda</h2>
@@ -375,6 +391,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 </div>
+
 <section id="reserva">
 <div class="container" style="max-width: 700px; margin: 0 auto; padding: 0 24px 80px 24px;">
 <div class="form-wrapper-simple">
@@ -442,6 +459,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 </section>
+
 <footer class="footer">
 <div class="container">
 <div class="footer-content">
@@ -472,9 +490,15 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 <p style="text-align: center;" data-key="footer_copyright">© 2026 Angel Tour Brasil – O passeio mais completo da Costa Esmeralda.</p>
 </div>
 </footer>
+
 <a href="https://wa.me/5547999679084?text=Olá! Gostaria de informações sobre o passeio de barco" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
 <i class="fab fa-whatsapp"></i>
 </a>
+
+<button id="installAppBtn" class="install-app-btn">
+    <i class="fas fa-download"></i> Instalar App
+</button>
+
 <!-- 🤖 ANGEL AI CHATBOT -->
 <button class="ai-chatbot-toggle" id="aiChatbotToggle" title="Angel AI">
 <i class="fas fa-robot"></i>
@@ -502,17 +526,11 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 
 <script type="module">
-// 🆕 IMPORTAR TRANSFORMERS.JS (solo se carga cuando se necesita)
 import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';
-
-// Configurar Transformers.js para usar caché del navegador
 env.allowLocalModels = false;
 env.useBrowserCache = true;
-
-// Hacer disponible globalmente
 window.TransformersPipeline = pipeline;
 window.TransformersEnv = env;
-console.log('✅ Transformers.js importado correctamente');
 </script>
 
 <script>
@@ -723,322 +741,134 @@ categories: [
 }
 };
 
-// 🆕 LABELS PARA ZERO-SHOT CLASSIFICATION (Transformers.js)
 const zeroShotLabels = {
 es: ['precios y costos', 'bebés y niños pequeños', 'niños y descuentos', 'reservas y contacto', 'clima y lluvia', 'itinerario y horarios', 'comida y bebidas', 'playa y entretenimiento', 'accesibilidad y discapacidad', 'seguridad y salvavidas', 'baños e instalaciones', 'ubicación y distancia', 'mascotas y animales', 'formas de pago', 'sol y sombra', 'actividades acuáticas', 'capacidad de barcos', 'saludo'],
 pt: ['preços e custos', 'bebês e crianças pequenas', 'crianças e descontos', 'reservas e contato', 'clima e chuva', 'itinerário e horários', 'comida e bebidas', 'praia e entretenimento', 'acessibilidade e deficiência', 'segurança e salva-vidas', 'banheiros e instalações', 'localização e distância', 'mascotes e animais', 'formas de pagamento', 'sol e sombra', 'atividades aquáticas', 'capacidade de barcos', 'saudação'],
 en: ['prices and costs', 'babies and infants', 'children and discounts', 'reservations and contact', 'weather and rain', 'itinerary and schedule', 'food and drinks', 'beach and entertainment', 'accessibility and disability', 'safety and lifeguards', 'bathrooms and facilities', 'location and distance', 'pets and animals', 'payment methods', 'sun and shade', 'water activities', 'boat capacity', 'greeting']
 };
 
-// 🆕 MAPEO DE LABELS A INTENT IDS
 const labelToIntentId = {
 es: { 'precios y costos':'precio', 'bebés y niños pequeños':'bebes', 'niños y descuentos':'ninos', 'reservas y contacto':'reserva', 'clima y lluvia':'lluvia', 'itinerario y horarios':'itinerario', 'comida y bebidas':'comida', 'playa y entretenimiento':'playa', 'accesibilidad y discapacidad':'accesibilidad', 'seguridad y salvavidas':'seguridad', 'baños e instalaciones':'banos', 'ubicación y distancia':'ubicacion', 'mascotas y animales':'mascotas', 'formas de pago':'pagos', 'sol y sombra':'sol', 'actividades acuáticas':'snorkel', 'capacidad de barcos':'capacidad', 'saludo':'hola' },
 pt: { 'preços e custos':'precio', 'bebês e crianças pequenas':'bebes', 'crianças e descontos':'ninos', 'reservas e contato':'reserva', 'clima e chuva':'lluvia', 'itinerário e horários':'itinerario', 'comida e bebidas':'comida', 'praia e entretenimiento':'playa', 'acessibilidade e deficiência':'accesibilidad', 'segurança e salva-vidas':'seguridad', 'banheiros e instalações':'banos', 'localização e distância':'ubicacion', 'mascotes e animais':'mascotas', 'formas de pagamento':'pagos', 'sol e sombra':'sol', 'atividades aquáticas':'snorkel', 'capacidade de barcos':'capacidad', 'saudação':'hola' },
 en: { 'prices and costs':'precio', 'babies and infants':'bebes', 'children and discounts':'ninos', 'reservations and contact':'reserva', 'weather and rain':'lluvia', 'itinerary and schedule':'itinerario', 'food and drinks':'comida', 'beach and entertainment':'playa', 'accessibility and disability':'accesibilidad', 'safety and lifeguards':'seguridad', 'bathrooms and facilities':'banos', 'location and distance':'ubicacion', 'pets and animals':'mascotas', 'payment methods':'pagos', 'sun and shade':'sol', 'water activities':'snorkel', 'boat capacity':'capacidad', 'greeting':'hola' }
 };
 
-// 🆕 QUICK REPLIES CONFIGURACIÓN
 const quickRepliesConfig = {
-es: [
-{ icon:'💰', text:'¿Cuánto cuesta?' },
-{ icon:'🗺️', text:'Itinerario' },
-{ icon:'👶', text:'Bebés gratis' },
-{ icon:'⛵', text:'¿Y si llueve?' },
-{ icon:'🍉', text:'Comida' },
-{ icon:'📱', text:'Reservar' }
-],
-pt: [
-{ icon:'💰', text:'Quanto custa?' },
-{ icon:'🗺️', text:'Itinerário' },
-{ icon:'👶', text:'Bebês grátis' },
-{ icon:'⛵', text:'E se chover?' },
-{ icon:'🍉', text:'Comida' },
-{ icon:'📱', text:'Reservar' }
-],
-en: [
-{ icon:'💰', text:'How much?' },
-{ icon:'🗺️', text:'Itinerary' },
-{ icon:'👶', text:'Free babies' },
-{ icon:'⛵', text:'What if rain?' },
-{ icon:'🍉', text:'Food' },
-{ icon:'📱', text:'Book now' }
-]
+es: [{ icon:'💰', text:'¿Cuánto cuesta?' }, { icon:'🗺️', text:'Itinerario' }, { icon:'👶', text:'Bebés gratis' }, { icon:'⛵', text:'¿Y si llueve?' }, { icon:'🍉', text:'Comida' }, { icon:'📱', text:'Reservar' }],
+pt: [{ icon:'💰', text:'Quanto custa?' }, { icon:'🗺️', text:'Itinerário' }, { icon:'👶', text:'Bebês grátis' }, { icon:'⛵', text:'E se chover?' }, { icon:'🍉', text:'Comida' }, { icon:'📱', text:'Reservar' }],
+en: [{ icon:'💰', text:'How much?' }, { icon:'🗺️', text:'Itinerary' }, { icon:'👶', text:'Free babies' }, { icon:'⛵', text:'What if rain?' }, { icon:'🍉', text:'Food' }, { icon:'📱', text:'Book now' }]
 };
 
-// ========== 🧠 MOTOR HÍBRIDO: KEYWORDS + TRANSFORMERS.JS ==========
 let chatHistory = [];
 let chatbotOpen = false;
 let conversationContext = { lastIntent: null, lastQuery: null };
-
-// 🆕 ESTADO DE TRANSFORMERS.JS
 let transformersClassifier = null;
 let transformersLoading = false;
 let transformersLoaded = false;
-let transformersError = false;
 
-// 🆕 Cargar Transformers.js bajo demanda (lazy loading)
 async function loadTransformersClassifier() {
-    if (transformersLoaded && transformersClassifier) {
-        return transformersClassifier;
-    }
-    
-    if (transformersLoading) {
-        // Ya se está cargando, esperar
-        return new Promise((resolve) => {
-            const checkInterval = setInterval(() => {
-                if (transformersLoaded) {
-                    clearInterval(checkInterval);
-                    resolve(transformersClassifier);
-                }
-            }, 100);
-        });
-    }
-    
+    if (transformersLoaded && transformersClassifier) return transformersClassifier;
+    if (transformersLoading) return new Promise((resolve) => { const check = setInterval(() => { if (transformersLoaded) { clearInterval(check); resolve(transformersClassifier); } }, 100); });
     transformersLoading = true;
-    
     try {
-        console.log('🧠 Cargando Transformers.js (zero-shot classifier)...');
-        
-        // Verificar que Transformers está disponible
-        if (!window.TransformersPipeline) {
-            throw new Error('Transformers.js no está disponible');
-        }
-        
-        // Cargar el modelo de zero-shot classification
-        transformersClassifier = await window.TransformersPipeline(
-            'zero-shot-classification',
-            'Xenova/distilbert-base-uncased-mnli',
-            { progress_callback: (progress) => {
-                if (progress.status === 'downloading') {
-                    const percent = progress.progress ? Math.round(progress.progress) : 0;
-                    console.log(`📥 Descargando modelo: ${percent}%`);
-                }
-            }}
-        );
-        
-        transformersLoaded = true;
-        transformersLoading = false;
+        if (!window.TransformersPipeline) throw new Error('Transformers.js no disponible');
+        transformersClassifier = await window.TransformersPipeline('zero-shot-classification', 'Xenova/distilbert-base-uncased-mnli', { progress_callback: (p) => { if (p.status === 'downloading') console.log(`📥 Descargando modelo IA: ${Math.round(p.progress || 0)}%`); } });
+        transformersLoaded = true; transformersLoading = false;
         console.log('✅ Transformers.js cargado correctamente');
         return transformersClassifier;
-        
     } catch (error) {
         console.error('❌ Error cargando Transformers.js:', error);
-        transformersError = true;
         transformersLoading = false;
         return null;
     }
 }
 
-// 🆕 Clasificar texto con Transformers.js
 async function classifyWithTransformers(text) {
-    if (!transformersClassifier) {
-        const classifier = await loadTransformersClassifier();
-        if (!classifier) return null;
-    }
-    
+    if (!transformersClassifier) { const c = await loadTransformersClassifier(); if (!c) return null; }
     try {
         const labels = zeroShotLabels[currentLang] || zeroShotLabels['es'];
-        const result = await transformersClassifier(text, labels, {
-            hypothesisTemplate: "Este texto es sobre {}"
-        });
-        
-        // Retornar el label con mayor score
-        if (result && result.labels && result.labels.length > 0) {
-            return {
-                label: result.labels[0],
-                score: result.scores[0],
-                allLabels: result.labels,
-                allScores: result.scores
-            };
-        }
+        const result = await transformersClassifier(text, labels, { hypothesisTemplate: "Este texto es sobre {}" });
+        if (result && result.labels && result.labels.length > 0) return { label: result.labels[0], score: result.scores[0] };
         return null;
-    } catch (error) {
-        console.error('❌ Error clasificando con Transformers:', error);
-        return null;
-    }
+    } catch (error) { console.error('❌ Error clasificando:', error); return null; }
 }
 
-// Algoritmo de Levenshtein para fuzzy matching
 function levenshteinDistance(a, b) {
-    if (a.length === 0) return b.length;
-    if (b.length === 0) return a.length;
-    const matrix = [];
-    for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+    if (a.length === 0) return b.length; if (b.length === 0) return a.length;
+    const matrix = []; for (let i = 0; i <= b.length; i++) matrix[i] = [i];
     for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
-    for (let i = 1; i <= b.length; i++) {
-        for (let j = 1; j <= a.length; j++) {
-            if (b.charAt(i - 1) === a.charAt(j - 1)) {
-                matrix[i][j] = matrix[i - 1][j - 1];
-            } else {
-                matrix[i][j] = Math.min(
-                    matrix[i - 1][j - 1] + 1,
-                    matrix[i][j - 1] + 1,
-                    matrix[i - 1][j] + 1
-                );
-            }
-        }
-    }
-    return matrix[b.length][a.length];
+    for (let i = 1; i <= b.length; i++) { for (let j = 1; j <= a.length; j++) {
+        if (b.charAt(i - 1) === a.charAt(j - 1)) matrix[i][j] = matrix[i - 1][j - 1];
+        else matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j] + 1);
+    }} return matrix[b.length][a.length];
 }
 
-// Normalización avanzada de texto
-function normalizeText(text) {
-    return text
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[¿?¡!.,;:]/g, "")
-        .replace(/\s+/g, " ")
-        .trim();
-}
+function normalizeText(text) { return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[¿?¡!.,;:]/g, "").replace(/\s+/g, " ").trim(); }
 
-// Algoritmo de matching mejorado
 function calculateMatchScore(userText, keyword) {
-    const normalizedUser = normalizeText(userText);
-    const normalizedKeyword = normalizeText(keyword);
-    const userWords = normalizedUser.split(' ');
-    let score = 0;
-    
+    const normalizedUser = normalizeText(userText); const normalizedKeyword = normalizeText(keyword); const userWords = normalizedUser.split(' '); let score = 0;
     if (normalizedUser === normalizedKeyword) return 1000;
-    
-    if (userWords.includes(normalizedKeyword)) {
-        score += normalizedKeyword.length * 10;
-    }
-    
-    if (normalizedUser.includes(normalizedKeyword)) {
-        score += normalizedKeyword.length * 5;
-    }
-    
+    if (userWords.includes(normalizedKeyword)) score += normalizedKeyword.length * 10;
+    if (normalizedUser.includes(normalizedKeyword)) score += normalizedKeyword.length * 5;
     for (const userWord of userWords) {
         if (userWord.length >= 3 && normalizedKeyword.length >= 3) {
             const distance = levenshteinDistance(userWord, normalizedKeyword);
-            const maxLen = Math.max(userWord.length, normalizedKeyword.length);
-            const similarity = 1 - (distance / maxLen);
-            if (similarity > 0.75) {
-                score += normalizedKeyword.length * 3 * similarity;
-            }
+            const similarity = 1 - (distance / Math.max(userWord.length, normalizedKeyword.length));
+            if (similarity > 0.75) score += normalizedKeyword.length * 3 * similarity;
         }
     }
-    
-    const keywordWords = normalizedKeyword.split(' ');
-    for (const kw of keywordWords) {
-        if (userWords.includes(kw) && kw.length > 2) {
-            score += kw.length * 2;
-        }
-    }
-    
+    for (const kw of normalizedKeyword.split(' ')) { if (userWords.includes(kw) && kw.length > 2) score += kw.length * 2; }
     return score;
 }
 
-// 🆕 SISTEMA HÍBRIDO: Primero keywords, luego Transformers si falla
 async function getAIResponseHybrid(userText) {
     const kb = aiKnowledgeBase[currentLang] || aiKnowledgeBase['es'];
-    
-    // FASE 1: Intentar con keywords (rápido, 50ms)
     const matches = [];
     for (const intent of kb.intents) {
         let totalScore = 0;
-        for (const keyword of intent.keywords) {
-            totalScore += calculateMatchScore(userText, keyword);
-        }
-        if (totalScore > 0) {
-            matches.push({ intent, score: totalScore });
-        }
+        for (const keyword of intent.keywords) totalScore += calculateMatchScore(userText, keyword);
+        if (totalScore > 0) matches.push({ intent, score: totalScore });
     }
-    
     matches.sort((a, b) => b.score - a.score);
-    
-    // Si keywords encuentra algo con score alto, usar eso
     if (matches.length > 0 && matches[0].score > 15) {
-        console.log('✅ Match encontrado con keywords:', matches[0].intent.id, 'score:', matches[0].score);
-        return {
-            text: matches[0].intent.response,
-            isFallback: false,
-            intentId: matches[0].intent.id,
-            method: 'keywords'
-        };
+        console.log('✅ Match Keywords:', matches[0].intent.id, 'score:', matches[0].score);
+        return { text: matches[0].intent.response, isFallback: false, intentId: matches[0].intent.id, method: 'keywords' };
     }
-    
-    // FASE 2: Keywords falló o score bajo, intentar con Transformers.js
-    console.log('🧠 Keywords no encontró match claro, usando Transformers.js...');
-    
-    // Mostrar indicador de carga de IA
+    console.log('🧠 Usando Transformers.js...');
     showAILoadingIndicator();
-    
     try {
         const classification = await classifyWithTransformers(userText);
         removeAILoadingIndicator();
-        
-        if (classification && classification.score > 0.4) { // Umbral de confianza
-            const intentId = labelToIntentId[currentLang]?.[classification.label] || 
-                           labelToIntentId['es']?.[classification.label];
-            
+        if (classification && classification.score > 0.4) {
+            const intentId = labelToIntentId[currentLang]?.[classification.label] || labelToIntentId['es']?.[classification.label];
             if (intentId) {
                 const intent = kb.intents.find(i => i.id === intentId);
                 if (intent) {
-                    console.log('✅ Match encontrado con Transformers.js:', intentId, 'score:', classification.score.toFixed(3));
-                    return {
-                        text: intent.response,
-                        isFallback: false,
-                        intentId: intentId,
-                        method: 'transformers',
-                        confidence: classification.score
-                    };
+                    console.log('✅ Match Transformers:', intentId, 'score:', classification.score.toFixed(3));
+                    return { text: intent.response, isFallback: false, intentId: intentId, method: 'transformers', confidence: classification.score };
                 }
             }
         }
-        
-        console.log('⚠️ Transformers.js tampoco encontró match claro');
-    } catch (error) {
-        removeAILoadingIndicator();
-        console.error('❌ Error en Transformers.js:', error);
-    }
-    
-    // FASE 3: Ambos fallaron, mostrar fallback
-    return {
-        text: kb.fallback,
-        isFallback: true,
-        intentId: null,
-        method: 'fallback'
-    };
+    } catch (error) { removeAILoadingIndicator(); console.error('❌ Error Transformers:', error); }
+    return { text: kb.fallback, isFallback: true, intentId: null, method: 'fallback' };
 }
 
-// 🆕 Indicador de carga de IA
 function showAILoadingIndicator() {
-    const container = document.getElementById('aiChatMessages');
-    if (!container) return;
-    
-    const loading = document.createElement('div');
-    loading.className = 'ai-msg loading-ai';
-    loading.id = 'aiLoadingIndicator';
+    const container = document.getElementById('aiChatMessages'); if (!container) return;
+    const loading = document.createElement('div'); loading.className = 'ai-msg loading-ai'; loading.id = 'aiLoadingIndicator';
     loading.innerHTML = '<i class="fas fa-brain"></i> <span>🧠 Analizando con IA...</span>';
-    container.appendChild(loading);
-    container.scrollTop = container.scrollHeight;
+    container.appendChild(loading); container.scrollTop = container.scrollHeight;
 }
-
-function removeAILoadingIndicator() {
-    const loading = document.getElementById('aiLoadingIndicator');
-    if (loading) loading.remove();
-}
+function removeAILoadingIndicator() { const loading = document.getElementById('aiLoadingIndicator'); if (loading) loading.remove(); }
 
 function initChatbot() {
-    const toggle = document.getElementById('aiChatbotToggle');
-    const chatWindow = document.getElementById('aiChatbotWindow');
-    const close = document.getElementById('aiChatbotClose');
-    const input = document.getElementById('aiChatInput');
-    const send = document.getElementById('aiChatSend');
-    
+    const toggle = document.getElementById('aiChatbotToggle'); const chatWindow = document.getElementById('aiChatbotWindow');
+    const close = document.getElementById('aiChatbotClose'); const input = document.getElementById('aiChatInput'); const send = document.getElementById('aiChatSend');
     if (!toggle || !chatWindow) return;
-    
     toggle.addEventListener('click', () => {
-        chatbotOpen = !chatbotOpen;
-        chatWindow.classList.toggle('active', chatbotOpen);
-        if (chatbotOpen) {
-            if (chatHistory.length === 0) {
-                const t = translations[currentLang];
-                addBotMessage(t.ai_greeting || 'Olá! Sou o Angel AI. Como posso ajudar?');
-                showQuickReplies();
-            }
+        chatbotOpen = !chatbotOpen; chatWindow.classList.toggle('active', chatbotOpen);
+        if (chatbotOpen && chatHistory.length === 0) {
+            const t = translations[currentLang]; addBotMessage(t.ai_greeting || 'Olá! Sou o Angel AI.'); showQuickReplies();
         }
     });
     if (close) close.addEventListener('click', () => { chatbotOpen = false; chatWindow.classList.remove('active'); });
@@ -1047,210 +877,98 @@ function initChatbot() {
 }
 
 function showQuickReplies() {
-    const container = document.getElementById('aiQuickReplies');
-    if (!container) return;
-    
-    const replies = quickRepliesConfig[currentLang] || quickRepliesConfig['es'];
-    container.innerHTML = '';
-    container.classList.remove('hidden');
-    
+    const container = document.getElementById('aiQuickReplies'); if (!container) return;
+    const replies = quickRepliesConfig[currentLang] || quickRepliesConfig['es']; container.innerHTML = ''; container.classList.remove('hidden');
     replies.forEach(reply => {
-        const btn = document.createElement('button');
-        btn.className = 'quick-reply-btn';
-        btn.innerHTML = `${reply.icon} ${reply.text}`;
-        btn.onclick = () => {
-            const input = document.getElementById('aiChatInput');
-            if (input) {
-                input.value = reply.text;
-                sendMessage();
-            }
-        };
+        const btn = document.createElement('button'); btn.className = 'quick-reply-btn'; btn.innerHTML = `${reply.icon} ${reply.text}`;
+        btn.onclick = () => { const input = document.getElementById('aiChatInput'); if (input) { input.value = reply.text; sendMessage(); } };
         container.appendChild(btn);
     });
 }
-
-function hideQuickReplies() {
-    const container = document.getElementById('aiQuickReplies');
-    if (container) container.classList.add('hidden');
-}
+function hideQuickReplies() { const container = document.getElementById('aiQuickReplies'); if (container) container.classList.add('hidden'); }
 
 async function sendMessage() {
-    const input = document.getElementById('aiChatInput');
-    const text = input?.value.trim();
-    if (!text) return;
-    
-    addUserMessage(text);
-    input.value = '';
-    hideQuickReplies();
-    showTyping();
-    
+    const input = document.getElementById('aiChatInput'); const text = input?.value.trim(); if (!text) return;
+    addUserMessage(text); input.value = ''; hideQuickReplies(); showTyping();
     const startTime = performance.now();
-    
-    // 🆕 USAR SISTEMA HÍBRIDO
     const response = await getAIResponseHybrid(text);
-    
-    const endTime = performance.now();
-    const responseTime = Math.round(endTime - startTime);
-    
+    const endTime = performance.now(); const responseTime = Math.round(endTime - startTime);
     removeTyping();
-    
-    // Agregar indicador del método usado (solo en modo test)
     let methodBadge = '';
-    if (response.method === 'keywords') {
-        methodBadge = '<div style="font-size:0.65rem;color:#94A3B8;margin-top:4px;">⚡ Keywords (' + responseTime + 'ms)</div>';
-    } else if (response.method === 'transformers') {
-        methodBadge = '<div style="font-size:0.65rem;color:#10B981;margin-top:4px;">🧠 IA Semántica (' + responseTime + 'ms, ' + Math.round((response.confidence || 0) * 100) + '% confianza)</div>';
-    }
-    
+    if (response.method === 'keywords') methodBadge = `<div style="font-size:0.65rem;color:#94A3B8;margin-top:4px;">⚡ Keywords (${responseTime}ms)</div>`;
+    else if (response.method === 'transformers') methodBadge = `<div style="font-size:0.65rem;color:#10B981;margin-top:4px;">🧠 IA Semántica (${responseTime}ms, ${Math.round((response.confidence || 0) * 100)}% confianza)</div>`;
     addBotMessage(response.text + methodBadge);
-    
-    if (response.isFallback) {
-        showFallbackCategories();
-    } else {
-        setTimeout(() => showQuickReplies(), 500);
-    }
-    
-    conversationContext.lastQuery = text;
-    if (response.intentId) conversationContext.lastIntent = response.intentId;
+    if (response.isFallback) showFallbackCategories(); else setTimeout(() => showQuickReplies(), 500);
+    conversationContext.lastQuery = text; if (response.intentId) conversationContext.lastIntent = response.intentId;
 }
 
 function showFallbackCategories() {
-    const kb = aiKnowledgeBase[currentLang] || aiKnowledgeBase['es'];
-    const container = document.getElementById('aiChatMessages');
+    const kb = aiKnowledgeBase[currentLang] || aiKnowledgeBase['es']; const container = document.getElementById('aiChatMessages');
     if (!container || !kb.categories) return;
-    
-    const wrapper = document.createElement('div');
-    wrapper.className = 'ai-msg bot';
-    wrapper.style.alignSelf = 'flex-start';
-    
-    const categoriesDiv = document.createElement('div');
-    categoriesDiv.className = 'fallback-categories';
-    
+    const wrapper = document.createElement('div'); wrapper.className = 'ai-msg bot'; wrapper.style.alignSelf = 'flex-start';
+    const categoriesDiv = document.createElement('div'); categoriesDiv.className = 'fallback-categories';
     kb.categories.forEach(cat => {
-        const chip = document.createElement('button');
-        chip.className = 'category-chip';
-        chip.innerHTML = `${cat.icon} ${cat.label}`;
-        chip.onclick = () => {
-            const input = document.getElementById('aiChatInput');
-            if (input) {
-                input.value = cat.query;
-                sendMessage();
-            }
-        };
+        const chip = document.createElement('button'); chip.className = 'category-chip'; chip.innerHTML = `${cat.icon} ${cat.label}`;
+        chip.onclick = () => { const input = document.getElementById('aiChatInput'); if (input) { input.value = cat.query; sendMessage(); } };
         categoriesDiv.appendChild(chip);
     });
-    
-    wrapper.appendChild(categoriesDiv);
-    container.appendChild(wrapper);
-    container.scrollTop = container.scrollHeight;
+    wrapper.appendChild(categoriesDiv); container.appendChild(wrapper); container.scrollTop = container.scrollHeight;
 }
 
 function addUserMessage(text) {
-    const container = document.getElementById('aiChatMessages');
-    if (!container) return;
-    const msg = document.createElement('div');
-    msg.className = 'ai-msg user';
-    msg.textContent = text;
-    container.appendChild(msg);
-    container.scrollTop = container.scrollHeight;
-    chatHistory.push({ role: 'user', text });
+    const container = document.getElementById('aiChatMessages'); if (!container) return;
+    const msg = document.createElement('div'); msg.className = 'ai-msg user'; msg.textContent = text;
+    container.appendChild(msg); container.scrollTop = container.scrollHeight; chatHistory.push({ role: 'user', text });
 }
-
 function addBotMessage(text) {
-    const container = document.getElementById('aiChatMessages');
-    if (!container) return;
-    const msg = document.createElement('div');
-    msg.className = 'ai-msg bot';
-    msg.innerHTML = text;
-    container.appendChild(msg);
-    container.scrollTop = container.scrollHeight;
-    chatHistory.push({ role: 'bot', text });
+    const container = document.getElementById('aiChatMessages'); if (!container) return;
+    const msg = document.createElement('div'); msg.className = 'ai-msg bot'; msg.innerHTML = text;
+    container.appendChild(msg); container.scrollTop = container.scrollHeight; chatHistory.push({ role: 'bot', text });
 }
-
 function showTyping() {
-    const container = document.getElementById('aiChatMessages');
-    if (!container) return;
-    const typing = document.createElement('div');
-    typing.className = 'ai-msg typing';
-    typing.id = 'typingIndicator';
-    typing.innerHTML = '<span></span><span></span><span></span>';
-    container.appendChild(typing);
-    container.scrollTop = container.scrollHeight;
+    const container = document.getElementById('aiChatMessages'); if (!container) return;
+    const typing = document.createElement('div'); typing.className = 'ai-msg typing'; typing.id = 'typingIndicator';
+    typing.innerHTML = '<span></span><span></span><span></span>'; container.appendChild(typing); container.scrollTop = container.scrollHeight;
 }
-
-function removeTyping() {
-    const typing = document.getElementById('typingIndicator');
-    if (typing) typing.remove();
-}
+function removeTyping() { const typing = document.getElementById('typingIndicator'); if (typing) typing.remove(); }
 
 // ========== GALERÍA Y LIGHTBOX ==========
 const imagenesGrandes = [
-    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_01.webp",
-    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_02.webp",
-    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_03.webp",
-    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_04.webp",
-    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_05.webp",
-    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_06.webp",
-    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_07.webp",
-    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_08.webp",
-    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_09.webp",
-    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_10.webp",
-    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_11.webp",
-    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_12.webp"
+    "images/atb_01.webp", "images/atb_02.webp", "images/atb_03.webp", "images/atb_04.webp",
+    "images/atb_05.webp", "images/atb_06.webp", "images/atb_07.webp", "images/atb_08.webp",
+    "images/atb_09.webp", "images/atb_10.webp", "images/atb_11.webp", "images/atb_12.webp"
 ];
 const imagenesChicas = imagenesGrandes;
-let indiceActual = 0;
-let touchStartX = 0;
-let touchEndX = 0;
+let indiceActual = 0; let touchStartX = 0; let touchEndX = 0;
 
 function initGallery() {
-    const gridGaleria = document.getElementById('gridGaleria');
-    if(!gridGaleria) return;
-    
+    const gridGaleria = document.getElementById('gridGaleria'); if(!gridGaleria) return;
     gridGaleria.innerHTML = '';
     imagenesChicas.forEach((urlMini, indice) => {
-        const item = document.createElement('div');
-        item.className = 'gallery-item';
-        item.onclick = () => abrirLightbox(indice);
-        const img = document.createElement('img');
-        img.src = urlMini;
-        img.alt = `Foto ${indice + 1}`;
-        img.loading = 'lazy';
-        item.appendChild(img);
-        gridGaleria.appendChild(item);
+        const item = document.createElement('div'); item.className = 'gallery-item'; item.onclick = () => abrirLightbox(indice);
+        const img = document.createElement('img'); img.src = urlMini; img.alt = `Foto ${indice + 1}`; img.loading = 'lazy';
+        item.appendChild(img); gridGaleria.appendChild(item);
     });
 }
-
 window.abrirLightbox = function(indice) { 
-    indiceActual = indice; 
-    actualizarLightbox(); 
+    indiceActual = indice; actualizarLightbox(); 
     const lb = document.getElementById('lightboxModern'); 
-    if(lb) { 
-        lb.classList.add('active'); 
-        document.body.style.overflow = 'hidden'; 
-    } 
+    if(lb) { lb.classList.add('active'); document.body.style.overflow = 'hidden'; } 
 };
-
 function actualizarLightbox() { 
-    const img = document.getElementById('lightboxImg'); 
-    const counter = document.getElementById('fotoContador'); 
+    const img = document.getElementById('lightboxImg'); const counter = document.getElementById('fotoContador'); 
     if(img) img.src = imagenesGrandes[indiceActual]; 
     if(counter) counter.innerText = `${indiceActual + 1} / ${imagenesGrandes.length}`; 
 }
-
 function cambiarImagen(direccion) { 
     indiceActual += direccion; 
     if(indiceActual < 0) indiceActual = imagenesGrandes.length - 1; 
     else if(indiceActual >= imagenesGrandes.length) indiceActual = 0; 
     actualizarLightbox(); 
 }
-
 function cerrarLightbox() { 
     const lb = document.getElementById('lightboxModern'); 
-    if(lb) { 
-        lb.classList.remove('active'); 
-        document.body.style.overflow = ''; 
-    } 
+    if(lb) { lb.classList.remove('active'); document.body.style.overflow = ''; } 
 }
 
 // ========== UTILIDADES Y EVENTOS ==========
@@ -1259,29 +977,13 @@ function changeLanguage(lang) {
     if (currentLang === "es") codigoIdioma = "ESP";
     else if (currentLang === "pt") codigoIdioma = "POR";
     else if (currentLang === "en") codigoIdioma = "USA";
-    
     const t = translations[lang];
-    document.querySelectorAll('[data-key]').forEach(el => { 
-        const key = el.getAttribute('data-key'); 
-        if(t[key] !== undefined) el.textContent = t[key]; 
-    });
-    
+    document.querySelectorAll('[data-key]').forEach(el => { const key = el.getAttribute('data-key'); if(t[key] !== undefined) el.textContent = t[key]; });
     const els = { textFecha:t.fecha, textHorario:t.horario, textNombre:t.nombre, textEmpresa:t.empresa, textAdultos:t.adultos, textMenores:t.menores, textTotal:t.total, btnText:t.btn, horarioNote:t.horario_note, empresaNote:t.empresa_note, infoNoteText:t.info_text, discountBadge:t.discount_text, precioAdultos:t.precio_adultos, footerBoat:t.footer_boat, footerSecure:t.footer_secure, footerConfirm:t.footer_confirm, horarioTitulo1:t.horario1, horarioTitulo2:t.horario2, horarioTitulo3:t.horario3 };
-    for(const [id,val] of Object.entries(els)){ 
-        const el=document.getElementById(id); 
-        if(el) el.textContent=val; 
-    }
-    
-    document.querySelectorAll('.lang-btn-header').forEach(btn => { 
-        btn.classList.remove('active'); 
-        if(btn.getAttribute('data-lang')===lang) btn.classList.add('active'); 
-    });
-    
-    const chatInput = document.getElementById('aiChatInput');
-    if (chatInput) chatInput.placeholder = t.ai_chatbot_placeholder;
-    updateVoiceBtnTitle();
-    loadWeatherWidget(lang);
-    localStorage.setItem('preferred_language', lang);
+    for(const [id,val] of Object.entries(els)){ const el=document.getElementById(id); if(el) el.textContent=val; }
+    document.querySelectorAll('.lang-btn-header').forEach(btn => { btn.classList.remove('active'); if(btn.getAttribute('data-lang')===lang) btn.classList.add('active'); });
+    const chatInput = document.getElementById('aiChatInput'); if (chatInput) chatInput.placeholder = t.ai_chatbot_placeholder;
+    updateVoiceBtnTitle(); loadWeatherWidget(lang); localStorage.setItem('preferred_language', lang);
 }
 
 function calcularValorTotal() {
@@ -1294,109 +996,49 @@ function calcularValorTotal() {
 }
 
 function scrollToSectionWithOffset(id) {
-    const element = document.getElementById(id);
-    if (element) {
-        const header = document.querySelector('.header');
-        const headerHeight = header ? header.offsetHeight : 80;
-        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-        window.scrollTo({ top: elementPosition - headerHeight, behavior: 'smooth' });
-    }
+    const element = document.getElementById(id); if (!element) return;
+    const header = document.querySelector('.header'); const headerHeight = header ? header.offsetHeight : 80;
+    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+    window.scrollTo({ top: elementPosition - headerHeight, behavior: 'smooth' });
 }
 
 async function obtenerPaisUsuario() {
-    try {
-        const res = await fetch('https://ipapi.co/json/');
-        const data = await res.json();
-        if (data?.country_name) paisUsuario = data.country_name.toUpperCase();
-        else if (data?.country) paisUsuario = data.country;
-    } catch (e) { 
-        paisUsuario = "DESCONOCIDO"; 
-    }
+    try { const res = await fetch('https://ipapi.co/json/'); const data = await res.json(); if (data?.country_name) paisUsuario = data.country_name.toUpperCase(); else if (data?.country) paisUsuario = data.country; } 
+    catch (e) { paisUsuario = "DESCONOCIDO"; }
 }
 
 function stopReading() { 
-    if(speechSynthesis){ 
-        speechSynthesis.cancel(); 
-        isSpeaking=false; 
-        const btn=document.getElementById('readAloudBtn'); 
-        if(btn){ btn.innerHTML='<i class="fas fa-volume-up"></i> Leer'; btn.classList.remove('stop'); } 
-    } 
+    if(speechSynthesis){ speechSynthesis.cancel(); isSpeaking=false; const btn=document.getElementById('readAloudBtn'); if(btn){ btn.innerHTML='<i class="fas fa-volume-up"></i> Leer'; btn.classList.remove('stop'); } } 
 }
-
 function readTextAloud(text,lang){ 
-    if(!speechSynthesis) return; 
-    stopReading(); 
-    const utterance=new SpeechSynthesisUtterance(text); 
-    utterance.lang=lang==='es'?'es-ES':(lang==='pt'?'pt-BR':'en-US'); 
-    utterance.rate=0.9; 
-    speechSynthesis.speak(utterance); 
+    if(!speechSynthesis) return; stopReading(); 
+    const utterance=new SpeechSynthesisUtterance(text); utterance.lang=lang==='es'?'es-ES':(lang==='pt'?'pt-BR':'en-US'); utterance.rate=0.9; speechSynthesis.speak(utterance); 
 }
-
-function stripHtml(html) {
-    let tmp = document.createElement("DIV");
-    tmp.innerHTML = html;
-    return tmp.textContent || tmp.innerText || "";
-}
-
+function stripHtml(html) { let tmp = document.createElement("DIV"); tmp.innerHTML = html; return tmp.textContent || tmp.innerText || ""; }
 function htmlToWhatsAppFormat(html) {
-    let text = html;
-    text = text.replace(/<h3[^>]*>(.*?)<\/h3>/gi, '\n🔹 *$1*\n');
-    text = text.replace(/<strong>(.*?)<\/strong>/gi, '*$1*');
-    text = text.replace(/<br\s*\/?>/gi, '\n');
-    text = text.replace(/<p[^>]*>(.*?)<\/p>/gi, '\n$1\n');
-    text = text.replace(/<[^>]+>/g, '');
-    const txt = document.createElement("textarea");
-    txt.innerHTML = text;
-    text = txt.value;
-    text = text.replace(/\n{3,}/g, '\n');
-    return text.trim();
+    let text = html; text = text.replace(/<h3[^>]*>(.*?)<\/h3>/gi, '\n🔹 *$1*\n'); text = text.replace(/<strong>(.*?)<\/strong>/gi, '*$1*');
+    text = text.replace(/<br\s*\/?>/gi, '\n'); text = text.replace(/<p[^>]*>(.*?)<\/p>/gi, '\n$1\n'); text = text.replace(/<[^>]+>/g, '');
+    const txt = document.createElement("textarea"); txt.innerHTML = text; text = txt.value; text = text.replace(/\n{3,}/g, '\n'); return text.trim();
 }
-
 function openModal(stepData){
-    currentStepData = stepData;
-    document.getElementById('modalTitle').textContent = stepData.title;
+    currentStepData = stepData; document.getElementById('modalTitle').textContent = stepData.title;
     document.getElementById('modalBody').innerHTML = fullItinerary[currentLang] || fullItinerary['es'];
-    document.getElementById('infoModal').style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    stopReading();
-    if (stepData.step) {
-        setTimeout(() => {
-            const targetElement = document.getElementById(`step-${stepData.step}`);
-            if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-    }
+    document.getElementById('infoModal').style.display = 'flex'; document.body.style.overflow = 'hidden'; stopReading();
+    if (stepData.step) setTimeout(() => { const targetElement = document.getElementById(`step-${stepData.step}`); if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
 }
-
-function closeModalFunc(){ 
-    stopReading(); 
-    document.getElementById('infoModal').style.display='none'; 
-    document.body.style.overflow=''; 
-    currentStepData=null; 
-}
+function closeModalFunc(){ stopReading(); document.getElementById('infoModal').style.display='none'; document.body.style.overflow=''; currentStepData=null; }
 
 async function loadWeatherWidget(lang) { 
-    const container=document.getElementById('weatherWidgetPlaceholder'); 
-    if(!container) return; 
+    const container=document.getElementById('weatherWidgetPlaceholder'); if(!container) return; 
     const widgetLang={es:'es',pt:'pt',en:'en'}[lang]||'es'; 
     const titles={es:{label1:'PORTO BELO',label2:'Previsión 3 días'},pt:{label1:'PORTO BELO',label2:'Previsão 3 dias'},en:{label1:'PORTO BELO',label2:'3-Day Forecast'}}; 
     const title=titles[lang]||titles.es; 
-    const link=document.createElement('a'); 
-    link.className='weatherwidget-io'; 
-    link.href=`https://forecast7.com/${widgetLang}/n27d16n48d58/porto-belo/`; 
-    link.setAttribute('data-label_1',title.label1); 
-    link.setAttribute('data-label_2',title.label2); 
-    link.setAttribute('data-theme','original'); 
-    link.setAttribute('data-days','3'); 
-    link.style.cssText='pointer-events:none;cursor:default;width:100%;display:block'; 
-    link.textContent=`${title.label1} ${title.label2}`; 
-    container.innerHTML=''; 
-    container.appendChild(link); 
-    const oldScript=document.getElementById('weatherwidget-io-js'); 
-    if(oldScript) oldScript.remove(); 
-    const script=document.createElement('script'); 
-    script.id='weatherwidget-io-js'; 
-    script.src='https://weatherwidget.io/js/widget.min.js'; 
-    document.head.appendChild(script); 
+    const link=document.createElement('a'); link.className='weatherwidget-io'; link.href=`https://forecast7.com/${widgetLang}/n27d16n48d58/porto-belo/`; 
+    link.setAttribute('data-label_1',title.label1); link.setAttribute('data-label_2',title.label2); link.setAttribute('data-theme','original'); link.setAttribute('data-days','3'); 
+    link.style.cssText='pointer-events:none;cursor:default;width:100%;display:block'; link.textContent=`${title.label1} ${title.label2}`; 
+    container.innerHTML=''; container.appendChild(link); 
+    const oldScript=document.getElementById('weatherwidget-io-js'); if(oldScript) oldScript.remove(); 
+    const script=document.createElement('script'); script.id='weatherwidget-io-js'; script.src='https://weatherwidget.io/js/widget.min.js'; document.head.appendChild(script); 
 }
 
 // ========== INICIALIZACIÓN ==========
@@ -1405,61 +1047,33 @@ document.addEventListener('DOMContentLoaded', () => {
     changeLanguage(savedLang && translations[savedLang] ? savedLang : 'pt');
     
     document.querySelectorAll('.lang-btn-header').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const lang = this.getAttribute('data-lang');
-            if (lang && translations[lang]) {
-                changeLanguage(lang);
-            }
-        });
+        btn.addEventListener('click', function(e) { e.preventDefault(); const lang = this.getAttribute('data-lang'); if (lang && translations[lang]) changeLanguage(lang); });
     });
     
-    calcularValorTotal();
-    setTimeout(() => loadWeatherWidget(currentLang), 100);
-    initChatbot();
-    initVoiceRecognition();
-    initGallery();
+    calcularValorTotal(); setTimeout(() => loadWeatherWidget(currentLang), 100);
+    initChatbot(); initVoiceRecognition(); initGallery();
     
     const lightboxModern = document.getElementById('lightboxModern');
     if(lightboxModern) {
         lightboxModern.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
-        lightboxModern.addEventListener('touchend', e => { 
-            touchEndX = e.changedTouches[0].screenX; 
-            if(touchStartX - touchEndX > 60) cambiarImagen(1); 
-            if(touchEndX - touchStartX > 60) cambiarImagen(-1); 
-        });
+        lightboxModern.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; if(touchStartX - touchEndX > 60) cambiarImagen(1); if(touchEndX - touchStartX > 60) cambiarImagen(-1); });
         lightboxModern.addEventListener('click', e => { if(e.target === lightboxModern) cerrarLightbox(); });
     }
     document.getElementById('closeLightboxBtn')?.addEventListener('click', cerrarLightbox);
-    document.addEventListener('keydown', e => { 
-        if(document.getElementById('lightboxModern')?.classList.contains('active')) { 
-            if(e.key === 'Escape') cerrarLightbox(); 
-            if(e.key === 'ArrowRight') cambiarImagen(1); 
-            if(e.key === 'ArrowLeft') cambiarImagen(-1); 
-        } 
-    });
+    document.addEventListener('keydown', e => { if(document.getElementById('lightboxModern')?.classList.contains('active')) { if(e.key === 'Escape') cerrarLightbox(); if(e.key === 'ArrowRight') cambiarImagen(1); if(e.key === 'ArrowLeft') cambiarImagen(-1); } });
     
     document.querySelectorAll('.horario-card').forEach(card => {
-        card.addEventListener('click', function() {
-            document.querySelectorAll('.horario-card').forEach(c => c.classList.remove('selected'));
-            this.classList.add('selected');
-            document.getElementById('horario').value = this.getAttribute('data-horario');
-        });
+        card.addEventListener('click', function() { document.querySelectorAll('.horario-card').forEach(c => c.classList.remove('selected')); this.classList.add('selected'); document.getElementById('horario').value = this.getAttribute('data-horario'); });
     });
     
-    const fechaInp = document.getElementById('fecha');
-    if(fechaInp) fechaInp.setAttribute('min', new Date().toISOString().split('T')[0]);
+    const fechaInp = document.getElementById('fecha'); if(fechaInp) fechaInp.setAttribute('min', new Date().toISOString().split('T')[0]);
     
     document.getElementById('dataForm')?.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const fecha = document.getElementById('fecha')?.value;
-        const horario = document.getElementById('horario')?.value;
-        const nombre = document.getElementById('nombre')?.value.trim();
-        const empresa = document.getElementById('empresa')?.value.trim();
-        const adultos = document.getElementById('adultos')?.value;
-        const menores = document.getElementById('menores')?.value;
+        const fecha = document.getElementById('fecha')?.value; const horario = document.getElementById('horario')?.value;
+        const nombre = document.getElementById('nombre')?.value.trim(); const empresa = document.getElementById('empresa')?.value.trim();
+        const adultos = document.getElementById('adultos')?.value; const menores = document.getElementById('menores')?.value;
         if(!fecha || !horario || !nombre) { alert('Complete todos los campos requeridos'); return; }
-        
         if (paisUsuario === "DESCONOCIDO") await obtenerPaisUsuario();
         const total = (parseInt(adultos) * 100) + (parseInt(menores) * 50);
         const ipOrigen = (paisUsuario === "DESCONOCIDO") ? "No registrado" : paisUsuario;
@@ -1467,91 +1081,85 @@ document.addEventListener('DOMContentLoaded', () => {
         window.open(`https://wa.me/5547999679084?text=${encodeURIComponent(msg)}`, '_blank');
     });
     
-    const adultosInput = document.getElementById('adultos');
-    const menoresInput = document.getElementById('menores');
+    const adultosInput = document.getElementById('adultos'); const menoresInput = document.getElementById('menores');
     if(adultosInput) adultosInput.addEventListener('input', calcularValorTotal);
     if(menoresInput) menoresInput.addEventListener('input', calcularValorTotal);
     
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href !== '#' && href !== '') {
-                const targetId = href.substring(1);
-                const targetElement = document.getElementById(targetId);
+            const href = this.getAttribute('href'); if (href !== '#' && href !== '') {
+                const targetId = href.substring(1); const targetElement = document.getElementById(targetId);
                 if (targetElement) { e.preventDefault(); scrollToSectionWithOffset(targetId); }
             }
         });
     });
     
-    const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.getElementById('navLinks');
+    const menuToggle = document.getElementById('menuToggle'); const navLinks = document.getElementById('navLinks');
     if(menuToggle) menuToggle.addEventListener('click', () => navLinks?.classList.toggle('active'));
     document.querySelectorAll('.nav-link').forEach(link => link.addEventListener('click', e => {
-        e.preventDefault();
-        const href = link.getAttribute('href');
-        if(href && href !== '#') scrollToSectionWithOffset(href.substring(1));
+        e.preventDefault(); const href = link.getAttribute('href'); if(href && href !== '#') scrollToSectionWithOffset(href.substring(1));
         if(window.innerWidth <= 880) navLinks?.classList.remove('active');
     }));
-    document.addEventListener('click', e => { 
-        if(window.innerWidth <= 880 && navLinks && menuToggle && !navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
-            navLinks.classList.remove('active'); 
-        }
-    });
+    document.addEventListener('click', e => { if(window.innerWidth <= 880 && navLinks && menuToggle && !navLinks.contains(e.target) && !menuToggle.contains(e.target)) navLinks.classList.remove('active'); });
     
     document.getElementById('closeModalBtn')?.addEventListener('click', closeModalFunc);
     document.getElementById('closeModalFooterBtn')?.addEventListener('click', closeModalFunc);
     document.getElementById('infoModal')?.addEventListener('click', e => { if(e.target === document.getElementById('infoModal')) closeModalFunc(); });
     
     document.getElementById('shareWhatsappBtn')?.addEventListener('click', () => {
-        if(currentStepData){
-            const formattedText = htmlToWhatsAppFormat(currentStepData.longtext);
-            const message = `🏴‍☠️ *ITINERARIO COMPLETO* ⚓\n${formattedText}`;
-            window.open(`https://wa.me/?text=${encodeURIComponent(message)}`,'_blank');
-        }
+        if(currentStepData){ const formattedText = htmlToWhatsAppFormat(currentStepData.longtext); window.open(`https://wa.me/?text=${encodeURIComponent(`🏴‍☠️ *ITINERARIO COMPLETO* ⚓\n${formattedText}`)}`,'_blank'); }
     });
-    
     document.getElementById('readAloudBtn')?.addEventListener('click', () => {
-        if(currentStepData){
-            if(isSpeaking) stopReading();
-            else {
-                const cleanText = stripHtml(currentStepData.longtext);
-                readTextAloud(`${currentStepData.title}. ${cleanText}`, currentLang);
-            }
-        }
+        if(currentStepData){ if(isSpeaking) stopReading(); else { const cleanText = stripHtml(currentStepData.longtext); readTextAloud(`${currentStepData.title}. ${cleanText}`, currentLang); } }
     });
-    
     document.querySelectorAll('.timeline-step').forEach(step => {
         step.addEventListener('click', () => {
             const titles = { es: "Itinerario Completo de la Excursión", pt: "Roteiro Completo da Excursão", en: "Complete Tour Itinerary" };
-            openModal({
-                title: titles[currentLang] || titles['es'],
-                desc: "Detalles de las 4 etapas del paseo",
-                longtext: fullItinerary[currentLang] || fullItinerary['es'],
-                step: step.getAttribute('data-step')
-            });
+            openModal({ title: titles[currentLang] || titles['es'], desc: "Detalles de las 4 etapas del paseo", longtext: fullItinerary[currentLang] || fullItinerary['es'], step: step.getAttribute('data-step') });
         });
     });
     
-    const stickyBar = document.getElementById('stickyBookingBar');
-    const heroSec = document.getElementById('inicio');
-    const stickyBtn = document.getElementById('stickyBookBtn');
+    const stickyBar = document.getElementById('stickyBookingBar'); const heroSec = document.getElementById('inicio'); const stickyBtn = document.getElementById('stickyBookBtn');
     function checkStickyBar(){ 
         if(window.innerWidth <= 880 && heroSec){ 
             const heroBottom = heroSec.offsetTop + heroSec.offsetHeight; 
             window.scrollY > heroBottom - 100 ? stickyBar?.classList.add('show') : stickyBar?.classList.remove('show'); 
-        } else {
-            stickyBar?.classList.remove('show'); 
-        } 
+        } else { stickyBar?.classList.remove('show'); } 
     }
-    window.addEventListener('scroll', checkStickyBar); 
-    window.addEventListener('resize', checkStickyBar); 
-    checkStickyBar();
+    window.addEventListener('scroll', checkStickyBar); window.addEventListener('resize', checkStickyBar); checkStickyBar();
     if(stickyBtn) stickyBtn.addEventListener('click', () => scrollToSectionWithOffset('reserva'));
     document.querySelector('.garantia-link')?.addEventListener('click', e => { e.preventDefault(); scrollToSectionWithOffset('reserva'); });
     
     obtenerPaisUsuario().then(() => { console.log("País del usuario detectado:", paisUsuario); });
     
-    console.log('✅ Sistema Híbrido (Keywords + Transformers.js) inicializado correctamente');
+    // 📱 LÓGICA DE INSTALACIÓN PWA
+    let deferredPrompt;
+    const installBtn = document.getElementById('installAppBtn');
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault(); deferredPrompt = e;
+        if (installBtn) installBtn.style.display = 'flex';
+    });
+    if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') installBtn.style.display = 'none';
+                deferredPrompt = null;
+            }
+        });
+    }
+    
+    // 📱 REGISTRAR SERVICE WORKER
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => console.log('✅ Service Worker registrado:', registration.scope))
+                .catch(error => console.log('❌ Error registrando SW:', error));
+        });
+    }
+    
+    console.log('✅ Sistema Híbrido (Keywords + Transformers.js) + PWA inicializado correctamente');
 });
 </script>
 </body>
