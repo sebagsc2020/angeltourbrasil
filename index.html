@@ -2,33 +2,40 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
-<title>+Angel Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Angel Tour Brasil | O passeio mais completo da Costa Esmeralda</title>
 
 <!-- 📱 PWA & APP META TAGS -->
 <meta name="theme-color" content="#0A2F6C">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Angel Tour">
-<link rel="apple-touch-icon" href="images/logoangel-pb.png">
+<link rel="icon" href="images/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="images/icon.png">
 <link rel="manifest" href="manifest.json">
 
 <meta name="description" content="Conheça o passeio mais completo da região! Passeio pela Costa Esmeralda, parada na Bahía de Caixa D'Aço, tobogã, buffet de frutas, batida de côco e muita animação. Embarque em Porto Belo - SC.">
-<meta name="keywords" content="Angel Tour Brasil, passeio de barco, Costa Esmeralda, Porto Belo, Caixa D'Aço, turismo Santa Catarina">
+<meta name="keywords" content="Angel Tour Brasil, passeio de barco, Costa Esmeralda, Porto Belo, Caixa D'Aço, turismo Santa Catarina, passeio de barco Porto Belo, escuna Porto Belo">
 <meta name="author" content="Angel Tour Brasil">
 <meta name="robots" content="index, follow">
+<meta name="geo.region" content="BR-SC">
+<meta name="geo.placename" content="Porto Belo">
+<meta name="geo.position" content="-27.158333;-48.566667">
+<meta name="ICBM" content="-27.158333, -48.566667">
 <meta property="og:title" content="Angel Tour Brasil | O passeio mais completo da Costa Esmeralda">
-<meta property="og:description" content="Passeio náutico pela Costa Esmeralda com parada para nadar na Bahía de Caixa D'Aço.">
+<meta property="og:description" content="Passeio náutico pela Costa Esmeralda com parada para nadar na Bahía de Caixa D'Aço, tobogã, frutas e batidas. Segurança e diversão para toda a família em Porto Belo - SC.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.angeltourbrasil.com.br/">
-<meta property="og:image" content="images/logoangel-pb.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/logoangel-pb.png">
+<meta property="og:site_name" content="Angel Tour Brasil">
+<meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="images/logoangel-pb.png">
+<meta name="twitter:title" content="Angel Tour Brasil | O passeio mais completo da Costa Esmeralda">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/logoangel-pb.png">
 <link rel="canonical" href="https://www.angeltourbrasil.com.br/">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 90px; }
@@ -44,7 +51,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 .lang-buttons-header { display: flex; gap: 0.5rem; align-items: center; }
 .lang-btn-header { background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 40px; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
 .lang-btn-header:hover { background: #0EA5E9; border-color: #0EA5E9; transform: translateY(-2px); }
-.lang-btn-header.active { background: #E2E8F0; border-color: #CBD5E1; box-shadow: 0 0 0 2px rgba(100, 116, 139, 0.2); }
+.lang-btn-header.active { background: #E2E8F0; border-color: #CBD5E1; box-shadow: 0 0 0 2px rgba(100, 116, 139, 0.2); width: 50px; height: 50px; transform: scale(1.02); }
 .lang-btn-header.active img { width: 28px; height: 28px; }
 .lang-btn-header img { width: 20px; height: 20px; object-fit: contain; transition: all 0.3s ease; }
 .menu-icon { font-size: 1.8rem; cursor: pointer; color: var(--deep-blue); display: flex; align-items: center; }
@@ -184,17 +191,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 .ai-msg.typing span:nth-child(2) { animation-delay: 0.2s; }
 .ai-msg.typing span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-8px); opacity: 1; } }
-.ai-msg.loading-ai { background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); align-self: flex-start; border-bottom-left-radius: 4px; display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #F59E0B; }
-.ai-msg.loading-ai i { animation: spin 1s linear infinite; color: #D97706; }
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-.ai-quick-replies { padding: 8px 12px; border-top: 1px solid #E2E8F0; background: #F8FAFC; display: flex; flex-wrap: wrap; gap: 6px; max-height: 100px; overflow-y: auto; }
-.ai-quick-replies.hidden { display: none; }
-.quick-reply-btn { background: white; border: 1.5px solid #E2E8F0; color: #475569; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; font-weight: 500; }
-.quick-reply-btn:hover { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-color: transparent; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3); }
-.quick-reply-btn i { margin-right: 4px; }
-.fallback-categories { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-.category-chip { background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%); border: 1px solid #CBD5E1; color: #334155; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 4px; }
-.category-chip:hover { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-color: transparent; transform: translateY(-1px); }
+.ai-quick-replies { display: none; }
 .ai-chatbot-input-area { padding: 12px 16px; border-top: 1px solid #E2E8F0; display: flex; gap: 8px; background: white; align-items: center; }
 .ai-chatbot-input { flex: 1; border: 1.5px solid #E2E8F0; border-radius: 24px; padding: 10px 16px; font-size: 0.85rem; font-family: 'Inter', sans-serif; outline: none; }
 .ai-chatbot-input:focus { border-color: #667eea; }
@@ -236,19 +233,9 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 .footer-form { flex-wrap: wrap; gap: 0.75rem; }
 }
 .weather-widget-container { margin-bottom: 2rem; padding: 0.5rem; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; min-height: 220px; display: flex; justify-content: center; align-items: center; }
-.install-app-btn {
-    position: fixed; bottom: 170px; right: 28px; background: linear-gradient(135deg, #0A2F6C 0%, #005f8c 100%);
-    color: white; border: none; padding: 12px 20px; border-radius: 50px; font-weight: 700; font-size: 0.85rem;
-    box-shadow: 0 4px 15px rgba(10, 47, 108, 0.4); cursor: pointer; display: none; align-items: center; gap: 8px;
-    z-index: 96; transition: all 0.3s ease; animation: float 3s ease-in-out infinite;
-}
-.install-app-btn:hover { transform: translateY(-3px) scale(1.05); }
-.install-app-btn i { font-size: 1.1rem; }
-@media (max-width: 880px) { .install-app-btn { bottom: 235px !important; right: 15px; padding: 10px 16px; font-size: 0.8rem; } }
 </style>
 </head>
 <body>
-
 <header class="header">
 <div class="container">
 <div class="navbar">
@@ -256,9 +243,9 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 <div class="logo-text">Angel Tour <span>Brasil</span></div>
 <div class="header-right">
 <div class="lang-buttons-header">
-<button class="lang-btn-header" data-lang="es" title="Español"><img src="images/bt-es.png" alt="Español"></button>
-<button class="lang-btn-header" data-lang="pt" title="Português"><img src="images/bt-pt.png" alt="Português"></button>
-<button class="lang-btn-header" data-lang="en" title="English"><img src="images/bt-us.png" alt="English"></button>
+<button class="lang-btn-header" data-lang="es" title="Español"><img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-es.png" alt="Español"></button>
+<button class="lang-btn-header" data-lang="pt" title="Português"><img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-pt.png" alt="Português"></button>
+<button class="lang-btn-header" data-lang="en" title="English"><img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-us.png" alt="English"></button>
 </div>
 <div class="menu-icon" id="menuToggle"><i class="fas fa-bars"></i></div>
 </div>
@@ -290,7 +277,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 <div class="hero-content">
 <div class="hero-left">
 <div class="hero-logo">
-<img src="images/logoangel-pb.png" alt="Angel Tour Brasil Logo">
+<img src="https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/logoangel-pb.png" alt="Angel Tour Brasil Logo">
 </div>
 </div>
 <div class="hero-right">
@@ -324,16 +311,20 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 <p class="section-sub" data-key="itinerary_sub">Embarque em Porto dos Piratas e viva momentos inesquecíveis</p>
 <div class="timeline" id="timelineContainer">
 <div class="timeline-step" data-step="1" data-key-es="Embarque" data-key-pt="Embarque" data-key-en="Boarding" data-desc-es="Trapiche en Porto dos Piratas / Porto Belo." data-desc-pt="Trapiche em Porto dos Piratas / Porto Belo." data-desc-en="Pier in Porto dos Piratas / Porto Belo." data-longtext-es="El embarque se realiza en el pintoresco Trapiche de Porto dos Piratas." data-longtext-pt="O embarque é realizado no pitoresco Trapiche de Porto dos Piratas." data-longtext-en="Boarding takes place at the picturesque Trapiche de Porto dos Piratas.">
-<div class="step-number">1</div><h3 data-key="step1_title">Embarque</h3>
+<div class="step-number">1</div>
+<h3 data-key="step1_title">Embarque</h3>
 </div>
 <div class="timeline-step" data-step="2" data-key-es="Navegación" data-key-pt="Navegação" data-key-en="Cruising" data-desc-es="1h30 por la Costa Esmeralda" data-desc-pt="1h30 pela Costa Esmeralda" data-desc-en="1h30 along the Emerald Coast" data-longtext-es="Navegamos por la deslumbrante Costa Esmeralda." data-longtext-pt="Navegamos pela deslumbrante Costa Esmeralda." data-longtext-en="We sail along the stunning Emerald Coast.">
-<div class="step-number">2</div><h3 data-key="step2_title">Navegación</h3>
+<div class="step-number">2</div>
+<h3 data-key="step2_title">Navegación</h3>
 </div>
 <div class="timeline-step" data-step="3" data-key-es="Parada para Baño" data-key-pt="Parada para Banho" data-key-en="Swimming Stop" data-desc-es="Caixa D'Aço: natación" data-desc-pt="Caixa D'Aço: natação" data-desc-en="Caixa D'Aço: swimming" data-longtext-es="Llegamos a la deslumbrante Bahía de Caixa D'Aço." data-longtext-pt="Chegamos à deslumbrante Baía de Caixa D'Aço." data-longtext-en="We arrive at the stunning Caixa D'Aço Bay.">
-<div class="step-number">3</div><h3 data-key="step3_title">Parada para Baño</h3>
+<div class="step-number">3</div>
+<h3 data-key="step3_title">Parada para Baño</h3>
 </div>
 <div class="timeline-step" data-step="4" data-key-es="Fiesta a bordo" data-key-pt="Festa a bordo" data-key-en="Party on board" data-desc-es="Frutas, batida tropical" data-desc-pt="Frutas, batida tropical" data-desc-en="Fruits, tropical cocktails" data-longtext-es="Buffet de frutas frescas y batida de coco." data-longtext-pt="Buffet de frutas frescas e batida de coco." data-longtext-en="Fresh fruit buffet and coconut cocktail.">
-<div class="step-number">4</div><h3 data-key="step4_title">Fiesta a bordo</h3>
+<div class="step-number">4</div>
+<h3 data-key="step4_title">Fiesta a bordo</h3>
 </div>
 </div>
 </div>
@@ -361,8 +352,8 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 <div style="display: flex; justify-content: center; margin-bottom: 3rem;">
 <div class="video-container-9-16">
 <div class="video-aspect">
-<video controls playsinline poster="images/atb_01.webp">
-<source src="images/atv_video_1.mp4" type="video/mp4">
+<video controls playsinline poster="https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_01.webp">
+<source src="https://sebagsc2020.github.io/angeltourbrasil/images/atv_video_1.mp4" type="video/mp4">
 </video>
 </div>
 </div>
@@ -491,13 +482,10 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </footer>
 
-<a href="https://wa.me/5547999679084?text=Olá! Gostaria de informações sobre o passeio de barco" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+<!-- ✅ BOTÓN WHATSAPP MULTI-IDIOMA -->
+<a id="whatsappFloat" href="#" class="whatsapp-float" target="_blank" rel="noopener noreferrer" onclick="updateWhatsAppLink(event)">
 <i class="fab fa-whatsapp"></i>
 </a>
-
-<button id="installAppBtn" class="install-app-btn">
-    <i class="fas fa-download"></i> Instalar App
-</button>
 
 <!-- 🤖 ANGEL AI CHATBOT -->
 <button class="ai-chatbot-toggle" id="aiChatbotToggle" title="Angel AI">
@@ -525,25 +513,17 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 
-<script type="module">
-import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';
-env.allowLocalModels = false;
-env.useBrowserCache = true;
-window.TransformersPipeline = pipeline;
-window.TransformersEnv = env;
-</script>
-
 <script>
 const translations = {
-es: { nav_home:"Inicio", nav_tour:"El Paseo", nav_gallery:"Galería", nav_book:"Reservar", hero_title:"El paseo más completo de la Costa Esmeralda", hero_sub:"Navegue por paisajes paradisíacos, nade en la Bahía de Caixa D'Aço, disfrute del tobogán, frutas tropicales y mucha animación a bordo.", btn_route:"Ver Itinerario", btn_guarantee:"Asegurar Plaza", why_title:"¿Por qué navegar con Angel Tour?", why_sub:"Experiencia completa, seguridad y diversión para todas las edades", diff1_title:"Seguridad total", diff1_desc:"Chalecos + salvavidas y tripulación entrenada", diff2_title:"Parada en Caixa D'Aço", diff2_desc:"Aguas cristalinas para nadar con tranquilidad", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas y batida de coco a bordo", diff4_title:"Diversión asegurada", diff4_desc:"Tobogán, música y animación para adultos y niños", itinerary_title:"Itinerario de la Experiencia", itinerary_sub:"Embarque en Porto dos Piratas y viva momentos inolvidables", step1_title:"Embarque", step2_title:"Navegación", step3_title:"Parada para Baño", step4_title:"Fiesta a bordo", gallery_title:"Vive esta aventura", gallery_sub:"Mira el paseo e inspírate para tu viaje", testimonials_title:"Quienes ya navegaron, recomiendan", test1_text:"¡Paseo fantástico! El equipo es muy atento.", test2_text:"Seguridad y diversión. Buffet de frutas delicioso.", test3_text:"¡El mejor paseo en barco de Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegación", footer_home:"Inicio", footer_route:"Itinerario", footer_gallery:"Galería", footer_follow:"Sigue la aventura", footer_copyright:"© 2026 Angel Tour Brasil – El paseo más completo de la Costa Esmeralda.", map_text:"Abrir en Google Maps", sticky_subtitle:"Reserva tu lugar", sticky_price:"⭐ ¡Precios especiales! ⭐", sticky_btn:"Reservar Ahora", fecha:"FECHA DEL PASEO", horario:"PREFERENCIA DE HORARIO", horario1:"Mañana", horario2:"Media Mañana", horario3:"Tarde", nombre:"NOMBRE", empresa:"EMPRESA", empresa_note:"*Opcional", adultos:"ADULTOS", menores:"MENORES de 6 a 11 años", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeto a disponibilidad", info_text:"💡 Precio de venta al público.", discount_text:"🎯 50% de descuento", precio_adultos:"💰 R$ 100,00 cada adulto", footer_boat:"Paseos en barco", footer_secure:"Confirmación segura", footer_confirm:"Envío por WhatsApp", ai_chatbot_placeholder:"Pregúntame algo...", ai_online:"Online agora", ai_greeting:"¡Hola! 👋 Soy <b>Angel AI</b>, tu asistente virtual. Tengo información sobre el paseo. ¿En qué te puedo ayudar?", voice_listening:"🎤 Escuchando...", voice_stop:"🛑 Detener", voice_error:"❌ Error de micrófono", voice_unsupported:"🎤 No soportado", voice_start:"🎤 Toca para hablar" },
-pt: { nav_home:"Início", nav_tour:"O Passeio", nav_gallery:"Galeria", nav_book:"Reservar", hero_title:"O passeio mais completo da Costa Esmeralda", hero_sub:"Navegue por paisagens paradisíacas, nade na Bahía de Caixa D'Aço, aproveite tobogã, frutas tropicais e muita animação a bordo.", btn_route:"Ver Roteiro", btn_guarantee:"Garantir Vaga", why_title:"Por que velejar com a Angel Tour?", why_sub:"Experiência completa, segurança e diversão para todas as idades", diff1_title:"Segurança total", diff1_desc:"Coletes + guarda-vidas e tripulação treinada", diff2_title:"Parada em Caixa D'Aço", diff2_desc:"Águas cristalinas para nadar com tranquilidade", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas e batida de coco a bordo", diff4_title:"Diversão garantida", diff4_desc:"Tobogã, música e animação para adultos e crianças", itinerary_title:"Roteiro da Experiência", itinerary_sub:"Embarque em Porto dos Piratas e viva momentos inesquecíveis", step1_title:"Embarque", step2_title:"Navegação", step3_title:"Parada para Banho", step4_title:"Festa a bordo", gallery_title:"Viva essa aventura", gallery_sub:"Assista ao passeio e inspire-se para sua viagem", testimonials_title:"Quem já navegou, recomenda", test1_text:"Passeio fantástico! A equipe é muito atenciosa.", test2_text:"Segurança e diversão. Buffet de frutas delicioso.", test3_text:"Melhor passeio de barco de Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegação", footer_home:"Início", footer_route:"Itinerário", footer_gallery:"Galeria", footer_follow:"Siga a aventura", footer_copyright:"© 2026 Angel Tour Brasil – O passeio mais completo da Costa Esmeralda.", map_text:"Abrir no Google Maps", sticky_subtitle:"Reserve seu lugar", sticky_price:"⭐ Preços especiais! ⭐", sticky_btn:"Reservar Agora", fecha:"DATA DO PASSEIO", horario:"PREFERÊNCIA DE HORÁRIO", horario1:"Manhã", horario2:"Meia Manhã", horario3:"Tarde", nombre:"NOME", empresa:"EMPRESA", empresa_note:"*Opcional", adultos:"ADULTOS", menores:"MENORES de 6 a 11 anos", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeito à disponibilidade", info_text:"💡 Preço de venda ao público.", discount_text:"🎯 50% de desconto", precio_adultos:"💰 R$ 100,00 cada adulto", footer_boat:"Passeios de barco", footer_secure:"Confirmação segura", footer_confirm:"Envio por WhatsApp", ai_chatbot_placeholder:"Pergunte algo...", ai_online:"Online agora", ai_greeting:"Olá! 👋 Sou o <b>Angel AI</b>, seu assistente virtual. Tenho informações sobre o passeio. Como posso ajudar?", voice_listening:"🎤 Ouvindo...", voice_stop:"🛑 Parar", voice_error:"❌ Erro de microfone", voice_unsupported:"🎤 Não suportado", voice_start:"🎤 Toque para falar" },
-en: { nav_home:"Home", nav_tour:"The Tour", nav_gallery:"Gallery", nav_book:"Book Now", hero_title:"The most complete tour of the Emerald Coast", hero_sub:"Sail through stunning landscapes, swim in Caixa D'Aço Bay, enjoy a waterslide, tropical fruits, and lots of fun on board.", btn_route:"See Itinerary", btn_guarantee:"Book Now", why_title:"Why sail with Angel Tour?", why_sub:"Complete experience, safety and fun for all ages", diff1_title:"Total safety", diff1_desc:"Life jackets + lifeguards and trained crew", diff2_title:"Stop at Caixa D'Aço", diff2_desc:"Crystal clear waters for a safe swim", diff3_title:"Buffet & Drinks", diff3_desc:"Fresh fruits and coconut cocktail on board", diff4_title:"Guaranteed fun", diff4_desc:"Waterslide, music and entertainment for all ages", itinerary_title:"Experience Itinerary", itinerary_sub:"Board at Porto dos Piratas and live unforgettable moments", step1_title:"Boarding", step2_title:"Navigation", step3_title:"Swimming Stop", step4_title:"Party on board", gallery_title:"Live this adventure", gallery_sub:"Watch the tour and get inspired for your trip", testimonials_title:"Those who have sailed, recommend", test1_text:"Fantastic tour! The team is very attentive.", test2_text:"Safety and fun. Delicious fruit buffet.", test3_text:"Best boat tour in Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navigation", footer_home:"Home", footer_route:"Itinerary", footer_gallery:"Gallery", footer_follow:"Follow the adventure", footer_copyright:"© 2026 Angel Tour Brasil – The most complete tour of the Emerald Coast.", map_text:"Open in Google Maps", sticky_subtitle:"Book your spot", sticky_price:"⭐ Special prices! ⭐", sticky_btn:"Book Now", fecha:"TOUR DATE", horario:"TIME PREFERENCE", horario1:"Morning", horario2:"Late Morning", horario3:"Afternoon", nombre:"NAME", empresa:"COMPANY", empresa_note:"*Optional", adultos:"ADULTS", menores:"CHILDREN 6 to 11 years", total:"TOTAL VALUE", btn:"SEND RESERVATION", horario_note:"⏱️ Subject to availability", info_text:"💡 Public sale price.", discount_text:"🎯 50% discount", precio_adultos:"💰 R$ 100.00 per adult", footer_boat:"Boat tours", footer_secure:"Secure confirmation", footer_confirm:"WhatsApp delivery", ai_chatbot_placeholder:"Ask me something...", ai_online:"Online now", ai_greeting:"Hello! 👋 I'm <b>Angel AI</b>, your virtual assistant. I have information about the tour. How can I help you?", voice_listening:"🎤 Listening...", voice_stop:"🛑 Stop", voice_error:"❌ Microphone error", voice_unsupported:"🎤 Not supported", voice_start:"🎤 Tap to speak" }
+es: { nav_home:"Inicio", nav_tour:"El Paseo", nav_gallery:"Galería", nav_book:"Reservar", hero_title:"El paseo más completo de la Costa Esmeralda", hero_sub:"Navegue por paisajes paradisíacos, nade en la Bahía de Caixa D'Aço, disfrute del tobogán, frutas tropicales y mucha animación a bordo.", btn_route:"Ver Itinerario", btn_guarantee:"Asegurar Plaza", why_title:"¿Por qué navegar con Angel Tour?", why_sub:"Experiencia completa, seguridad y diversión para todas las edades", diff1_title:"Seguridad total", diff1_desc:"Chalecos + salvavidas y tripulación entrenada", diff2_title:"Parada en Caixa D'Aço", diff2_desc:"Aguas cristalinas para nadar con tranquilidad", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas y batida de coco a bordo", diff4_title:"Diversión asegurada", diff4_desc:"Tobogán, música y animación para adultos y niños", itinerary_title:"Itinerario de la Experiencia", itinerary_sub:"Embarque en Porto dos Piratas y viva momentos inolvidables", step1_title:"Embarque", step2_title:"Navegación", step3_title:"Parada para Baño", step4_title:"Fiesta a bordo", gallery_title:"Vive esta aventura", gallery_sub:"Mira el paseo e inspírate para tu viaje", testimonials_title:"Quienes ya navegaron, recomiendan", test1_text:"¡Paseo fantástico! El equipo es muy atento.", test2_text:"Seguridad y diversión. Buffet de frutas delicioso.", test3_text:"¡El mejor paseo en barco de Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegación", footer_home:"Inicio", footer_route:"Itinerario", footer_gallery:"Galería", footer_follow:"Sigue la aventura", footer_copyright:"© 2026 Angel Tour Brasil – El paseo más completo de la Costa Esmeralda.", map_text:"Abrir en Google Maps", sticky_subtitle:"Reserva tu lugar", sticky_price:"⭐ ¡Precios especiales! ⭐", sticky_btn:"Reservar Ahora", fecha:"FECHA DEL PASEO", horario:"PREFERENCIA DE HORARIO", horario1:"Mañana", horario2:"Media Mañana", horario3:"Tarde", nombre:"NOMBRE", empresa:"EMPRESA", empresa_note:"*Opcional", adultos:"ADULTOS", menores:"MENORES de 6 a 11 años", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeto a disponibilidad", info_text:"💡 Precio de venta al público.", discount_text:"🎯 50% de descuento", precio_adultos:"💰 R$ 100,00 cada adulto", footer_boat:"Paseos en barco", footer_secure:"Confirmación segura", footer_confirm:"Envío por WhatsApp", ai_chatbot_placeholder:"Pregúntame algo...", ai_online:"Online agora", ai_greeting:"¡Hola! 👋 Soy <b>Angel AI</b>, tu asistente virtual. Tengo información sobre el paseo. ¿En qué te puedo ayudar?", voice_listening:"🎤 Escuchando...", voice_stop:"🛑 Detener", voice_error:"❌ Error de micrófono", voice_unsupported:"🎤 No soportado", voice_start:"🎤 Toca para hablar", wa_message:"¡Hola! 👋 Me interesa el paseo en barco de Angel Tour Brasil. ¿Podrían darme más información sobre disponibilidad y precios? ⛵" },
+pt: { nav_home:"Início", nav_tour:"O Passeio", nav_gallery:"Galeria", nav_book:"Reservar", hero_title:"O passeio mais completo da Costa Esmeralda", hero_sub:"Navegue por paisagens paradisíacas, nade na Bahía de Caixa D'Aço, aproveite tobogã, frutas tropicais e muita animação a bordo.", btn_route:"Ver Roteiro", btn_guarantee:"Garantir Vaga", why_title:"Por que velejar com a Angel Tour?", why_sub:"Experiência completa, segurança e diversão para todas as idades", diff1_title:"Segurança total", diff1_desc:"Coletes + guarda-vidas e tripulação treinada", diff2_title:"Parada em Caixa D'Aço", diff2_desc:"Águas cristalinas para nadar com tranquilidade", diff3_title:"Buffet & Batidas", diff3_desc:"Frutas frescas e batida de coco a bordo", diff4_title:"Diversão garantida", diff4_desc:"Tobogã, música e animação para adultos e crianças", itinerary_title:"Roteiro da Experiência", itinerary_sub:"Embarque em Porto dos Piratas e viva momentos inesquecíveis", step1_title:"Embarque", step2_title:"Navegação", step3_title:"Parada para Banho", step4_title:"Festa a bordo", gallery_title:"Viva essa aventura", gallery_sub:"Assista ao passeio e inspire-se para sua viagem", testimonials_title:"Quem já navegou, recomenda", test1_text:"Passeio fantástico! A equipe é muito atenciosa.", test2_text:"Segurança e diversão. Buffet de frutas delicioso.", test3_text:"Melhor passeio de barco de Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegação", footer_home:"Início", footer_route:"Itinerário", footer_gallery:"Galeria", footer_follow:"Siga a aventura", footer_copyright:"© 2026 Angel Tour Brasil – O passeio mais completo da Costa Esmeralda.", map_text:"Abrir no Google Maps", sticky_subtitle:"Reserve seu lugar", sticky_price:"⭐ Preços especiais! ⭐", sticky_btn:"Reservar Agora", fecha:"DATA DO PASSEIO", horario:"PREFERÊNCIA DE HORÁRIO", horario1:"Manhã", horario2:"Meia Manhã", horario3:"Tarde", nombre:"NOME", empresa:"EMPRESA", empresa_note:"*Opcional", adultos:"ADULTOS", menores:"MENORES de 6 a 11 anos", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeito à disponibilidade", info_text:"💡 Preço de venda ao público.", discount_text:"🎯 50% de desconto", precio_adultos:"💰 R$ 100,00 cada adulto", footer_boat:"Passeios de barco", footer_secure:"Confirmação segura", footer_confirm:"Envio por WhatsApp", ai_chatbot_placeholder:"Pergunte algo...", ai_online:"Online agora", ai_greeting:"Olá! 👋 Sou o <b>Angel AI</b>, seu assistente virtual. Tenho informações sobre o passeio. Como posso ajudar?", voice_listening:"🎤 Ouvindo...", voice_stop:"🛑 Parar", voice_error:"❌ Erro de microfone", voice_unsupported:"🎤 Não suportado", voice_start:"🎤 Toque para falar", wa_message:"Olá! 👋 Tenho interesse no passeio de barco da Angel Tour Brasil. Poderiam me dar mais informações sobre disponibilidade e preços? ⛵" },
+en: { nav_home:"Home", nav_tour:"The Tour", nav_gallery:"Gallery", nav_book:"Book Now", hero_title:"The most complete tour of the Emerald Coast", hero_sub:"Sail through stunning landscapes, swim in Caixa D'Aço Bay, enjoy a waterslide, tropical fruits, and lots of fun on board.", btn_route:"See Itinerary", btn_guarantee:"Book Now", why_title:"Why sail with Angel Tour?", why_sub:"Complete experience, safety and fun for all ages", diff1_title:"Total safety", diff1_desc:"Life jackets + lifeguards and trained crew", diff2_title:"Stop at Caixa D'Aço", diff2_desc:"Crystal clear waters for a safe swim", diff3_title:"Buffet & Drinks", diff3_desc:"Fresh fruits and coconut cocktail on board", diff4_title:"Guaranteed fun", diff4_desc:"Waterslide, music and entertainment for all ages", itinerary_title:"Experience Itinerary", itinerary_sub:"Board at Porto dos Piratas and live unforgettable moments", step1_title:"Boarding", step2_title:"Navigation", step3_title:"Swimming Stop", step4_title:"Party on board", gallery_title:"Live this adventure", gallery_sub:"Watch the tour and get inspired for your trip", testimonials_title:"Those who have sailed, recommend", test1_text:"Fantastic tour! The team is very attentive.", test2_text:"Safety and fun. Delicious fruit buffet.", test3_text:"Best boat tour in Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navigation", footer_home:"Home", footer_route:"Itinerary", footer_gallery:"Gallery", footer_follow:"Follow the adventure", footer_copyright:"© 2026 Angel Tour Brasil – The most complete tour of the Emerald Coast.", map_text:"Open in Google Maps", sticky_subtitle:"Book your spot", sticky_price:"⭐ Special prices! ⭐", sticky_btn:"Book Now", fecha:"TOUR DATE", horario:"TIME PREFERENCE", horario1:"Morning", horario2:"Late Morning", horario3:"Afternoon", nombre:"NAME", empresa:"COMPANY", empresa_note:"*Optional", adultos:"ADULTS", menores:"CHILDREN 6 to 11 years", total:"TOTAL VALUE", btn:"SEND RESERVATION", horario_note:"⏱️ Subject to availability", info_text:"💡 Public sale price.", discount_text:"🎯 50% discount", precio_adultos:"💰 R$ 100.00 per adult", footer_boat:"Boat tours", footer_secure:"Secure confirmation", footer_confirm:"WhatsApp delivery", ai_chatbot_placeholder:"Ask me something...", ai_online:"Online now", ai_greeting:"Hello! 👋 I'm <b>Angel AI</b>, your virtual assistant. I have information about the tour. How can I help you?", voice_listening:"🎤 Listening...", voice_stop:"🛑 Stop", voice_error:"❌ Microphone error", voice_unsupported:"🎤 Not supported", voice_start:"🎤 Tap to speak", wa_message:"Hello! 👋 I'm interested in the Angel Tour Brasil boat tour. Could you provide me with more information about availability and prices? ⛵" }
 };
 
 const fullItinerary = {
-es: `<h3 id="step-1">1. Embarque Ordenado y Exclusivo</h3><p><strong>Punto de encuentro:</strong> Los pasajeros se concentran de manera organizada en nuestro muelle privado ubicado en Porto Belo.<br><strong>Infraestructura de espera:</strong> Antes de subir a bordo, el grupo puede disfrutar de las comodidades del predio Porto dos Piratas, como sanitarios, duchas de agua dulce y estaciones para recargar celulares.<br><strong>Control de capacidad:</strong> El personal y los guías realizan el chequeo estricto del listado de pasajeros (incluyendo niños y bebés) para cumplir con los estándares de seguridad de la Marina Brasileña antes de habilitar el ingreso a las modernas embarcaciones de la flota.</p><h3 id="step-2">2. Navegación por la Costa Esmeralda y Relato Cultural</h3><p><strong>Zarpada:</strong> Las embarcaciones (con capacidades de 150, 170 o 240 pasajeros) inician la travesía náutica adentrándose en el océano Atlántico.<br><strong>Recorrido panorámico:</strong> Se navega por las aguas calmas y cristalinas de la "Ensenada das Garoupas", contemplando los majestuosos paisajes de la sofisticada Costa Esmeralda, zona habitual de cruceros de lujo.<br><strong>Bloque cultural:</strong> Durante esta etapa del viaje, se comparten relatos históricos fascinantes sobre la región y los orígenes de la fundación portuguesa del tradicional barrio "Arazá".</p><h3 id="step-3">3. Parada para Baño y Relax en Caixa d'Aço</h3><p><strong>Llegada al refugio natural:</strong> El barco se posiciona en la famosa bahía de Caixa d'Aço ("Caja Fuerte"), reconocida internacionalmente por sus icónicos bares flotantes.<br><strong>Momento de natación y clavados:</strong> Se realiza una parada libre de 30 minutos para que los pasajeros disfruten y se refresquen en el mar.<br><strong>Diversión en el tobogán:</strong> Tanto adultos como niños tienen acceso al tobogán acuático del barco, diseñado especialmente para garantizar una caída suave, controlada y segura directamente al agua.<br><strong>Seguridad constante:</strong> Todo el tiempo de fondeo permanece bajo la atenta supervisión de marineros guardavidas profesionales y con chalecos salvavidas a disposición.</p><h3 id="step-4">4. Fiesta a Bordo y Regreso al Predio</h3><p><strong>Show pirata interactivo:</strong> Tras el baño, se enciende la energía a bordo con la animación en vivo de nuestros piratas, donde los pasajeros pasan a ser los protagonistas del espectáculo.<br><strong>Música y baile:</strong> El barco se convierte en una pista festiva con distintos estilos musicales para bailar mientras se inicia el regreso al muelle.<br><strong>Servicio de bar y buffet:</strong> Los pasajeros pueden complementar la fiesta disfrutando de un refrescante buffet de frutas tropicales o adquiriendo tragos y snacks en el bar a bordo.<br><strong>Cierre de la jornada:</strong> Arribo al muelle propio para continuar disfrutando del restaurante, las delicias del bar de playa o los combos estudiantiles en el predio Porto dos Piratas.</p>`,
-pt: `<h3 id="step-1">1. Embarque Ordenado e Exclusivo</h3><p><strong>Ponto de encontro:</strong> Os passageiros se concentram de maneira organizada em nosso píer privado localizado em Porto Belo.<br><strong>Infraestrutura de espera:</strong> Antes de embarcar, o grupo pode desfrutar das comodidades do complexo Porto dos Piratas, como banheiros, chuveiros de água doce e estações para recarregar celulares.<br><strong>Controle de capacidade:</strong> A equipe e os guias realizam a conferência rigorosa da lista de passageiros (incluindo crianças e bebês) para cumprir os padrões de segurança da Marinha Brasileira antes de permitir o acesso às modernas embarcações da frota.</p><h3 id="step-2">2. Navegação pela Costa Esmeralda e Relato Cultural</h3><p><strong>Zarpada:</strong> As embarcações (com capacidades de 150, 170 ou 240 passageiros) iniciam a travessia náutica adentrando o oceano Atlântico.<br><strong>Percorrido panorâmico:</strong> Navega-se pelas águas calmas e cristalinas da "Enseada das Garoupas", contemplando as majestosas paisagens da sofisticada Costa Esmeralda, zona habitual de cruzeiros de luxo.<br><strong>Bloco cultural:</strong> Durante esta etapa da viagem, são compartilhados relatos históricos fascinantes sobre a região e as origens da fundação portuguesa do tradicional bairro "Arazá".</p><h3 id="step-3">3. Parada para Banho e Relax em Caixa d'Aço</h3><p><strong>Chegada ao refúgio natural:</strong> O barco se posiciona na famosa baía de Caixa d'Aço ("Cofre Forte"), reconhecida internacionalmente por seus icônicos bares flutuantes.<br><strong>Momento de natação e mergulhos:</strong> Realiza-se uma parada livre de 30 minutos para que os passageiros aproveitem e se refresquem no mar.<br><strong>Diversão no tobogã:</strong> Tanto adultos quanto crianças têm acesso ao tobogã aquático do barco, projetado especialmente para garantir uma queda suave, controlada e segura diretamente na água.<br><strong>Segurança constante:</strong> Todo o tempo de fundeio permanece sob a atenta supervisão de marinheiros salva-vidas profissionais e com coletes salva-vidas à disposição.</p><h3 id="step-4">4. Festa a Bordo e Retorno ao Complexo</h3><p><strong>Show pirata interativo:</strong> Após o banho, a energia a bordo se acende com a animação ao vivo de nossos piratas, onde os passageiros passam a ser os protagonistas do espetáculo.<br><strong>Música e dança:</strong> O barco se transforma em uma pista festiva com distintos estilos musicais para dançar enquanto se inicia o retorno ao píer.<br><strong>Serviço de bar e buffet:</strong> Os passageiros podem complementar a festa desfrutando de um refrescante buffet de frutas tropicais ou adquirindo drinks e lanches no bar a bordo.<br><strong>Fechamento da jornada:</strong> Chegada ao píer próprio para continuar desfrutando do restaurante, das delícias do bar de praia ou dos combos estudantis no complexo Porto dos Piratas.</p>`,
-en: `<h3 id="step-1">1. Orderly and Exclusive Boarding</h3><p><strong>Meeting point:</strong> Passengers gather in an organized manner at our private pier located in Porto Belo.<br><strong>Waiting infrastructure:</strong> Before boarding, the group can enjoy the facilities of the Porto dos Piratas complex, such as restrooms, fresh water showers, and cell phone charging stations.<br><strong>Capacity control:</strong> Staff and guides strictly check the passenger list (including children and babies) to comply with Brazilian Navy safety standards before allowing entry to the modern fleet vessels.</p><h3 id="step-2">2. Navigation along the Emerald Coast and Cultural Storytelling</h3><p><strong>Departure:</strong> The vessels (with capacities of 150, 170, or 240 passengers) begin the nautical journey into the Atlantic Ocean.<br><strong>Panoramic route:</strong> We sail through the calm and crystal-clear waters of "Ensenada das Garoupas", contemplating the majestic landscapes of the sophisticated Emerald Coast, a usual area for luxury cruises.<br><strong>Cultural block:</strong> During this stage of the trip, fascinating historical stories about the region and the origins of the Portuguese foundation of the traditional "Arazá" neighborhood are shared.</p><h3 id="step-3">3. Swimming Stop and Relaxation in Caixa d'Aço</h3><p><strong>Arrival at the natural refuge:</strong> The boat positions itself in the famous Caixa d'Aço bay ("Strongbox"), internationally recognized for its iconic floating bars.<br><strong>Swimming and diving moment:</strong> A free 30-minute stop is made for passengers to enjoy and refresh themselves in the sea.<br><strong>Waterslide fun:</strong> Both adults and children have access to the boat's waterslide, specially designed to guarantee a soft, controlled, and safe drop directly into the water.<br><strong>Constant safety:</strong> The entire anchoring time remains under the attentive supervision of professional lifeguard sailors and with life jackets available.</p><h3 id="step-4">4. Party on Board and Return to the Complex</h3><p><strong>Interactive pirate show:</strong> After swimming, the energy on board lights up with the live animation of our pirates, where passengers become the protagonists of the show.<br><strong>Music and dancing:</strong> The boat turns into a festive dance floor with different musical styles to dance while starting the return to the pier.<br><strong>Bar and buffet service:</strong> Passengers can complement the party by enjoying a refreshing tropical fruit buffet or purchasing drinks and snacks at the on-board bar.<br><strong>End of the journey:</strong> Arrival at the private pier to continue enjoying the restaurant, the delights of the beach bar, or the student combos at the Porto dos Piratas complex.</p>`
+es: `<h3 id="step-1">1. Embarque Ordenado y Exclusivo</h3><p><strong>Punto de encuentro:</strong> Los pasajeros se concentran de manera organizada en nuestro muelle privado ubicado en Porto Belo.<br><strong>Infraestructura de espera:</strong> Antes de subir a bordo, el grupo puede disfrutar de las comodidades del predio Porto dos Piratas, como sanitarios, duchas de agua dulce y estaciones para recargar celulares.<br><strong>Control de capacidad:</strong> El personal y los guías realizan el chequeo estricto del listado de pasajeros (incluyendo niños y bebés) para cumplir con los estándares de seguridad de la Marina Brasileña antes de habilitar el ingreso a las modernas embarcaciones de la flota.</p><h3 id="step-2">2. Navegación por la Costa Esmeralda y Relato Cultural</h3><p><strong>Zarpada:</strong> Las embarcaciones (con capacidades de 150, 170 o 240 pasajeros) inician la travesía náutica adentrándose en el océano Atlántico.<br><strong>Recorrido panorámico:</strong> Se navega por las aguas calmas y cristalinas de la "Ensenada das Garoupas", contemplando los majestuosos paisajes de la sofisticada Costa Esmeralda, zona habitual de cruceros de lujo.<br><strong>Bloque cultural:</strong> Durante esta etapa del viaje, se comparten relatos históricos fascinantes sobre la región y los orígenes de la fundación portuguesa del tradicional barrio "Arazá".</p><h3 id="step-3">3. Parada para Baño y Relax en Caixa d'Aço</h3><p><strong>Llegada al refugio natural:</strong> El barco se posiciona en la famosa bahía de Caixa d’Aço ("Caja Fuerte"), reconocida internacionalmente por sus icónicos bares flotantes.<br><strong>Momento de natación y clavados:</strong> Se realiza una parada libre de 30 minutos para que los pasajeros disfruten y se refresquen en el mar.<br><strong>Diversión en el tobogán:</strong> Tanto adultos como niños tienen acceso al tobogán acuático del barco, diseñado especialmente para garantizar una caída suave, controlada y segura directamente al agua.<br><strong>Seguridad constante:</strong> Todo el tiempo de fondeo permanece bajo la atenta supervisión de marineros guardavidas profesionales y con chalecos salvavidas a disposición.</p><h3 id="step-4">4. Fiesta a Bordo y Regreso al Predio</h3><p><strong>Show pirata interactivo:</strong> Tras el baño, se enciende la energía a bordo con la animación en vivo de nuestros piratas, donde los pasajeros pasan a ser los protagonistas del espectáculo.<br><strong>Música y baile:</strong> El barco se convierte en una pista festiva con distintos estilos musicales para bailar mientras se inicia el regreso al muelle.<br><strong>Servicio de bar y buffet:</strong> Los pasajeros pueden complementar la fiesta disfrutando de un refrescante buffet de frutas tropicales o adquiriendo tragos y snacks en el bar a bordo.<br><strong>Cierre de la jornada:</strong> Arribo al muelle propio para continuar disfrutando del restaurante, las delicias del bar de playa o los combos estudiantiles en el predio Porto dos Piratas.</p>`,
+pt: `<h3 id="step-1">1. Embarque Ordenado e Exclusivo</h3><p><strong>Ponto de encontro:</strong> Os passageiros se concentram de maneira organizada em nosso píer privado localizado em Porto Belo.<br><strong>Infraestrutura de espera:</strong> Antes de embarcar, o grupo pode desfrutar das comodidades do complexo Porto dos Piratas, como banheiros, chuveiros de água doce e estações para recarregar celulares.<br><strong>Controle de capacidade:</strong> A equipe e os guias realizam a conferência rigorosa da lista de passageiros (incluindo crianças e bebês) para cumprir os padrões de segurança da Marinha Brasileira antes de permitir o acesso às modernas embarcações da frota.</p><h3 id="step-2">2. Navegação pela Costa Esmeralda e Relato Cultural</h3><p><strong>Zarpada:</strong> As embarcações (com capacidades de 150, 170 ou 240 passageiros) iniciam a travessia náutica adentrando o oceano Atlântico.<br><strong>Percorrido panorâmico:</strong> Navega-se pelas águas calmas e cristalinas da "Enseada das Garoupas", contemplando as majestosas paisagens da sofisticada Costa Esmeralda, zona habitual de cruzeiros de luxo.<br><strong>Bloco cultural:</strong> Durante esta etapa da viagem, são compartilhados relatos históricos fascinantes sobre a região e as origens da fundação portuguesa do tradicional bairro "Arazá".</p><h3 id="step-3">3. Parada para Banho e Relax em Caixa d'Aço</h3><p><strong>Chegada ao refúgio natural:</strong> O barco se posiciona na famosa baía de Caixa d’Aço ("Cofre Forte"), reconhecida internacionalmente por seus icônicos bares flutuantes.<br><strong>Momento de natação e mergulhos:</strong> Realiza-se uma parada livre de 30 minutos para que os passageiros aproveitem e se refresquem no mar.<br><strong>Diversão no tobogã:</strong> Tanto adultos quanto crianças têm acesso ao tobogã aquático do barco, projetado especialmente para garantir uma queda suave, controlada e segura diretamente na água.<br><strong>Segurança constante:</strong> Todo o tempo de fundeio permanece sob a atenta supervisão de marinheiros salva-vidas profissionais e com coletes salva-vidas à disposição.</p><h3 id="step-4">4. Festa a Bordo e Retorno ao Complexo</h3><p><strong>Show pirata interativo:</strong> Após o banho, a energia a bordo se acende com a animação ao vivo de nossos piratas, onde os passageiros passam a ser os protagonistas do espetáculo.<br><strong>Música e dança:</strong> O barco se transforma em uma pista festiva com distintos estilos musicais para dançar enquanto se inicia o retorno ao píer.<br><strong>Serviço de bar e buffet:</strong> Os passageiros podem complementar a festa desfrutando de um refrescante buffet de frutas tropicais ou adquirindo drinks e lanches no bar a bordo.<br><strong>Fechamento da jornada:</strong> Chegada ao píer próprio para continuar desfrutando do restaurante, das delícias do bar de praia ou dos combos estudantis no complexo Porto dos Piratas.</p>`,
+en: `<h3 id="step-1">1. Orderly and Exclusive Boarding</h3><p><strong>Meeting point:</strong> Passengers gather in an organized manner at our private pier located in Porto Belo.<br><strong>Waiting infrastructure:</strong> Before boarding, the group can enjoy the facilities of the Porto dos Piratas complex, such as restrooms, fresh water showers, and cell phone charging stations.<br><strong>Capacity control:</strong> Staff and guides strictly check the passenger list (including children and babies) to comply with Brazilian Navy safety standards before allowing entry to the modern fleet vessels.</p><h3 id="step-2">2. Navigation along the Emerald Coast and Cultural Storytelling</h3><p><strong>Departure:</strong> The vessels (with capacities of 150, 170, or 240 passengers) begin the nautical journey into the Atlantic Ocean.<br><strong>Panoramic route:</strong> We sail through the calm and crystal-clear waters of "Ensenada das Garoupas", contemplating the majestic landscapes of the sophisticated Emerald Coast, a usual area for luxury cruises.<br><strong>Cultural block:</strong> During this stage of the trip, fascinating historical stories about the region and the origins of the Portuguese foundation of the traditional "Arazá" neighborhood are shared.</p><h3 id="step-3">3. Swimming Stop and Relaxation in Caixa d'Aço</h3><p><strong>Arrival at the natural refuge:</strong> The boat positions itself in the famous Caixa d’Aço bay ("Strongbox"), internationally recognized for its iconic floating bars.<br><strong>Swimming and diving moment:</strong> A free 30-minute stop is made for passengers to enjoy and refresh themselves in the sea.<br><strong>Waterslide fun:</strong> Both adults and children have access to the boat's waterslide, specially designed to guarantee a soft, controlled, and safe drop directly into the water.<br><strong>Constant safety:</strong> The entire anchoring time remains under the attentive supervision of professional lifeguard sailors and with life jackets available.</p><h3 id="step-4">4. Party on Board and Return to the Complex</h3><p><strong>Interactive pirate show:</strong> After swimming, the energy on board lights up with the live animation of our pirates, where passengers become the protagonists of the show.<br><strong>Music and dancing:</strong> The boat turns into a festive dance floor with different musical styles to dance while starting the return to the pier.<br><strong>Bar and buffet service:</strong> Passengers can complement the party by enjoying a refreshing tropical fruit buffet or purchasing drinks and snacks at the on-board bar.<br><strong>End of the journey:</strong> Arrival at the private pier to continue enjoying the restaurant, the delights of the beach bar, or the student combos at the Porto dos Piratas complex.</p>`
 };
 
 let currentLang = 'pt';
@@ -553,6 +533,7 @@ let isSpeaking = false;
 let paisUsuario = "DESCONOCIDO";
 let codigoIdioma = "POR";
 
+// ========== 🎤 RECONOCIMIENTO DE VOZ ==========
 let recognition = null;
 let isListening = false;
 let voiceSupported = false;
@@ -640,233 +621,65 @@ function hideVoiceStatus() {
     if (el) el.classList.remove('show');
 }
 
+// ========== 🤖 BASE DE CONOCIMIENTO ==========
 const aiKnowledgeBase = {
 es: {
 intents: [
-{ id:'precio', keywords: ['precio', 'costo', 'valor', 'cuanto', 'tarifa', 'pagar', 'cuesta', 'cobran', 'vale'], response: '💰 <b>Precios:</b><br>Adultos: R$ 100,00<br>Menores 6-11 años: 50% (R$ 50,00)<br>Bebés 0-5 años: GRATIS' },
-{ id:'bebes', keywords: ['bebes', 'bebe', '0 a 5', 'menor 5', 'gratuito', 'gratis', 'infantes', 'recien nacido'], response: '👶 <b>Bebés 0-5 años:</b><br>Son completamente GRATIS. ⚠️ IMPORTANTE: La Marina Brasileña exige registrar sus nombres y edades exactos por seguridad.' },
-{ id:'ninos', keywords: ['ninos', 'niños', '6 a 11', 'menor 6', 'mitad', 'descuento', 'criancas', 'hijos'], response: '🧒 <b>Niños 6-11 años:</b><br>Tienen 50% de descuento. Pagan R$ 50,00.' },
-{ id:'reserva', keywords: ['reserva', 'reservar', 'agendar', 'book', 'whatsapp', 'contacto', 'angel', 'comunicar', 'llamar', 'numero'], response: '📱 <b>Reservas:</b><br>Puedes reservar directamente por WhatsApp al <b>+55 47 99967-048</b> o rellenando el formulario al final de esta página. Contacto: Ángel.' },
-{ id:'lluvia', keywords: ['lluvia', 'clima', 'mal tiempo', 'suspende', 'cancela', 'si llueve', 'tormenta', 'llover'], response: '⛵ <b>¿Se suspende por lluvia?</b><br>NO. El paseo NO se suspende por lluvia. Nuestros barcos cuentan con cubierta hermética y seguimos navegando con total seguridad.' },
-{ id:'itinerario', keywords: ['itinerario', 'ruta', 'recorrido', 'paradas', 'que incluye', 'paseo', 'duracion', 'tiempo', 'horario', 'horarios', 'sale', 'hora'], response: '🗺️ <b>Itinerario (1h30):</b><br>1. Embarque en Porto dos Piratas.<br>2. Navegación por Costa Esmeralda.<br>3. Parada de 30 min en Caixa d\'Aço (tobogán y baño).<br>4. Fiesta a bordo con buffet de frutas y animación pirata.<br><br>🕐 <b>Horarios:</b> 9:30, 11:10 y 13:00 Hs.' },
-{ id:'comida', keywords: ['comida', 'comer', 'buffet', 'fruta', 'almuerzo', 'restaurante', 'snack', 'mate', 'alimentos', 'hambre', 'beber', 'bebida', 'conservadora'], response: '🍉 <b>Comida y Bebida:</b><br>Incluimos un delicioso buffet de frutas tropicales a bordo. En el predio hay restaurante (hamburguesas, sándwiches) y bar. ¡Puedes traer tu propia conservadora y mate!' },
-{ id:'isla', keywords: ['isla', 'desembarco', 'porto belo isla', 'ilha'], response: '🏝️ <b>Isla de Porto Belo:</b><br>No, el recorrido no contempla desembarcar en la isla. Nos enfocamos en la navegación por la Costa Esmeralda y la parada en Caixa d\'Aço.' },
-{ id:'playa', keywords: ['playa', 'arena', 'entretenimiento', 'musica', 'animacion', 'fiesta', 'show', 'pirata'], response: '🏖️ <b>Playa y Animación:</b><br>¡Sí! Contamos con animación en vivo, música ambiental y juegos tanto en la playa como a bordo. ¡La diversión no para!' },
-{ id:'accesibilidad', keywords: ['silla de ruedas', 'discapacidad', 'accesibilidad', 'movilidad reducida', 'rampa', 'discapacitado'], response: '♿ <b>Accesibilidad:</b><br>Sí, nuestras instalaciones y accesos están preparados para personas en silla de ruedas o con movilidad reducida. El personal está entrenado para asistir.' },
-{ id:'seguridad', keywords: ['seguridad', 'guardavidas', 'chaleco', 'seguro', 'marina', 'peligro', 'riesgo'], response: '🛟 <b>Seguridad:</b><br>Es nuestra prioridad. Contamos con guardavidas profesionales, chalecos salvavidas para todos, barcos certificados por la Marina Brasileña y cámaras de seguridad en el predio.' },
-{ id:'banos', keywords: ['banos', 'wc', 'sanitario', 'ducha', 'agua caliente', 'baño', 'teroi'], response: '🚻 <b>Instalaciones:</b><br>Sí, contamos con baños limpios (hombres/mujeres) en tierra y en los barcos. Duchas de agua dulce y dispensadores de agua caliente gratis para el mate.' },
-{ id:'ubicacion', keywords: ['distancia', 'balneario', 'camboriu', 'florianopolis', 'llegar', 'ubicacion', 'donde', 'direccion', 'como llegar'], response: '📍 <b>Ubicación:</b><br>Porto Belo está a unos 25-26 km de Balneário Camboriú (30-40 min en auto). El predio tiene fácil acceso y estacionamiento.' },
-{ id:'mascotas', keywords: ['mascotas', 'perros', 'gatos', 'animales', 'mascota', 'perro'], response: '🐕 <b>Mascotas:</b><br>Lamentablemente no se permiten mascotas en la playa ni barcos por higiene, EXCEPTO perros guía/asistencia que están plenamente permitidos.' },
-{ id:'pagos', keywords: ['pagos', 'pix', 'efectivo', 'tarjeta', 'dinero', 'pago', 'formas de pago'], response: '💳 <b>Formas de Pago:</b><br>Aceptamos PIX y dinero en efectivo.' },
-{ id:'sol', keywords: ['sol', 'sombra', 'sombrilla', 'reposera', 'protector solar', 'quemar'], response: '☀️ <b>Sol y Sombra:</b><br>Los barcos tienen techos/sombra. En la playa puedes traer tu sombrilla/reposera o usar las áreas techadas del restaurante. Hay tiendas cerca para comprar protector solar.' },
-{ id:'snorkel', keywords: ['snorkel', 'mascara', 'nadar', 'tobogan', 'agua', 'bucear'], response: '🤿 <b>Actividades Acuáticas:</b><br>¡Puedes traer tu máscara de snorkel! Tenemos tobogán seguro en el barco y 30 min de parada para nadar en aguas calmas.' },
-{ id:'capacidad', keywords: ['capacidad', 'barco', 'pasajeros', 'cuantos', 'embarcacion'], response: '🚢 <b>Flota:</b><br>Tenemos 3 barcos modernos con capacidades de 150, 170 y 240 pasajeros.' },
-{ id:'hola', keywords: ['hola', 'oi', 'hello', 'buenos dias', 'buenas tardes', 'buenas noches'], response: '👋 ¡Hola! Soy Angel AI, tu asistente virtual. Pregúntame lo que quieras sobre precios, itinerario, seguridad o cómo reservar.' }
+{ keywords: ['precio', 'costo', 'valor', 'cuanto', 'tarifa'], response: '💰 <b>Precios:</b><br>Adultos: R$ 100,00<br>Menores 6-11 años: 50% (R$ 50,00)<br>Bebés 0-5 años: GRATIS' },
+{ keywords: ['bebes', 'bebe', '0 a 5', 'menor 5', 'gratuito', 'gratis'], response: '👶 <b>Bebés 0-5 años:</b><br>Son completamente GRATIS. ⚠️ IMPORTANTE: La Marina Brasileña exige registrar sus nombres y edades exactos por seguridad.' },
+{ keywords: ['ninos', 'niños', '6 a 11', 'menor 6', 'mitad', 'descuento'], response: '🧒 <b>Niños 6-11 años:</b><br>Tienen 50% de descuento. Pagan R$ 50,00.' },
+{ keywords: ['reserva', 'reservar', 'agendar', 'book', 'whatsapp'], response: '📱 <b>Reservas:</b><br>Puedes reservar directamente por WhatsApp al +55 47 99967-048 o rellenando el formulario al final de esta página.' },
+{ keywords: ['lluvia', 'clima', 'mal tiempo', 'suspende', 'cancela', 'si llueve'], response: '⛵ <b>¿Se suspende por lluvia?</b><br>NO. El paseo NO se suspende por lluvia. Nuestros barcos cuentan con cubierta hermética y seguimos navegando con total seguridad.' },
+{ keywords: ['itinerario', 'ruta', 'recorrido', 'paradas', 'que incluye', 'paseo'], response: '🗺️ <b>Itinerario:</b><br>1. Embarque en Porto dos Piratas.<br>2. Navegación por Costa Esmeralda.<br>3. Parada de 30 min en Caixa d\'Aço (tobogán y baño).<br>4. Fiesta a bordo con buffet de frutas y animación pirata.' },
+{ keywords: ['hola', 'oi', 'hello', 'buenos dias', 'buenas tardes'], response: '👋 ¡Hola! Soy Angel AI, tu asistente virtual. Pregúntame lo que quieras sobre precios, itinerario, seguridad o cómo reservar.' }
 ],
-fallback: '🤔 No estoy seguro de entender tu pregunta. Puedes preguntarme sobre:',
-categories: [
-{ icon:'💰', label:'Precios y descuentos', query:'precios' },
-{ icon:'🗺️', label:'Itinerario y horarios', query:'itinerario' },
-{ icon:'🍉', label:'Comida y bebida', query:'comida' },
-{ icon:'🛟', label:'Seguridad', query:'seguridad' },
-{ icon:'📍', label:'Ubicación', query:'ubicacion' },
-{ icon:'📱', label:'Reservas', query:'reserva' }
-]
+fallback: '🤔 No estoy seguro de entender tu pregunta. Intenta preguntar sobre: precios, itinerario, bebés, lluvia o reservas. También puedes escribirnos por WhatsApp.'
 },
 pt: {
 intents: [
-{ id:'precio', keywords: ['preco', 'custo', 'valor', 'quanto', 'tarifa', 'pagar', 'cobra', 'vale'], response: '💰 <b>Preços:</b><br>Adultos: R$ 100,00<br>Menores 6-11 anos: 50% (R$ 50,00)<br>Bebês 0-5 anos: GRÁTIS' },
-{ id:'bebes', keywords: ['bebes', 'bebe', '0 a 5', 'menor 5', 'gratuito', 'gratis', 'infantes'], response: '👶 <b>Bebês 0-5 anos:</b><br>São completamente GRÁTIS. ⚠️ IMPORTANTE: A Marinha Brasileira exige registrar seus nomes e idades exatos por segurança.' },
-{ id:'ninos', keywords: ['criancas', 'crianças', '6 a 11', 'menor 6', 'metade', 'desconto', 'filhos'], response: '🧒 <b>Crianças 6-11 anos:</b><br>Têm 50% de desconto. Pagam R$ 50,00.' },
-{ id:'reserva', keywords: ['reserva', 'reservar', 'agendar', 'whatsapp', 'contato', 'angel', 'ligar', 'numero'], response: '📱 <b>Reservas:</b><br>Você pode reservar diretamente pelo WhatsApp <b>+55 47 99967-048</b> ou preenchendo o formulário no final desta página. Contato: Ángel.' },
-{ id:'lluvia', keywords: ['chuva', 'clima', 'mau tempo', 'suspende', 'cancela', 'se chover', 'tempestade'], response: '⛵ <b>Suspende por chuva?</b><br>NÃO. O passeio NÃO é suspenso por chuva. Nossos barcos possuem cobertura hermética e navegamos com total segurança.' },
-{ id:'itinerario', keywords: ['itinerario', 'rota', 'paradas', 'que inclui', 'passeio', 'duracao', 'tempo', 'horario', 'horarios', 'sai', 'hora'], response: '🗺️ <b>Itinerário (1h30):</b><br>1. Embarque em Porto dos Piratas.<br>2. Navegação pela Costa Esmeralda.<br>3. Parada de 30 min em Caixa d\'Aço (tobogã e banho).<br>4. Festa a bordo com buffet de frutas e animação pirata.<br><br>🕐 <b>Horários:</b> 9:30, 11:10 e 13:00 Hs.' },
-{ id:'comida', keywords: ['comida', 'comer', 'buffet', 'fruta', 'almoco', 'restaurante', 'lanche', 'mate', 'alimentos', 'fome', 'beber', 'bebida'], response: '🍉 <b>Comida e Bebida:</b><br>Incluímos um delicioso buffet de frutas tropicais a bordo. No local há restaurante (hambúrgueres, sanduíches) e bar. Você pode trazer sua própria cooler e mate!' },
-{ id:'isla', keywords: ['ilha', 'desembarque', 'porto belo ilha'], response: '🏝️ <b>Ilha de Porto Belo:</b><br>Não, o roteiro não prevê desembarque na ilha. Focamos na navegação pela Costa Esmeralda e na parada em Caixa d\'Aço.' },
-{ id:'playa', keywords: ['praia', 'areia', 'entretenimento', 'musica', 'animacao', 'festa', 'show', 'pirata'], response: '🏖️ <b>Praia e Animação:</b><br>Sim! Temos animação ao vivo, música ambiente e jogos tanto na praia quanto a bordo. A diversão não para!' },
-{ id:'accesibilidad', keywords: ['cadeira de rodas', 'deficiencia', 'acessibilidade', 'mobilidade reduzida', 'rampa'], response: '♿ <b>Acessibilidade:</b><br>Sim, nossas instalações e acessos estão preparados para pessoas em cadeira de rodas ou com mobilidade reduzida. A equipe está treinada para ajudar.' },
-{ id:'seguridad', keywords: ['seguranca', 'salva-vidas', 'colete', 'seguro', 'marinha', 'perigo'], response: '🛟 <b>Segurança:</b><br>É nossa prioridade. Temos salva-vidas profissionais, coletes para todos, barcos certificados pela Marinha Brasileira e câmeras de segurança no local.' },
-{ id:'banos', keywords: ['banheiros', 'wc', 'sanitario', 'chuveiro', 'agua quente', 'banheiro'], response: '🚻 <b>Instalações:</b><br>Sim, temos banheiros limpos (masculino/feminino) em terra e nos barcos. Chuveiros de água doce e dispensadores de água quente grátis para o mate.' },
-{ id:'ubicacion', keywords: ['distancia', 'balneario', 'camboriu', 'florianopolis', 'chegar', 'localizacao', 'onde', 'endereco'], response: '📍 <b>Localização:</b><br>Porto Belo fica a uns 25-26 km de Balneário Camboriú (30-40 min de carro). O local tem fácil acesso e estacionamento.' },
-{ id:'mascotas', keywords: ['mascotes', 'cachorros', 'gatos', 'animais', 'cachorro'], response: '🐕 <b>Mascotes:</b><br>Infelizmente não são permitidos animais na praia ou barcos por higiene, EXCETO cães-guia/assistência que são plenamente permitidos.' },
-{ id:'pagos', keywords: ['pagamentos', 'pix', 'dinheiro', 'cartao', 'pagar'], response: '💳 <b>Formas de Pagamento:</b><br>Aceitamos PIX e dinheiro em espécie.' },
-{ id:'sol', keywords: ['sol', 'sombra', 'guarda-sol', 'espreguicadeira', 'protetor solar'], response: '☀️ <b>Sol e Sombra:</b><br>Os barcos têm teto/sombra. Na praia você pode trazer seu guarda-sol/espreguicadeira ou usar as áreas cobertas do restaurante. Há lojas perto para comprar protetor solar.' },
-{ id:'snorkel', keywords: ['snorkel', 'mascara', 'nadar', 'toboga', 'agua', 'mergulhar'], response: '🤿 <b>Atividades Aquáticas:</b><br>Você pode trazer sua máscara de snorkel! Temos tobogã seguro no barco e 30 min de parada para nadar em águas calmas.' },
-{ id:'capacidad', keywords: ['capacidade', 'barco', 'passageiros', 'quantos'], response: '🚢 <b>Frota:</b><br>Temos 3 barcos modernos com capacidades de 150, 170 e 240 passageiros.' },
-{ id:'hola', keywords: ['ola', 'oi', 'bom dia', 'boa tarde', 'boa noite'], response: '👋 Olá! Sou o Angel AI, seu assistente virtual. Pergunte o que quiser sobre preços, itinerário, segurança ou como reservar.' }
+{ keywords: ['preco', 'custo', 'valor', 'quanto', 'tarifa'], response: '💰 <b>Preços:</b><br>Adultos: R$ 100,00<br>Menores 6-11 anos: 50% (R$ 50,00)<br>Bebês 0-5 anos: GRÁTIS' },
+{ keywords: ['bebes', 'bebe', '0 a 5', 'menor 5', 'gratuito', 'gratis'], response: '👶 <b>Bebês 0-5 anos:</b><br>São completamente GRÁTIS. ⚠️ IMPORTANTE: A Marinha Brasileira exige registrar seus nomes e idades exatos por segurança.' },
+{ keywords: ['criancas', 'crianças', '6 a 11', 'menor 6', 'metade', 'desconto'], response: '🧒 <b>Crianças 6-11 anos:</b><br>Têm 50% de desconto. Pagam R$ 50,00.' },
+{ keywords: ['reserva', 'reservar', 'agendar', 'whatsapp'], response: '📱 <b>Reservas:</b><br>Você pode reservar diretamente pelo WhatsApp +55 47 99967-048 ou preenchendo o formulário no final desta página.' },
+{ keywords: ['chuva', 'clima', 'mau tempo', 'suspende', 'cancela', 'se chover'], response: '⛵ <b>Suspende por chuva?</b><br>NÃO. O passeio NÃO é suspenso por chuva. Nossos barcos possuem cobertura hermética e navegamos com total segurança.' },
+{ keywords: ['itinerario', 'rota', 'paradas', 'que inclui', 'passeio'], response: '🗺️ <b>Itinerário:</b><br>1. Embarque em Porto dos Piratas.<br>2. Navegação pela Costa Esmeralda.<br>3. Parada de 30 min em Caixa d\'Aço (tobogã e banho).<br>4. Festa a bordo com buffet de frutas e animação pirata.' },
+{ keywords: ['ola', 'oi', 'bom dia', 'boa tarde'], response: '👋 Olá! Sou o Angel AI, seu assistente virtual. Pergunte o que quiser sobre preços, itinerário, segurança ou como reservar.' }
 ],
-fallback: '🤔 Não tenho certeza da sua pergunta. Você pode me perguntar sobre:',
-categories: [
-{ icon:'💰', label:'Preços', query:'precos' },
-{ icon:'🗺️', label:'Itinerário', query:'itinerario' },
-{ icon:'🍉', label:'Comida', query:'comida' },
-{ icon:'🛟', label:'Segurança', query:'seguranca' },
-{ icon:'📍', label:'Localização', query:'localizacao' },
-{ icon:'📱', label:'Reservas', query:'reserva' }
-]
+fallback: '🤔 Não tenho certeza da sua pergunta. Tente perguntar sobre: preços, itinerário, bebês, chuva ou reservas. Ou nos chame no WhatsApp.'
 },
 en: {
 intents: [
-{ id:'precio', keywords: ['price', 'cost', 'how much', 'rate', 'ticket', 'pay', 'worth'], response: '💰 <b>Prices:</b><br>Adults: R$ 100.00<br>Children 6-11 years: 50% off (R$ 50.00)<br>Babies 0-5 years: FREE' },
-{ id:'bebes', keywords: ['babies', 'baby', '0 to 5', 'under 5', 'free', 'infants'], response: '👶 <b>Babies 0-5 years:</b><br>Completely FREE. ⚠️ IMPORTANT: Brazilian Navy requires registering their exact names and ages for safety.' },
-{ id:'ninos', keywords: ['children', 'kids', '6 to 11', 'discount', 'half price'], response: '🧒 <b>Children 6-11 years:</b><br>Get 50% discount. Pay R$ 50.00.' },
-{ id:'reserva', keywords: ['book', 'reservation', 'reserve', 'whatsapp', 'contact', 'angel', 'call', 'number'], response: '📱 <b>Reservations:</b><br>You can book directly via WhatsApp at <b>+55 47 99967-048</b> or by filling out the form at the bottom of this page. Contact: Ángel.' },
-{ id:'lluvia', keywords: ['rain', 'weather', 'cancel', 'suspend', 'bad weather', 'storm'], response: '⛵ <b>Cancelled due to rain?</b><br>NO. The tour is NOT suspended by rain. Our boats have waterproof covers and we sail safely in all weather.' },
-{ id:'itinerario', keywords: ['itinerary', 'route', 'stops', 'includes', 'tour', 'duration', 'time', 'schedule', 'hour'], response: '🗺️ <b>Itinerary (1h30):</b><br>1. Boarding at Porto dos Piratas.<br>2. Navigation along the Emerald Coast.<br>3. 30-min stop at Caixa d\'Aço Bay (waterslide & swimming).<br>4. On-board party with fruit buffet & pirate show.<br><br>🕐 <b>Schedules:</b> 9:30, 11:10 and 13:00 Hs.' },
-{ id:'comida', keywords: ['food', 'eat', 'buffet', 'fruit', 'lunch', 'restaurant', 'snack', 'mate', 'drink', 'hungry'], response: '🍉 <b>Food & Drink:</b><br>We include a delicious tropical fruit buffet on board. There is a restaurant (burgers, sandwiches) and bar on site. You can bring your own cooler and mate!' },
-{ id:'isla', keywords: ['island', 'disembark', 'porto belo island'], response: '🏝️ <b>Porto Belo Island:</b><br>No, the tour does not include disembarking on the island. We focus on sailing the Emerald Coast and stopping at Caixa d\'Aço.' },
-{ id:'playa', keywords: ['beach', 'sand', 'entertainment', 'music', 'animation', 'party', 'show'], response: '🏖️ <b>Beach & Entertainment:</b><br>Yes! We have live animation, ambient music, and games both on the beach and on board. The fun never stops!' },
-{ id:'accesibilidad', keywords: ['wheelchair', 'disability', 'accessibility', 'mobility', 'ramp'], response: '♿ <b>Accessibility:</b><br>Yes, our facilities and access points are prepared for people in wheelchairs or with reduced mobility. Staff is trained to assist.' },
-{ id:'seguridad', keywords: ['safety', 'lifeguard', 'vest', 'secure', 'navy', 'danger'], response: '🛟 <b>Safety:</b><br>It is our priority. We have professional lifeguards, life jackets for everyone, boats certified by the Brazilian Navy, and security cameras on site.' },
-{ id:'banos', keywords: ['bathroom', 'toilet', 'wc', 'shower', 'hot water'], response: '🚻 <b>Facilities:</b><br>Yes, we have clean restrooms (men/women) on land and on boats. Freshwater showers and free hot water dispensers for mate.' },
-{ id:'ubicacion', keywords: ['distance', 'balneario', 'camboriu', 'florianopolis', 'arrive', 'location', 'where', 'address'], response: '📍 <b>Location:</b><br>Porto Belo is about 25-26 km from Balneário Camboriú (30-40 min by car). The site has easy access and parking.' },
-{ id:'mascotas', keywords: ['pets', 'dogs', 'cats', 'animals', 'dog'], response: '🐕 <b>Pets:</b><br>Unfortunately, pets are not allowed on the beach or boats for hygiene reasons, EXCEPT guide/assistance dogs which are fully permitted.' },
-{ id:'pagos', keywords: ['payment', 'pix', 'cash', 'card', 'money'], response: '💳 <b>Payment Methods:</b><br>We accept PIX and cash.' },
-{ id:'sol', keywords: ['sun', 'shade', 'umbrella', 'lounger', 'sunscreen'], response: '☀️ <b>Sun & Shade:</b><br>Boats have roofs/shade. On the beach, you can bring your umbrella/lounger or use the covered areas of the restaurant. There are shops nearby to buy sunscreen.' },
-{ id:'snorkel', keywords: ['snorkel', 'mask', 'swim', 'slide', 'water', 'dive'], response: '🤿 <b>Water Activities:</b><br>You can bring your snorkel mask! We have a safe waterslide on the boat and a 30-min stop to swim in calm waters.' },
-{ id:'capacidad', keywords: ['capacity', 'boat', 'passengers', 'how many'], response: '🚢 <b>Fleet:</b><br>We have 3 modern boats with capacities of 150, 170, and 240 passengers.' },
-{ id:'hola', keywords: ['hello', 'hi', 'good morning', 'good afternoon', 'good evening'], response: '👋 Hello! I\'m Angel AI, your virtual assistant. Ask me anything about prices, itinerary, safety, or how to book.' }
+{ keywords: ['price', 'cost', 'how much', 'rate', 'ticket'], response: '💰 <b>Prices:</b><br>Adults: R$ 100.00<br>Children 6-11 years: 50% off (R$ 50.00)<br>Babies 0-5 years: FREE' },
+{ keywords: ['babies', 'baby', '0 to 5', 'under 5', 'free'], response: '👶 <b>Babies 0-5 years:</b><br>Completely FREE. ⚠️ IMPORTANT: Brazilian Navy requires registering their exact names and ages for safety.' },
+{ keywords: ['children', 'kids', '6 to 11', 'discount', 'half price'], response: '🧒 <b>Children 6-11 years:</b><br>Get 50% discount. Pay R$ 50.00.' },
+{ keywords: ['book', 'reservation', 'reserve', 'whatsapp'], response: '📱 <b>Reservations:</b><br>You can book directly via WhatsApp at +55 47 99967-048 or by filling out the form at the bottom of this page.' },
+{ keywords: ['rain', 'weather', 'cancel', 'suspend', 'bad weather'], response: '⛵ <b>Cancelled due to rain?</b><br>NO. The tour is NOT suspended by rain. Our boats have waterproof covers and we sail safely in all weather.' },
+{ keywords: ['itinerary', 'route', 'stops', 'includes', 'tour'], response: '🗺️ <b>Itinerary:</b><br>1. Boarding at Porto dos Piratas.<br>2. Navigation along the Emerald Coast.<br>3. 30-min stop at Caixa d\'Aço Bay (waterslide & swimming).<br>4. On-board party with fruit buffet & pirate show.' },
+{ keywords: ['hello', 'hi', 'good morning', 'good afternoon'], response: '👋 Hello! I\'m Angel AI, your virtual assistant. Ask me anything about prices, itinerary, safety, or how to book.' }
 ],
-fallback: '🤔 I\'m not sure I understand. You can ask me about:',
-categories: [
-{ icon:'💰', label:'Prices', query:'prices' },
-{ icon:'🗺️', label:'Itinerary', query:'itinerary' },
-{ icon:'🍉', label:'Food', query:'food' },
-{ icon:'🛟', label:'Safety', query:'safety' },
-{ icon:'📍', label:'Location', query:'location' },
-{ icon:'📱', label:'Reservations', query:'reservation' }
-]
+fallback: '🤔 I\'m not sure I understand. Try asking about: prices, itinerary, babies, rain, or reservations. Or contact us on WhatsApp.'
 }
 };
 
-const zeroShotLabels = {
-es: ['precios y costos', 'bebés y niños pequeños', 'niños y descuentos', 'reservas y contacto', 'clima y lluvia', 'itinerario y horarios', 'comida y bebidas', 'playa y entretenimiento', 'accesibilidad y discapacidad', 'seguridad y salvavidas', 'baños e instalaciones', 'ubicación y distancia', 'mascotas y animales', 'formas de pago', 'sol y sombra', 'actividades acuáticas', 'capacidad de barcos', 'saludo'],
-pt: ['preços e custos', 'bebês e crianças pequenas', 'crianças e descontos', 'reservas e contato', 'clima e chuva', 'itinerário e horários', 'comida e bebidas', 'praia e entretenimento', 'acessibilidade e deficiência', 'segurança e salva-vidas', 'banheiros e instalações', 'localização e distância', 'mascotes e animais', 'formas de pagamento', 'sol e sombra', 'atividades aquáticas', 'capacidade de barcos', 'saudação'],
-en: ['prices and costs', 'babies and infants', 'children and discounts', 'reservations and contact', 'weather and rain', 'itinerary and schedule', 'food and drinks', 'beach and entertainment', 'accessibility and disability', 'safety and lifeguards', 'bathrooms and facilities', 'location and distance', 'pets and animals', 'payment methods', 'sun and shade', 'water activities', 'boat capacity', 'greeting']
-};
-
-const labelToIntentId = {
-es: { 'precios y costos':'precio', 'bebés y niños pequeños':'bebes', 'niños y descuentos':'ninos', 'reservas y contacto':'reserva', 'clima y lluvia':'lluvia', 'itinerario y horarios':'itinerario', 'comida y bebidas':'comida', 'playa y entretenimiento':'playa', 'accesibilidad y discapacidad':'accesibilidad', 'seguridad y salvavidas':'seguridad', 'baños e instalaciones':'banos', 'ubicación y distancia':'ubicacion', 'mascotas y animales':'mascotas', 'formas de pago':'pagos', 'sol y sombra':'sol', 'actividades acuáticas':'snorkel', 'capacidad de barcos':'capacidad', 'saludo':'hola' },
-pt: { 'preços e custos':'precio', 'bebês e crianças pequenas':'bebes', 'crianças e descontos':'ninos', 'reservas e contato':'reserva', 'clima e chuva':'lluvia', 'itinerário e horários':'itinerario', 'comida e bebidas':'comida', 'praia e entretenimiento':'playa', 'acessibilidade e deficiência':'accesibilidad', 'segurança e salva-vidas':'seguridad', 'banheiros e instalações':'banos', 'localização e distância':'ubicacion', 'mascotes e animais':'mascotas', 'formas de pagamento':'pagos', 'sol e sombra':'sol', 'atividades aquáticas':'snorkel', 'capacidade de barcos':'capacidad', 'saudação':'hola' },
-en: { 'prices and costs':'precio', 'babies and infants':'bebes', 'children and discounts':'ninos', 'reservations and contact':'reserva', 'weather and rain':'lluvia', 'itinerary and schedule':'itinerario', 'food and drinks':'comida', 'beach and entertainment':'playa', 'accessibility and disability':'accesibilidad', 'safety and lifeguards':'seguridad', 'bathrooms and facilities':'banos', 'location and distance':'ubicacion', 'pets and animals':'mascotas', 'payment methods':'pagos', 'sun and shade':'sol', 'water activities':'snorkel', 'boat capacity':'capacidad', 'greeting':'hola' }
-};
-
-const quickRepliesConfig = {
-es: [{ icon:'💰', text:'¿Cuánto cuesta?' }, { icon:'🗺️', text:'Itinerario' }, { icon:'👶', text:'Bebés gratis' }, { icon:'⛵', text:'¿Y si llueve?' }, { icon:'🍉', text:'Comida' }, { icon:'📱', text:'Reservar' }],
-pt: [{ icon:'💰', text:'Quanto custa?' }, { icon:'🗺️', text:'Itinerário' }, { icon:'👶', text:'Bebês grátis' }, { icon:'⛵', text:'E se chover?' }, { icon:'🍉', text:'Comida' }, { icon:'📱', text:'Reservar' }],
-en: [{ icon:'💰', text:'How much?' }, { icon:'🗺️', text:'Itinerary' }, { icon:'👶', text:'Free babies' }, { icon:'⛵', text:'What if rain?' }, { icon:'🍉', text:'Food' }, { icon:'📱', text:'Book now' }]
-};
-
+// ========== FUNCIONES DEL CHATBOT LOCAL ==========
 let chatHistory = [];
 let chatbotOpen = false;
-let conversationContext = { lastIntent: null, lastQuery: null };
-let transformersClassifier = null;
-let transformersLoading = false;
-let transformersLoaded = false;
-
-async function loadTransformersClassifier() {
-    if (transformersLoaded && transformersClassifier) return transformersClassifier;
-    if (transformersLoading) return new Promise((resolve) => { const check = setInterval(() => { if (transformersLoaded) { clearInterval(check); resolve(transformersClassifier); } }, 100); });
-    transformersLoading = true;
-    try {
-        if (!window.TransformersPipeline) throw new Error('Transformers.js no disponible');
-        transformersClassifier = await window.TransformersPipeline('zero-shot-classification', 'Xenova/distilbert-base-uncased-mnli', { progress_callback: (p) => { if (p.status === 'downloading') console.log(`📥 Descargando modelo IA: ${Math.round(p.progress || 0)}%`); } });
-        transformersLoaded = true; transformersLoading = false;
-        console.log('✅ Transformers.js cargado correctamente');
-        return transformersClassifier;
-    } catch (error) {
-        console.error('❌ Error cargando Transformers.js:', error);
-        transformersLoading = false;
-        return null;
-    }
-}
-
-async function classifyWithTransformers(text) {
-    if (!transformersClassifier) { const c = await loadTransformersClassifier(); if (!c) return null; }
-    try {
-        const labels = zeroShotLabels[currentLang] || zeroShotLabels['es'];
-        const result = await transformersClassifier(text, labels, { hypothesisTemplate: "Este texto es sobre {}" });
-        if (result && result.labels && result.labels.length > 0) return { label: result.labels[0], score: result.scores[0] };
-        return null;
-    } catch (error) { console.error('❌ Error clasificando:', error); return null; }
-}
-
-function levenshteinDistance(a, b) {
-    if (a.length === 0) return b.length; if (b.length === 0) return a.length;
-    const matrix = []; for (let i = 0; i <= b.length; i++) matrix[i] = [i];
-    for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
-    for (let i = 1; i <= b.length; i++) { for (let j = 1; j <= a.length; j++) {
-        if (b.charAt(i - 1) === a.charAt(j - 1)) matrix[i][j] = matrix[i - 1][j - 1];
-        else matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j] + 1);
-    }} return matrix[b.length][a.length];
-}
-
-function normalizeText(text) { return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[¿?¡!.,;:]/g, "").replace(/\s+/g, " ").trim(); }
-
-function calculateMatchScore(userText, keyword) {
-    const normalizedUser = normalizeText(userText); const normalizedKeyword = normalizeText(keyword); const userWords = normalizedUser.split(' '); let score = 0;
-    if (normalizedUser === normalizedKeyword) return 1000;
-    if (userWords.includes(normalizedKeyword)) score += normalizedKeyword.length * 10;
-    if (normalizedUser.includes(normalizedKeyword)) score += normalizedKeyword.length * 5;
-    for (const userWord of userWords) {
-        if (userWord.length >= 3 && normalizedKeyword.length >= 3) {
-            const distance = levenshteinDistance(userWord, normalizedKeyword);
-            const similarity = 1 - (distance / Math.max(userWord.length, normalizedKeyword.length));
-            if (similarity > 0.75) score += normalizedKeyword.length * 3 * similarity;
-        }
-    }
-    for (const kw of normalizedKeyword.split(' ')) { if (userWords.includes(kw) && kw.length > 2) score += kw.length * 2; }
-    return score;
-}
-
-async function getAIResponseHybrid(userText) {
-    const kb = aiKnowledgeBase[currentLang] || aiKnowledgeBase['es'];
-    const matches = [];
-    for (const intent of kb.intents) {
-        let totalScore = 0;
-        for (const keyword of intent.keywords) totalScore += calculateMatchScore(userText, keyword);
-        if (totalScore > 0) matches.push({ intent, score: totalScore });
-    }
-    matches.sort((a, b) => b.score - a.score);
-    if (matches.length > 0 && matches[0].score > 15) {
-        console.log('✅ Match Keywords:', matches[0].intent.id, 'score:', matches[0].score);
-        return { text: matches[0].intent.response, isFallback: false, intentId: matches[0].intent.id, method: 'keywords' };
-    }
-    console.log('🧠 Usando Transformers.js...');
-    showAILoadingIndicator();
-    try {
-        const classification = await classifyWithTransformers(userText);
-        removeAILoadingIndicator();
-        if (classification && classification.score > 0.4) {
-            const intentId = labelToIntentId[currentLang]?.[classification.label] || labelToIntentId['es']?.[classification.label];
-            if (intentId) {
-                const intent = kb.intents.find(i => i.id === intentId);
-                if (intent) {
-                    console.log('✅ Match Transformers:', intentId, 'score:', classification.score.toFixed(3));
-                    return { text: intent.response, isFallback: false, intentId: intentId, method: 'transformers', confidence: classification.score };
-                }
-            }
-        }
-    } catch (error) { removeAILoadingIndicator(); console.error('❌ Error Transformers:', error); }
-    return { text: kb.fallback, isFallback: true, intentId: null, method: 'fallback' };
-}
-
-function showAILoadingIndicator() {
-    const container = document.getElementById('aiChatMessages'); if (!container) return;
-    const loading = document.createElement('div'); loading.className = 'ai-msg loading-ai'; loading.id = 'aiLoadingIndicator';
-    loading.innerHTML = '<i class="fas fa-brain"></i> <span>🧠 Analizando con IA...</span>';
-    container.appendChild(loading); container.scrollTop = container.scrollHeight;
-}
-function removeAILoadingIndicator() { const loading = document.getElementById('aiLoadingIndicator'); if (loading) loading.remove(); }
 
 function initChatbot() {
-    const toggle = document.getElementById('aiChatbotToggle'); const chatWindow = document.getElementById('aiChatbotWindow');
-    const close = document.getElementById('aiChatbotClose'); const input = document.getElementById('aiChatInput'); const send = document.getElementById('aiChatSend');
+    const toggle = document.getElementById('aiChatbotToggle');
+    const chatWindow = document.getElementById('aiChatbotWindow');
+    const close = document.getElementById('aiChatbotClose');
+    const input = document.getElementById('aiChatInput');
+    const send = document.getElementById('aiChatSend');
+    
     if (!toggle || !chatWindow) return;
+    
     toggle.addEventListener('click', () => {
-        chatbotOpen = !chatbotOpen; chatWindow.classList.toggle('active', chatbotOpen);
+        chatbotOpen = !chatbotOpen;
+        chatWindow.classList.toggle('active', chatbotOpen);
         if (chatbotOpen && chatHistory.length === 0) {
-            const t = translations[currentLang]; addBotMessage(t.ai_greeting || 'Olá! Sou o Angel AI.'); showQuickReplies();
+            const t = translations[currentLang];
+            addBotMessage(t.ai_greeting || 'Olá! Sou o Angel AI. Como posso ajudar?');
         }
     });
     if (close) close.addEventListener('click', () => { chatbotOpen = false; chatWindow.classList.remove('active'); });
@@ -874,112 +687,198 @@ function initChatbot() {
     if (input) input.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
 }
 
-function showQuickReplies() {
-    const container = document.getElementById('aiQuickReplies'); if (!container) return;
-    const replies = quickRepliesConfig[currentLang] || quickRepliesConfig['es']; container.innerHTML = ''; container.classList.remove('hidden');
-    replies.forEach(reply => {
-        const btn = document.createElement('button'); btn.className = 'quick-reply-btn'; btn.innerHTML = `${reply.icon} ${reply.text}`;
-        btn.onclick = () => { const input = document.getElementById('aiChatInput'); if (input) { input.value = reply.text; sendMessage(); } };
-        container.appendChild(btn);
-    });
-}
-function hideQuickReplies() { const container = document.getElementById('aiQuickReplies'); if (container) container.classList.add('hidden'); }
-
-async function sendMessage() {
-    const input = document.getElementById('aiChatInput'); const text = input?.value.trim(); if (!text) return;
-    addUserMessage(text); input.value = ''; hideQuickReplies(); showTyping();
-    const startTime = performance.now();
-    const response = await getAIResponseHybrid(text);
-    const endTime = performance.now(); const responseTime = Math.round(endTime - startTime);
-    removeTyping();
-    let methodBadge = '';
-    if (response.method === 'keywords') methodBadge = `<div style="font-size:0.65rem;color:#94A3B8;margin-top:4px;">⚡ Keywords (${responseTime}ms)</div>`;
-    else if (response.method === 'transformers') methodBadge = `<div style="font-size:0.65rem;color:#10B981;margin-top:4px;">🧠 IA Semántica (${responseTime}ms, ${Math.round((response.confidence || 0) * 100)}% confianza)</div>`;
-    addBotMessage(response.text + methodBadge);
-    if (response.isFallback) showFallbackCategories(); else setTimeout(() => showQuickReplies(), 500);
-    conversationContext.lastQuery = text; if (response.intentId) conversationContext.lastIntent = response.intentId;
+function sendMessage() {
+    const input = document.getElementById('aiChatInput');
+    const text = input?.value.trim();
+    if (!text) return;
+    
+    addUserMessage(text);
+    input.value = '';
+    showTyping();
+    
+    setTimeout(() => {
+        const response = getAIResponse(text);
+        removeTyping();
+        addBotMessage(response);
+    }, 600 + Math.random() * 400);
 }
 
-function showFallbackCategories() {
-    const kb = aiKnowledgeBase[currentLang] || aiKnowledgeBase['es']; const container = document.getElementById('aiChatMessages');
-    if (!container || !kb.categories) return;
-    const wrapper = document.createElement('div'); wrapper.className = 'ai-msg bot'; wrapper.style.alignSelf = 'flex-start';
-    const categoriesDiv = document.createElement('div'); categoriesDiv.className = 'fallback-categories';
-    kb.categories.forEach(cat => {
-        const chip = document.createElement('button'); chip.className = 'category-chip'; chip.innerHTML = `${cat.icon} ${cat.label}`;
-        chip.onclick = () => { const input = document.getElementById('aiChatInput'); if (input) { input.value = cat.query; sendMessage(); } };
-        categoriesDiv.appendChild(chip);
-    });
-    wrapper.appendChild(categoriesDiv); container.appendChild(wrapper); container.scrollTop = container.scrollHeight;
+function getAIResponse(userText) {
+    const normalizedText = userText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const kb = aiKnowledgeBase[currentLang] || aiKnowledgeBase['es'];
+    let bestMatch = null;
+    let bestScore = 0;
+
+    for (const intent of kb.intents) {
+        let score = 0;
+        for (const keyword of intent.keywords) {
+            const normalizedKeyword = keyword.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            if (normalizedText.includes(normalizedKeyword)) {
+                score += normalizedKeyword.length * 2;
+            }
+        }
+        if (score > bestScore) {
+            bestScore = score;
+            bestMatch = intent;
+        }
+    }
+    
+    return bestMatch ? bestMatch.response : kb.fallback;
 }
 
 function addUserMessage(text) {
-    const container = document.getElementById('aiChatMessages'); if (!container) return;
-    const msg = document.createElement('div'); msg.className = 'ai-msg user'; msg.textContent = text;
-    container.appendChild(msg); container.scrollTop = container.scrollHeight; chatHistory.push({ role: 'user', text });
+    const container = document.getElementById('aiChatMessages');
+    if (!container) return;
+    const msg = document.createElement('div');
+    msg.className = 'ai-msg user';
+    msg.textContent = text;
+    container.appendChild(msg);
+    container.scrollTop = container.scrollHeight;
+    chatHistory.push({ role: 'user', text });
 }
-function addBotMessage(text) {
-    const container = document.getElementById('aiChatMessages'); if (!container) return;
-    const msg = document.createElement('div'); msg.className = 'ai-msg bot'; msg.innerHTML = text;
-    container.appendChild(msg); container.scrollTop = container.scrollHeight; chatHistory.push({ role: 'bot', text });
-}
-function showTyping() {
-    const container = document.getElementById('aiChatMessages'); if (!container) return;
-    const typing = document.createElement('div'); typing.className = 'ai-msg typing'; typing.id = 'typingIndicator';
-    typing.innerHTML = '<span></span><span></span><span></span>'; container.appendChild(typing); container.scrollTop = container.scrollHeight;
-}
-function removeTyping() { const typing = document.getElementById('typingIndicator'); if (typing) typing.remove(); }
 
+function addBotMessage(text) {
+    const container = document.getElementById('aiChatMessages');
+    if (!container) return;
+    const msg = document.createElement('div');
+    msg.className = 'ai-msg bot';
+    msg.innerHTML = text;
+    container.appendChild(msg);
+    container.scrollTop = container.scrollHeight;
+    chatHistory.push({ role: 'bot', text });
+}
+
+function showTyping() {
+    const container = document.getElementById('aiChatMessages');
+    if (!container) return;
+    const typing = document.createElement('div');
+    typing.className = 'ai-msg typing';
+    typing.id = 'typingIndicator';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    container.appendChild(typing);
+    container.scrollTop = container.scrollHeight;
+}
+
+function removeTyping() {
+    const typing = document.getElementById('typingIndicator');
+    if (typing) typing.remove();
+}
+
+// ========== GALERÍA Y LIGHTBOX ==========
 const imagenesGrandes = [
-    "images/atb_01.webp", "images/atb_02.webp", "images/atb_03.webp", "images/atb_04.webp",
-    "images/atb_05.webp", "images/atb_06.webp", "images/atb_07.webp", "images/atb_08.webp",
-    "images/atb_09.webp", "images/atb_10.webp", "images/atb_11.webp", "images/atb_12.webp"
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_01.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_02.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_03.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_04.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_05.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_06.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_07.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_08.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_09.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_10.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_11.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/atb_12.webp"
 ];
 const imagenesChicas = imagenesGrandes;
-let indiceActual = 0; let touchStartX = 0; let touchEndX = 0;
+let indiceActual = 0;
+let touchStartX = 0;
+let touchEndX = 0;
 
 function initGallery() {
-    const gridGaleria = document.getElementById('gridGaleria'); if(!gridGaleria) return;
+    const gridGaleria = document.getElementById('gridGaleria');
+    if(!gridGaleria) return;
+    
     gridGaleria.innerHTML = '';
     imagenesChicas.forEach((urlMini, indice) => {
-        const item = document.createElement('div'); item.className = 'gallery-item'; item.onclick = () => abrirLightbox(indice);
-        const img = document.createElement('img'); img.src = urlMini; img.alt = `Foto ${indice + 1}`; img.loading = 'lazy';
-        item.appendChild(img); gridGaleria.appendChild(item);
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        item.onclick = () => abrirLightbox(indice);
+        const img = document.createElement('img');
+        img.src = urlMini;
+        img.alt = `Foto ${indice + 1}`;
+        img.loading = 'lazy';
+        item.appendChild(img);
+        gridGaleria.appendChild(item);
     });
 }
+
 window.abrirLightbox = function(indice) { 
-    indiceActual = indice; actualizarLightbox(); 
+    indiceActual = indice; 
+    actualizarLightbox(); 
     const lb = document.getElementById('lightboxModern'); 
-    if(lb) { lb.classList.add('active'); document.body.style.overflow = 'hidden'; } 
+    if(lb) { 
+        lb.classList.add('active'); 
+        document.body.style.overflow = 'hidden'; 
+    } 
 };
+
 function actualizarLightbox() { 
-    const img = document.getElementById('lightboxImg'); const counter = document.getElementById('fotoContador'); 
+    const img = document.getElementById('lightboxImg'); 
+    const counter = document.getElementById('fotoContador'); 
     if(img) img.src = imagenesGrandes[indiceActual]; 
     if(counter) counter.innerText = `${indiceActual + 1} / ${imagenesGrandes.length}`; 
 }
+
 function cambiarImagen(direccion) { 
     indiceActual += direccion; 
     if(indiceActual < 0) indiceActual = imagenesGrandes.length - 1; 
     else if(indiceActual >= imagenesGrandes.length) indiceActual = 0; 
     actualizarLightbox(); 
 }
+
 function cerrarLightbox() { 
     const lb = document.getElementById('lightboxModern'); 
-    if(lb) { lb.classList.remove('active'); document.body.style.overflow = ''; } 
+    if(lb) { 
+        lb.classList.remove('active'); 
+        document.body.style.overflow = ''; 
+    } 
 }
 
+// ========== UTILIDADES Y EVENTOS ==========
 function changeLanguage(lang) {
     currentLang = lang;
     if (currentLang === "es") codigoIdioma = "ESP";
     else if (currentLang === "pt") codigoIdioma = "POR";
     else if (currentLang === "en") codigoIdioma = "USA";
+    
     const t = translations[lang];
-    document.querySelectorAll('[data-key]').forEach(el => { const key = el.getAttribute('data-key'); if(t[key] !== undefined) el.textContent = t[key]; });
+    document.querySelectorAll('[data-key]').forEach(el => { 
+        const key = el.getAttribute('data-key'); 
+        if(t[key] !== undefined) el.textContent = t[key]; 
+    });
+    
     const els = { textFecha:t.fecha, textHorario:t.horario, textNombre:t.nombre, textEmpresa:t.empresa, textAdultos:t.adultos, textMenores:t.menores, textTotal:t.total, btnText:t.btn, horarioNote:t.horario_note, empresaNote:t.empresa_note, infoNoteText:t.info_text, discountBadge:t.discount_text, precioAdultos:t.precio_adultos, footerBoat:t.footer_boat, footerSecure:t.footer_secure, footerConfirm:t.footer_confirm, horarioTitulo1:t.horario1, horarioTitulo2:t.horario2, horarioTitulo3:t.horario3 };
-    for(const [id,val] of Object.entries(els)){ const el=document.getElementById(id); if(el) el.textContent=val; }
-    document.querySelectorAll('.lang-btn-header').forEach(btn => { btn.classList.remove('active'); if(btn.getAttribute('data-lang')===lang) btn.classList.add('active'); });
-    const chatInput = document.getElementById('aiChatInput'); if (chatInput) chatInput.placeholder = t.ai_chatbot_placeholder;
-    updateVoiceBtnTitle(); loadWeatherWidget(lang); localStorage.setItem('preferred_language', lang);
+    for(const [id,val] of Object.entries(els)){ 
+        const el=document.getElementById(id); 
+        if(el) el.textContent=val; 
+    }
+    
+    document.querySelectorAll('.lang-btn-header').forEach(btn => { 
+        btn.classList.remove('active'); 
+        if(btn.getAttribute('data-lang')===lang) btn.classList.add('active'); 
+    });
+    
+    const chatInput = document.getElementById('aiChatInput');
+    if (chatInput) chatInput.placeholder = t.ai_chatbot_placeholder;
+    updateVoiceBtnTitle();
+    loadWeatherWidget(lang);
+    
+    // ✅ ACTUALIZAR MENSAJE DE WHATSAPP FLOTANTE AL CAMBIAR IDIOMA
+    const waBtn = document.getElementById('whatsappFloat');
+    if (waBtn && t.wa_message) {
+        waBtn.href = `https://wa.me/5547999679084?text=${encodeURIComponent(t.wa_message)}`;
+    }
+    
+    localStorage.setItem('preferred_language', lang);
+}
+
+// ✅ FUNCIÓN PARA ACTUALIZAR EL ENLACE DE WHATSAPP SEGÚN IDIOMA
+function updateWhatsAppLink(event) {
+    const t = translations[currentLang];
+    const waBtn = document.getElementById('whatsappFloat');
+    if (waBtn && t.wa_message) {
+        waBtn.href = `https://wa.me/5547999679084?text=${encodeURIComponent(t.wa_message)}`;
+    }
 }
 
 function calcularValorTotal() {
@@ -992,83 +891,167 @@ function calcularValorTotal() {
 }
 
 function scrollToSectionWithOffset(id) {
-    const element = document.getElementById(id); if (!element) return;
-    const header = document.querySelector('.header'); const headerHeight = header ? header.offsetHeight : 80;
-    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-    window.scrollTo({ top: elementPosition - headerHeight, behavior: 'smooth' });
+    const element = document.getElementById(id);
+    if (element) {
+        const header = document.querySelector('.header');
+        const headerHeight = header ? header.offsetHeight : 80;
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({ top: elementPosition - headerHeight, behavior: 'smooth' });
+    }
 }
 
 async function obtenerPaisUsuario() {
-    try { const res = await fetch('https://ipapi.co/json/'); const data = await res.json(); if (data?.country_name) paisUsuario = data.country_name.toUpperCase(); else if (data?.country) paisUsuario = data.country; } 
-    catch (e) { paisUsuario = "DESCONOCIDO"; }
+    try {
+        const res = await fetch('https://ipapi.co/json/');
+        const data = await res.json();
+        if (data?.country_name) paisUsuario = data.country_name.toUpperCase();
+        else if (data?.country) paisUsuario = data.country;
+    } catch (e) { 
+        paisUsuario = "DESCONOCIDO"; 
+    }
 }
 
 function stopReading() { 
-    if(speechSynthesis){ speechSynthesis.cancel(); isSpeaking=false; const btn=document.getElementById('readAloudBtn'); if(btn){ btn.innerHTML='<i class="fas fa-volume-up"></i> Leer'; btn.classList.remove('stop'); } } 
+    if(speechSynthesis){ 
+        speechSynthesis.cancel(); 
+        isSpeaking=false; 
+        const btn=document.getElementById('readAloudBtn'); 
+        if(btn){ btn.innerHTML='<i class="fas fa-volume-up"></i> Leer'; btn.classList.remove('stop'); } 
+    } 
 }
+
 function readTextAloud(text,lang){ 
-    if(!speechSynthesis) return; stopReading(); 
-    const utterance=new SpeechSynthesisUtterance(text); utterance.lang=lang==='es'?'es-ES':(lang==='pt'?'pt-BR':'en-US'); utterance.rate=0.9; speechSynthesis.speak(utterance); 
+    if(!speechSynthesis) return; 
+    stopReading(); 
+    const utterance=new SpeechSynthesisUtterance(text); 
+    utterance.lang=lang==='es'?'es-ES':(lang==='pt'?'pt-BR':'en-US'); 
+    utterance.rate=0.9; 
+    speechSynthesis.speak(utterance); 
 }
-function stripHtml(html) { let tmp = document.createElement("DIV"); tmp.innerHTML = html; return tmp.textContent || tmp.innerText || ""; }
+
+function stripHtml(html) {
+    let tmp = document.createElement("DIV");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
+}
+
+// ✅ FUNCIÓN CORREGIDA (sin saltos de línea reales dentro de comillas)
 function htmlToWhatsAppFormat(html) {
-    let text = html; text = text.replace(/<h3[^>]*>(.*?)<\/h3>/gi, '\n🔹 *$1*\n'); text = text.replace(/<strong>(.*?)<\/strong>/gi, '*$1*');
-    text = text.replace(/<br\s*\/?>/gi, '\n'); text = text.replace(/<p[^>]*>(.*?)<\/p>/gi, '\n$1\n'); text = text.replace(/<[^>]+>/g, '');
-    const txt = document.createElement("textarea"); txt.innerHTML = text; text = txt.value; text = text.replace(/\n{3,}/g, '\n'); return text.trim();
+    let text = html;
+    text = text.replace(/<h3[^>]*>(.*?)<\/h3>/gi, '\n🔹 *$1*\n');
+    text = text.replace(/<strong>(.*?)<\/strong>/gi, '*$1*');
+    text = text.replace(/<br\s*\/?>/gi, '\n');
+    text = text.replace(/<p[^>]*>(.*?)<\/p>/gi, '\n$1\n');
+    text = text.replace(/<[^>]+>/g, '');
+    const txt = document.createElement("textarea");
+    txt.innerHTML = text;
+    text = txt.value;
+    text = text.replace(/\n{3,}/g, '\n');
+    return text.trim();
 }
+
 function openModal(stepData){
-    currentStepData = stepData; document.getElementById('modalTitle').textContent = stepData.title;
+    currentStepData = stepData;
+    document.getElementById('modalTitle').textContent = stepData.title;
     document.getElementById('modalBody').innerHTML = fullItinerary[currentLang] || fullItinerary['es'];
-    document.getElementById('infoModal').style.display = 'flex'; document.body.style.overflow = 'hidden'; stopReading();
-    if (stepData.step) setTimeout(() => { const targetElement = document.getElementById(`step-${stepData.step}`); if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
+    document.getElementById('infoModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    stopReading();
+    if (stepData.step) {
+        setTimeout(() => {
+            const targetElement = document.getElementById(`step-${stepData.step}`);
+            if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    }
 }
-function closeModalFunc(){ stopReading(); document.getElementById('infoModal').style.display='none'; document.body.style.overflow=''; currentStepData=null; }
+
+function closeModalFunc(){ 
+    stopReading(); 
+    document.getElementById('infoModal').style.display='none'; 
+    document.body.style.overflow=''; 
+    currentStepData=null; 
+}
 
 async function loadWeatherWidget(lang) { 
-    const container=document.getElementById('weatherWidgetPlaceholder'); if(!container) return; 
+    const container=document.getElementById('weatherWidgetPlaceholder'); 
+    if(!container) return; 
     const widgetLang={es:'es',pt:'pt',en:'en'}[lang]||'es'; 
     const titles={es:{label1:'PORTO BELO',label2:'Previsión 3 días'},pt:{label1:'PORTO BELO',label2:'Previsão 3 dias'},en:{label1:'PORTO BELO',label2:'3-Day Forecast'}}; 
     const title=titles[lang]||titles.es; 
-    const link=document.createElement('a'); link.className='weatherwidget-io'; link.href=`https://forecast7.com/${widgetLang}/n27d16n48d58/porto-belo/`; 
-    link.setAttribute('data-label_1',title.label1); link.setAttribute('data-label_2',title.label2); link.setAttribute('data-theme','original'); link.setAttribute('data-days','3'); 
-    link.style.cssText='pointer-events:none;cursor:default;width:100%;display:block'; link.textContent=`${title.label1} ${title.label2}`; 
-    container.innerHTML=''; container.appendChild(link); 
-    const oldScript=document.getElementById('weatherwidget-io-js'); if(oldScript) oldScript.remove(); 
-    const script=document.createElement('script'); script.id='weatherwidget-io-js'; script.src='https://weatherwidget.io/js/widget.min.js'; document.head.appendChild(script); 
+    const link=document.createElement('a'); 
+    link.className='weatherwidget-io'; 
+    link.href=`https://forecast7.com/${widgetLang}/n27d16n48d58/porto-belo/`; 
+    link.setAttribute('data-label_1',title.label1); 
+    link.setAttribute('data-label_2',title.label2); 
+    link.setAttribute('data-theme','original'); 
+    link.setAttribute('data-days','3'); 
+    link.style.cssText='pointer-events:none;cursor:default;width:100%;display:block'; 
+    link.textContent=`${title.label1} ${title.label2}`; 
+    container.innerHTML=''; 
+    container.appendChild(link); 
+    const oldScript=document.getElementById('weatherwidget-io-js'); 
+    if(oldScript) oldScript.remove(); 
+    const script=document.createElement('script'); 
+    script.id='weatherwidget-io-js'; 
+    script.src='https://weatherwidget.io/js/widget.min.js'; 
+    document.head.appendChild(script); 
 }
 
+// ========== INICIALIZACIÓN ==========
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Inicializar idioma
     const savedLang = localStorage.getItem('preferred_language');
     changeLanguage(savedLang && translations[savedLang] ? savedLang : 'pt');
     
-    document.querySelectorAll('.lang-btn-header').forEach(btn => {
-        btn.addEventListener('click', function(e) { e.preventDefault(); const lang = this.getAttribute('data-lang'); if (lang && translations[lang]) changeLanguage(lang); });
-    });
+    // 2. Inicializar componentes
+    calcularValorTotal();
+    setTimeout(() => loadWeatherWidget(currentLang), 100);
+    initChatbot();
+    initVoiceRecognition();
+    initGallery();
     
-    calcularValorTotal(); setTimeout(() => loadWeatherWidget(currentLang), 100);
-    initChatbot(); initVoiceRecognition(); initGallery();
-    
+    // 3. Configurar eventos de Galería/Lightbox
     const lightboxModern = document.getElementById('lightboxModern');
     if(lightboxModern) {
         lightboxModern.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
-        lightboxModern.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; if(touchStartX - touchEndX > 60) cambiarImagen(1); if(touchEndX - touchStartX > 60) cambiarImagen(-1); });
+        lightboxModern.addEventListener('touchend', e => { 
+            touchEndX = e.changedTouches[0].screenX; 
+            if(touchStartX - touchEndX > 60) cambiarImagen(1); 
+            if(touchEndX - touchStartX > 60) cambiarImagen(-1); 
+        });
         lightboxModern.addEventListener('click', e => { if(e.target === lightboxModern) cerrarLightbox(); });
     }
     document.getElementById('closeLightboxBtn')?.addEventListener('click', cerrarLightbox);
-    document.addEventListener('keydown', e => { if(document.getElementById('lightboxModern')?.classList.contains('active')) { if(e.key === 'Escape') cerrarLightbox(); if(e.key === 'ArrowRight') cambiarImagen(1); if(e.key === 'ArrowLeft') cambiarImagen(-1); } });
-    
-    document.querySelectorAll('.horario-card').forEach(card => {
-        card.addEventListener('click', function() { document.querySelectorAll('.horario-card').forEach(c => c.classList.remove('selected')); this.classList.add('selected'); document.getElementById('horario').value = this.getAttribute('data-horario'); });
+    document.addEventListener('keydown', e => { 
+        if(document.getElementById('lightboxModern')?.classList.contains('active')) { 
+            if(e.key === 'Escape') cerrarLightbox(); 
+            if(e.key === 'ArrowRight') cambiarImagen(1); 
+            if(e.key === 'ArrowLeft') cambiarImagen(-1); 
+        } 
     });
     
-    const fechaInp = document.getElementById('fecha'); if(fechaInp) fechaInp.setAttribute('min', new Date().toISOString().split('T')[0]);
+    // 4. Eventos del Formulario
+    document.querySelectorAll('.horario-card').forEach(card => {
+        card.addEventListener('click', function() {
+            document.querySelectorAll('.horario-card').forEach(c => c.classList.remove('selected'));
+            this.classList.add('selected');
+            document.getElementById('horario').value = this.getAttribute('data-horario');
+        });
+    });
+    
+    const fechaInp = document.getElementById('fecha');
+    if(fechaInp) fechaInp.setAttribute('min', new Date().toISOString().split('T')[0]);
     
     document.getElementById('dataForm')?.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const fecha = document.getElementById('fecha')?.value; const horario = document.getElementById('horario')?.value;
-        const nombre = document.getElementById('nombre')?.value.trim(); const empresa = document.getElementById('empresa')?.value.trim();
-        const adultos = document.getElementById('adultos')?.value; const menores = document.getElementById('menores')?.value;
+        const fecha = document.getElementById('fecha')?.value;
+        const horario = document.getElementById('horario')?.value;
+        const nombre = document.getElementById('nombre')?.value.trim();
+        const empresa = document.getElementById('empresa')?.value.trim();
+        const adultos = document.getElementById('adultos')?.value;
+        const menores = document.getElementById('menores')?.value;
         if(!fecha || !horario || !nombre) { alert('Complete todos los campos requeridos'); return; }
+        
         if (paisUsuario === "DESCONOCIDO") await obtenerPaisUsuario();
         const total = (parseInt(adultos) * 100) + (parseInt(menores) * 50);
         const ipOrigen = (paisUsuario === "DESCONOCIDO") ? "No registrado" : paisUsuario;
@@ -1076,83 +1059,95 @@ document.addEventListener('DOMContentLoaded', () => {
         window.open(`https://wa.me/5547999679084?text=${encodeURIComponent(msg)}`, '_blank');
     });
     
-    const adultosInput = document.getElementById('adultos'); const menoresInput = document.getElementById('menores');
+    const adultosInput = document.getElementById('adultos');
+    const menoresInput = document.getElementById('menores');
     if(adultosInput) adultosInput.addEventListener('input', calcularValorTotal);
     if(menoresInput) menoresInput.addEventListener('input', calcularValorTotal);
     
+    // 5. Eventos de Navegación y Menú
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href'); if (href !== '#' && href !== '') {
-                const targetId = href.substring(1); const targetElement = document.getElementById(targetId);
+            const href = this.getAttribute('href');
+            if (href !== '#' && href !== '') {
+                const targetId = href.substring(1);
+                const targetElement = document.getElementById(targetId);
                 if (targetElement) { e.preventDefault(); scrollToSectionWithOffset(targetId); }
             }
         });
     });
     
-    const menuToggle = document.getElementById('menuToggle'); const navLinks = document.getElementById('navLinks');
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
     if(menuToggle) menuToggle.addEventListener('click', () => navLinks?.classList.toggle('active'));
     document.querySelectorAll('.nav-link').forEach(link => link.addEventListener('click', e => {
-        e.preventDefault(); const href = link.getAttribute('href'); if(href && href !== '#') scrollToSectionWithOffset(href.substring(1));
+        e.preventDefault();
+        const href = link.getAttribute('href');
+        if(href && href !== '#') scrollToSectionWithOffset(href.substring(1));
         if(window.innerWidth <= 880) navLinks?.classList.remove('active');
     }));
-    document.addEventListener('click', e => { if(window.innerWidth <= 880 && navLinks && menuToggle && !navLinks.contains(e.target) && !menuToggle.contains(e.target)) navLinks.classList.remove('active'); });
+    document.addEventListener('click', e => { 
+        if(window.innerWidth <= 880 && navLinks && menuToggle && !navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+            navLinks.classList.remove('active'); 
+        }
+    });
     
+    // 6. Eventos de Modales
     document.getElementById('closeModalBtn')?.addEventListener('click', closeModalFunc);
     document.getElementById('closeModalFooterBtn')?.addEventListener('click', closeModalFunc);
     document.getElementById('infoModal')?.addEventListener('click', e => { if(e.target === document.getElementById('infoModal')) closeModalFunc(); });
     
     document.getElementById('shareWhatsappBtn')?.addEventListener('click', () => {
-        if(currentStepData){ const formattedText = htmlToWhatsAppFormat(currentStepData.longtext); window.open(`https://wa.me/?text=${encodeURIComponent(`🏴‍☠️ *ITINERARIO COMPLETO* ⚓\n${formattedText}`)}`,'_blank'); }
+        if(currentStepData){
+            const formattedText = htmlToWhatsAppFormat(currentStepData.longtext);
+            const message = `🏴‍☠️ *ITINERARIO COMPLETO* ⚓\n${formattedText}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(message)}`,'_blank');
+        }
     });
+    
     document.getElementById('readAloudBtn')?.addEventListener('click', () => {
-        if(currentStepData){ if(isSpeaking) stopReading(); else { const cleanText = stripHtml(currentStepData.longtext); readTextAloud(`${currentStepData.title}. ${cleanText}`, currentLang); } }
+        if(currentStepData){
+            if(isSpeaking) stopReading();
+            else {
+                const cleanText = stripHtml(currentStepData.longtext);
+                readTextAloud(`${currentStepData.title}. ${cleanText}`, currentLang);
+            }
+        }
     });
+    
     document.querySelectorAll('.timeline-step').forEach(step => {
         step.addEventListener('click', () => {
             const titles = { es: "Itinerario Completo de la Excursión", pt: "Roteiro Completo da Excursão", en: "Complete Tour Itinerary" };
-            openModal({ title: titles[currentLang] || titles['es'], desc: "Detalles de las 4 etapas del paseo", longtext: fullItinerary[currentLang] || fullItinerary['es'], step: step.getAttribute('data-step') });
+            openModal({
+                title: titles[currentLang] || titles['es'],
+                desc: "Detalles de las 4 etapas del paseo",
+                longtext: fullItinerary[currentLang] || fullItinerary['es'],
+                step: step.getAttribute('data-step')
+            });
         });
     });
     
-    const stickyBar = document.getElementById('stickyBookingBar'); const heroSec = document.getElementById('inicio'); const stickyBtn = document.getElementById('stickyBookBtn');
+    // 7. Barra Sticky
+    const stickyBar = document.getElementById('stickyBookingBar');
+    const heroSec = document.getElementById('inicio');
+    const stickyBtn = document.getElementById('stickyBookBtn');
     function checkStickyBar(){ 
         if(window.innerWidth <= 880 && heroSec){ 
             const heroBottom = heroSec.offsetTop + heroSec.offsetHeight; 
             window.scrollY > heroBottom - 100 ? stickyBar?.classList.add('show') : stickyBar?.classList.remove('show'); 
-        } else { stickyBar?.classList.remove('show'); } 
+        } else {
+            stickyBar?.classList.remove('show'); 
+        } 
     }
-    window.addEventListener('scroll', checkStickyBar); window.addEventListener('resize', checkStickyBar); checkStickyBar();
+    window.addEventListener('scroll', checkStickyBar); 
+    window.addEventListener('resize', checkStickyBar); 
+    checkStickyBar();
     if(stickyBtn) stickyBtn.addEventListener('click', () => scrollToSectionWithOffset('reserva'));
     document.querySelector('.garantia-link')?.addEventListener('click', e => { e.preventDefault(); scrollToSectionWithOffset('reserva'); });
     
+    // 8. Detectar país
     obtenerPaisUsuario().then(() => { console.log("País del usuario detectado:", paisUsuario); });
     
-    let deferredPrompt;
-    const installBtn = document.getElementById('installAppBtn');
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault(); deferredPrompt = e;
-        if (installBtn) installBtn.style.display = 'flex';
-    });
-    if (installBtn) {
-        installBtn.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') installBtn.style.display = 'none';
-                deferredPrompt = null;
-            }
-        });
-    }
-    
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js')
-                .then(registration => console.log('✅ Service Worker registrado:', registration.scope))
-                .catch(error => console.log('❌ Error registrando SW:', error));
-        });
-    }
-    
-    console.log('✅ Sistema Híbrido (Keywords + Transformers.js) + PWA inicializado correctamente');
+    console.log('✅ Angel AI, Galería e Idiomas inicializados correctamente');
 });
 </script>
 </body>
