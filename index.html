@@ -46,6 +46,29 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
+/* ===== PROTECCIÓN: DESHABILITAR SELECCIÓN DE TEXTO ===== */
+* {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+/* Excepción para inputs y textareas (para que el usuario pueda escribir) */
+input, textarea, [contenteditable="true"] {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+}
+
+/* Evita el arrastre de imágenes */
+img {
+    -webkit-user-drag: none !important;
+    user-drag: none !important;
+    pointer-events: none !important;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 90px; }
 body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #1A2C3E; overflow-x: hidden; }
@@ -273,6 +296,201 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
     border-radius: 24px !important;
     overflow: hidden !important;
 }
+
+/* ===== ESTILOS PARA LA SECCIÓN PARADOR ===== */
+.parador-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.parador-card {
+    background: white;
+    border-radius: 28px;
+    padding: 2rem 1.8rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 180, 216, 0.15);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.parador-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08);
+    border-color: var(--turquoise);
+}
+
+.parador-card .parador-logo {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1rem;
+    display: block;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--deep-blue), #005f8c);
+    padding: 8px;
+    box-shadow: 0 4px 12px rgba(10, 47, 108, 0.2);
+}
+
+.parador-card .parador-logo svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.parador-card h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--deep-blue);
+    margin-bottom: 0.75rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+.parador-card p {
+    color: #4A627A;
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
+/* ===== ESTILOS PARA EL SLIDESHOW ===== */
+.parador-imagen-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto 3rem;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    background: #1A2C3E;
+    aspect-ratio: 16 / 6;
+    position: relative;
+}
+
+.parador-imagen-container .slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.parador-imagen-container .slide.active {
+    opacity: 1;
+}
+
+.parador-imagen-container .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Indicadores de página (puntos) */
+.slide-indicators {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.slide-indicators .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.slide-indicators .dot.active {
+    background: white;
+    transform: scale(1.2);
+    border-color: white;
+}
+
+.slide-indicators .dot:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* Flechas de navegación */
+.slide-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+}
+
+.slide-arrow:hover {
+    background: rgba(0, 0, 0, 0.7);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.slide-arrow.prev {
+    left: 15px;
+}
+
+.slide-arrow.next {
+    right: 15px;
+}
+
+@media (max-width: 880px) {
+    .parador-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .parador-card {
+        padding: 1.5rem;
+    }
+    .parador-imagen-container {
+        aspect-ratio: 16 / 8;
+        margin-bottom: 2rem;
+    }
+    .slide-arrow {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+    }
+    .slide-arrow.prev {
+        left: 8px;
+    }
+    .slide-arrow.next {
+        right: 8px;
+    }
+}
+
+@media (max-width: 600px) {
+    .parador-imagen-container {
+        aspect-ratio: 16 / 10;
+        border-radius: 16px;
+    }
+    .slide-indicators .dot {
+        width: 8px;
+        height: 8px;
+    }
+    .slide-arrow {
+        width: 25px;
+        height: 25px;
+        font-size: 0.7rem;
+    }
+}
 </style>
 </head>
 <body>
@@ -292,8 +510,9 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 <ul class="nav-links" id="navLinks">
 <li><a href="#inicio" class="nav-link" data-key="nav_home">Início</a></li>
-<li><a href="#itinerario" class="nav-link" data-key="nav_tour">El Paseo</a></li>
-<li><a href="#galeria" class="nav-link" data-key="nav_gallery">Galería</a></li>
+<li><a href="#itinerario" class="nav-link" data-key="nav_tour">O Passeio</a></li>
+<li><a href="#galeria" class="nav-link" data-key="nav_gallery">Galeria</a></li>
+<li><a href="#parador" class="nav-link" data-key="nav_parador">Porto Belo Beach Day</a></li>
 <li><a href="#reserva" class="btn-reserva-nav nav-link" data-key="nav_book">Reservar</a></li>
 </ul>
 </div>
@@ -334,13 +553,13 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 
 <div class="section">
 <div class="container">
-<h2 class="section-title" data-key="why_title">¿Por qué navegar con Angel Tour?</h2>
-<p class="section-sub" data-key="why_sub">Experiencia completa, seguridad y diversão para todas las edades</p>
+<h2 class="section-title" data-key="why_title">¿Por qué navegar com Angel Tour?</h2>
+<p class="section-sub" data-key="why_sub">Experiencia completa, seguridad e diversão para todas as edades</p>
 <div class="cards-grid">
-<div class="card-icon"><i class="fas fa-life-ring"></i><h3 data-key="diff1_title">Seguridad total</h3><p data-key="diff1_desc">Chalecos + salvavidas y tripulación entrenada</p></div>
-<div class="card-icon"><i class="fas fa-water"></i><h3 data-key="diff2_title">Parada em Caixa D'Aço</h3><p data-key="diff2_desc">Aguas cristalinas para nadar con tranquilidad</p></div>
+<div class="card-icon"><i class="fas fa-life-ring"></i><h3 data-key="diff1_title">Segurança total</h3><p data-key="diff1_desc">Coletes + salva-vidas e tripulação treinada</p></div>
+<div class="card-icon"><i class="fas fa-water"></i><h3 data-key="diff2_title">Parada em Caixa D'Aço</h3><p data-key="diff2_desc">Águas cristalinas para nadar com tranquilidade</p></div>
 <div class="card-icon"><i class="fas fa-cocktail"></i><h3 data-key="diff3_title">Buffet de Frutas</h3><p data-key="diff3_desc">Buffet de Frutas frescas a bordo</p></div>
-<div class="card-icon"><i class="fas fa-smile-wink"></i><h3 data-key="diff4_title">Diversión asegurada</h3><p data-key="diff4_desc">Tobogán, música y animación para adultos y niños</p></div>
+<div class="card-icon"><i class="fas fa-smile-wink"></i><h3 data-key="diff4_title">Diversão garantida</h3><p data-key="diff4_desc">Tobogã, música e animação para adultos e crianças</p></div>
 </div>
 </div>
 </div>
@@ -356,15 +575,15 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 <div class="timeline-step" data-step="2" data-key-es="Navegación" data-key-pt="Navegação" data-key-en="Cruising" data-desc-es="1h30 por la Costa Esmeralda" data-desc-pt="1h30 pela Costa Esmeralda" data-desc-en="1h30 along the Emerald Coast" data-longtext-es="Navegamos por la deslumbrante Costa Esmeralda." data-longtext-pt="Navegamos pela deslumbrante Costa Esmeralda." data-longtext-en="We sail along the stunning Emerald Coast.">
 <div class="step-number">2</div>
-<h3 data-key="step2_title">Navegación</h3>
+<h3 data-key="step2_title">Navegação</h3>
 </div>
 <div class="timeline-step" data-step="3" data-key-es="Parada para Baño" data-key-pt="Parada para Banho" data-key-en="Swimming Stop" data-desc-es="Caixa D'Aço: natación" data-desc-pt="Caixa D'Aço: natação" data-desc-en="Caixa D'Aço: swimming" data-longtext-es="Llegamos a la deslumbrante Bahía de Caixa D'Aço." data-longtext-pt="Chegamos à deslumbrante Baía de Caixa D'Aço." data-longtext-en="We arrive at the stunning Caixa D'Aço Bay.">
 <div class="step-number">3</div>
-<h3 data-key="step3_title">Parada para Baño</h3>
+<h3 data-key="step3_title">Parada para Banho</h3>
 </div>
 <div class="timeline-step" data-step="4" data-key-es="Fiesta a bordo" data-key-pt="Festa a bordo" data-key-en="Party on board" data-desc-es="Frutas, batida tropical" data-desc-pt="Frutas, batida tropical" data-desc-en="Fruits, tropical cocktails" data-longtext-es="Buffet de frutas frescas." data-longtext-pt="Buffet de frutas frescas." data-longtext-en="Fresh fruit buffet.">
 <div class="step-number">4</div>
-<h3 data-key="step4_title">Fiesta a bordo</h3>
+<h3 data-key="step4_title">Festa a bordo</h3>
 </div>
 </div>
 </div>
@@ -392,7 +611,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 <div style="display: flex; justify-content: center; margin-bottom: 3rem;">
 <div class="video-container-9-16">
 <div class="video-aspect">
-<video controls playsinline poster="https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_01.webp">
+<video controls playsinline poster="https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/images/atb_01.webp">
 <source src="https://sebagsc2020.github.io/angeltourbrasil/images/atv_video_1.mp4" type="video/mp4">
 </video>
 </div>
@@ -417,11 +636,77 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 <h2 class="section-title" data-key="testimonials_title">Quem já navegou, recomenda</h2>
 <div class="cards-grid" style="gap: 28px;">
 <div class="testimonial-card"><div class="stars">★★★★★</div><p data-key="test1_text">"Passeio fantástico! A equipe é muito atenciosa."</p><strong>– Mariana S.</strong></div>
-<div class="testimonial-card"><div class="stars">★★★★★</div><p data-key="test2_text">"Seguridad y diversión. Buffet de frutas delicioso."</p><strong>– Rafael C.</strong></div>
+<div class="testimonial-card"><div class="stars">★★★★★</div><p data-key="test2_text">"Segurança e diversão. Buffet de frutas delicioso."</p><strong>– Rafael C.</strong></div>
 <div class="testimonial-card"><div class="stars">★★★★★</div><p data-key="test3_text">"Melhor passeio de barco de Porto Belo!"</p><strong>– Patrícia K.</strong></div>
 </div>
 </div>
 </div>
+
+<!-- ===== SECCIÓN: PORTO BELO BEACH DAY CON SLIDESHOW Y NUEVOS TEXTOS ===== -->
+<section id="parador" class="section">
+<div class="container">
+<h2 class="section-title" data-key="parador_title">🏝️ Porto Belo Beach Day</h2>
+<p class="section-sub" data-key="parador_sub">Desfrute de uma experiência completa em nosso exclusivo parador à beira-mar</p>
+
+<!-- ===== SLIDESHOW DE IMÁGENES (res_1.webp a res_12.webp) ===== -->
+<div class="parador-imagen-container" id="bannerSlideshow">
+    <!-- Las imágenes se cargarán dinámicamente con JavaScript -->
+    <!-- Flechas de navegación -->
+    <button class="slide-arrow prev" id="slidePrev" aria-label="Anterior">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="slide-arrow next" id="slideNext" aria-label="Siguiente">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+    <!-- Indicadores (puntos) -->
+    <div class="slide-indicators" id="slideIndicators"></div>
+</div>
+
+<div class="parador-grid">
+<!-- ===== COLUMNA 1: LOJAS DE SOUVENIRS ===== -->
+<div class="parador-card">
+<div class="parador-logo">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50" cy="50" r="45" fill="#0A2F6C"/>
+<circle cx="50" cy="50" r="38" fill="none" stroke="#00B4D8" stroke-width="2"/>
+<text x="50" y="58" font-family="Arial, sans-serif" font-size="38" font-weight="bold" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">⛵</text>
+<text x="50" y="78" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#00B4D8" text-anchor="middle">ANGEL</text>
+</svg>
+</div>
+<h3 data-key="parador_col1_title">Lojas de Souvenirs</h3>
+<p data-key="parador_col1_text">Leve a magia da viagem com você. Das lembranças temáticas que contam histórias à moda praia que combina com o verão, temos o souvenir perfeito para guardar (ou presentear) o clima inesquecível desses dias.</p>
+</div>
+
+<!-- ===== COLUMNA 2: INFRAESTRUTURA E CONFORTO ===== -->
+<div class="parador-card">
+<div class="parador-logo">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50" cy="50" r="45" fill="#0A2F6C"/>
+<circle cx="50" cy="50" r="38" fill="none" stroke="#00B4D8" stroke-width="2"/>
+<text x="50" y="58" font-family="Arial, sans-serif" font-size="38" font-weight="bold" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">⛵</text>
+<text x="50" y="78" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#00B4D8" text-anchor="middle">ANGEL</text>
+</svg>
+</div>
+<h3 data-key="parador_col2_title">Infraestrutura e Conforto</h3>
+<p data-key="parador_col2_text">Nosso parador conta com chuveiros de água doce e sanitários impecáveis. Desfrute de um espaço pensado para seu máximo conforto, com acesso direto à praia e áreas de descanso rodeadas pela natureza.</p>
+</div>
+
+<!-- ===== COLUMNA 3: GASTRONOMIA E BAR ===== -->
+<div class="parador-card">
+<div class="parador-logo">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50" cy="50" r="45" fill="#0A2F6C"/>
+<circle cx="50" cy="50" r="38" fill="none" stroke="#00B4D8" stroke-width="2"/>
+<text x="50" y="58" font-family="Arial, sans-serif" font-size="38" font-weight="bold" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">⛵</text>
+<text x="50" y="78" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#00B4D8" text-anchor="middle">ANGEL</text>
+</svg>
+</div>
+<h3 data-key="parador_col3_title">Gastronomia e Bar</h3>
+<p data-key="parador_col3_text">Delicie-se com nossa variada oferta gastronômica: Snacks, sanduíches, hambúrgueres com batatas fritas, variados pratos e bebidas refrescantes. Tudo preparado com ingredientes frescos e de qualidade.</p>
+</div>
+</div>
+</div>
+</section>
 
 <section id="reserva">
 <div class="container" style="max-width: 700px; margin: 0 auto; padding: 0 24px 80px 24px;">
@@ -440,8 +725,8 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 <div>
 <div class="form-label"><i class="far fa-clock"></i> <span id="textHorario">PREFERÊNCIA DE HORÁRIO</span></div>
 <div class="horarios-group">
-<div class="horario-card" data-horario="09:30"><div class="horario-titulo" id="horarioTitulo1">Mañana</div><div class="horario-hora">9:30 Hs</div></div>
-<div class="horario-card" data-horario="11:10"><div class="horario-titulo" id="horarioTitulo2">Media Mañana</div><div class="horario-hora">11:10 Hs</div></div>
+<div class="horario-card" data-horario="09:30"><div class="horario-titulo" id="horarioTitulo1">Manhã</div><div class="horario-hora">9:30 Hs</div></div>
+<div class="horario-card" data-horario="11:10"><div class="horario-titulo" id="horarioTitulo2">Meia Manhã</div><div class="horario-hora">11:10 Hs</div></div>
 <div class="horario-card" data-horario="13:00"><div class="horario-titulo" id="horarioTitulo3">Tarde</div><div class="horario-hora">13:00 Hs</div></div>
 </div>
 <input type="hidden" id="horario" name="horario" required>
@@ -472,7 +757,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 <div class="info-box">
-<p>💡 <span id="infoNoteText">Precio de venta al público.</span></p>
+<p>💡 <span id="infoNoteText">Preço de venda ao público.</span></p>
 </div>
 <div>
 <div class="form-label"><i class="fas fa-dollar-sign"></i> <span id="textTotal">VALOR TOTAL</span></div>
@@ -509,6 +794,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 <p><a href="#inicio" style="color:#ccc; text-decoration: none;" data-key="footer_home">Início</a></p>
 <p><a href="#itinerario" style="color:#ccc; text-decoration: none;" data-key="footer_route">Itinerário</a></p>
 <p><a href="#galeria" style="color:#ccc; text-decoration: none;" data-key="footer_gallery">Galeria</a></p>
+<p><a href="#parador" style="color:#ccc; text-decoration: none;" data-key="footer_parador">Porto Belo Beach Day</a></p>
 </div>
 <div class="footer-col social">
 <h4 data-key="footer_follow">Siga a aventura</h4>
@@ -554,10 +840,302 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 
 <script>
+// ============================================
+// 1. BLOQUEAR BOTÓN DERECHO DEL MOUSE
+// ============================================
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    return false;
+});
+
+// ============================================
+// 2. BLOQUEAR TECLAS DE ACCESO AL CÓDIGO FUENTE
+// ============================================
+document.addEventListener('keydown', function(e) {
+    if (
+        e.key === 'F12' ||
+        (e.ctrlKey && e.key === 'u') ||
+        (e.ctrlKey && e.shiftKey && e.key === 'i') ||
+        (e.ctrlKey && e.shiftKey && e.key === 'j') ||
+        (e.ctrlKey && e.shiftKey && e.key === 'c')
+    ) {
+        e.preventDefault();
+        return false;
+    }
+});
+
+// ============================================
+// 3. BLOQUEAR COPIAR (CTRL+C) Y PEGAR EN ÁREAS NO PERMITIDAS
+// ============================================
+document.addEventListener('copy', function(e) {
+    const target = e.target;
+    if (target.tagName !== 'INPUT' && target.tagName !== 'TEXTAREA' && !target.hasAttribute('contenteditable')) {
+        e.preventDefault();
+        return false;
+    }
+});
+
+// ============================================
+// 4. BLOQUEAR ARRASTRE DE IMÁGENES
+// ============================================
+document.addEventListener('dragstart', function(e) {
+    if (e.target.tagName === 'IMG') {
+        e.preventDefault();
+        return false;
+    }
+});
+
+console.log('🔒 Protecciones activadas: Botón derecho, código fuente y copia bloqueados.');
+</script>
+
+<script>
+// ============================================
+// RESTA DEL CÓDIGO JAVASCRIPT ORIGINAL
+// ============================================
 const translations = {
-es: { nav_home:"Inicio", nav_tour:"El Paseo", nav_gallery:"Galería", nav_book:"Reservar", hero_title:"El paseo más completo de la Costa Esmeralda", hero_sub:"Navegue por paisajes paradisíacos, nade en la Bahía de Caixa D'Aço, disfrute del tobogán, frutas tropicales y mucha animación a bordo.", btn_route:"Ver Itinerario", btn_guarantee:"Asegurar Plaza", why_title:"¿Por qué navegar con Angel Tour?", why_sub:"Experiencia completa, seguridad y diversión para todas las edades", diff1_title:"Seguridad total", diff1_desc:"Chalecos + salvavidas y tripulación entrenada", diff2_title:"Parada en Caixa D'Aço", diff2_desc:"Aguas cristalinas para nadar con tranquilidad", diff3_title:"Buffet de Frutas", diff3_desc:"Frutas frescas a bordo", diff4_title:"Diversión asegurada", diff4_desc:"Tobogán, música y animación para adultos y niños", itinerary_title:"Itinerario de la Experiencia", itinerary_sub:"Embarque en Porto dos Piratas y viva momentos inolvidables", step1_title:"Embarque", step2_title:"Navegación", step3_title:"Parada para Baño", step4_title:"Fiesta a bordo", gallery_title:"Vive esta aventura", gallery_sub:"Mira el paseo e inspírate para tu viaje", testimonials_title:"Quienes ya navegaron, recomiendan", test1_text:"¡Paseo fantástico! El equipo es muy atento.", test2_text:"Seguridad y diversión. Buffet de frutas delicioso.", test3_text:"¡El mejor paseo en barco de Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegación", footer_home:"Inicio", footer_route:"Itinerario", footer_gallery:"Galería", footer_follow:"Sigue la aventura", footer_copyright:"© 2026 Angel Tour Brasil – El paseo más completo de la Costa Esmeralda.", map_text:"Abrir en Google Maps", sticky_subtitle:"Reserva tu lugar", sticky_price:"⭐ ¡Precios especiales! ⭐", sticky_btn:"Reservar Ahora", fecha:"FECHA DEL PASEO", horario:"PREFERENCIA DE HORARIO", horario1:"Mañana", horario2:"Media Mañana", horario3:"Tarde", nombre:"NOMBRE", empresa:"EMPRESA", empresa_note:"*Opcional", adultos:"ADULTOS", menores:"MENORES de 6 a 11 años", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeto a disponibilidad", info_text:"💡 Precio de venta al público.", discount_text:"🎯 50% de descuento", precio_adultos:"💰 R$ 100,00 cada adulto", footer_boat:"Paseos en barco", footer_secure:"Confirmación segura", footer_confirm:"Envío por WhatsApp", ai_chatbot_placeholder:"Pregúntame algo...", ai_online:"Online agora", ai_greeting:"¡Hola! 👋 Soy <b>Angel AI</b>, tu asistente virtual. Tengo información sobre el paseo. ¿En qué te puedo ayudar?", voice_listening:"🎤 Escuchando...", voice_stop:"🛑 Detener", voice_error:"❌ Error de micrófono", voice_unsupported:"🎤 No soportado", voice_start:"🎤 Toca para hablar", wa_message:"¡Hola! 👋 Me interesa el paseo en barco de Angel Tour Brasil. ¿Podrían darme más información sobre disponibilidad y precios? ⛵" },
-pt: { nav_home:"Início", nav_tour:"O Passeio", nav_gallery:"Galeria", nav_book:"Reservar", hero_title:"O passeio mais completo da Costa Esmeralda", hero_sub:"Navegue por paisagens paradisíacas, nade na Bahía de Caixa D'Aço, aproveite tobogã, frutas tropicais e muita animação a bordo.", btn_route:"Ver Roteiro", btn_guarantee:"Garantir Vaga", why_title:"Por que velejar com a Angel Tour?", why_sub:"Experiência completa, segurança e diversão para todas as idades", diff1_title:"Segurança total", diff1_desc:"Coletes + guarda-vidas e tripulação treinada", diff2_title:"Parada em Caixa D'Aço", diff2_desc:"Águas cristalinas para nadar com tranquilidade", diff3_title:"Buffet de Frutas", diff3_desc:"Buffet de Frutas frescas a bordo", diff4_title:"Diversão garantida", diff4_desc:"Tobogã, música e animação para adultos e crianças", itinerary_title:"Roteiro da Experiência", itinerary_sub:"Embarque em Porto dos Piratas e viva momentos inesquecíveis", step1_title:"Embarque", step2_title:"Navegação", step3_title:"Parada para Banho", step4_title:"Festa a bordo", gallery_title:"Viva essa aventura", gallery_sub:"Assista ao passeio e inspire-se para sua viagem", testimonials_title:"Quem já navegou, recomenda", test1_text:"Passeio fantástico! A equipe é muito atenciosa.", test2_text:"Segurança e diversão. Buffet de frutas delicioso.", test3_text:"Melhor passeio de barco de Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navegação", footer_home:"Início", footer_route:"Itinerário", footer_gallery:"Galeria", footer_follow:"Siga a aventura", footer_copyright:"© 2026 Angel Tour Brasil – O passeio mais completo da Costa Esmeralda.", map_text:"Abrir no Google Maps", sticky_subtitle:"Reserve seu lugar", sticky_price:"⭐ Preços especiais! ⭐", sticky_btn:"Reservar Agora", fecha:"DATA DO PASSEIO", horario:"PREFERÊNCIA DE HORÁRIO", horario1:"Manhã", horario2:"Meia Manhã", horario3:"Tarde", nombre:"NOME", empresa:"EMPRESA", empresa_note:"*Opcional", adultos:"ADULTOS", menores:"MENORES de 6 a 11 anos", total:"VALOR TOTAL", btn:"ENVIAR RESERVA", horario_note:"⏱️ Sujeito à disponibilidade", info_text:"💡 Preço de venda ao público.", discount_text:"🎯 50% de desconto", precio_adultos:"💰 R$ 100,00 cada adulto", footer_boat:"Passeios de barco", footer_secure:"Confirmação segura", footer_confirm:"Envio por WhatsApp", ai_chatbot_placeholder:"Pergunte algo...", ai_online:"Online agora", ai_greeting:"Olá! 👋 Sou o <b>Angel AI</b>, seu assistente virtual. Tenho informações sobre o passeio. Como posso ajudar?", voice_listening:"🎤 Ouvindo...", voice_stop:"🛑 Parar", voice_error:"❌ Erro de microfone", voice_unsupported:"🎤 Não suportado", voice_start:"🎤 Toque para falar", wa_message:"Olá! 👋 Tenho interesse no passeio de barco da Angel Tour Brasil. Poderiam me dar mais informações sobre disponibilidade e preços? ⛵" },
-en: { nav_home:"Home", nav_tour:"The Tour", nav_gallery:"Gallery", nav_book:"Book Now", hero_title:"The most complete tour of the Emerald Coast", hero_sub:"Sail through stunning landscapes, swim in Caixa D'Aço Bay, enjoy a waterslide, tropical fruits, and lots of fun on board.", btn_route:"See Itinerary", btn_guarantee:"Book Now", why_title:"Why sail with Angel Tour?", why_sub:"Complete experience, safety and fun for all ages", diff1_title:"Total safety", diff1_desc:"Life jackets + lifeguards and trained crew", diff2_title:"Stop at Caixa D'Aço", diff2_desc:"Crystal clear waters for a safe swim", diff3_title:"Buffet & Drinks", diff3_desc:"Fresh fruits on board", diff4_title:"Guaranteed fun", diff4_desc:"Waterslide, music and entertainment for all ages", itinerary_title:"Experience Itinerary", itinerary_sub:"Board at Porto dos Piratas and live unforgettable moments", step1_title:"Boarding", step2_title:"Navigation", step3_title:"Swimming Stop", step4_title:"Party on board", gallery_title:"Live this adventure", gallery_sub:"Watch the tour and get inspired for your trip", testimonials_title:"Those who have sailed, recommend", test1_text:"Fantastic tour! The team is very attentive.", test2_text:"Safety and fun. Delicious fruit buffet.", test3_text:"Best boat tour in Porto Belo!", footer_address:"Porto dos Piratas, Porto Belo - SC", footer_nav:"Navigation", footer_home:"Home", footer_route:"Itinerary", footer_gallery:"Gallery", footer_follow:"Follow the adventure", footer_copyright:"© 2026 Angel Tour Brasil – The most complete tour of the Emerald Coast.", map_text:"Open in Google Maps", sticky_subtitle:"Book your spot", sticky_price:"⭐ Special prices! ⭐", sticky_btn:"Book Now", fecha:"TOUR DATE", horario:"TIME PREFERENCE", horario1:"Morning", horario2:"Late Morning", horario3:"Afternoon", nombre:"NAME", empresa:"COMPANY", empresa_note:"*Optional", adultos:"ADULTS", menores:"CHILDREN 6 to 11 years", total:"TOTAL VALUE", btn:"SEND RESERVATION", horario_note:"⏱️ Subject to availability", info_text:"💡 Public sale price.", discount_text:"🎯 50% discount", precio_adultos:"💰 R$ 100.00 per adult", footer_boat:"Boat tours", footer_secure:"Secure confirmation", footer_confirm:"WhatsApp delivery", ai_chatbot_placeholder:"Ask me something...", ai_online:"Online now", ai_greeting:"Hello! 👋 I'm <b>Angel AI</b>, your virtual assistant. I have information about the tour. How can I help you?", voice_listening:"🎤 Listening...", voice_stop:"🛑 Stop", voice_error:"❌ Microphone error", voice_unsupported:"🎤 Not supported", voice_start:"🎤 Tap to speak", wa_message:"Hello! 👋 I'm interested in the Angel Tour Brasil boat tour. Could you provide me with more information about availability and prices? ⛵" }
+es: { 
+    nav_home:"Início", 
+    nav_tour:"O Passeio", 
+    nav_gallery:"Galeria", 
+    nav_parador:"Porto Belo Beach Day", 
+    nav_book:"Reservar", 
+    hero_title:"El paseo más completo de la Costa Esmeralda", 
+    hero_sub:"Navegue por paisajes paradisíacos, nade en la Bahía de Caixa D'Aço, disfrute del tobogán, frutas tropicales y mucha animación a bordo.", 
+    btn_route:"Ver Itinerario", 
+    btn_guarantee:"Asegurar Plaza", 
+    why_title:"¿Por qué navegar con Angel Tour?", 
+    why_sub:"Experiencia completa, seguridad y diversión para todas las edades", 
+    diff1_title:"Seguridad total", 
+    diff1_desc:"Chalecos + salvavidas y tripulación entrenada", 
+    diff2_title:"Parada en Caixa D'Aço", 
+    diff2_desc:"Aguas cristalinas para nadar con tranquilidad", 
+    diff3_title:"Buffet de Frutas", 
+    diff3_desc:"Frutas frescas a bordo", 
+    diff4_title:"Diversión asegurada", 
+    diff4_desc:"Tobogán, música y animación para adultos y niños", 
+    itinerary_title:"Itinerario de la Experiencia", 
+    itinerary_sub:"Embarque en Porto dos Piratas y viva momentos inolvidables", 
+    step1_title:"Embarque", 
+    step2_title:"Navegación", 
+    step3_title:"Parada para Baño", 
+    step4_title:"Fiesta a bordo", 
+    gallery_title:"Vive esta aventura", 
+    gallery_sub:"Mira el paseo e inspírate para tu viaje", 
+    testimonials_title:"Quienes ya navegaron, recomiendan", 
+    test1_text:"¡Paseo fantástico! El equipo es muy atento.", 
+    test2_text:"Seguridad y diversión. Buffet de frutas delicioso.", 
+    test3_text:"¡El mejor paseo en barco de Porto Belo!", 
+    parador_title:"🏝️ Porto Belo Beach Day", 
+    parador_sub:"Disfruta de una experiencia completa en nuestro exclusivo parador junto al mar",
+    parador_col1_title:"Tiendas de Souvenirs",
+    parador_col1_text:"Lleva la magia del viaje contigo. Desde recuerdos temáticos que cuentan historias hasta ropa de playa que combina con el verano, tenemos el souvenir perfecto para guardar (o regalar) el clima inolvidable de estos días.",
+    parador_col2_title:"Infraestructura y Confort",
+    parador_col2_text:"Nuestro parador cuenta con duchas de agua dulce y sanitarios impecables. Disfruta de un espacio pensado para tu máximo confort, con acceso directo a la playa y áreas de descanso rodeadas por la naturaleza.",
+    parador_col3_title:"Gastronomía y Bar",
+    parador_col3_text:"Deléitate con nuestra variada oferta gastronómica: Snacks, sándwiches, hamburguesas con papas fritas, variados platos y bebidas refrescantes. Todo preparado con ingredientes frescos y de calidad.",
+    footer_address:"Porto dos Piratas, Porto Belo - SC", 
+    footer_nav:"Navegación", 
+    footer_home:"Início", 
+    footer_route:"Itinerario", 
+    footer_gallery:"Galeria", 
+    footer_parador:"Porto Belo Beach Day", 
+    footer_follow:"Sigue la aventura", 
+    footer_copyright:"© 2026 Angel Tour Brasil – El paseo más completo de la Costa Esmeralda.", 
+    map_text:"Abrir en Google Maps", 
+    sticky_subtitle:"Reserva tu lugar", 
+    sticky_price:"⭐ ¡Precios especiales! ⭐", 
+    sticky_btn:"Reservar Ahora", 
+    fecha:"FECHA DEL PASEO", 
+    horario:"PREFERENCIA DE HORARIO", 
+    horario1:"Mañana", 
+    horario2:"Media Mañana", 
+    horario3:"Tarde", 
+    nombre:"NOMBRE", 
+    empresa:"EMPRESA", 
+    empresa_note:"*Opcional", 
+    adultos:"ADULTOS", 
+    menores:"MENORES de 6 a 11 años", 
+    total:"VALOR TOTAL", 
+    btn:"ENVIAR RESERVA", 
+    horario_note:"⏱️ Sujeto a disponibilidad", 
+    info_text:"💡 Precio de venta al público.", 
+    discount_text:"🎯 50% de descuento", 
+    precio_adultos:"💰 R$ 100,00 cada adulto", 
+    footer_boat:"Paseos en barco", 
+    footer_secure:"Confirmación segura", 
+    footer_confirm:"Envío por WhatsApp", 
+    ai_chatbot_placeholder:"Pregúntame algo...", 
+    ai_online:"Online agora", 
+    ai_greeting:"¡Hola! 👋 Soy <b>Angel AI</b>, tu asistente virtual. Tengo información sobre el paseo. ¿En qué te puedo ayudar?", 
+    voice_listening:"🎤 Escuchando...", 
+    voice_stop:"🛑 Detener", 
+    voice_error:"❌ Error de micrófono", 
+    voice_unsupported:"🎤 No soportado", 
+    voice_start:"🎤 Toca para hablar", 
+    wa_message:"¡Hola! 👋 Me interesa el paseo en barco de Angel Tour Brasil. ¿Podrían darme más información sobre disponibilidad y precios? ⛵" 
+},
+pt: { 
+    nav_home:"Início", 
+    nav_tour:"O Passeio", 
+    nav_gallery:"Galeria", 
+    nav_parador:"Porto Belo Beach Day", 
+    nav_book:"Reservar", 
+    hero_title:"O passeio mais completo da Costa Esmeralda", 
+    hero_sub:"Navegue por paisagens paradisíacas, nade na Bahía de Caixa D'Aço, aproveite tobogã, frutas tropicais e muita animação a bordo.", 
+    btn_route:"Ver Roteiro", 
+    btn_guarantee:"Garantir Vaga", 
+    why_title:"Por que velejar com a Angel Tour?", 
+    why_sub:"Experiência completa, segurança e diversão para todas as idades", 
+    diff1_title:"Segurança total", 
+    diff1_desc:"Coletes + guarda-vidas e tripulação treinada", 
+    diff2_title:"Parada em Caixa D'Aço", 
+    diff2_desc:"Águas cristalinas para nadar com tranquilidade", 
+    diff3_title:"Buffet de Frutas", 
+    diff3_desc:"Buffet de Frutas frescas a bordo", 
+    diff4_title:"Diversão garantida", 
+    diff4_desc:"Tobogã, música e animação para adultos e crianças", 
+    itinerary_title:"Roteiro da Experiência", 
+    itinerary_sub:"Embarque em Porto dos Piratas e viva momentos inesquecíveis", 
+    step1_title:"Embarque", 
+    step2_title:"Navegação", 
+    step3_title:"Parada para Banho", 
+    step4_title:"Festa a bordo", 
+    gallery_title:"Viva essa aventura", 
+    gallery_sub:"Assista ao passeio e inspire-se para sua viagem", 
+    testimonials_title:"Quem já navegou, recomenda", 
+    test1_text:"Passeio fantástico! A equipe é muito atenciosa.", 
+    test2_text:"Segurança e diversão. Buffet de frutas delicioso.", 
+    test3_text:"Melhor passeio de barco de Porto Belo!", 
+    parador_title:"🏝️ Porto Belo Beach Day", 
+    parador_sub:"Desfrute de uma experiência completa em nosso exclusivo parador à beira-mar",
+    parador_col1_title:"Lojas de Souvenirs",
+    parador_col1_text:"Leve a magia da viagem com você. Das lembranças temáticas que contam histórias à moda praia que combina com o verão, temos o souvenir perfeito para guardar (ou presentear) o clima inesquecível desses dias.",
+    parador_col2_title:"Infraestrutura e Conforto",
+    parador_col2_text:"Nosso parador conta com chuveiros de água doce e sanitários impecáveis. Desfrute de um espaço pensado para seu máximo conforto, com acesso direto à praia e áreas de descanso rodeadas pela natureza.",
+    parador_col3_title:"Gastronomia e Bar",
+    parador_col3_text:"Delicie-se com nossa variada oferta gastronômica: Snacks, sanduíches, hambúrgueres com batatas fritas, variados pratos e bebidas refrescantes. Tudo preparado com ingredientes frescos e de qualidade.",
+    footer_address:"Porto dos Piratas, Porto Belo - SC", 
+    footer_nav:"Navegação", 
+    footer_home:"Início", 
+    footer_route:"Itinerário", 
+    footer_gallery:"Galeria", 
+    footer_parador:"Porto Belo Beach Day", 
+    footer_follow:"Siga a aventura", 
+    footer_copyright:"© 2026 Angel Tour Brasil – O passeio mais completo da Costa Esmeralda.", 
+    map_text:"Abrir no Google Maps", 
+    sticky_subtitle:"Reserve seu lugar", 
+    sticky_price:"⭐ Preços especiais! ⭐", 
+    sticky_btn:"Reservar Agora", 
+    fecha:"DATA DO PASSEIO", 
+    horario:"PREFERÊNCIA DE HORÁRIO", 
+    horario1:"Manhã", 
+    horario2:"Meia Manhã", 
+    horario3:"Tarde", 
+    nombre:"NOME", 
+    empresa:"EMPRESA", 
+    empresa_note:"*Opcional", 
+    adultos:"ADULTOS", 
+    menores:"MENORES de 6 a 11 anos", 
+    total:"VALOR TOTAL", 
+    btn:"ENVIAR RESERVA", 
+    horario_note:"⏱️ Sujeito à disponibilidade", 
+    info_text:"💡 Preço de venda ao público.", 
+    discount_text:"🎯 50% de desconto", 
+    precio_adultos:"💰 R$ 100,00 cada adulto", 
+    footer_boat:"Passeios de barco", 
+    footer_secure:"Confirmação segura", 
+    footer_confirm:"Envio por WhatsApp", 
+    ai_chatbot_placeholder:"Pergunte algo...", 
+    ai_online:"Online agora", 
+    ai_greeting:"Olá! 👋 Sou o <b>Angel AI</b>, seu assistente virtual. Tenho informações sobre o passeio. Como posso ajudar?", 
+    voice_listening:"🎤 Ouvindo...", 
+    voice_stop:"🛑 Parar", 
+    voice_error:"❌ Erro de microfone", 
+    voice_unsupported:"🎤 Não suportado", 
+    voice_start:"🎤 Toque para falar", 
+    wa_message:"Olá! 👋 Tenho interesse no passeio de barco da Angel Tour Brasil. Poderiam me dar mais informações sobre disponibilidade e preços? ⛵" 
+},
+en: { 
+    nav_home:"Home", 
+    nav_tour:"The Tour", 
+    nav_gallery:"Gallery", 
+    nav_parador:"Porto Belo Beach Day", 
+    nav_book:"Book Now", 
+    hero_title:"The most complete tour of the Emerald Coast", 
+    hero_sub:"Sail through stunning landscapes, swim in Caixa D'Aço Bay, enjoy a waterslide, tropical fruits, and lots of fun on board.", 
+    btn_route:"See Itinerary", 
+    btn_guarantee:"Book Now", 
+    why_title:"Why sail with Angel Tour?", 
+    why_sub:"Complete experience, safety and fun for all ages", 
+    diff1_title:"Total safety", 
+    diff1_desc:"Life jackets + lifeguards and trained crew", 
+    diff2_title:"Stop at Caixa D'Aço", 
+    diff2_desc:"Crystal clear waters for a safe swim", 
+    diff3_title:"Buffet & Drinks", 
+    diff3_desc:"Fresh fruits on board", 
+    diff4_title:"Guaranteed fun", 
+    diff4_desc:"Waterslide, music and entertainment for all ages", 
+    itinerary_title:"Experience Itinerary", 
+    itinerary_sub:"Board at Porto dos Piratas and live unforgettable moments", 
+    step1_title:"Boarding", 
+    step2_title:"Navigation", 
+    step3_title:"Swimming Stop", 
+    step4_title:"Party on board", 
+    gallery_title:"Live this adventure", 
+    gallery_sub:"Watch the tour and get inspired for your trip", 
+    testimonials_title:"Those who have sailed, recommend", 
+    test1_text:"Fantastic tour! The team is very attentive.", 
+    test2_text:"Safety and fun. Delicious fruit buffet.", 
+    test3_text:"Best boat tour in Porto Belo!", 
+    parador_title:"🏝️ Porto Belo Beach Day", 
+    parador_sub:"Enjoy a complete experience at our exclusive beachfront club",
+    parador_col1_title:"Souvenir Shops",
+    parador_col1_text:"Take the magic of the trip with you. From themed souvenirs that tell stories to beachwear that matches the summer, we have the perfect souvenir to keep (or gift) the unforgettable vibe of these days.",
+    parador_col2_title:"Infrastructure & Comfort",
+    parador_col2_text:"Our beach club features fresh water showers and impeccable restrooms. Enjoy a space designed for your maximum comfort, with direct beach access and rest areas surrounded by nature.",
+    parador_col3_title:"Gastronomy & Bar",
+    parador_col3_text:"Delight yourself with our varied gastronomic offer: Snacks, sandwiches, burgers with fries, varied dishes and refreshing drinks. All prepared with fresh and quality ingredients.",
+    footer_address:"Porto dos Piratas, Porto Belo - SC", 
+    footer_nav:"Navigation", 
+    footer_home:"Home", 
+    footer_route:"Itinerary", 
+    footer_gallery:"Gallery", 
+    footer_parador:"Porto Belo Beach Day", 
+    footer_follow:"Follow the adventure", 
+    footer_copyright:"© 2026 Angel Tour Brasil – The most complete tour of the Emerald Coast.", 
+    map_text:"Open in Google Maps", 
+    sticky_subtitle:"Book your spot", 
+    sticky_price:"⭐ Special prices! ⭐", 
+    sticky_btn:"Book Now", 
+    fecha:"TOUR DATE", 
+    horario:"TIME PREFERENCE", 
+    horario1:"Morning", 
+    horario2:"Late Morning", 
+    horario3:"Afternoon", 
+    nombre:"NAME", 
+    empresa:"COMPANY", 
+    empresa_note:"*Optional", 
+    adultos:"ADULTS", 
+    menores:"CHILDREN 6 to 11 years", 
+    total:"TOTAL VALUE", 
+    btn:"SEND RESERVATION", 
+    horario_note:"⏱️ Subject to availability", 
+    info_text:"💡 Public sale price.", 
+    discount_text:"🎯 50% discount", 
+    precio_adultos:"💰 R$ 100.00 per adult", 
+    footer_boat:"Boat tours", 
+    footer_secure:"Secure confirmation", 
+    footer_confirm:"WhatsApp delivery", 
+    ai_chatbot_placeholder:"Ask me something...", 
+    ai_online:"Online now", 
+    ai_greeting:"Hello! 👋 I'm <b>Angel AI</b>, your virtual assistant. I have information about the tour. How can I help you?", 
+    voice_listening:"🎤 Listening...", 
+    voice_stop:"🛑 Stop", 
+    voice_error:"❌ Microphone error", 
+    voice_unsupported:"🎤 Not supported", 
+    voice_start:"🎤 Tap to speak", 
+    wa_message:"Hello! 👋 I'm interested in the Angel Tour Brasil boat tour. Could you provide me with more information about availability and prices? ⛵" 
+}
 };
 
 const fullItinerary = {
@@ -661,7 +1239,7 @@ function hideVoiceStatus() {
     if (el) el.classList.remove('show');
 }
 
-// ========== 🤖 NUEVA BASE DE CONOCIMIENTO ==========
+// ========== 🤖 BASE DE CONOCIMIENTO ==========
 const aiKnowledgeBase = {
 es: {
 intents: [
@@ -1130,7 +1708,24 @@ function getAIResponse(userText) {
 }
 
 // ========== IMÁGENES ==========
-const imagenesGrandes = [
+// IMÁGENES PARA EL SLIDESHOW DE PORTO BELO BEACH DAY (res_1.webp a res_12.webp)
+const imagenesSlideshow = [
+    "https://sebagsc2020.github.io/angeltourbrasil/images/res_1.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/res_2.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/res_3.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/res_4.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/res_5.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/res_6.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/res_7.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/res_8.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/res_9.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/res_10.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/res_11.webp",
+    "https://sebagsc2020.github.io/angeltourbrasil/images/res_12.webp"
+];
+
+// IMÁGENES PARA LA GALERÍA DE FOTOS (atb_01.webp a atb_12.webp)
+const imagenesGaleria = [
     "https://sebagsc2020.github.io/angeltourbrasil/images/atb_01.webp",
     "https://sebagsc2020.github.io/angeltourbrasil/images/atb_02.webp",
     "https://sebagsc2020.github.io/angeltourbrasil/images/atb_03.webp",
@@ -1144,7 +1739,10 @@ const imagenesGrandes = [
     "https://sebagsc2020.github.io/angeltourbrasil/images/atb_11.webp",
     "https://sebagsc2020.github.io/angeltourbrasil/images/atb_12.webp"
 ];
-const imagenesChicas = imagenesGrandes;
+
+// Variable para el lightbox (usa las imágenes de la galería)
+const imagenesGrandes = imagenesGaleria;
+const imagenesChicas = imagenesGaleria;
 
 async function obtenerPaisUsuario() {
     try {
@@ -1318,13 +1916,77 @@ function scrollToSectionWithOffset(id) {
     }
 }
 
-// ========== INICIALIZACIÓN SEGURA ==========
+// ========== SLIDESHOW ==========
+let slideIndex = 0;
+let slideInterval = null;
+const SLIDE_INTERVAL_TIME = 4000;
+
+function initSlideshow() {
+    const container = document.getElementById('bannerSlideshow');
+    if (!container) return;
+    
+    const slides = container.querySelectorAll('.slide');
+    const dots = container.querySelectorAll('.dot');
+    
+    if (slides.length === 0) return;
+    
+    showSlide(0);
+    startAutoplay();
+}
+
+function showSlide(index) {
+    const container = document.getElementById('bannerSlideshow');
+    if (!container) return;
+    
+    const slides = container.querySelectorAll('.slide');
+    const dots = container.querySelectorAll('.dot');
+    
+    if (index >= slides.length) index = 0;
+    if (index < 0) index = slides.length - 1;
+    
+    slideIndex = index;
+    
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+}
+
+function nextSlide() {
+    const slides = document.querySelectorAll('#bannerSlideshow .slide');
+    if (slides.length === 0) return;
+    showSlide(slideIndex + 1);
+}
+
+function prevSlide() {
+    const slides = document.querySelectorAll('#bannerSlideshow .slide');
+    if (slides.length === 0) return;
+    showSlide(slideIndex - 1);
+}
+
+function startAutoplay() {
+    stopAutoplay();
+    slideInterval = setInterval(nextSlide, SLIDE_INTERVAL_TIME);
+}
+
+function stopAutoplay() {
+    if (slideInterval) {
+        clearInterval(slideInterval);
+        slideInterval = null;
+    }
+}
+
+function resetAutoplay() {
+    stopAutoplay();
+    startAutoplay();
+}
+
+// ========== INICIALIZACIÓN ==========
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Inicializar idioma
     const savedLang = localStorage.getItem('preferred_language');
     changeLanguage(savedLang && translations[savedLang] ? savedLang : 'pt');
     
-    // ========== EVENTOS DE BOTONES DE IDIOMA ==========
     document.querySelectorAll('.lang-btn-header').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -1335,27 +1997,111 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // 2. Inicializar componentes
     calcularValorTotal();
     setTimeout(() => loadWeatherWidget(currentLang), 100);
     initChatbot();
     initVoiceRecognition();
     
-    // 3. Configurar eventos de Galería/Lightbox
+    // ========== CREAR SLIDESHOW (usa imagenesSlideshow = res_1.webp a res_12.webp) ==========
+    const bannerContainer = document.getElementById('bannerSlideshow');
+    if (bannerContainer && imagenesSlideshow.length > 0) {
+        const prevBtn = document.getElementById('slidePrev');
+        const nextBtn = document.getElementById('slideNext');
+        const indicators = document.getElementById('slideIndicators');
+        
+        const existingSlides = bannerContainer.querySelectorAll('.slide');
+        existingSlides.forEach(slide => slide.remove());
+        
+        imagenesSlideshow.forEach((url, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'slide';
+            if (index === 0) slide.classList.add('active');
+            
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = `Porto Belo Beach Day ${index + 1}`;
+            img.draggable = false;
+            img.loading = 'lazy';
+            
+            img.onerror = function() {
+                console.warn(`⚠️ Error al cargar slide ${index + 1}: ${url}`);
+                this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="300" viewBox="0 0 800 300"%3E%3Crect width="800" height="300" fill="%230A2F6C"/%3E%3Ctext x="400" y="150" font-family="Arial" font-size="24" fill="%23FFFFFF" text-anchor="middle"%3EPorto Belo Beach Day%3C/text%3E%3C/svg%3E';
+            };
+            
+            slide.appendChild(img);
+            bannerContainer.appendChild(slide);
+        });
+        
+        if (indicators) {
+            indicators.innerHTML = '';
+            imagenesSlideshow.forEach((_, index) => {
+                const dot = document.createElement('span');
+                dot.className = 'dot';
+                if (index === 0) dot.classList.add('active');
+                dot.setAttribute('data-index', index);
+                dot.addEventListener('click', function() {
+                    showSlide(parseInt(this.getAttribute('data-index')));
+                    resetAutoplay();
+                });
+                indicators.appendChild(dot);
+            });
+        }
+        
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                prevSlide();
+                resetAutoplay();
+            });
+        }
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                nextSlide();
+                resetAutoplay();
+            });
+        }
+        
+        bannerContainer.addEventListener('mouseenter', stopAutoplay);
+        bannerContainer.addEventListener('mouseleave', startAutoplay);
+        bannerContainer.addEventListener('touchstart', stopAutoplay);
+        bannerContainer.addEventListener('touchend', startAutoplay);
+        
+        initSlideshow();
+        console.log('✅ Slideshow de Porto Belo Beach Day iniciado con ' + imagenesSlideshow.length + ' imágenes (res_1.webp a res_12.webp)');
+    }
+    
+    // ========== GALERÍA (usa imagenesGaleria = atb_01.webp a atb_12.webp) ==========
     const gridGaleria = document.getElementById('gridGaleria');
     if(gridGaleria){
         gridGaleria.innerHTML = '';
-        imagenesChicas.forEach((urlMini, indice) => {
+        console.log(`🖼️ Cargando galería con ${imagenesGaleria.length} imágenes (atb_01.webp a atb_12.webp)`);
+        
+        imagenesGaleria.forEach((urlMini, indice) => {
             const item = document.createElement('div');
             item.className = 'gallery-item';
             item.onclick = () => window.abrirLightbox(indice);
+            
             const img = document.createElement('img');
             img.src = urlMini;
             img.alt = `Foto ${indice + 1}`;
             img.loading = 'lazy';
+            img.draggable = false;
+            
+            img.onerror = function() {
+                console.warn(`⚠️ Error al cargar imagen ${indice + 1}: ${urlMini}`);
+                this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"%3E%3Crect width="400" height="300" fill="%23e2e8f0"/%3E%3Ctext x="200" y="150" font-family="Arial" font-size="16" fill="%2364748b" text-anchor="middle"%3EImagen no disponible%3C/text%3E%3C/svg%3E';
+            };
+            
+            img.onload = function() {
+                console.log(`✅ Imagen ${indice + 1} cargada correctamente`);
+            };
+            
             item.appendChild(img);
             gridGaleria.appendChild(item);
         });
+        
+        console.log(`📊 Elementos en la galería: ${gridGaleria.children.length}`);
     }
     
     const lightboxModern = document.getElementById('lightboxModern');
@@ -1378,7 +2124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } 
     });
     
-    // 4. Eventos del Formulario
+    // ========== FORMULARIO ==========
     document.querySelectorAll('.horario-card').forEach(card => {
         card.addEventListener('click', function() {
             document.querySelectorAll('.horario-card').forEach(c => c.classList.remove('selected'));
@@ -1398,7 +2144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const empresa = document.getElementById('empresa')?.value.trim();
         const adultos = document.getElementById('adultos')?.value;
         const menores = document.getElementById('menores')?.value;
-        if(!fecha || !horario || !nombre) { alert('Complete todos los campos requeridos'); return; }
+        if(!fecha || !horario || !nombre) { alert('Complete todos os campos requeridos'); return; }
         
         if (paisUsuario === "DESCONOCIDO") await obtenerPaisUsuario();
         const total = (parseInt(adultos) * 100) + (parseInt(menores) * 50);
@@ -1412,7 +2158,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(adultosInput) adultosInput.addEventListener('input', calcularValorTotal);
     if(menoresInput) menoresInput.addEventListener('input', calcularValorTotal);
     
-    // 5. Eventos de Navegación y Menú
+    // ========== NAVEGACIÓN ==========
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -1439,7 +2185,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // 6. Eventos de Modales
+    // ========== MODALES ==========
     document.getElementById('closeModalBtn')?.addEventListener('click', closeModalFunc);
     document.getElementById('closeModalFooterBtn')?.addEventListener('click', closeModalFunc);
     document.getElementById('infoModal')?.addEventListener('click', e => { if(e.target === document.getElementById('infoModal')) closeModalFunc(); });
@@ -1474,7 +2220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // 7. Barra Sticky
+    // ========== STICKY BAR ==========
     const stickyBar = document.getElementById('stickyBookingBar');
     const heroSec = document.getElementById('inicio');
     const stickyBtn = document.getElementById('stickyBookBtn');
@@ -1492,13 +2238,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if(stickyBtn) stickyBtn.addEventListener('click', () => scrollToSectionWithOffset('reserva'));
     document.querySelector('.garantia-link')?.addEventListener('click', e => { e.preventDefault(); scrollToSectionWithOffset('reserva'); });
     
-    // 8. Detectar país
     obtenerPaisUsuario().then(() => { console.log("País del usuario detectado:", paisUsuario); });
     
-    console.log('✅ Angel AI, Galería e Idiomas inicializados correctamente');
+    console.log('✅ Angel AI, Galería (atb_*.webp), Slideshow (res_*.webp) e Idiomas inicializados correctamente');
 });
 
-// Variables globales para Lightbox
+// ========== LIGHTBOX ==========
 let indiceActual = 0;
 
 window.abrirLightbox = function(indice) { 
@@ -1514,14 +2259,14 @@ window.abrirLightbox = function(indice) {
 function actualizarLightbox() { 
     const img = document.getElementById('lightboxImg'); 
     const counter = document.getElementById('fotoContador'); 
-    if(img) img.src = imagenesGrandes[indiceActual]; 
-    if(counter) counter.innerText = `${indiceActual + 1} / ${imagenesGrandes.length}`; 
+    if(img) img.src = imagenesGaleria[indiceActual]; 
+    if(counter) counter.innerText = `${indiceActual + 1} / ${imagenesGaleria.length}`; 
 }
 
 function cambiarImagen(direccion) { 
     indiceActual += direccion; 
-    if(indiceActual < 0) indiceActual = imagenesGrandes.length - 1; 
-    else if(indiceActual >= imagenesGrandes.length) indiceActual = 0; 
+    if(indiceActual < 0) indiceActual = imagenesGaleria.length - 1; 
+    else if(indiceActual >= imagenesGaleria.length) indiceActual = 0; 
     actualizarLightbox(); 
 }
 
