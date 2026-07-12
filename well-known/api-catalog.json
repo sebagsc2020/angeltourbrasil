@@ -1,0 +1,29 @@
+{
+  "@context": "https://www.w3.org/ns/linkset/1.0",
+  "linkset": [
+    {
+      "link": [
+        {
+          "href": "https://www.angeltourbrasil.com.br/.well-known/mcp/server-card.json",
+          "type": "application/json",
+          "rel": "service-desc"
+        },
+        {
+          "href": "https://www.angeltourbrasil.com.br/sitemap-index.xml",
+          "type": "application/xml",
+          "rel": "sitemap"
+        },
+        {
+          "href": "https://www.angeltourbrasil.com.br/llms.txt",
+          "type": "text/plain",
+          "rel": "llms-txt"
+        },
+        {
+          "href": "https://www.angeltourbrasil.com.br/#reserva",
+          "type": "text/html",
+          "rel": "booking"
+        }
+      ]
+    }
+  ]
+}

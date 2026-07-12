@@ -1,0 +1,63 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schemas/server-card.json",
+  "name": "Angel Tour Brasil",
+  "description": "Servicio de paseos en barco por la Costa Esmeralda, Porto Belo - Santa Catarina, Brasil.",
+  "version": "1.0.0",
+  "capabilities": {
+    "booking": {
+      "endpoint": "https://www.angeltourbrasil.com.br/#reserva",
+      "methods": ["POST", "GET"],
+      "parameters": {
+        "fecha": "string (YYYY-MM-DD)",
+        "horario": "string (09:30|11:10|13:00)",
+        "adultos": "number (0-99)",
+        "menores": "number (0-99)",
+        "nombre": "string",
+        "empresa": "string (opcional)"
+      }
+    },
+    "knowledge": {
+      "endpoint": "https://www.angeltourbrasil.com.br/llms.txt",
+      "format": "text/plain"
+    },
+    "sitemap": {
+      "endpoint": "https://www.angeltourbrasil.com.br/sitemap-index.xml",
+      "format": "application/xml"
+    }
+  },
+  "contact": {
+    "email": "angelportobelo@gmail.com",
+    "phone": "+5547999679084",
+    "website": "https://www.angeltourbrasil.com.br"
+  },
+  "languages": ["pt", "es", "en"],
+  "location": {
+    "city": "Porto Belo",
+    "state": "Santa Catarina",
+    "country": "Brasil",
+    "coordinates": {
+      "latitude": -27.158333,
+      "longitude": -48.566667
+    }
+  },
+  "services": [
+    {
+      "name": "Passeio Costa Esmeralda",
+      "description": "Paseo en barco con parada en Caixa D'Aço, tobogán, buffet de frutas y animación",
+      "duration": "1h30",
+      "capacity": "150-240 pasajeros",
+      "schedule": ["09:30", "11:10", "13:00"]
+    },
+    {
+      "name": "Porto Belo Beach Day",
+      "description": "Experiencia completa en parador con souvenirs, gastronomía y confort",
+      "schedule": "Todos los días"
+    }
+  ],
+  "pricing": {
+    "currency": "BRL",
+    "adult": 100.00,
+    "child_6_11": 50.00,
+    "child_0_5": 0.00
+  }
+}
