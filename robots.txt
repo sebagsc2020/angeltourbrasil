@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# Permitir acceso a archivos para agentes IA
+Allow: /.well-known/mcp/
+Allow: /llms.txt
+Allow: /sitemap-index.xml
+Allow: /sitemap-main.xml
+
+# Páginas importantes (con anclas)
+Allow: /#inicio
+Allow: /#itinerario
+Allow: /#galeria
+Allow: /#parador
+Allow: /#reserva
+
+# Sitemaps
+Sitemap: https://www.angeltourbrasil.com.br/sitemap-index.xml
+
+# Anunciar servicio MCP a agentes de IA (GitHub Pages no soporta Link headers,
+# pero los bots pueden encontrar la información en el HTML)
