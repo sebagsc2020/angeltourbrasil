@@ -3,15 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<!-- ===== 🧠 SCHEMA.ORG PARA IA (GEO READY) ===== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TouristAttraction",
+  "name": "Angel Tour Brasil - Passeio Costa Esmeralda",
+  "description": "O passeio mais completo da Costa Esmeralda com parada em Caixa D'Aço, tobogã e buffet de frutas",
+  "url": "https://www.angeltourbrasil.com.br/",
+  "telephone": "+5547999679084",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Av. Gov. Celso Ramos 1445",
+    "addressLocality": "Porto Belo",
+    "addressRegion": "SC",
+    "postalCode": "88210-000",
+    "addressCountry": "BR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "-27.158333",
+    "longitude": "-48.566667"
+  },
+  "openingHours": "Daily 09:00-17:00",
+  "priceRange": "R$ 100,00",
+  "image": "https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/logoangel-pb.png",
+  "offers": {
+    "@type": "Offer",
+    "price": "100.00",
+    "priceCurrency": "BRL",
+    "availability": "https://schema.org/InStock"
+  }
+}
+</script>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-R5LT7ZSN19"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-R5LT7ZSN19');
 </script>
+
 <title>Porto Belo Beach Day | O passeio mais completo da Costa Esmeralda</title>
 
 <!-- 📱 PWA & APP META TAGS -->
@@ -45,8 +80,9 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 <style>
-/* ===== TODOS TUS ESTILOS EXISTENTES (Mantén los mismos) ===== */
+/* ===== TODOS TUS ESTILOS EXISTENTES ===== */
 * {
     -webkit-user-select: none !important;
     -moz-user-select: none !important;
@@ -427,11 +463,47 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
     .slide-indicators .dot { width: 8px; height: 8px; }
     .slide-arrow { width: 25px; height: 25px; font-size: 0.7rem; }
 }
+
+/* ===== 🆕 VIEW TRANSITIONS API ===== */
+@view-transition {
+    navigation: auto;
+}
+
+/* ===== 🆕 CSS NESTING DEMO ===== */
+/* (Ya tienes estructura compatible, añadimos un ejemplo adicional) */
+.card-icon {
+    .icon-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+    /* Esto es CSS Nesting nativo */
+}
+
+/* ===== 🆕 MEJORA PARA IA - Atributos de datos ===== */
+[data-ai-enhanced] {
+    position: relative;
+}
+[data-ai-enhanced]::after {
+    content: "🧠";
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 0.7rem;
+    background: #667eea;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 10px;
+    display: none;
+}
+[data-ai-enhanced]:hover::after {
+    display: block;
+}
 </style>
 </head>
 <body>
-<!-- ===== TODO EL CONTENIDO HTML EXISTENTE (header, hero, sections, footer) ===== -->
-<!-- Mantén exactamente todo tu contenido HTML, no lo modifiques -->
+
+<!-- ===== TODO EL CONTENIDO HTML EXISTENTE ===== -->
+<!-- Mantén exactamente todo tu contenido, solo añadimos atributos data-ai-enhanced a secciones clave -->
 
 <header class="header">
 <div class="container">
@@ -470,7 +542,8 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 
-<section id="inicio" class="hero">
+<!-- 🆕 Sección con atributo para IA -->
+<section id="inicio" class="hero" data-ai-enhanced>
 <div class="container">
 <div class="hero-content">
 <div class="hero-left">
@@ -490,10 +563,10 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </section>
 
-<div class="section">
+<div class="section" data-ai-enhanced>
 <div class="container">
 <h2 class="section-title" data-key="why_title">¿Por qué navegar com Angel Tour?</h2>
-<p class="section-sub" data-key="why_sub">Experiencia completa, seguridad e diversão para todas as edades</p>
+<p class="section-sub" data-key="why_sub">Experiencia completa, segurança e diversão para todas as edades</p>
 <div class="cards-grid">
 <div class="card-icon"><i class="fas fa-life-ring"></i><h3 data-key="diff1_title">Segurança total</h3><p data-key="diff1_desc">Coletes + salva-vidas e tripulação treinada</p></div>
 <div class="card-icon"><i class="fas fa-water"></i><h3 data-key="diff2_title">Parada em Caixa D'Aço</h3><p data-key="diff2_desc">Águas cristalinas para nadar com tranquilidade</p></div>
@@ -503,7 +576,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 
-<section id="itinerario" class="section section-bg-light">
+<section id="itinerario" class="section section-bg-light" data-ai-enhanced>
 <div class="container">
 <h2 class="section-title" data-key="itinerary_title">Roteiro da Experiência</h2>
 <p class="section-sub" data-key="itinerary_sub">Embarque em Porto dos Piratas e viva momentos inesquecíveis</p>
@@ -543,7 +616,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 
-<section id="galeria" class="section">
+<section id="galeria" class="section" data-ai-enhanced>
 <div class="container">
 <h2 class="section-title" data-key="gallery_title">Viva essa aventura</h2>
 <p class="section-sub" data-key="gallery_sub">Assista ao passeio e inspire-se para sua viagem</p>
@@ -570,7 +643,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 
-<div class="section section-bg-light">
+<div class="section section-bg-light" data-ai-enhanced>
 <div class="container">
 <h2 class="section-title" data-key="testimonials_title">Quem já navegou, recomenda</h2>
 <div class="cards-grid" style="gap: 28px;">
@@ -582,7 +655,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 
 <!-- ===== SECCIÓN: PORTO BELO BEACH DAY ===== -->
-<section id="parador" class="section">
+<section id="parador" class="section" data-ai-enhanced>
 <div class="container">
 <h2 class="section-title" data-key="parador_title">🏝️ Porto Belo Beach Day</h2>
 <p class="section-sub" data-key="parador_sub">Desfrute de uma experiência completa em nosso exclusivo parador à beira-mar</p>
@@ -611,7 +684,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </section>
 
-<section id="reserva">
+<section id="reserva" data-ai-enhanced>
 <div class="container" style="max-width: 700px; margin: 0 auto; padding: 0 24px 80px 24px;">
 <div class="form-wrapper-simple">
 <div class="weather-widget-container">
@@ -763,9 +836,98 @@ document.addEventListener('dragstart', function(e) {
     if (e.target.tagName === 'IMG') { e.preventDefault(); return false; }
 });
 console.log('🔒 Protecciones activadas');
-</script>
 
-<script>
+// ============================================
+// 🆕 WEBMCP EXPUESTO - FUNCIONES PARA AGENTES IA
+// ============================================
+window.webmcp = {
+    // Información estructurada del sitio
+    getSiteInfo: () => ({
+        name: 'Angel Tour Brasil',
+        description: 'Passeio mais completo da Costa Esmeralda',
+        location: 'Porto Belo - SC',
+        services: ['Passeios de barco', 'Porto Belo Beach Day', 'Buffet de frutas', 'Tobogã'],
+        prices: {
+            adult: 'R$ 100,00',
+            child_6_11: '50% desconto',
+            under_5: 'Grátis'
+        },
+        contact: {
+            whatsapp: '+55 47 99967-9084',
+            email: 'angelportobelo@gmail.com'
+        },
+        schedules: ['09:30', '11:10', '13:00']
+    }),
+    
+    // Buscar en el contenido del sitio
+    searchContent: (query) => {
+        const elements = document.querySelectorAll('[data-key]');
+        const results = [];
+        const q = query.toLowerCase();
+        elements.forEach(el => {
+            const text = el.textContent.toLowerCase();
+            if (text.includes(q) && !results.includes(el.textContent)) {
+                results.push(el.textContent.trim().substring(0, 100));
+            }
+        });
+        return results.length ? results.slice(0, 5) : ['Nenhum resultado encontrado'];
+    },
+    
+    // Obtener itinerario completo
+    getItinerary: (lang = 'pt') => {
+        const itineraries = {
+            es: "1. Embarque en Porto dos Piratas\n2. Navegación por la Costa Esmeralda\n3. Parada en Caixa D'Aço\n4. Fiesta a bordo con frutas y música",
+            pt: "1. Embarque em Porto dos Piratas\n2. Navegação pela Costa Esmeralda\n3. Parada em Caixa D'Aço\n4. Festa a bordo com frutas e música",
+            en: "1. Boarding at Porto dos Piratas\n2. Cruising the Emerald Coast\n3. Stop at Caixa D'Aço\n4. Party on board with fruits and music"
+        };
+        return itineraries[lang] || itineraries.pt;
+    },
+    
+    // Calcular precio total
+    calculatePrice: (adults, children) => {
+        const adultPrice = 100;
+        const childPrice = 50;
+        return (adults * adultPrice) + (children * childPrice);
+    }
+};
+
+console.log('🌐 WebMCP expuesto. Prueba: window.webmcp.getSiteInfo()');
+console.log('🔍 Buscar: window.webmcp.searchContent("barco")');
+console.log('📅 Itinerario: window.webmcp.getItinerary("pt")');
+
+// ============================================
+// 🆕 VIEW TRANSITIONS API - NAVEGACIÓN FLUIDA
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+    // Capturar clics en enlaces internos
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', async (e) => {
+            const href = link.getAttribute('href');
+            if (href === '#') return;
+            
+            const targetId = href.substring(1);
+            const target = document.getElementById(targetId);
+            
+            if (target && document.startViewTransition) {
+                e.preventDefault();
+                
+                // Cerrar menú móvil si está abierto
+                const navLinks = document.getElementById('navLinks');
+                if (navLinks && navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                }
+                
+                // Transición suave
+                await document.startViewTransition(() => {
+                    target.scrollIntoView({ behavior: 'instant' });
+                }).ready;
+            }
+        });
+    });
+    
+    console.log('✅ View Transitions API activada');
+});
+
 // ============================================
 // CHATBOT CON GEMINI IA GENERATIVA 🧠
 // ============================================
@@ -1511,6 +1673,13 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => loadWeatherWidget(currentLang), 100);
     initChatbot();
     initVoiceRecognition();
+    
+    // 🆕 LOG DE WEBMCP EN CONSOLA
+    console.log('🌐 WebMCP disponible:');
+    console.log('  📍 getSiteInfo()', window.webmcp.getSiteInfo());
+    console.log('  🔍 searchContent("barco")', window.webmcp.searchContent('barco'));
+    console.log('  📅 getItinerary()', window.webmcp.getItinerary('pt'));
+    console.log('  💰 calculatePrice(2,1)', window.webmcp.calculatePrice(2,1));
     
     // ========== CREAR SLIDESHOW ==========
     const bannerContainer = document.getElementById('bannerSlideshow');
