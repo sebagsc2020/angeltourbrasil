@@ -877,10 +877,10 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 <div class="footer-content">
 <div class="footer-col">
 <h3 style="color:white;">Angel Tour Brasil</h3>
-<p><i class="fas fa-anchor"></i> <span data-key="footer_address">Porto dos Piratas, Porto Belo - SC</span></p>
+<p><i class="fas fa-anchor"></i> <span data-key="footer_address">Porto Belo Beach Day, Porto Belo - SC</span></p>
 <p><i class="fab fa-whatsapp"></i> (47) 99967-9084</p>
 <p><i class="far fa-envelope"></i> angelportobelo@gmail.com</p>
-<a href="https://www.google.com/maps/dir/?api=1&destination=Porto+dos+Piratas+Porto+Belo+SC+Brasil" target="_blank" class="map-link" rel="noopener noreferrer">
+<a href="https://www.google.com/maps/dir/?api=1&destination=Porto+Belo+Beach+Day+Porto+Belo+SC+Brasil" target="_blank" class="map-link" rel="noopener noreferrer">
 <i class="fas fa-map-marker-alt"></i>
 <span data-key="map_text">Abrir no Google Maps</span>
 </a>
@@ -1860,9 +1860,9 @@ function sendMessage() {
 }
 
 // ============================================
-// SLIDESHOW
+// 🔀 SLIDESHOW CON IMÁGENES ALEATORIAS (BANNER)
 // ============================================
-var imagenesSlideshow = [
+var imagenesSlideshowOriginal = [
     'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/res_1.webp',
     'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/res_2.webp',
     'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/res_3.webp',
@@ -1877,6 +1877,22 @@ var imagenesSlideshow = [
     'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/res_12.webp'
 ];
 
+// 🔀 Función para barajar un array (Fisher-Yates)
+function shuffleArray(array) {
+    var arr = array.slice();
+    for (var i = arr.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    return arr;
+}
+
+// 📸 Banner con imágenes barajadas
+var imagenesSlideshow = shuffleArray(imagenesSlideshowOriginal);
+
+// 📸 Galería con imágenes barajadas
 var imagenesGaleria = [
     'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_01.webp',
     'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_02.webp',
@@ -1891,6 +1907,8 @@ var imagenesGaleria = [
     'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_11.webp',
     'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_12.webp'
 ];
+
+var imagenesGaleriaBarajadas = shuffleArray(imagenesGaleria);
 
 var slideIndex = 0;
 var slideInterval = null;
@@ -1955,7 +1973,7 @@ function stopAutoplay() { if (slideInterval) { clearInterval(slideInterval); sli
 function resetAutoplay() { stopAutoplay(); startAutoplay(); }
 
 // ============================================
-// GALERÍA Y LIGHTBOX
+// GALERÍA Y LIGHTBOX (con imágenes aleatorias)
 // ============================================
 var indiceActual = 0;
 
@@ -1964,7 +1982,7 @@ function initGallery() {
     if (!grid) return;
     
     grid.innerHTML = '';
-    imagenesGaleria.forEach(function(url, index) {
+    imagenesGaleriaBarajadas.forEach(function(url, index) {
         var item = document.createElement('div');
         item.className = 'gallery-item';
         var img = document.createElement('img');
@@ -1983,8 +2001,8 @@ function abrirLightbox(index) {
     var img = document.getElementById('lightboxImg');
     var counter = document.getElementById('fotoContador');
     if (lb && img && counter) {
-        img.src = imagenesGaleria[index];
-        counter.textContent = (index + 1) + ' / ' + imagenesGaleria.length;
+        img.src = imagenesGaleriaBarajadas[index];
+        counter.textContent = (index + 1) + ' / ' + imagenesGaleriaBarajadas.length;
         lb.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
@@ -1999,11 +2017,11 @@ function cerrarLightbox() {
 }
 
 function cambiarImagen(direccion) {
-    indiceActual = (indiceActual + direccion + imagenesGaleria.length) % imagenesGaleria.length;
+    indiceActual = (indiceActual + direccion + imagenesGaleriaBarajadas.length) % imagenesGaleriaBarajadas.length;
     var img = document.getElementById('lightboxImg');
     var counter = document.getElementById('fotoContador');
-    if (img) img.src = imagenesGaleria[indiceActual];
-    if (counter) counter.textContent = (indiceActual + 1) + ' / ' + imagenesGaleria.length;
+    if (img) img.src = imagenesGaleriaBarajadas[indiceActual];
+    if (counter) counter.textContent = (indiceActual + 1) + ' / ' + imagenesGaleriaBarajadas.length;
 }
 
 // ============================================
