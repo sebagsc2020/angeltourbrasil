@@ -1,0 +1,107 @@
+{
+  "name": "Angel Tour Brasil",
+  "version": "2.0.0",
+  "description": "Sistema de reservas y paseos en barco en Porto Belo - Costa Esmeralda",
+  "functions": [
+    {
+      "name": "getSiteInfo",
+      "description": "Obtiene información general del sitio, servicios y contactos",
+      "parameters": {}
+    },
+    {
+      "name": "getItinerary",
+      "description": "Obtiene el itinerario completo del paseo en el idioma especificado",
+      "parameters": {
+        "lang": {
+          "type": "string",
+          "description": "Idioma: 'es' (español), 'pt' (portugués) o 'en' (inglés)",
+          "default": "pt",
+          "enum": ["es", "pt", "en"]
+        }
+      }
+    },
+    {
+      "name": "getPrices",
+      "description": "Obtiene los precios actualizados para adultos y niños",
+      "parameters": {}
+    },
+    {
+      "name": "calculatePrice",
+      "description": "Calcula el precio total basado en número de adultos y niños",
+      "parameters": {
+        "adults": {
+          "type": "number",
+          "description": "Cantidad de adultos",
+          "required": true,
+          "minimum": 0
+        },
+        "children": {
+          "type": "number",
+          "description": "Cantidad de niños de 6 a 11 años",
+          "required": true,
+          "minimum": 0
+        }
+      }
+    },
+    {
+      "name": "checkAvailability",
+      "description": "Verifica disponibilidad para una fecha y horario específicos",
+      "parameters": {
+        "date": {
+          "type": "string",
+          "description": "Fecha en formato YYYY-MM-DD",
+          "required": true
+        },
+        "time": {
+          "type": "string",
+          "description": "Horario: '09:30', '11:10' o '13:00'",
+          "required": true,
+          "enum": ["09:30", "11:10", "13:00"]
+        }
+      }
+    },
+    {
+      "name": "getAvailableDates",
+      "description": "Obtiene las fechas disponibles para reservas en los próximos 30 días",
+      "parameters": {}
+    },
+    {
+      "name": "makeReservation",
+      "description": "Realiza una reserva completa con todos los datos del pasajero",
+      "parameters": {
+        "date": {
+          "type": "string",
+          "description": "Fecha en formato YYYY-MM-DD",
+          "required": true
+        },
+        "time": {
+          "type": "string",
+          "description": "Horario: '09:30', '11:10' o '13:00'",
+          "required": true,
+          "enum": ["09:30", "11:10", "13:00"]
+        },
+        "name": {
+          "type": "string",
+          "description": "Nombre completo del responsable",
+          "required": true
+        },
+        "adults": {
+          "type": "number",
+          "description": "Cantidad de adultos",
+          "required": true,
+          "minimum": 0
+        },
+        "children": {
+          "type": "number",
+          "description": "Cantidad de niños de 6 a 11 años",
+          "required": true,
+          "minimum": 0
+        },
+        "company": {
+          "type": "string",
+          "description": "Nombre de la empresa (opcional)"
+        }
+      }
+    }
+  ]
+}
