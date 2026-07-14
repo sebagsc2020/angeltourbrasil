@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-<!-- ===== 🧠 SCHEMA.ORG PARA IA (GEO READY) ===== -->
+<!-- ===== SCHEMA.ORG PARA IA ===== -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -38,7 +38,7 @@
 }
 </script>
 
-<!-- ===== 🤖 WEBMCP MANIFEST ===== -->
+<!-- ===== WEBMCP MANIFEST ===== -->
 <link rel="webmcp" href="/webmcp-manifest.json">
 
 <!-- Google tag (gtag.js) -->
@@ -85,7 +85,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <style>
-/* ===== TODOS TUS ESTILOS EXISTENTES ===== */
+/* ===== TODOS TUS ESTILOS ===== */
 * {
     -webkit-user-select: none !important;
     -moz-user-select: none !important;
@@ -467,7 +467,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
     .slide-arrow { width: 25px; height: 25px; font-size: 0.7rem; }
 }
 
-/* ===== VIEW TRANSITIONS API ===== */
+/* ===== VIEW TRANSITIONS ===== */
 @view-transition {
     navigation: auto;
 }
@@ -501,7 +501,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </head>
 <body>
 
-<!-- ===== CONTENIDO HTML ===== -->
+<!-- ===== HEADER ===== -->
 <header class="header">
 <div class="container">
 <div class="navbar">
@@ -509,8 +509,8 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 <div class="logo-text">Angel Tour <span>Brasil</span></div>
 <div class="header-right">
 <div class="lang-buttons-header">
+<button class="lang-btn-header active" data-lang="pt" title="Português"><img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-pt.png" alt="Português"></button>
 <button class="lang-btn-header" data-lang="es" title="Español"><img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-es.png" alt="Español"></button>
-<button class="lang-btn-header" data-lang="pt" title="Português"><img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-pt.png" alt="Português"></button>
 <button class="lang-btn-header" data-lang="en" title="English"><img src="https://sebagsc2020.github.io/angeltourbrasil/images/bt-us.png" alt="English"></button>
 </div>
 <div class="menu-icon" id="menuToggle"><i class="fas fa-bars"></i></div>
@@ -527,18 +527,20 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </header>
 
+<!-- ===== STICKY BAR ===== -->
 <div id="stickyBookingBar" class="sticky-booking-bar">
 <div class="sticky-booking-content">
 <div class="sticky-booking-info">
-<span data-key="sticky_subtitle">Reserva tu lugar</span>
-<strong data-key="sticky_price">⭐Precios especiales!⭐</strong>
+<span data-key="sticky_subtitle">Reserve seu lugar</span>
+<strong data-key="sticky_price">⭐ Preços especiais! ⭐</strong>
 </div>
 <button id="stickyBookBtn" class="btn-sticky-book">
-<i class="fas fa-calendar-check"></i> <span data-key="sticky_btn">Reservar Ahora</span>
+<i class="fas fa-calendar-check"></i> <span data-key="sticky_btn">Reservar Agora</span>
 </button>
 </div>
 </div>
 
+<!-- ===== HERO ===== -->
 <section id="inicio" class="hero" data-ai-enhanced>
 <div class="container">
 <div class="hero-content">
@@ -559,12 +561,13 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </section>
 
+<!-- ===== WHY ===== -->
 <div class="section" data-ai-enhanced>
 <div class="container">
-<h2 class="section-title" data-key="why_title">¿Por qué navegar com Angel Tour?</h2>
-<p class="section-sub" data-key="why_sub">Experiencia completa, segurança e diversão para todas as edades</p>
+<h2 class="section-title" data-key="why_title">Por que velejar com a Angel Tour?</h2>
+<p class="section-sub" data-key="why_sub">Experiência completa, segurança e diversão para todas as idades</p>
 <div class="cards-grid">
-<div class="card-icon"><i class="fas fa-life-ring"></i><h3 data-key="diff1_title">Segurança total</h3><p data-key="diff1_desc">Coletes + salva-vidas e tripulação treinada</p></div>
+<div class="card-icon"><i class="fas fa-life-ring"></i><h3 data-key="diff1_title">Segurança total</h3><p data-key="diff1_desc">Coletes + guarda-vidas e tripulação treinada</p></div>
 <div class="card-icon"><i class="fas fa-water"></i><h3 data-key="diff2_title">Parada em Caixa D'Aço</h3><p data-key="diff2_desc">Águas cristalinas para nadar com tranquilidade</p></div>
 <div class="card-icon"><i class="fas fa-cocktail"></i><h3 data-key="diff3_title">Buffet de Frutas</h3><p data-key="diff3_desc">Buffet de Frutas frescas a bordo</p></div>
 <div class="card-icon"><i class="fas fa-smile-wink"></i><h3 data-key="diff4_title">Diversão garantida</h3><p data-key="diff4_desc">Tobogã, música e animação para adultos e crianças</p></div>
@@ -572,6 +575,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 
+<!-- ===== ITINERARIO ===== -->
 <section id="itinerario" class="section section-bg-light" data-ai-enhanced>
 <div class="container">
 <h2 class="section-title" data-key="itinerary_title">Roteiro da Experiência</h2>
@@ -597,21 +601,23 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </section>
 
+<!-- ===== MODAL ===== -->
 <div id="infoModal" class="info-modal">
 <div class="modal-card">
 <div class="modal-header">
-<h3 id="modalTitle">Título</h3>
+<h3 id="modalTitle">Itinerário Completo</h3>
 <button class="modal-close" id="closeModalBtn">&times;</button>
 </div>
-<div class="modal-body" id="modalBody"><p>Contenido del popup...</p></div>
+<div class="modal-body" id="modalBody"></div>
 <div class="modal-footer">
-<button class="btn-read-aloud" id="readAloudBtn"><i class="fas fa-volume-up"></i> Leer</button>
-<button class="btn-share-wa" id="shareWhatsappBtn"><i class="fab fa-whatsapp"></i> Compartir</button>
-<button class="btn-modal-close" id="closeModalFooterBtn">Cerrar</button>
+<button class="btn-read-aloud" id="readAloudBtn"><i class="fas fa-volume-up"></i> Ler</button>
+<button class="btn-share-wa" id="shareWhatsappBtn"><i class="fab fa-whatsapp"></i> Compartilhar</button>
+<button class="btn-modal-close" id="closeModalFooterBtn">Fechar</button>
 </div>
 </div>
 </div>
 
+<!-- ===== GALERIA ===== -->
 <section id="galeria" class="section" data-ai-enhanced>
 <div class="container">
 <h2 class="section-title" data-key="gallery_title">Viva essa aventura</h2>
@@ -631,6 +637,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </section>
 
+<!-- ===== LIGHTBOX ===== -->
 <div id="lightboxModern" class="lightbox-modern">
 <div class="lightbox-content">
 <button class="close-btn" id="closeLightboxBtn">&times;</button>
@@ -639,6 +646,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 
+<!-- ===== TESTIMONIOS ===== -->
 <div class="section section-bg-light" data-ai-enhanced>
 <div class="container">
 <h2 class="section-title" data-key="testimonials_title">Quem já navegou, recomenda</h2>
@@ -650,6 +658,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 
+<!-- ===== PARADOR ===== -->
 <section id="parador" class="section" data-ai-enhanced>
 <div class="container">
 <h2 class="section-title" data-key="parador_title">🏝️ Porto Belo Beach Day</h2>
@@ -679,74 +688,103 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </section>
 
+<!-- ===== RESERVA ===== -->
 <section id="reserva" data-ai-enhanced>
 <div class="container" style="max-width: 700px; margin: 0 auto; padding: 0 24px 80px 24px;">
 <div class="form-wrapper-simple">
-<div class="weather-widget-container">
-<div id="weatherWidgetPlaceholder" style="width:100%;">
-<div style="color: #64748B; font-size: 0.8rem; text-align: center; padding: 20px;">🌊 Cargando previsión del tiempo...</div>
+<!-- CLIMA -->
+<div class="weather-widget-container" id="weatherWidgetContainer">
+    <div style="width:100%; border-radius:24px; overflow:hidden; background: linear-gradient(135deg, #0A2F6C, #005f8c); padding: 20px; text-align: center; color: white;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <div>
+                <h3 style="font-size: 1.2rem; margin-bottom: 5px;">🌊 Porto Belo - SC</h3>
+                <p style="font-size: 0.8rem; opacity: 0.8;" data-key="weather_title">Previsão para 3 dias</p>
+            </div>
+            <div id="weatherContent" style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+                <div style="text-align: center; padding: 8px 12px; background: rgba(255,255,255,0.1); border-radius: 12px; min-width: 80px;">
+                    <div style="font-size: 1.5rem;">⛅</div>
+                    <div style="font-size: 0.7rem;" data-key="weather_today">Hoje</div>
+                    <div style="font-weight: bold; font-size: 1rem;">22°C</div>
+                </div>
+                <div style="text-align: center; padding: 8px 12px; background: rgba(255,255,255,0.1); border-radius: 12px; min-width: 80px;">
+                    <div style="font-size: 1.5rem;">☀️</div>
+                    <div style="font-size: 0.7rem;" data-key="weather_tomorrow">Amanhã</div>
+                    <div style="font-weight: bold; font-size: 1rem;">25°C</div>
+                </div>
+                <div style="text-align: center; padding: 8px 12px; background: rgba(255,255,255,0.1); border-radius: 12px; min-width: 80px;">
+                    <div style="font-size: 1.5rem;">🌤️</div>
+                    <div style="font-size: 0.7rem;" data-key="weather_after">+2 dias</div>
+                    <div style="font-weight: bold; font-size: 1rem;">24°C</div>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 12px; font-size: 0.7rem; opacity: 0.6;" data-key="weather_note">
+            Dados climáticos para planejar seu passeio
+        </div>
+    </div>
 </div>
-</div>
+
 <form id="dataForm">
 <div class="form-grid-2col">
 <div>
-<div class="form-label"><i class="far fa-calendar-alt"></i> <span id="textFecha">DATA DO PASSEIO</span></div>
+<div class="form-label"><i class="far fa-calendar-alt"></i> <span id="textFecha" data-key="fecha_label">DATA DO PASSEIO</span></div>
 <input type="date" id="fecha" name="fecha" required class="form-input">
 </div>
 <div>
-<div class="form-label"><i class="far fa-clock"></i> <span id="textHorario">PREFERÊNCIA DE HORÁRIO</span></div>
+<div class="form-label"><i class="far fa-clock"></i> <span id="textHorario" data-key="horario_label">PREFERÊNCIA DE HORÁRIO</span></div>
 <div class="horarios-group">
-<div class="horario-card" data-horario="09:30"><div class="horario-titulo" id="horarioTitulo1">Manhã</div><div class="horario-hora">9:30 Hs</div></div>
-<div class="horario-card" data-horario="11:10"><div class="horario-titulo" id="horarioTitulo2">Meia Manhã</div><div class="horario-hora">11:10 Hs</div></div>
-<div class="horario-card" data-horario="13:00"><div class="horario-titulo" id="horarioTitulo3">Tarde</div><div class="horario-hora">13:00 Hs</div></div>
+<div class="horario-card" data-horario="09:30"><div class="horario-titulo" id="horarioTitulo1" data-key="horario1">Manhã</div><div class="horario-hora">9:30 Hs</div></div>
+<div class="horario-card" data-horario="11:10"><div class="horario-titulo" id="horarioTitulo2" data-key="horario2">Meia Manhã</div><div class="horario-hora">11:10 Hs</div></div>
+<div class="horario-card" data-horario="13:00"><div class="horario-titulo" id="horarioTitulo3" data-key="horario3">Tarde</div><div class="horario-hora">13:00 Hs</div></div>
 </div>
 <input type="hidden" id="horario" name="horario" required>
-<div class="form-note" id="horarioNote">⏱️ Sujeito à disponibilidade</div>
+<div class="form-note" id="horarioNote" data-key="horario_note">⏱️ Sujeito à disponibilidade</div>
 </div>
 </div>
 <div class="form-grid-2col" style="margin-top: 1rem;">
 <div>
-<div class="form-label"><i class="fas fa-user"></i> <span id="textNombre">NOME</span></div>
+<div class="form-label"><i class="fas fa-user"></i> <span id="textNombre" data-key="nombre_label">NOME</span></div>
 <input type="text" id="nombre" name="nombre" required placeholder="Ex: Carlos Silva" class="form-input">
 </div>
 <div>
-<div class="form-label"><i class="fas fa-building"></i> <span id="textEmpresa">EMPRESA</span></div>
+<div class="form-label"><i class="fas fa-building"></i> <span id="textEmpresa" data-key="empresa_label">EMPRESA</span></div>
 <input type="text" id="empresa" name="empresa" placeholder="Ex: Turismo Brasil" class="form-input">
-<div class="form-note" id="empresaNote">*Opcional</div>
+<div class="form-note" id="empresaNote" data-key="empresa_note">*Opcional</div>
 </div>
 </div>
 <div class="form-grid-2col" style="margin-top: 1rem;">
 <div>
-<div class="form-label"><i class="fas fa-users"></i> <span id="textAdultos">ADULTOS</span></div>
+<div class="form-label"><i class="fas fa-users"></i> <span id="textAdultos" data-key="adultos_label">ADULTOS</span></div>
 <input type="number" id="adultos" name="adultos" required step="1" min="0" max="99" value="0" class="form-input" onfocus="if(this.value == '0') this.value = ''" onblur="if(this.value == '') this.value = 0; calcularValorTotal()">
-<div class="form-note" id="precioAdultos">💰 R$ 100,00 cada adulto</div>
+<div class="form-note" id="precioAdultos" data-key="precio_adultos">💰 R$ 100,00 cada adulto</div>
 </div>
 <div>
-<div class="form-label"><i class="fas fa-child"></i> <span id="textMenores">MENORES 6-11 años</span></div>
+<div class="form-label"><i class="fas fa-child"></i> <span id="textMenores" data-key="menores_label">MENORES 6-11 años</span></div>
 <input type="number" id="menores" name="menores" step="1" min="0" max="99" value="0" class="form-input" onfocus="if(this.value == '0') this.value = ''" onblur="if(this.value == '') this.value = 0; calcularValorTotal()">
-<div class="form-note"><span id="discountBadge" class="discount-badge">🎯 50% de desconto</span></div>
+<div class="form-note"><span id="discountBadge" class="discount-badge" data-key="discount_text">🎯 50% de desconto</span></div>
 </div>
 </div>
 <div class="info-box">
-<p>💡 <span id="infoNoteText">Preço de venda ao público.</span></p>
+<p>💡 <span id="infoNoteText" data-key="info_text">Preço de venda ao público.</span></p>
 </div>
 <div>
-<div class="form-label"><i class="fas fa-dollar-sign"></i> <span id="textTotal">VALOR TOTAL</span></div>
+<div class="form-label"><i class="fas fa-dollar-sign"></i> <span id="textTotal" data-key="total_label">VALOR TOTAL</span></div>
 <input type="text" id="valorTotal" name="valorTotal" readonly value="R$ 0,00" class="form-input total-display">
 </div>
 <button type="submit" id="btnSubmit" class="btn-submit-modern">
-<i class="fab fa-whatsapp"></i> <span id="btnText">ENVIAR RESERVA</span>
+<i class="fab fa-whatsapp"></i> <span id="btnText" data-key="btn_text">ENVIAR RESERVA</span>
 </button>
 </form>
 <div class="footer-form">
-<span><i class="fas fa-ship"></i> <span id="footerBoat">Passeios de barco</span></span>
-<span><i class="fas fa-lock"></i> <span id="footerSecure">Confirmação segura</span></span>
-<span><i class="fab fa-whatsapp"></i> <span id="footerConfirm">Envio por WhatsApp</span></span>
+<span><i class="fas fa-ship"></i> <span id="footerBoat" data-key="footer_boat">Passeios de barco</span></span>
+<span><i class="fas fa-lock"></i> <span id="footerSecure" data-key="footer_secure">Confirmação segura</span></span>
+<span><i class="fab fa-whatsapp"></i> <span id="footerConfirm" data-key="footer_confirm">Envio por WhatsApp</span></span>
 </div>
 </div>
 </div>
 </section>
 
+<!-- ===== FOOTER ===== -->
 <footer class="footer">
 <div class="container">
 <div class="footer-content">
@@ -779,10 +817,12 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </footer>
 
-<a id="whatsappFloat" href="#" class="whatsapp-float" target="_blank" rel="noopener noreferrer" onclick="updateWhatsAppLink(event)">
+<!-- ===== WHATSAPP FLOAT ===== -->
+<a id="whatsappFloat" href="#" class="whatsapp-float" target="_blank">
 <i class="fab fa-whatsapp"></i>
 </a>
 
+<!-- ===== AI CHATBOT ===== -->
 <button class="ai-chatbot-toggle" id="aiChatbotToggle" title="Angel AI">
 <i class="fas fa-robot"></i>
 <span class="ai-badge-dot"></span>
@@ -797,7 +837,6 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 <button class="ai-chatbot-close" id="aiChatbotClose"><i class="fas fa-times"></i></button>
 </div>
 <div class="ai-chatbot-messages" id="aiChatMessages"></div>
-<div class="ai-quick-replies" id="aiQuickReplies"></div>
 <div class="ai-chatbot-input-area">
 <input type="text" class="ai-chatbot-input" id="aiChatInput" placeholder="Pergunte algo..." autocomplete="off">
 <button class="ai-voice-btn" id="aiVoiceBtn" title="🎤 Hablar">
@@ -819,28 +858,18 @@ document.addEventListener('keydown', function(e) {
         e.preventDefault(); return false;
     }
 });
-document.addEventListener('copy', function(e) {
-    const target = e.target;
-    if (target.tagName !== 'INPUT' && target.tagName !== 'TEXTAREA' && !target.hasAttribute('contenteditable')) {
-        e.preventDefault(); return false;
-    }
-});
-document.addEventListener('dragstart', function(e) {
-    if (e.target.tagName === 'IMG') { e.preventDefault(); return false; }
-});
 
 // ============================================
 // WEBMCP - FUNCIONES PARA AGENTES IA
 // ============================================
 window.webmcp = {
-    // 🔹 Información general del sitio
     getSiteInfo: function() {
         return {
             name: 'Angel Tour Brasil',
             description: 'O passeio mais completo da Costa Esmeralda',
             location: 'Porto Belo - SC',
             address: 'Av. Gov. Celso Ramos 1445, Porto Belo, SC, CEP 88210-000',
-            services: ['Passeios de barco', 'Porto Belo Beach Day', 'Buffet de frutas', 'Tobogã', 'Música ao vivo'],
+            services: ['Passeios de barco', 'Porto Belo Beach Day', 'Buffet de frutas', 'Tobogã'],
             prices: {
                 adult: { price: 100, currency: 'BRL', formatted: 'R$ 100,00' },
                 child_6_11: { price: 50, currency: 'BRL', formatted: 'R$ 50,00', discount: '50%' },
@@ -848,272 +877,755 @@ window.webmcp = {
             },
             contact: {
                 whatsapp: '+55 47 99967-9084',
-                email: 'angelportobelo@gmail.com',
-                phone: '+55 47 99967-9084'
+                email: 'angelportobelo@gmail.com'
             },
             schedules: ['09:30', '11:10', '13:00'],
-            duration: '1h30',
-            totalCapacity: 240,
-            languages: ['Português', 'Español', 'English'],
-            website: 'https://www.angeltourbrasil.com.br',
-            social: {
-                instagram: 'https://www.instagram.com/angelportobelo/',
-                facebook: 'https://www.facebook.com/angeldeportobelo',
-                youtube: 'https://www.youtube.com/angelportobelo'
-            }
+            duration: '1h30'
         };
     },
-
-    // 🔹 Obtener itinerario por idioma
-    getItinerary: function(lang = 'pt') {
-        const itineraries = {
-            es: {
-                title: "Itinerario del Paseo",
-                steps: [
-                    { step: 1, title: "Embarque", description: "Embarque en Porto dos Piratas", time: "9:30" },
-                    { step: 2, title: "Navegación", description: "Recorrido por la Costa Esmeralda", time: "9:30-11:00" },
-                    { step: 3, title: "Parada en Caixa D'Aço", description: "30 minutos para nadar y tobogán", time: "11:00-11:30" },
-                    { step: 4, title: "Fiesta a bordo", description: "Buffet de frutas y música", time: "11:30-12:30" },
-                    { step: 5, title: "Regreso", description: "Retorno al puerto", time: "12:30-13:00" }
-                ],
-                totalDuration: "3h30",
-                includes: ["Tobogán acuático", "Buffet de frutas", "Música en vivo", "Chalecos salvavidas"]
-            },
-            pt: {
-                title: "Roteiro do Passeio",
-                steps: [
-                    { step: 1, title: "Embarque", description: "Embarque em Porto dos Piratas", time: "9:30" },
-                    { step: 2, title: "Navegação", description: "Percorrido pela Costa Esmeralda", time: "9:30-11:00" },
-                    { step: 3, title: "Parada em Caixa D'Aço", description: "30 minutos para nadar e tobogã", time: "11:00-11:30" },
-                    { step: 4, title: "Festa a bordo", description: "Buffet de frutas e música", time: "11:30-12:30" },
-                    { step: 5, title: "Retorno", description: "Retorno ao porto", time: "12:30-13:00" }
-                ],
-                totalDuration: "3h30",
-                includes: ["Tobogã aquático", "Buffet de frutas", "Música ao vivo", "Coletes salva-vidas"]
-            },
-            en: {
-                title: "Tour Itinerary",
-                steps: [
-                    { step: 1, title: "Boarding", description: "Boarding at Porto dos Piratas", time: "9:30" },
-                    { step: 2, title: "Cruising", description: "Cruising the Emerald Coast", time: "9:30-11:00" },
-                    { step: 3, title: "Swimming Stop", description: "30 minutes swimming and waterslide", time: "11:00-11:30" },
-                    { step: 4, title: "Party on Board", description: "Fruit buffet and live music", time: "11:30-12:30" },
-                    { step: 5, title: "Return", description: "Return to port", time: "12:30-13:00" }
-                ],
-                totalDuration: "3h30",
-                includes: ["Waterslide", "Fruit buffet", "Live music", "Life jackets"]
-            }
+    getItinerary: function(lang) {
+        var langCode = lang || 'pt';
+        var itineraries = {
+            es: "1. Embarque en Porto dos Piratas\n2. Navegación por la Costa Esmeralda\n3. Parada en Caixa D'Aço\n4. Fiesta a bordo",
+            pt: "1. Embarque em Porto dos Piratas\n2. Navegação pela Costa Esmeralda\n3. Parada em Caixa D'Aço\n4. Festa a bordo",
+            en: "1. Boarding at Porto dos Piratas\n2. Cruising the Emerald Coast\n3. Stop at Caixa D'Aço\n4. Party on board"
         };
-        return itineraries[lang] || itineraries.pt;
+        return { itinerary: itineraries[langCode] || itineraries.pt };
     },
-
-    // 🔹 Obtener precios
-    getPrices: function() {
-        return {
-            adult: { price: 100, currency: 'BRL', formatted: 'R$ 100,00' },
-            child_6_11: { price: 50, currency: 'BRL', formatted: 'R$ 50,00', discount: '50%' },
-            under_5: { price: 0, currency: 'BRL', formatted: 'Grátis' },
-            groupDiscounts: [
-                { minPeople: 10, discount: '10%' },
-                { minPeople: 20, discount: '15%' }
-            ]
-        };
-    },
-
-    // 🔹 Calcular precio total
     calculatePrice: function(adults, children) {
-        const adultPrice = 100;
-        const childPrice = 50;
-        const total = (adults * adultPrice) + (children * childPrice);
-        return {
-            adultPrice: adultPrice,
-            childPrice: childPrice,
-            adults: adults,
-            children: children,
-            total: total,
-            formatted: total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
-            breakdown: {
-                adults: { count: adults, price: adultPrice, subtotal: adults * adultPrice },
-                children: { count: children, price: childPrice, subtotal: children * childPrice }
-            }
-        };
+        var total = (adults * 100) + (children * 50);
+        return { total: total, formatted: 'R$ ' + total.toFixed(2).replace('.', ',') };
     },
-
-    // 🔹 Verificar disponibilidad
     checkAvailability: function(date, time) {
-        const today = new Date();
-        const todayStr = today.toISOString().split('T')[0];
-        const maxDate = new Date(today);
-        maxDate.setDate(today.getDate() + 30);
-        const maxDateStr = maxDate.toISOString().split('T')[0];
-        
-        const isValidDate = date >= todayStr && date <= maxDateStr;
-        const isValidTime = ['09:30', '11:10', '13:00'].includes(time);
-        
-        if (!isValidDate) {
-            return {
-                available: false,
-                message: '❌ Fecha inválida. Debe estar entre hoy y los próximos 30 días.',
-                error: 'invalid_date',
-                validRange: { from: todayStr, to: maxDateStr }
-            };
-        }
-        
-        if (!isValidTime) {
-            return {
-                available: false,
-                message: '❌ Horário inválido. Horários disponíveis: 09:30, 11:10, 13:00',
-                error: 'invalid_time',
-                validTimes: ['09:30', '11:10', '13:00']
-            };
-        }
-        
-        const randomAvailable = Math.random() < 0.8;
-        
+        var validTimes = ['09:30', '11:10', '13:00'];
+        var isValidTime = validTimes.indexOf(time) !== -1;
+        var randomAvailable = Math.random() < 0.8;
         return {
-            available: randomAvailable,
-            date: date,
-            time: time,
-            message: randomAvailable ? 
-                '✅ Disponível para reserva' : 
-                '❌ Não disponível nesse horário. Tente outro horário.',
-            alternatives: randomAvailable ? [] : ['09:30', '11:10', '13:00'].filter(t => t !== time),
-            remainingSpots: randomAvailable ? Math.floor(Math.random() * 40) + 10 : 0
+            available: isValidTime && randomAvailable,
+            message: randomAvailable ? '✅ Disponível' : '❌ Não disponível'
         };
     },
-
-    // 🔹 Obtener fechas disponibles
-    getAvailableDates: function() {
-        const dates = [];
-        const today = new Date();
-        const todayStr = today.toISOString().split('T')[0];
-        for (let i = 0; i < 30; i++) {
-            const date = new Date(today);
-            date.setDate(today.getDate() + i);
-            dates.push(date.toISOString().split('T')[0]);
-        }
-        return {
-            availableDates: dates,
-            count: dates.length,
-            nextAvailable: dates[0] || null,
-            today: todayStr,
-            maxDate: dates[dates.length - 1] || null
-        };
-    },
-
-    // 🔹 Hacer reserva
-    makeReservation: function(date, time, name, adults, children, company = '') {
-        if (!date || !time || !name || adults === undefined || children === undefined) {
-            return {
-                success: false,
-                error: 'Campos requeridos: date, time, name, adults, children'
-            };
-        }
-        
-        const adultsNum = parseInt(adults);
-        const childrenNum = parseInt(children || 0);
-        
-        if (isNaN(adultsNum) || isNaN(childrenNum) || adultsNum < 0 || childrenNum < 0) {
-            return {
-                success: false,
-                error: 'Adultos e crianças devem ser números maiores ou iguais a 0'
-            };
-        }
-        
-        const availability = window.webmcp.checkAvailability(date, time);
-        if (!availability.available) {
-            return {
-                success: false,
-                error: 'No hay disponibilidad para la fecha y horario seleccionados',
-                availability: availability
-            };
-        }
-        
-        const price = window.webmcp.calculatePrice(adultsNum, childrenNum);
-        const reservationId = 'AT-' + Date.now().toString().slice(-6) + '-' + 
-                             Math.random().toString(36).substring(2, 5).toUpperCase();
-        
-        const message = `🏴‍☠️ *NOVA RESERVA* ⚓\n` +
-                       `📋 *ID:* ${reservationId}\n` +
-                       `📅 *Data:* ${date}\n` +
-                       `⏰ *Horário:* ${time}\n` +
-                       `👤 *Responsável:* ${name}\n` +
-                       `👥 *Adultos:* ${adultsNum}\n` +
-                       `🧒 *Crianças (6-11):* ${childrenNum}\n` +
-                       `💰 *Total:* R$ ${price.total}\n` +
-                       `${company ? `🏢 *Empresa:* ${company}\n` : ''}` +
-                       `📱 *Confirmação:* ${window.location.origin}`;
-        
-        const waUrl = `https://wa.me/5547999679084?text=${encodeURIComponent(message)}`;
-        
-        try {
-            const reservations = JSON.parse(localStorage.getItem('angel_tour_reservations') || '[]');
-            reservations.push({
-                id: reservationId,
-                date, time, name,
-                adults: adultsNum,
-                children: childrenNum,
-                company: company || '',
-                total: price.total,
-                createdAt: new Date().toISOString()
-            });
-            localStorage.setItem('angel_tour_reservations', JSON.stringify(reservations));
-        } catch (e) {
-            console.warn('No se pudo guardar en localStorage:', e);
-        }
-        
+    makeReservation: function(date, time, name, adults, children, company) {
+        var price = window.webmcp.calculatePrice(adults, children);
+        var reservationId = 'AT-' + Date.now().toString().slice(-6);
         return {
             success: true,
             reservationId: reservationId,
-            date: date,
-            time: time,
-            name: name,
-            adults: adultsNum,
-            children: childrenNum,
-            total: price.total,
-            formattedTotal: price.formatted,
-            message: `✅ Reserva #${reservationId} criada com sucesso!\nTotal: ${price.formatted}`,
-            whatsappLink: waUrl
+            message: '✅ Reserva criada! ID: ' + reservationId,
+            total: price.total
         };
-    },
-
-    // 🔹 Obtener historial de reservas
-    getReservations: function() {
-        try {
-            const reservations = JSON.parse(localStorage.getItem('angel_tour_reservations') || '[]');
-            return { total: reservations.length, reservations: reservations };
-        } catch (e) {
-            return { total: 0, reservations: [] };
-        }
-    },
-
-    // 🔹 Obtener el manifest
-    getManifest: function() {
-        return window.webmcpManifest || null;
     }
 };
 
 // ============================================
-// CHATBOT CON GEMINI IA
+// ITINERARIO COMPLETO PARA EL MODAL
 // ============================================
-const WORKER_URL = 'https://angeltour-chatbot.sebagsc2020.workers.dev/api/chat';
+var fullItinerary = {
+    es: '<h3>1. Embarque Ordenado y Exclusivo</h3><p><strong>Punto de encuentro:</strong> Los pasajeros se concentran de manera organizada en nuestro muelle privado ubicado en Porto Belo.</p><h3>2. Navegación por la Costa Esmeralda</h3><p><strong>Zarpada:</strong> Las embarcaciones inician la travesía náutica adentrándose en el océano Atlántico.</p><h3>3. Parada para Baño y Relax en Caixa d\'Aço</h3><p><strong>Llegada al refugio natural:</strong> El barco se posiciona en la famosa bahía de Caixa d\'Aço.</p><h3>4. Fiesta a Bordo y Regreso</h3><p><strong>Show pirata interactivo:</strong> Tras el baño, se enciende la energía a bordo con la animación en vivo.</p>',
+    pt: '<h3>1. Embarque Ordenado e Exclusivo</h3><p><strong>Ponto de encontro:</strong> Os passageiros se concentram de maneira organizada em nosso píer privado localizado em Porto Belo.</p><h3>2. Navegação pela Costa Esmeralda</h3><p><strong>Zarpada:</strong> As embarcações iniciam a travessia náutica adentrando o oceano Atlântico.</p><h3>3. Parada para Banho e Relax em Caixa d\'Aço</h3><p><strong>Chegada ao refúgio natural:</strong> O barco se posiciona na famosa baía de Caixa d\'Aço.</p><h3>4. Festa a Bordo e Retorno</h3><p><strong>Show pirata interativo:</strong> Após o banho, a energia a bordo se acende com a animação ao vivo.</p>',
+    en: '<h3>1. Orderly and Exclusive Boarding</h3><p><strong>Meeting point:</strong> Passengers gather in an organized manner at our private pier located in Porto Belo.</p><h3>2. Navigation along the Emerald Coast</h3><p><strong>Departure:</strong> The vessels begin the nautical journey into the Atlantic Ocean.</p><h3>3. Swimming Stop and Relaxation in Caixa d\'Aço</h3><p><strong>Arrival at the natural refuge:</strong> The boat positions itself in the famous Caixa d\'Aço bay.</p><h3>4. Party on Board and Return</h3><p><strong>Interactive pirate show:</strong> After swimming, the energy on board lights up with the live animation.</p>'
+};
 
-// ... [MANTENER TODAS LAS TRADUCCIONES Y FUNCIONES EXISTENTES DEL CHATBOT] ...
+// ============================================
+// TRADUCCIONES COMPLETAS
+// ============================================
+var translations = {
+    pt: {
+        nav_home: "Início", nav_tour: "O Passeio", nav_gallery: "Galeria", nav_parador: "Porto Belo Beach Day", nav_book: "Reservar",
+        hero_title: "O passeio mais completo da Costa Esmeralda",
+        hero_sub: "Navegue por paisagens paradisíacas, nade na Bahía de Caixa D'Aço, aproveite tobogã, frutas tropicais e muita animação a bordo.",
+        btn_route: "Ver Roteiro", btn_guarantee: "Garantir Vaga",
+        why_title: "Por que velejar com a Angel Tour?", why_sub: "Experiência completa, segurança e diversão para todas as idades",
+        diff1_title: "Segurança total", diff1_desc: "Coletes + guarda-vidas e tripulação treinada",
+        diff2_title: "Parada em Caixa D'Aço", diff2_desc: "Águas cristalinas para nadar com tranquilidade",
+        diff3_title: "Buffet de Frutas", diff3_desc: "Buffet de Frutas frescas a bordo",
+        diff4_title: "Diversão garantida", diff4_desc: "Tobogã, música e animação para adultos e crianças",
+        itinerary_title: "Roteiro da Experiência", itinerary_sub: "Embarque em Porto dos Piratas e viva momentos inesquecíveis",
+        step1_title: "Embarque", step2_title: "Navegação", step3_title: "Parada para Banho", step4_title: "Festa a bordo",
+        gallery_title: "Viva essa aventura", gallery_sub: "Assista ao passeio e inspire-se para sua viagem",
+        testimonials_title: "Quem já navegou, recomenda",
+        test1_text: "Passeio fantástico! A equipe é muito atenciosa.",
+        test2_text: "Segurança e diversão. Buffet de frutas delicioso.",
+        test3_text: "Melhor passeio de barco de Porto Belo!",
+        parador_title: "🏝️ Porto Belo Beach Day",
+        parador_sub: "Desfrute de uma experiência completa em nosso exclusivo parador à beira-mar",
+        parador_col1_title: "Lojas de Souvenirs",
+        parador_col1_text: "Leve a magia da viagem com você. Das lembranças temáticas que contam histórias à moda praia que combina com o verão, temos o souvenir perfeito para guardar (ou presentear) o clima inesquecível desses dias.",
+        parador_col2_title: "Infraestrutura e Conforto",
+        parador_col2_text: "Nosso parador conta com chuveiros de água doce e sanitários impecáveis. Desfrute de um espaço pensado para seu máximo conforto, com acesso direto à praia e áreas de descanso rodeadas pela natureza.",
+        parador_col3_title: "Gastronomia e Bar",
+        parador_col3_text: "Delicie-se com nossa variada oferta gastronômica: Snacks, sanduíches, hambúrgueres com batatas fritas, variados pratos e bebidas refrescantes. Tudo preparado com ingredientes frescos e de qualidade.",
+        footer_address: "Porto dos Piratas, Porto Belo - SC",
+        footer_nav: "Navegação", footer_home: "Início", footer_route: "Itinerário", footer_gallery: "Galeria", footer_parador: "Porto Belo Beach Day",
+        footer_follow: "Siga a aventura", footer_copyright: "© 2026 Angel Tour Brasil – O passeio mais completo da Costa Esmeralda.",
+        map_text: "Abrir no Google Maps",
+        sticky_subtitle: "Reserve seu lugar", sticky_price: "⭐ Preços especiais! ⭐", sticky_btn: "Reservar Agora",
+        fecha_label: "DATA DO PASSEIO", horario_label: "PREFERÊNCIA DE HORÁRIO", horario1: "Manhã", horario2: "Meia Manhã", horario3: "Tarde",
+        nombre_label: "NOME", empresa_label: "EMPRESA", empresa_note: "*Opcional",
+        adultos_label: "ADULTOS", menores_label: "MENORES de 6 a 11 anos", total_label: "VALOR TOTAL",
+        btn_text: "ENVIAR RESERVA", horario_note: "⏱️ Sujeito à disponibilidade",
+        info_text: "💡 Preço de venda ao público.", discount_text: "🎯 50% de desconto",
+        precio_adultos: "💰 R$ 100,00 cada adulto",
+        footer_boat: "Passeios de barco", footer_secure: "Confirmação segura", footer_confirm: "Envio por WhatsApp",
+        ai_chatbot_placeholder: "Pergunte algo...", ai_online: "Online agora",
+        weather_title: "Previsão para 3 dias", weather_today: "Hoje", weather_tomorrow: "Amanhã", weather_after: "+2 dias", weather_note: "Dados climáticos para planejar seu passeio",
+        wa_message: "Olá! 👋 Tenho interesse no passeio de barco da Angel Tour Brasil. Poderiam me dar mais informações sobre disponibilidade e preços? ⛵",
+        modal_title: "Roteiro Completo da Excursão",
+        modal_read: "Ler", modal_stop: "Parar", modal_share: "Compartilhar", modal_close: "Fechar"
+    },
+    es: {
+        nav_home: "Início", nav_tour: "El Paseo", nav_gallery: "Galería", nav_parador: "Porto Belo Beach Day", nav_book: "Reservar",
+        hero_title: "El paseo más completo de la Costa Esmeralda",
+        hero_sub: "Navegue por paisajes paradisíacos, nade en la Bahía de Caixa D'Aço, disfrute del tobogán, frutas tropicales y mucha animación a bordo.",
+        btn_route: "Ver Itinerario", btn_guarantee: "Asegurar Plaza",
+        why_title: "¿Por qué navegar con Angel Tour?", why_sub: "Experiencia completa, seguridad y diversión para todas las edades",
+        diff1_title: "Seguridad total", diff1_desc: "Chalecos + salvavidas y tripulación entrenada",
+        diff2_title: "Parada en Caixa D'Aço", diff2_desc: "Aguas cristalinas para nadar con tranquilidad",
+        diff3_title: "Buffet de Frutas", diff3_desc: "Frutas frescas a bordo",
+        diff4_title: "Diversión asegurada", diff4_desc: "Tobogán, música y animación para adultos y niños",
+        itinerary_title: "Itinerario de la Experiencia", itinerary_sub: "Embarque en Porto dos Piratas y viva momentos inolvidables",
+        step1_title: "Embarque", step2_title: "Navegación", step3_title: "Parada para Baño", step4_title: "Fiesta a bordo",
+        gallery_title: "Vive esta aventura", gallery_sub: "Mira el paseo e inspírate para tu viaje",
+        testimonials_title: "Quienes ya navegaron, recomiendan",
+        test1_text: "¡Paseo fantástico! El equipo es muy atento.",
+        test2_text: "Seguridad y diversión. Buffet de frutas delicioso.",
+        test3_text: "¡El mejor paseo en barco de Porto Belo!",
+        parador_title: "🏝️ Porto Belo Beach Day",
+        parador_sub: "Disfruta de una experiencia completa en nuestro exclusivo parador junto al mar",
+        parador_col1_title: "Tiendas de Souvenirs",
+        parador_col1_text: "Lleva la magia del viaje contigo. Desde recuerdos temáticos que cuentan historias hasta ropa de playa que combina con el verano, tenemos el souvenir perfecto para guardar (o regalar) el clima inolvidable de estos días.",
+        parador_col2_title: "Infraestructura y Confort",
+        parador_col2_text: "Nuestro parador cuenta con duchas de agua dulce y sanitarios impecables. Disfruta de un espacio pensado para tu máximo confort, con acceso directo a la playa y áreas de descanso rodeadas por la naturaleza.",
+        parador_col3_title: "Gastronomía y Bar",
+        parador_col3_text: "Deléitate con nuestra variada oferta gastronómica: Snacks, sándwiches, hamburguesas con papas fritas, variados platos y bebidas refrescantes. Todo preparado con ingredientes frescos y de calidad.",
+        footer_address: "Porto dos Piratas, Porto Belo - SC",
+        footer_nav: "Navegación", footer_home: "Início", footer_route: "Itinerario", footer_gallery: "Galería", footer_parador: "Porto Belo Beach Day",
+        footer_follow: "Sigue la aventura", footer_copyright: "© 2026 Angel Tour Brasil – El paseo más completo de la Costa Esmeralda.",
+        map_text: "Abrir en Google Maps",
+        sticky_subtitle: "Reserva tu lugar", sticky_price: "⭐ ¡Precios especiales! ⭐", sticky_btn: "Reservar Ahora",
+        fecha_label: "FECHA DEL PASEO", horario_label: "PREFERENCIA DE HORARIO", horario1: "Mañana", horario2: "Media Mañana", horario3: "Tarde",
+        nombre_label: "NOMBRE", empresa_label: "EMPRESA", empresa_note: "*Opcional",
+        adultos_label: "ADULTOS", menores_label: "MENORES de 6 a 11 años", total_label: "VALOR TOTAL",
+        btn_text: "ENVIAR RESERVA", horario_note: "⏱️ Sujeto a disponibilidad",
+        info_text: "💡 Precio de venta al público.", discount_text: "🎯 50% de descuento",
+        precio_adultos: "💰 R$ 100,00 cada adulto",
+        footer_boat: "Paseos en barco", footer_secure: "Confirmación segura", footer_confirm: "Envío por WhatsApp",
+        ai_chatbot_placeholder: "Pregúntame algo...", ai_online: "Online agora",
+        weather_title: "Previsión para 3 días", weather_today: "Hoy", weather_tomorrow: "Mañana", weather_after: "+2 días", weather_note: "Datos climáticos para planificar tu paseo",
+        wa_message: "¡Hola! 👋 Me interesa el paseo en barco de Angel Tour Brasil. ¿Podrían darme más información sobre disponibilidad y precios? ⛵",
+        modal_title: "Itinerario Completo de la Excursión",
+        modal_read: "Leer", modal_stop: "Parar", modal_share: "Compartir", modal_close: "Cerrar"
+    },
+    en: {
+        nav_home: "Home", nav_tour: "The Tour", nav_gallery: "Gallery", nav_parador: "Porto Belo Beach Day", nav_book: "Book Now",
+        hero_title: "The most complete tour of the Emerald Coast",
+        hero_sub: "Sail through stunning landscapes, swim in Caixa D'Aço Bay, enjoy a waterslide, tropical fruits, and lots of fun on board.",
+        btn_route: "See Itinerary", btn_guarantee: "Book Now",
+        why_title: "Why sail with Angel Tour?", why_sub: "Complete experience, safety and fun for all ages",
+        diff1_title: "Total safety", diff1_desc: "Life jackets + lifeguards and trained crew",
+        diff2_title: "Stop at Caixa D'Aço", diff2_desc: "Crystal clear waters for a safe swim",
+        diff3_title: "Buffet & Drinks", diff3_desc: "Fresh fruits on board",
+        diff4_title: "Guaranteed fun", diff4_desc: "Waterslide, music and entertainment for all ages",
+        itinerary_title: "Experience Itinerary", itinerary_sub: "Board at Porto dos Piratas and live unforgettable moments",
+        step1_title: "Boarding", step2_title: "Navigation", step3_title: "Swimming Stop", step4_title: "Party on board",
+        gallery_title: "Live this adventure", gallery_sub: "Watch the tour and get inspired for your trip",
+        testimonials_title: "Those who have sailed, recommend",
+        test1_text: "Fantastic tour! The team is very attentive.",
+        test2_text: "Safety and fun. Delicious fruit buffet.",
+        test3_text: "Best boat tour in Porto Belo!",
+        parador_title: "🏝️ Porto Belo Beach Day",
+        parador_sub: "Enjoy a complete experience at our exclusive beachfront club",
+        parador_col1_title: "Souvenir Shops",
+        parador_col1_text: "Take the magic of the trip with you. From themed souvenirs that tell stories to beachwear that matches the summer, we have the perfect souvenir to keep (or gift) the unforgettable vibe of these days.",
+        parador_col2_title: "Infrastructure & Comfort",
+        parador_col2_text: "Our beach club features fresh water showers and impeccable restrooms. Enjoy a space designed for your maximum comfort, with direct beach access and rest areas surrounded by nature.",
+        parador_col3_title: "Gastronomy & Bar",
+        parador_col3_text: "Delight yourself with our varied gastronomic offer: Snacks, sandwiches, burgers with fries, varied dishes and refreshing drinks. All prepared with fresh and quality ingredients.",
+        footer_address: "Porto dos Piratas, Porto Belo - SC",
+        footer_nav: "Navigation", footer_home: "Home", footer_route: "Itinerary", footer_gallery: "Gallery", footer_parador: "Porto Belo Beach Day",
+        footer_follow: "Follow the adventure", footer_copyright: "© 2026 Angel Tour Brasil – The most complete tour of the Emerald Coast.",
+        map_text: "Open in Google Maps",
+        sticky_subtitle: "Book your spot", sticky_price: "⭐ Special prices! ⭐", sticky_btn: "Book Now",
+        fecha_label: "TOUR DATE", horario_label: "TIME PREFERENCE", horario1: "Morning", horario2: "Late Morning", horario3: "Afternoon",
+        nombre_label: "NAME", empresa_label: "COMPANY", empresa_note: "*Optional",
+        adultos_label: "ADULTS", menores_label: "CHILDREN 6 to 11 years", total_label: "TOTAL VALUE",
+        btn_text: "SEND RESERVATION", horario_note: "⏱️ Subject to availability",
+        info_text: "💡 Public sale price.", discount_text: "🎯 50% discount",
+        precio_adultos: "💰 R$ 100.00 per adult",
+        footer_boat: "Boat tours", footer_secure: "Secure confirmation", footer_confirm: "WhatsApp delivery",
+        ai_chatbot_placeholder: "Ask me something...", ai_online: "Online now",
+        weather_title: "3-Day Forecast", weather_today: "Today", weather_tomorrow: "Tomorrow", weather_after: "+2 days", weather_note: "Weather data to plan your tour",
+        wa_message: "Hello! 👋 I'm interested in the Angel Tour Brasil boat tour. Could you provide me with more information about availability and prices? ⛵",
+        modal_title: "Complete Tour Itinerary",
+        modal_read: "Read", modal_stop: "Stop", modal_share: "Share", modal_close: "Close"
+    }
+};
 
-// Por razones de espacio, mantén aquí todas las funciones de traducción y chatbot
-// que ya tenías en tu código original. No las elimines.
+// ============================================
+// VARIABLES GLOBALES
+// ============================================
+var currentLang = 'pt';
+var speechSynthesis = window.speechSynthesis;
+var isSpeaking = false;
 
-console.log('🌐 WebMCP Functions Disponibles:');
-console.log('  📍 getSiteInfo()');
-console.log('  📅 getItinerary(lang)');
-console.log('  💰 getPrices()');
-console.log('  🧮 calculatePrice(adults, children)');
-console.log('  ✅ checkAvailability(date, time)');
-console.log('  📆 getAvailableDates()');
-console.log('  📝 makeReservation(date, time, name, adults, children, company)');
-console.log('  📋 getReservations()');
-console.log('  📄 getManifest()');
-console.log('✅ WebMCP manifest cargado correctamente');
+// ============================================
+// FUNCIONES PRINCIPALES
+// ============================================
+
+function changeLanguage(lang) {
+    currentLang = lang;
+    var t = translations[lang] || translations['pt'];
+    
+    // Actualizar todos los elementos con data-key
+    document.querySelectorAll('[data-key]').forEach(function(el) {
+        var key = el.getAttribute('data-key');
+        if (t[key] !== undefined) {
+            el.textContent = t[key];
+        }
+    });
+    
+    // Actualizar botones de idioma
+    document.querySelectorAll('.lang-btn-header').forEach(function(btn) {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-lang') === lang) {
+            btn.classList.add('active');
+        }
+    });
+    
+    // Actualizar placeholder del chat
+    var chatInput = document.getElementById('aiChatInput');
+    if (chatInput) {
+        chatInput.placeholder = t.ai_chatbot_placeholder || 'Pergunte algo...';
+    }
+    
+    // Actualizar botón de WhatsApp
+    updateWhatsAppLink();
+    
+    // Guardar preferencia
+    localStorage.setItem('preferred_language', lang);
+    
+    console.log('✅ Idioma cambiado a:', lang);
+}
+
+function updateWhatsAppLink() {
+    var t = translations[currentLang] || translations['pt'];
+    var waBtn = document.getElementById('whatsappFloat');
+    if (waBtn) {
+        var message = t.wa_message || 'Olá! Tenho interesse no passeio.';
+        waBtn.href = 'https://wa.me/5547999679084?text=' + encodeURIComponent(message);
+    }
+}
+
+function scrollToSectionWithOffset(id) {
+    var element = document.getElementById(id);
+    if (element) {
+        var header = document.querySelector('.header');
+        var headerHeight = header ? header.offsetHeight : 80;
+        var offsetPosition = element.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
+}
+
+function calcularValorTotal() {
+    var adultos = parseInt(document.getElementById('adultos').value || 0);
+    var menores = parseInt(document.getElementById('menores').value || 0);
+    var total = (adultos * 100) + (menores * 50);
+    var valorTotalInput = document.getElementById('valorTotal');
+    if (valorTotalInput) {
+        valorTotalInput.value = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+    return total;
+}
+
+// ============================================
+// MODAL DEL ITINERARIO
+// ============================================
+
+function openModal(stepData) {
+    var modal = document.getElementById('infoModal');
+    var title = document.getElementById('modalTitle');
+    var body = document.getElementById('modalBody');
+    
+    if (!modal || !title || !body) return;
+    
+    var t = translations[currentLang] || translations['pt'];
+    title.textContent = t.modal_title || 'Roteiro Completo';
+    body.innerHTML = fullItinerary[currentLang] || fullItinerary['pt'];
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    var modal = document.getElementById('infoModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    if (isSpeaking) {
+        stopReading();
+    }
+}
+
+function stopReading() {
+    if (speechSynthesis) {
+        speechSynthesis.cancel();
+        isSpeaking = false;
+        var btn = document.getElementById('readAloudBtn');
+        if (btn) {
+            var t = translations[currentLang] || translations['pt'];
+            btn.innerHTML = '<i class="fas fa-volume-up"></i> ' + (t.modal_read || 'Ler');
+        }
+    }
+}
+
+function readTextAloud(text) {
+    if (!speechSynthesis) return;
+    stopReading();
+    var utterance = new SpeechSynthesisUtterance(text);
+    var langMap = { 'es': 'es-ES', 'pt': 'pt-BR', 'en': 'en-US' };
+    utterance.lang = langMap[currentLang] || 'pt-BR';
+    utterance.rate = 0.9;
+    isSpeaking = true;
+    var btn = document.getElementById('readAloudBtn');
+    if (btn) {
+        var t = translations[currentLang] || translations['pt'];
+        btn.innerHTML = '<i class="fas fa-stop"></i> ' + (t.modal_stop || 'Parar');
+    }
+    utterance.onend = function() {
+        isSpeaking = false;
+        if (btn) {
+            var t = translations[currentLang] || translations['pt'];
+            btn.innerHTML = '<i class="fas fa-volume-up"></i> ' + (t.modal_read || 'Ler');
+        }
+    };
+    speechSynthesis.speak(utterance);
+}
+
+function stripHtml(html) {
+    var tmp = document.createElement('DIV');
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || '';
+}
+
+function htmlToWhatsAppFormat(html) {
+    var text = html;
+    text = text.replace(/<h3[^>]*>(.*?)<\/h3>/gi, '\n🔹 *$1*\n');
+    text = text.replace(/<strong>(.*?)<\/strong>/gi, '*$1*');
+    text = text.replace(/<br\s*\/?>/gi, '\n');
+    text = text.replace(/<p[^>]*>(.*?)<\/p>/gi, '\n$1\n');
+    text = text.replace(/<[^>]+>/g, '');
+    text = text.replace(/\n{3,}/g, '\n');
+    return text.trim();
+}
+
+// ============================================
+// SLIDESHOW - USA LAS IMÁGENES res_1.webp a res_12.webp
+// ============================================
+var imagenesSlideshow = [
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/res_1.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/res_2.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/res_3.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/res_4.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/res_5.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/res_6.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/res_7.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/res_8.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/res_9.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/res_10.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/res_11.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/res_12.webp'
+];
+
+var imagenesGaleria = [
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_01.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_02.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_03.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_04.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_05.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_06.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_07.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_08.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_09.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_10.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_11.webp',
+    'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/atb_12.webp'
+];
+
+var slideIndex = 0;
+var slideInterval = null;
+
+function initSlideshow() {
+    var container = document.getElementById('bannerSlideshow');
+    if (!container) return;
+    
+    // Limpiar slides existentes
+    var existingSlides = container.querySelectorAll('.slide');
+    existingSlides.forEach(function(el) { el.remove(); });
+    
+    // Crear slides con res_1.webp a res_12.webp
+    imagenesSlideshow.forEach(function(url, index) {
+        var slide = document.createElement('div');
+        slide.className = 'slide' + (index === 0 ? ' active' : '');
+        var img = document.createElement('img');
+        img.src = url;
+        img.alt = 'Porto Belo Beach Day ' + (index + 1);
+        img.loading = 'lazy';
+        img.onerror = function() {
+            console.warn('⚠️ Error al cargar: ' + url);
+            this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="300" viewBox="0 0 800 300"%3E%3Crect width="800" height="300" fill="%230A2F6C"/%3E%3Ctext x="400" y="150" font-family="Arial" font-size="24" fill="%23FFFFFF" text-anchor="middle"%3EPorto Belo Beach Day%3C/text%3E%3C/svg%3E';
+        };
+        slide.appendChild(img);
+        container.appendChild(slide);
+    });
+    
+    // Crear indicadores
+    var indicators = document.getElementById('slideIndicators');
+    if (indicators) {
+        indicators.innerHTML = '';
+        imagenesSlideshow.forEach(function(_, index) {
+            var dot = document.createElement('span');
+            dot.className = 'dot' + (index === 0 ? ' active' : '');
+            dot.addEventListener('click', function() { showSlide(index); resetAutoplay(); });
+            indicators.appendChild(dot);
+        });
+    }
+    
+    // Eventos de navegación
+    document.getElementById('slidePrev').addEventListener('click', function() { prevSlide(); resetAutoplay(); });
+    document.getElementById('slideNext').addEventListener('click', function() { nextSlide(); resetAutoplay(); });
+    
+    // Auto-play
+    startAutoplay();
+}
+
+function showSlide(index) {
+    var slides = document.querySelectorAll('#bannerSlideshow .slide');
+    var dots = document.querySelectorAll('#slideIndicators .dot');
+    if (!slides.length) return;
+    
+    slideIndex = (index + slides.length) % slides.length;
+    slides.forEach(function(s, i) {
+        s.classList.toggle('active', i === slideIndex);
+    });
+    dots.forEach(function(d, i) {
+        d.classList.toggle('active', i === slideIndex);
+    });
+}
+
+function nextSlide() { showSlide(slideIndex + 1); }
+function prevSlide() { showSlide(slideIndex - 1); }
+function startAutoplay() { stopAutoplay(); slideInterval = setInterval(nextSlide, 4000); }
+function stopAutoplay() { if (slideInterval) { clearInterval(slideInterval); slideInterval = null; } }
+function resetAutoplay() { stopAutoplay(); startAutoplay(); }
+
+// ============================================
+// GALERÍA Y LIGHTBOX
+// ============================================
+var indiceActual = 0;
+
+function initGallery() {
+    var grid = document.getElementById('gridGaleria');
+    if (!grid) return;
+    
+    grid.innerHTML = '';
+    imagenesGaleria.forEach(function(url, index) {
+        var item = document.createElement('div');
+        item.className = 'gallery-item';
+        var img = document.createElement('img');
+        img.src = url;
+        img.alt = 'Foto ' + (index + 1);
+        img.loading = 'lazy';
+        item.appendChild(img);
+        item.addEventListener('click', function() { abrirLightbox(index); });
+        grid.appendChild(item);
+    });
+}
+
+function abrirLightbox(index) {
+    indiceActual = index;
+    var lb = document.getElementById('lightboxModern');
+    var img = document.getElementById('lightboxImg');
+    var counter = document.getElementById('fotoContador');
+    if (lb && img && counter) {
+        img.src = imagenesGaleria[index];
+        counter.textContent = (index + 1) + ' / ' + imagenesGaleria.length;
+        lb.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function cerrarLightbox() {
+    var lb = document.getElementById('lightboxModern');
+    if (lb) {
+        lb.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+function cambiarImagen(direccion) {
+    indiceActual = (indiceActual + direccion + imagenesGaleria.length) % imagenesGaleria.length;
+    var img = document.getElementById('lightboxImg');
+    var counter = document.getElementById('fotoContador');
+    if (img) img.src = imagenesGaleria[indiceActual];
+    if (counter) counter.textContent = (indiceActual + 1) + ' / ' + imagenesGaleria.length;
+}
+
+// ============================================
+// CHATBOT
+// ============================================
+function initChatbot() {
+    var toggle = document.getElementById('aiChatbotToggle');
+    var chatWindow = document.getElementById('aiChatbotWindow');
+    var close = document.getElementById('aiChatbotClose');
+    var input = document.getElementById('aiChatInput');
+    var send = document.getElementById('aiChatSend');
+    
+    if (toggle && chatWindow) {
+        toggle.addEventListener('click', function() {
+            chatWindow.classList.toggle('active');
+            var messages = document.getElementById('aiChatMessages');
+            if (chatWindow.classList.contains('active') && messages.children.length === 0) {
+                var t = translations[currentLang] || translations['pt'];
+                messages.innerHTML = '<div class="ai-msg bot">Olá! 👋 Sou o Angel AI. Como posso ajudar? 😊</div>';
+            }
+        });
+    }
+    if (close) {
+        close.addEventListener('click', function() { chatWindow.classList.remove('active'); });
+    }
+    if (send) {
+        send.addEventListener('click', sendMessage);
+    }
+    if (input) {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+    }
+}
+
+function sendMessage() {
+    var input = document.getElementById('aiChatInput');
+    var text = input.value.trim();
+    if (!text) return;
+    
+    var messages = document.getElementById('aiChatMessages');
+    if (!messages) return;
+    
+    // Mensaje del usuario
+    var userMsg = document.createElement('div');
+    userMsg.className = 'ai-msg user';
+    userMsg.textContent = text;
+    messages.appendChild(userMsg);
+    input.value = '';
+    messages.scrollTop = messages.scrollHeight;
+    
+    // Respuesta del bot
+    setTimeout(function() {
+        var botMsg = document.createElement('div');
+        botMsg.className = 'ai-msg bot';
+        var lowerText = text.toLowerCase();
+        var response = '🤔 No tengo esa información. Puedo ayudarte con precios, disponibilidad y reservas.';
+        if (lowerText.indexOf('preço') !== -1 || lowerText.indexOf('precio') !== -1 || lowerText.indexOf('price') !== -1) {
+            response = '💰 Preços: Adultos R$ 100,00 | Crianças (6-11) R$ 50,00 | Menores de 5 grátis!';
+        } else if (lowerText.indexOf('horário') !== -1 || lowerText.indexOf('horario') !== -1 || lowerText.indexOf('time') !== -1) {
+            response = '⏰ Horários: 9:30, 11:10 e 13:00. Sujeito à disponibilidade.';
+        } else if (lowerText.indexOf('reserv') !== -1 || lowerText.indexOf('booking') !== -1) {
+            response = '📝 Para reservar, preencha o formulário abaixo ou fale conosco no WhatsApp (47) 99967-9084';
+        } else if (lowerText.indexOf('caixa') !== -1 || lowerText.indexOf('tobogã') !== -1 || lowerText.indexOf('tobogan') !== -1) {
+            response = '🏊 Parada de 30 minutos em Caixa D\'Aço para nadar e usar o tobogã!';
+        } else if (lowerText.indexOf('obrigado') !== -1 || lowerText.indexOf('gracias') !== -1 || lowerText.indexOf('thank') !== -1) {
+            response = '😊 Por nada! Estamos aqui para ajudar. Bom passeio! ⛵';
+        }
+        botMsg.innerHTML = response;
+        messages.appendChild(botMsg);
+        messages.scrollTop = messages.scrollHeight;
+    }, 500);
+}
+
+// ============================================
+// INICIALIZACIÓN
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    // Idioma guardado
+    var savedLang = localStorage.getItem('preferred_language') || 'pt';
+    changeLanguage(savedLang);
+    
+    // Botones de idioma
+    document.querySelectorAll('.lang-btn-header').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            changeLanguage(this.getAttribute('data-lang'));
+        });
+    });
+    
+    // Navegación suave
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+            var href = this.getAttribute('href');
+            if (href && href !== '#') {
+                e.preventDefault();
+                scrollToSectionWithOffset(href.substring(1));
+                var navLinks = document.getElementById('navLinks');
+                if (navLinks) navLinks.classList.remove('active');
+            }
+        });
+    });
+    
+    // Menú móvil
+    document.getElementById('menuToggle').addEventListener('click', function() {
+        document.getElementById('navLinks').classList.toggle('active');
+    });
+    
+    // Formulario - fecha mínima
+    var fechaInput = document.getElementById('fecha');
+    if (fechaInput) {
+        var today = new Date().toISOString().split('T')[0];
+        fechaInput.setAttribute('min', today);
+    }
+    
+    // Selección de horario
+    document.querySelectorAll('.horario-card').forEach(function(card) {
+        card.addEventListener('click', function() {
+            document.querySelectorAll('.horario-card').forEach(function(c) {
+                c.classList.remove('selected');
+            });
+            this.classList.add('selected');
+            document.getElementById('horario').value = this.getAttribute('data-horario');
+        });
+    });
+    
+    // Envío del formulario
+    document.getElementById('dataForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var fecha = document.getElementById('fecha').value;
+        var horario = document.getElementById('horario').value;
+        var nombre = document.getElementById('nombre').value.trim();
+        var empresa = document.getElementById('empresa').value.trim();
+        var adultos = document.getElementById('adultos').value;
+        var menores = document.getElementById('menores').value;
+        
+        if (!fecha || !horario || !nombre) {
+            alert('Preencha todos os campos obrigatórios');
+            return;
+        }
+        
+        var total = (parseInt(adultos) * 100) + (parseInt(menores) * 50);
+        var msg = '🏴‍☠️ DETALLE DE RESERVA ⚓\n' +
+                  '📅 Fecha: ' + fecha.split('-').reverse().join('/') + '\n' +
+                  '⏰ Salida: ' + horario + ' Hs\n' +
+                  '👤 Nombre: ' + nombre + '\n' +
+                  (empresa ? '🏢 Empresa: ' + empresa + '\n' : '') +
+                  '👥 Adultos: ' + adultos + '\n' +
+                  '🧒 Menores: ' + menores + '\n' +
+                  '💰 TOTAL: ' + total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        
+        window.open('https://wa.me/5547999679084?text=' + encodeURIComponent(msg), '_blank');
+    });
+    
+    // Calcular precio
+    document.getElementById('adultos').addEventListener('input', calcularValorTotal);
+    document.getElementById('menores').addEventListener('input', calcularValorTotal);
+    calcularValorTotal();
+    
+    // Inicializar componentes
+    initSlideshow();
+    initGallery();
+    initChatbot();
+    
+    // MODAL - Eventos
+    document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+    document.getElementById('closeModalFooterBtn').addEventListener('click', closeModal);
+    document.getElementById('infoModal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+    
+    // Leer en voz alta
+    document.getElementById('readAloudBtn').addEventListener('click', function() {
+        if (isSpeaking) {
+            stopReading();
+        } else {
+            var body = document.getElementById('modalBody');
+            var text = stripHtml(body.innerHTML);
+            readTextAloud(text);
+        }
+    });
+    
+    // Compartir por WhatsApp
+    document.getElementById('shareWhatsappBtn').addEventListener('click', function() {
+        var body = document.getElementById('modalBody');
+        var formattedText = htmlToWhatsAppFormat(body.innerHTML);
+        var message = '🏴‍☠️ *ITINERARIO COMPLETO* ⚓\n' + formattedText;
+        window.open('https://wa.me/?text=' + encodeURIComponent(message), '_blank');
+    });
+    
+    // Timeline - abrir modal
+    document.querySelectorAll('.timeline-step').forEach(function(step) {
+        step.addEventListener('click', function() {
+            openModal({
+                title: 'Itinerário Completo',
+                longtext: fullItinerary[currentLang] || fullItinerary['pt'],
+                step: this.getAttribute('data-step')
+            });
+        });
+    });
+    
+    // Sticky bar
+    var stickyBar = document.getElementById('stickyBookingBar');
+    var hero = document.getElementById('inicio');
+    
+    function checkStickyBar() {
+        if (window.innerWidth <= 880 && hero) {
+            var heroBottom = hero.offsetTop + hero.offsetHeight;
+            if (window.scrollY > heroBottom - 100) {
+                stickyBar.classList.add('show');
+            } else {
+                stickyBar.classList.remove('show');
+            }
+        } else {
+            stickyBar.classList.remove('show');
+        }
+    }
+    
+    window.addEventListener('scroll', checkStickyBar);
+    window.addEventListener('resize', checkStickyBar);
+    checkStickyBar();
+    
+    document.getElementById('stickyBookBtn').addEventListener('click', function() {
+        scrollToSectionWithOffset('reserva');
+    });
+    
+    document.querySelector('.garantia-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        scrollToSectionWithOffset('reserva');
+    });
+    
+    // WhatsApp flotante
+    updateWhatsAppLink();
+    
+    // Lightbox
+    document.getElementById('closeLightboxBtn').addEventListener('click', cerrarLightbox);
+    document.getElementById('lightboxModern').addEventListener('click', function(e) {
+        if (e.target === this) cerrarLightbox();
+    });
+    
+    document.addEventListener('keydown', function(e) {
+        if (document.getElementById('lightboxModern').classList.contains('active')) {
+            if (e.key === 'Escape') cerrarLightbox();
+            if (e.key === 'ArrowRight') cambiarImagen(1);
+            if (e.key === 'ArrowLeft') cambiarImagen(-1);
+        }
+    });
+    
+    console.log('🚀 Angel Tour Brasil - Site atualizado com WebMCP!');
+    console.log('🌐 WebMCP Functions:', Object.keys(window.webmcp));
+});
+
+// Exponer funciones globales
+window.abrirLightbox = abrirLightbox;
+window.cerrarLightbox = cerrarLightbox;
+window.cambiarImagen = cambiarImagen;
+window.openModal = openModal;
+window.closeModal = closeModal;
 </script>
 </body>
 </html>
