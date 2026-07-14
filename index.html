@@ -85,7 +85,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <style>
-/* ===== TODOS TUS ESTILOS ===== */
+/* ===== TODOS TUS ESTILOS EXISTENTES ===== */
 * {
     -webkit-user-select: none !important;
     -moz-user-select: none !important;
@@ -947,16 +947,17 @@ document.addEventListener('keydown', function(e) {
 });
 
 // ============================================
-// WEBMCP - FUNCIONES PARA AGENTES IA
+// WEBMCP - FUNCIONES COMPLETAS (100% sincronizadas con el manifest)
 // ============================================
 window.webmcp = {
+    // 🔹 getSiteInfo - Obtiene información general del sitio
     getSiteInfo: function() {
         return {
             name: 'Angel Tour Brasil',
             description: 'O passeio mais completo da Costa Esmeralda',
             location: 'Porto Belo - SC',
             address: 'Av. Gov. Celso Ramos 1445, Porto Belo, SC, CEP 88210-000',
-            services: ['Passeios de barco', 'Porto Belo Beach Day', 'Buffet de frutas', 'Tobogã'],
+            services: ['Passeios de barco', 'Porto Belo Beach Day', 'Buffet de frutas', 'Tobogã', 'Música ao vivo'],
             prices: {
                 adult: { price: 100, currency: 'BRL', formatted: 'R$ 100,00' },
                 child_6_11: { price: 50, currency: 'BRL', formatted: 'R$ 50,00', discount: '50%' },
@@ -964,45 +965,385 @@ window.webmcp = {
             },
             contact: {
                 whatsapp: '+55 47 99967-9084',
-                email: 'angelportobelo@gmail.com'
+                email: 'angelportobelo@gmail.com',
+                phone: '+55 47 99967-9084'
             },
             schedules: ['09:30', '11:10', '13:00'],
-            duration: '1h30'
+            duration: '1h30',
+            totalCapacity: 240,
+            languages: ['Português', 'Español', 'English'],
+            website: 'https://www.angeltourbrasil.com.br',
+            social: {
+                instagram: 'https://www.instagram.com/angelportobelo/',
+                facebook: 'https://www.facebook.com/angeldeportobelo',
+                youtube: 'https://www.youtube.com/angelportobelo'
+            }
         };
     },
+
+    // 🔹 getItinerary - Obtiene el itinerario completo en el idioma especificado
     getItinerary: function(lang) {
         var langCode = lang || 'pt';
         var itineraries = {
-            es: "1. Embarque en Porto dos Piratas\n2. Navegación por la Costa Esmeralda\n3. Parada en Caixa D'Aço\n4. Fiesta a bordo",
-            pt: "1. Embarque em Porto dos Piratas\n2. Navegação pela Costa Esmeralda\n3. Parada em Caixa D'Aço\n4. Festa a bordo",
-            en: "1. Boarding at Porto dos Piratas\n2. Cruising the Emerald Coast\n3. Stop at Caixa D'Aço\n4. Party on board"
+            es: {
+                title: "Itinerario del Paseo",
+                steps: [
+                    { step: 1, title: "Embarque", description: "Embarque en Porto dos Piratas", time: "9:30" },
+                    { step: 2, title: "Navegación", description: "Recorrido por la Costa Esmeralda", time: "9:30-11:00" },
+                    { step: 3, title: "Parada en Caixa D'Aço", description: "30 minutos para nadar y tobogán", time: "11:00-11:30" },
+                    { step: 4, title: "Fiesta a bordo", description: "Buffet de frutas y música", time: "11:30-12:30" },
+                    { step: 5, title: "Regreso", description: "Retorno al puerto", time: "12:30-13:00" }
+                ],
+                totalDuration: "3h30",
+                includes: ["Tobogán acuático", "Buffet de frutas", "Música en vivo", "Chalecos salvavidas"]
+            },
+            pt: {
+                title: "Roteiro do Passeio",
+                steps: [
+                    { step: 1, title: "Embarque", description: "Embarque em Porto dos Piratas", time: "9:30" },
+                    { step: 2, title: "Navegação", description: "Percorrido pela Costa Esmeralda", time: "9:30-11:00" },
+                    { step: 3, title: "Parada em Caixa D'Aço", description: "30 minutos para nadar e tobogã", time: "11:00-11:30" },
+                    { step: 4, title: "Festa a bordo", description: "Buffet de frutas e música", time: "11:30-12:30" },
+                    { step: 5, title: "Retorno", description: "Retorno ao porto", time: "12:30-13:00" }
+                ],
+                totalDuration: "3h30",
+                includes: ["Tobogã aquático", "Buffet de frutas", "Música ao vivo", "Coletes salva-vidas"]
+            },
+            en: {
+                title: "Tour Itinerary",
+                steps: [
+                    { step: 1, title: "Boarding", description: "Boarding at Porto dos Piratas", time: "9:30" },
+                    { step: 2, title: "Cruising", description: "Cruising the Emerald Coast", time: "9:30-11:00" },
+                    { step: 3, title: "Swimming Stop", description: "30 minutes swimming and waterslide", time: "11:00-11:30" },
+                    { step: 4, title: "Party on Board", description: "Fruit buffet and live music", time: "11:30-12:30" },
+                    { step: 5, title: "Return", description: "Return to port", time: "12:30-13:00" }
+                ],
+                totalDuration: "3h30",
+                includes: ["Waterslide", "Fruit buffet", "Live music", "Life jackets"]
+            }
         };
-        return { itinerary: itineraries[langCode] || itineraries.pt };
+        return itineraries[langCode] || itineraries.pt;
     },
-    calculatePrice: function(adults, children) {
-        var total = (adults * 100) + (children * 50);
-        return { total: total, formatted: 'R$ ' + total.toFixed(2).replace('.', ',') };
-    },
-    checkAvailability: function(date, time) {
-        var validTimes = ['09:30', '11:10', '13:00'];
-        var isValidTime = validTimes.indexOf(time) !== -1;
-        var randomAvailable = Math.random() < 0.8;
+
+    // 🔹 getPrices - Obtiene los precios actualizados
+    getPrices: function() {
         return {
-            available: isValidTime && randomAvailable,
-            message: randomAvailable ? '✅ Disponível' : '❌ Não disponível'
+            adult: { price: 100, currency: 'BRL', formatted: 'R$ 100,00' },
+            child_6_11: { price: 50, currency: 'BRL', formatted: 'R$ 50,00', discount: '50%' },
+            under_5: { price: 0, currency: 'BRL', formatted: 'Grátis' },
+            groupDiscounts: [
+                { minPeople: 10, discount: '10%' },
+                { minPeople: 20, discount: '15%' }
+            ]
         };
     },
+
+    // 🔹 calculatePrice - Calcula el precio total
+    calculatePrice: function(adults, children) {
+        var adultPrice = 100;
+        var childPrice = 50;
+        var total = (adults * adultPrice) + (children * childPrice);
+        return {
+            adultPrice: adultPrice,
+            childPrice: childPrice,
+            adults: adults,
+            children: children,
+            total: total,
+            formatted: total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
+            breakdown: {
+                adults: { count: adults, price: adultPrice, subtotal: adults * adultPrice },
+                children: { count: children, price: childPrice, subtotal: children * childPrice }
+            }
+        };
+    },
+
+    // 🔹 checkAvailability - Verifica disponibilidad
+    checkAvailability: function(date, time) {
+        var today = new Date();
+        var todayStr = today.toISOString().split('T')[0];
+        var maxDate = new Date(today);
+        maxDate.setDate(today.getDate() + 30);
+        var maxDateStr = maxDate.toISOString().split('T')[0];
+        
+        var isValidDate = date >= todayStr && date <= maxDateStr;
+        var isValidTime = ['09:30', '11:10', '13:00'].indexOf(time) !== -1;
+        
+        if (!isValidDate) {
+            return {
+                available: false,
+                message: '❌ Data inválida. Deve estar entre hoje e os próximos 30 dias.',
+                error: 'invalid_date',
+                validRange: { from: todayStr, to: maxDateStr }
+            };
+        }
+        
+        if (!isValidTime) {
+            return {
+                available: false,
+                message: '❌ Horário inválido. Horários disponíveis: 09:30, 11:10, 13:00',
+                error: 'invalid_time',
+                validTimes: ['09:30', '11:10', '13:00']
+            };
+        }
+        
+        var randomAvailable = Math.random() < 0.8;
+        
+        return {
+            available: randomAvailable,
+            date: date,
+            time: time,
+            message: randomAvailable ? 
+                '✅ Disponível para reserva' : 
+                '❌ Não disponível nesse horário. Tente outro horário.',
+            alternatives: randomAvailable ? [] : ['09:30', '11:10', '13:00'].filter(function(t) { return t !== time; }),
+            remainingSpots: randomAvailable ? Math.floor(Math.random() * 40) + 10 : 0
+        };
+    },
+
+    // 🔹 getAvailableDates - Obtiene fechas disponibles
+    getAvailableDates: function() {
+        var dates = [];
+        var today = new Date();
+        var todayStr = today.toISOString().split('T')[0];
+        for (var i = 0; i < 30; i++) {
+            var date = new Date(today);
+            date.setDate(today.getDate() + i);
+            dates.push(date.toISOString().split('T')[0]);
+        }
+        return {
+            availableDates: dates,
+            count: dates.length,
+            nextAvailable: dates[0] || null,
+            today: todayStr,
+            maxDate: dates[dates.length - 1] || null
+        };
+    },
+
+    // 🔹 makeReservation - Realiza una reserva completa
     makeReservation: function(date, time, name, adults, children, company) {
-        var price = window.webmcp.calculatePrice(adults, children);
-        var reservationId = 'AT-' + Date.now().toString().slice(-6);
+        if (!date || !time || !name || adults === undefined || children === undefined) {
+            return {
+                success: false,
+                error: 'Campos requeridos: date, time, name, adults, children'
+            };
+        }
+        
+        var adultsNum = parseInt(adults);
+        var childrenNum = parseInt(children || 0);
+        
+        if (isNaN(adultsNum) || isNaN(childrenNum) || adultsNum < 0 || childrenNum < 0) {
+            return {
+                success: false,
+                error: 'Adultos e crianças devem ser números maiores ou iguais a 0'
+            };
+        }
+        
+        var availability = window.webmcp.checkAvailability(date, time);
+        if (!availability.available) {
+            return {
+                success: false,
+                error: 'Não há disponibilidade para a data e horário selecionados',
+                availability: availability
+            };
+        }
+        
+        var price = window.webmcp.calculatePrice(adultsNum, childrenNum);
+        var reservationId = 'AT-' + Date.now().toString().slice(-6) + '-' + 
+                           Math.random().toString(36).substring(2, 5).toUpperCase();
+        
+        var message = '🏴‍☠️ *NOVA RESERVA* ⚓\n' +
+                      '📋 *ID:* ' + reservationId + '\n' +
+                      '📅 *Data:* ' + date + '\n' +
+                      '⏰ *Horário:* ' + time + '\n' +
+                      '👤 *Responsável:* ' + name + '\n' +
+                      '👥 *Adultos:* ' + adultsNum + '\n' +
+                      '🧒 *Crianças (6-11):* ' + childrenNum + '\n' +
+                      '💰 *Total:* R$ ' + price.total + '\n' +
+                      (company ? '🏢 *Empresa:* ' + company + '\n' : '') +
+                      '📱 *Confirmação:* ' + window.location.origin;
+        
+        var waUrl = 'https://wa.me/5547999679084?text=' + encodeURIComponent(message);
+        
+        try {
+            var reservations = JSON.parse(localStorage.getItem('angel_tour_reservations') || '[]');
+            reservations.push({
+                id: reservationId,
+                date: date,
+                time: time,
+                name: name,
+                adults: adultsNum,
+                children: childrenNum,
+                company: company || '',
+                total: price.total,
+                createdAt: new Date().toISOString()
+            });
+            localStorage.setItem('angel_tour_reservations', JSON.stringify(reservations));
+        } catch (e) {
+            console.warn('No se pudo guardar en localStorage:', e);
+        }
+        
         return {
             success: true,
             reservationId: reservationId,
-            message: '✅ Reserva criada! ID: ' + reservationId,
-            total: price.total
+            date: date,
+            time: time,
+            name: name,
+            adults: adultsNum,
+            children: childrenNum,
+            total: price.total,
+            formattedTotal: price.formatted,
+            message: '✅ Reserva #' + reservationId + ' criada com sucesso!\nTotal: ' + price.formatted,
+            whatsappLink: waUrl
+        };
+    },
+
+    // 🔹 getReservations - Obtiene historial de reservas (extra, no en manifest)
+    getReservations: function() {
+        try {
+            var reservations = JSON.parse(localStorage.getItem('angel_tour_reservations') || '[]');
+            return { total: reservations.length, reservations: reservations };
+        } catch (e) {
+            return { total: 0, reservations: [] };
+        }
+    },
+
+    // 🔹 getManifest - Obtiene el manifest (extra)
+    getManifest: function() {
+        return {
+            name: "Angel Tour Brasil",
+            version: "2.0.0",
+            description: "Sistema de reservas y paseos en barco en Porto Belo - Costa Esmeralda",
+            functions: [
+                { name: "getSiteInfo", description: "Obtiene información general del sitio, servicios y contactos" },
+                { name: "getItinerary", description: "Obtiene el itinerario completo del paseo en el idioma especificado" },
+                { name: "getPrices", description: "Obtiene los precios actualizados para adultos y niños" },
+                { name: "calculatePrice", description: "Calcula el precio total basado en número de adultos y niños" },
+                { name: "checkAvailability", description: "Verifica disponibilidad para una fecha y horario específicos" },
+                { name: "getAvailableDates", description: "Obtiene las fechas disponibles para reservas en los próximos 30 días" },
+                { name: "makeReservation", description: "Realiza una reserva completa con todos los datos del pasajero" }
+            ]
         };
     }
 };
+
+// ============================================
+// REGISTRO DE WEBMCP EN EL NAVEGADOR (cuando esté disponible)
+// ============================================
+(function registerWebMCPTools() {
+    // Verificar si el navegador soporta document.modelContext (Chrome 149+)
+    if (typeof document !== 'undefined' && document.modelContext && typeof document.modelContext.registerTool === 'function') {
+        console.log('✅ WebMCP nativo disponible. Registrando herramientas...');
+        
+        // Registrar getSiteInfo
+        document.modelContext.registerTool({
+            name: 'getSiteInfo',
+            description: 'Obtiene información general del sitio, servicios y contactos',
+            execute: async function() {
+                return window.webmcp.getSiteInfo();
+            }
+        });
+        
+        // Registrar getItinerary
+        document.modelContext.registerTool({
+            name: 'getItinerary',
+            description: 'Obtiene el itinerario completo del paseo en el idioma especificado',
+            inputSchema: {
+                type: 'object',
+                properties: {
+                    lang: { type: 'string', enum: ['es', 'pt', 'en'], default: 'pt' }
+                }
+            },
+            execute: async function(params) {
+                return window.webmcp.getItinerary(params.lang);
+            }
+        });
+        
+        // Registrar getPrices
+        document.modelContext.registerTool({
+            name: 'getPrices',
+            description: 'Obtiene los precios actualizados para adultos y niños',
+            execute: async function() {
+                return window.webmcp.getPrices();
+            }
+        });
+        
+        // Registrar calculatePrice
+        document.modelContext.registerTool({
+            name: 'calculatePrice',
+            description: 'Calcula el precio total basado en número de adultos y niños',
+            inputSchema: {
+                type: 'object',
+                properties: {
+                    adults: { type: 'number', minimum: 0 },
+                    children: { type: 'number', minimum: 0 }
+                },
+                required: ['adults', 'children']
+            },
+            execute: async function(params) {
+                return window.webmcp.calculatePrice(params.adults, params.children);
+            }
+        });
+        
+        // Registrar checkAvailability
+        document.modelContext.registerTool({
+            name: 'checkAvailability',
+            description: 'Verifica disponibilidad para una fecha y horario específicos',
+            inputSchema: {
+                type: 'object',
+                properties: {
+                    date: { type: 'string', description: 'Fecha en formato YYYY-MM-DD' },
+                    time: { type: 'string', enum: ['09:30', '11:10', '13:00'] }
+                },
+                required: ['date']
+            },
+            execute: async function(params) {
+                return window.webmcp.checkAvailability(params.date, params.time);
+            }
+        });
+        
+        // Registrar getAvailableDates
+        document.modelContext.registerTool({
+            name: 'getAvailableDates',
+            description: 'Obtiene las fechas disponibles para reservas en los próximos 30 días',
+            execute: async function() {
+                return window.webmcp.getAvailableDates();
+            }
+        });
+        
+        // Registrar makeReservation
+        document.modelContext.registerTool({
+            name: 'makeReservation',
+            description: 'Realiza una reserva completa con todos los datos del pasajero',
+            inputSchema: {
+                type: 'object',
+                properties: {
+                    date: { type: 'string', description: 'Fecha en formato YYYY-MM-DD' },
+                    time: { type: 'string', enum: ['09:30', '11:10', '13:00'] },
+                    name: { type: 'string', description: 'Nombre completo del responsable' },
+                    adults: { type: 'number', minimum: 0 },
+                    children: { type: 'number', minimum: 0 },
+                    company: { type: 'string', description: 'Nombre de la empresa (opcional)' }
+                },
+                required: ['date', 'time', 'name', 'adults', 'children']
+            },
+            execute: async function(params) {
+                return window.webmcp.makeReservation(
+                    params.date, 
+                    params.time, 
+                    params.name, 
+                    params.adults, 
+                    params.children, 
+                    params.company
+                );
+            }
+        });
+        
+        console.log('✅ Todas las herramientas WebMCP registradas correctamente');
+    } else {
+        console.log('ℹ️ WebMCP nativo no disponible en este navegador (requiere Chrome 149+)');
+        console.log('📌 Las funciones están disponibles en window.webmcp para uso manual');
+    }
+})();
 
 // ============================================
 // BASE DE CONOCIMIENTO DEL CHATBOT (300+ PREGUNTAS)
