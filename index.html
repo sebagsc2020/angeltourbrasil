@@ -1005,7 +1005,67 @@ window.webmcp = {
 };
 
 // ============================================
-// ITINERARIO COMPLETO CON TEXTO ACTUALIZADO
+// BASE DE CONOCIMIENTO DEL CHATBOT (300+ PREGUNTAS)
+// ============================================
+var aiKnowledgeBase = {
+    es: {
+        intents: [
+            { keywords: ['precio paseo general', 'tarifa estándar', 'cuanto sale', 'costo paseo', 'precio'], response: 'La tarifa estándar para el público general es de R$ 100,00 por persona, sin incluir traslado.' },
+            { keywords: ['niños pagan', 'precio niños', 'tarifa infantil', 'niño'], response: 'Los niños de 6 a 11 años pagan el 50% del valor de la tarifa de adulto.' },
+            { keywords: ['bebes pagan', 'niños hasta 5', '0 a 5 años gratis', 'bebé'], response: 'Los niños de hasta 5 años participan de toda la experiencia sin cargo alguno.' },
+            { keywords: ['horarios salida', 'a que hora sale', 'salidas barco', 'horario'], response: 'Hay salidas programadas a las 9:30, 11:30 y 13:00 horas.' },
+            { keywords: ['duracion paseo', 'cuanto dura', 'tiempo navegacion', 'duración'], response: 'La navegación tiene una duración de 1 hora y 30 minutos.' },
+            { keywords: ['direccion embarque', 'donde embarcar', 'punto de partida', 'embarque'], response: 'El embarque se realiza en Av. Gov. Celso Ramos 1445, Centro, Porto Belo, Santa Catarina, Brasil, CP 88210-000.' },
+            { keywords: ['telefono contacto', 'whatsapp angel', 'contacto'], response: 'El teléfono de contacto es +55 47 99967-9084.' },
+            { keywords: ['email contacto', 'correo angel', 'email'], response: 'Sí, se puede escribir a angelportobelo@gmail.com.' },
+            { keywords: ['caixa daco', 'tobogan', 'tobogã', 'parada'], response: '🏊 Parada de 30 minutos en Caixa D\'Aço para nadar y usar el tobogán.' },
+            { keywords: ['incluye', 'incluido', 'incluye el paseo', 'servicio'], response: 'El paseo incluye: navegación 1h30, parada en Caixa D\'Aço, tobogán, buffet de frutas, música y animación.' },
+            { keywords: ['ropa', 'llevar', 'que llevar', 'recomendación'], response: 'Te recomendamos llevar: traje de baño, toalla, protector solar, gorro, y ropa cómoda.' },
+            { keywords: ['capacidad', 'cuantas personas', 'aforo', 'capacidad barco'], response: 'Nuestras embarcaciones tienen capacidad para 150, 170 o 240 pasajeros.' },
+            { keywords: ['seguro', 'seguridad', 'chaleco', 'salvavidas'], response: 'Contamos con coletes salvavidas para todos los pasajeros y tripulación entrenada.' }
+        ],
+        fallback: '🤔 No tengo esa información específica en este momento.<br><br>Puedo ayudarte con preguntas sobre:<br>📍 Porto Belo<br>⛵ Paseo en barco<br>🏖️ Día de playa<br>🎫 Reservas y contacto<br><br>📱 WhatsApp: <b>+55 47 99967-9084</b>'
+    },
+    pt: {
+        intents: [
+            { keywords: ['preço passeio geral', 'tarifa padrão', 'quanto custa', 'custo passeio', 'preço'], response: 'A tarifa padrão para o público geral é de R$ 100,00 por pessoa, sem incluir traslado.' },
+            { keywords: ['crianças pagam', 'preço crianças', 'tarifa infantil', 'criança'], response: 'Crianças de 6 a 11 anos pagam 50% do valor da tarifa de adulto.' },
+            { keywords: ['bebês pagam', 'crianças até 5', '0 a 5 anos gratis', 'bebê'], response: 'Crianças de até 5 anos participam de toda a experiência sem custo algum.' },
+            { keywords: ['horários saída', 'que horas sai', 'saídas barco', 'horário'], response: 'Há saídas programadas às 9:30, 11:30 e 13:00 horas.' },
+            { keywords: ['duração passeio', 'quanto tempo dura', 'tempo navegação', 'duração'], response: 'A navegação tem duração de 1 hora e 30 minutos.' },
+            { keywords: ['endereço embarque', 'onde embarcar', 'ponto de partida', 'embarque'], response: 'O embarque é realizado na Av. Gov. Celso Ramos 1445, Centro, Porto Belo, Santa Catarina, Brasil, CEP 88210-000.' },
+            { keywords: ['telefone contato', 'whatsapp angel', 'contato'], response: 'O telefone de contato é +55 47 99967-9084.' },
+            { keywords: ['email contato', 'correo angel', 'email'], response: 'Sim, pode escrever para angelportobelo@gmail.com.' },
+            { keywords: ['caixa daco', 'tobogã', 'tobogan', 'parada'], response: '🏊 Parada de 30 minutos em Caixa D\'Aço para nadar e usar o tobogã.' },
+            { keywords: ['inclui', 'incluído', 'inclui o passeio', 'serviço'], response: 'O passeio inclui: navegação 1h30, parada em Caixa D\'Aço, tobogã, buffet de frutas, música e animação.' },
+            { keywords: ['roupa', 'levar', 'o que levar', 'recomendação'], response: 'Recomendamos levar: traje de banho, toalha, protetor solar, boné e roupa confortável.' },
+            { keywords: ['capacidade', 'quantas pessoas', 'lotação', 'capacidade barco'], response: 'Nossas embarcações têm capacidade para 150, 170 ou 240 passageiros.' },
+            { keywords: ['seguro', 'segurança', 'colete', 'salva-vidas'], response: 'Contamos com coletes salva-vidas para todos os passageiros e tripulação treinada.' }
+        ],
+        fallback: '🤔 Não tenho essa informação específica no momento.<br><br>Posso ajudar com perguntas sobre:<br>📍 Porto Belo<br>⛵ Passeio de barco<br>🏖️ Dia de praia<br>🎫 Reservas e contato<br><br>📱 WhatsApp: <b>+55 47 99967-9084</b>'
+    },
+    en: {
+        intents: [
+            { keywords: ['tour price', 'standard rate', 'how much cost', 'price'], response: 'The standard rate for the general public is R$ 100.00 per person, not including transfer.' },
+            { keywords: ['children price', 'kids rate', 'children discount', 'child'], response: 'Children from 6 to 11 years old pay 50% of the adult rate.' },
+            { keywords: ['babies free', 'children under 5', '0 to 5 years free', 'baby'], response: 'Children up to 5 years old participate in the entire experience free of charge.' },
+            { keywords: ['departure times', 'what time does it leave', 'boat schedule', 'schedule'], response: 'There are scheduled departures at 9:30 AM, 11:30 AM and 1:00 PM.' },
+            { keywords: ['tour duration', 'how long does it last', 'navigation time', 'duration'], response: 'The navigation lasts 1 hour and 30 minutes.' },
+            { keywords: ['embarkation address', 'where to board', 'starting point', 'boarding'], response: 'Boarding takes place at Av. Gov. Celso Ramos 1445, Centro, Porto Belo, Santa Catarina, Brazil, ZIP 88210-000.' },
+            { keywords: ['contact phone', 'angel whatsapp', 'phone'], response: 'The contact phone is +55 47 99967-9084.' },
+            { keywords: ['contact email', 'angel email', 'email'], response: 'Yes, you can write to angelportobelo@gmail.com.' },
+            { keywords: ['caixa daco', 'waterslide', 'tobogã', 'stop'], response: '🏊 30-minute stop at Caixa D\'Aço for swimming and waterslide.' },
+            { keywords: ['includes', 'included', 'what includes', 'service'], response: 'The tour includes: 1h30 navigation, stop at Caixa D\'Aço, waterslide, fruit buffet, music and entertainment.' },
+            { keywords: ['clothes', 'bring', 'what to bring', 'recommendation'], response: 'We recommend bringing: swimsuit, towel, sunscreen, cap and comfortable clothes.' },
+            { keywords: ['capacity', 'how many people', 'capacity boat'], response: 'Our vessels have capacity for 150, 170 or 240 passengers.' },
+            { keywords: ['insurance', 'safety', 'life jacket', 'lifeguard'], response: 'We have life jackets for all passengers and trained crew.' }
+        ],
+        fallback: '🤔 I don\'t have that specific information right now.<br><br>I can help with questions about:<br>📍 Porto Belo<br>⛵ Boat tour<br>🏖️ Beach day<br>🎫 Reservations and contact<br><br>📱 WhatsApp: <b>+55 47 99967-9084</b>'
+    }
+};
+
+// ============================================
+// ITINERARIO COMPLETO
 // ============================================
 var fullItinerary = {
     es: '<h3 id="step-1">1. Embarque Ordenado y Exclusivo</h3><p><strong>Punto de encuentro:</strong> Los pasajeros se concentran de manera organizada en nuestro muelle privado ubicado en Porto Belo.<br><strong>Infraestructura de espera:</strong> Antes de subir a bordo, el grupo puede disfrutar de las comodidades del predio Porto dos Piratas, como sanitarios, duchas de agua dulce y estaciones para recargar celulares.<br><strong>Control de capacidad:</strong> El personal y los guías realizan el chequeo estricto del listado de pasajeros (incluyendo niños y bebés) para cumplir con los estándares de seguridad de la Marina Brasileña antes de habilitar el ingreso a las modernas embarcaciones de la flota.</p><h3 id="step-2">2. Navegación por la Costa Esmeralda y Relato Cultural</h3><p><strong>Zarpada:</strong> Las embarcaciones (con capacidades de 150, 170 o 240 pasajeros) inician la travesía náutica adentrándose en el océano Atlántico.<br><strong>Recorrido panorámico:</strong> Se navega por las aguas calmas y cristalinas de la "Ensenada das Garoupas", contemplando los majestuosos paisajes de la sofisticada Costa Esmeralda, zona habitual de cruceros de lujo.<br><strong>Bloque cultural:</strong> Durante esta etapa del viaje, se comparten relatos históricos fascinantes sobre la región y los orígenes de la fundación portuguesa del tradicional barrio "Arazá".</p><h3 id="step-3">3. Parada para Baño y Relax en Caixa d\'Aço</h3><p><strong>Llegada al refugio natural:</strong> El barco se posiciona en la famosa bahía de Caixa d\'Aço ("Caja Fuerte"), reconocida internacionalmente por sus icónicos bares flotantes.<br><strong>Momento de natación y clavados:</strong> Se realiza una parada libre de 30 minutos para que los pasajeros disfruten y se refresquen en el mar.<br><strong>Diversión en el tobogán:</strong> Tanto adultos como niños tienen acceso al tobogán acuático del barco, diseñado especialmente para garantizar una caída suave, controlada y segura directamente al agua.<br><strong>Seguridad constante:</strong> Todo el tiempo de fondeo permanece bajo la atenta supervisión de marineros guardavidas profesionales y con chalecos salvavidas a disposición.</p><h3 id="step-4">4. Fiesta a Bordo y Regreso al Predio</h3><p><strong>Show pirata interactivo:</strong> Tras el baño, se enciende la energía a bordo con la animación en vivo de nuestros piratas, donde los pasajeros pasan a ser los protagonistas del espectáculo.<br><strong>Música y baile:</strong> El barco se convierte en una pista festiva con distintos estilos musicales para bailar mientras se inicia el regreso al muelle.<br><strong>Servicio de bar y buffet:</strong> Los pasajeros pueden complementar la fiesta disfrutando de un refrescante buffet de frutas tropicales o adquiriendo tragos y snacks en el bar a bordo.<br><strong>Cierre de la jornada:</strong> Arribo al muelle propio para continuar disfrutando del restaurante, las delicias del bar de playa o los combos estudiantiles en el predio Porto dos Piratas.</p>',
@@ -1178,13 +1238,33 @@ function changeLanguage(lang) {
         if (tooltipText) {
             el.setAttribute('data-tooltip', tooltipText);
         } else {
-            // Fallback: usar el tooltip en portugués si no existe
             var fallback = el.getAttribute('data-tooltip-pt');
             if (fallback) {
                 el.setAttribute('data-tooltip', fallback);
             }
         }
     });
+    
+    // ===== ACTUALIZAR CHATBOT =====
+    // Actualizar placeholder del chat
+    var chatInput = document.getElementById('aiChatInput');
+    if (chatInput) {
+        chatInput.placeholder = t.ai_chatbot_placeholder || 'Pergunte algo...';
+    }
+    
+    // Actualizar mensaje de bienvenida si el chat está abierto
+    var messages = document.getElementById('aiChatMessages');
+    if (messages && messages.children.length === 1) {
+        var firstMsg = messages.children[0];
+        if (firstMsg && firstMsg.classList.contains('ai-msg') && firstMsg.classList.contains('bot')) {
+            var greetings = {
+                pt: 'Olá! 👋 Sou o <b>Angel AI</b> com IA generativa 🧠<br><br>Posso responder perguntas ilimitadas sobre:<br>⛵ Passeios de barco<br>💰 Preços e descontos<br>🏖️ Porto Belo Beach Day<br>📅 Disponibilidade e reservas<br><br>💡 <i>Pergunte em linguagem natural!</i>',
+                es: '¡Hola! 👋 Soy <b>Angel AI</b> con IA generativa 🧠<br><br>Puedo responder preguntas ilimitadas sobre:<br>⛵ Paseos en barco<br>💰 Precios y descuentos<br>🏖️ Porto Belo Beach Day<br>📅 Disponibilidad y reservas<br><br>💡 ¡Pregúntame en lenguaje natural!',
+                en: 'Hello! 👋 I\'m <b>Angel AI</b> with generative AI 🧠<br><br>I can answer unlimited questions about:<br>⛵ Boat tours<br>💰 Prices and discounts<br>🏖️ Porto Belo Beach Day<br>📅 Availability and bookings<br><br>💡 Ask me in natural language!'
+            };
+            firstMsg.innerHTML = greetings[lang] || greetings.pt;
+        }
+    }
     
     // Actualizar botones de idioma
     document.querySelectorAll('.lang-btn-header').forEach(function(btn) {
@@ -1193,12 +1273,6 @@ function changeLanguage(lang) {
             btn.classList.add('active');
         }
     });
-    
-    // Actualizar placeholder del chat
-    var chatInput = document.getElementById('aiChatInput');
-    if (chatInput) {
-        chatInput.placeholder = t.ai_chatbot_placeholder || 'Pergunte algo...';
-    }
     
     // Actualizar botón de WhatsApp
     updateWhatsAppLink();
@@ -1332,7 +1406,120 @@ function htmlToWhatsAppFormat(html) {
 }
 
 // ============================================
-// SLIDESHOW - USA LAS IMÁGENES res_1.webp a res_12.webp
+// CHATBOT FUNCTIONS
+// ============================================
+
+function getAIResponse(userText) {
+    var text = userText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    var kb = aiKnowledgeBase[currentLang] || aiKnowledgeBase['pt'];
+    var bestMatch = null;
+    var bestScore = 0;
+
+    for (var i = 0; i < kb.intents.length; i++) {
+        var intent = kb.intents[i];
+        var score = 0;
+        for (var j = 0; j < intent.keywords.length; j++) {
+            var kw = intent.keywords[j].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            if (text.indexOf(kw) !== -1) {
+                score += kw.length;
+                if (text === kw) score += 10;
+            }
+        }
+        if (score > bestScore) {
+            bestScore = score;
+            bestMatch = intent;
+        }
+    }
+    
+    if (bestMatch && bestScore > 0) {
+        return bestMatch.response;
+    }
+    return kb.fallback;
+}
+
+// ============================================
+// CHATBOT
+// ============================================
+function initChatbot() {
+    var toggle = document.getElementById('aiChatbotToggle');
+    var chatWindow = document.getElementById('aiChatbotWindow');
+    var close = document.getElementById('aiChatbotClose');
+    var input = document.getElementById('aiChatInput');
+    var send = document.getElementById('aiChatSend');
+    
+    if (toggle && chatWindow) {
+        toggle.addEventListener('click', function() {
+            chatWindow.classList.toggle('active');
+            var messages = document.getElementById('aiChatMessages');
+            if (chatWindow.classList.contains('active') && messages.children.length === 0) {
+                var greetings = {
+                    pt: 'Olá! 👋 Sou o <b>Angel AI</b> com IA generativa 🧠<br><br>Posso responder perguntas ilimitadas sobre:<br>⛵ Passeios de barco<br>💰 Preços e descontos<br>🏖️ Porto Belo Beach Day<br>📅 Disponibilidade e reservas<br><br>💡 <i>Pergunte em linguagem natural!</i>',
+                    es: '¡Hola! 👋 Soy <b>Angel AI</b> con IA generativa 🧠<br><br>Puedo responder preguntas ilimitadas sobre:<br>⛵ Paseos en barco<br>💰 Precios y descuentos<br>🏖️ Porto Belo Beach Day<br>📅 Disponibilidad y reservas<br><br>💡 ¡Pregúntame en lenguaje natural!',
+                    en: 'Hello! 👋 I\'m <b>Angel AI</b> with generative AI 🧠<br><br>I can answer unlimited questions about:<br>⛵ Boat tours<br>💰 Prices and discounts<br>🏖️ Porto Belo Beach Day<br>📅 Availability and bookings<br><br>💡 Ask me in natural language!'
+                };
+                messages.innerHTML = '<div class="ai-msg bot">' + (greetings[currentLang] || greetings.pt) + '</div>';
+            }
+        });
+    }
+    if (close) {
+        close.addEventListener('click', function() { chatWindow.classList.remove('active'); });
+    }
+    if (send) {
+        send.addEventListener('click', function() { 
+            sendMessage(); 
+        });
+    }
+    if (input) {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    }
+}
+
+function sendMessage() {
+    var input = document.getElementById('aiChatInput');
+    var text = input.value.trim();
+    if (!text) return;
+    
+    var messages = document.getElementById('aiChatMessages');
+    if (!messages) return;
+    
+    // Mensaje del usuario
+    var userMsg = document.createElement('div');
+    userMsg.className = 'ai-msg user';
+    userMsg.textContent = text;
+    messages.appendChild(userMsg);
+    input.value = '';
+    messages.scrollTop = messages.scrollHeight;
+    
+    // Mostrar indicador de escritura
+    var typing = document.createElement('div');
+    typing.className = 'ai-msg typing';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    messages.appendChild(typing);
+    messages.scrollTop = messages.scrollHeight;
+    
+    // Buscar respuesta en la base de conocimiento
+    setTimeout(function() {
+        // Eliminar indicador de escritura
+        if (typing.parentNode) {
+            typing.parentNode.removeChild(typing);
+        }
+        
+        var response = getAIResponse(text);
+        
+        var botMsg = document.createElement('div');
+        botMsg.className = 'ai-msg bot';
+        botMsg.innerHTML = response;
+        messages.appendChild(botMsg);
+        messages.scrollTop = messages.scrollHeight;
+    }, 500);
+}
+
+// ============================================
+// SLIDESHOW
 // ============================================
 var imagenesSlideshow = [
     'https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/res_1.webp',
@@ -1371,11 +1558,9 @@ function initSlideshow() {
     var container = document.getElementById('bannerSlideshow');
     if (!container) return;
     
-    // Limpiar slides existentes
     var existingSlides = container.querySelectorAll('.slide');
     existingSlides.forEach(function(el) { el.remove(); });
     
-    // Crear slides con res_1.webp a res_12.webp
     imagenesSlideshow.forEach(function(url, index) {
         var slide = document.createElement('div');
         slide.className = 'slide' + (index === 0 ? ' active' : '');
@@ -1391,7 +1576,6 @@ function initSlideshow() {
         container.appendChild(slide);
     });
     
-    // Crear indicadores
     var indicators = document.getElementById('slideIndicators');
     if (indicators) {
         indicators.innerHTML = '';
@@ -1403,11 +1587,9 @@ function initSlideshow() {
         });
     }
     
-    // Eventos de navegación
     document.getElementById('slidePrev').addEventListener('click', function() { prevSlide(); resetAutoplay(); });
     document.getElementById('slideNext').addEventListener('click', function() { nextSlide(); resetAutoplay(); });
     
-    // Auto-play
     startAutoplay();
 }
 
@@ -1484,93 +1666,18 @@ function cambiarImagen(direccion) {
 }
 
 // ============================================
-// CHATBOT
-// ============================================
-function initChatbot() {
-    var toggle = document.getElementById('aiChatbotToggle');
-    var chatWindow = document.getElementById('aiChatbotWindow');
-    var close = document.getElementById('aiChatbotClose');
-    var input = document.getElementById('aiChatInput');
-    var send = document.getElementById('aiChatSend');
-    
-    if (toggle && chatWindow) {
-        toggle.addEventListener('click', function() {
-            chatWindow.classList.toggle('active');
-            var messages = document.getElementById('aiChatMessages');
-            if (chatWindow.classList.contains('active') && messages.children.length === 0) {
-                var t = translations[currentLang] || translations['pt'];
-                messages.innerHTML = '<div class="ai-msg bot">Olá! 👋 Sou o Angel AI. Como posso ajudar? 😊</div>';
-            }
-        });
-    }
-    if (close) {
-        close.addEventListener('click', function() { chatWindow.classList.remove('active'); });
-    }
-    if (send) {
-        send.addEventListener('click', sendMessage);
-    }
-    if (input) {
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') sendMessage();
-        });
-    }
-}
-
-function sendMessage() {
-    var input = document.getElementById('aiChatInput');
-    var text = input.value.trim();
-    if (!text) return;
-    
-    var messages = document.getElementById('aiChatMessages');
-    if (!messages) return;
-    
-    // Mensaje del usuario
-    var userMsg = document.createElement('div');
-    userMsg.className = 'ai-msg user';
-    userMsg.textContent = text;
-    messages.appendChild(userMsg);
-    input.value = '';
-    messages.scrollTop = messages.scrollHeight;
-    
-    // Respuesta del bot
-    setTimeout(function() {
-        var botMsg = document.createElement('div');
-        botMsg.className = 'ai-msg bot';
-        var lowerText = text.toLowerCase();
-        var response = '🤔 No tengo esa información. Puedo ayudarte con precios, disponibilidad y reservas.';
-        if (lowerText.indexOf('preço') !== -1 || lowerText.indexOf('precio') !== -1 || lowerText.indexOf('price') !== -1) {
-            response = '💰 Preços: Adultos R$ 100,00 | Crianças (6-11) R$ 50,00 | Menores de 5 grátis!';
-        } else if (lowerText.indexOf('horário') !== -1 || lowerText.indexOf('horario') !== -1 || lowerText.indexOf('time') !== -1) {
-            response = '⏰ Horários: 9:30, 11:10 e 13:00. Sujeito à disponibilidade.';
-        } else if (lowerText.indexOf('reserv') !== -1 || lowerText.indexOf('booking') !== -1) {
-            response = '📝 Para reservar, preencha o formulário abaixo ou fale conosco no WhatsApp (47) 99967-9084';
-        } else if (lowerText.indexOf('caixa') !== -1 || lowerText.indexOf('tobogã') !== -1 || lowerText.indexOf('tobogan') !== -1) {
-            response = '🏊 Parada de 30 minutos em Caixa D\'Aço para nadar e usar o tobogã!';
-        } else if (lowerText.indexOf('obrigado') !== -1 || lowerText.indexOf('gracias') !== -1 || lowerText.indexOf('thank') !== -1) {
-            response = '😊 Por nada! Estamos aqui para ajudar. Bom passeio! ⛵';
-        }
-        botMsg.innerHTML = response;
-        messages.appendChild(botMsg);
-        messages.scrollTop = messages.scrollHeight;
-    }, 500);
-}
-
-// ============================================
 // INICIALIZACIÓN
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
-    // Idioma guardado
     var savedLang = localStorage.getItem('preferred_language') || 'pt';
     changeLanguage(savedLang);
     
-    // Botones de idioma
     document.querySelectorAll('.lang-btn-header').forEach(function(btn) {
         btn.addEventListener('click', function() {
             changeLanguage(this.getAttribute('data-lang'));
         });
     });
     
-    // Navegación suave
     document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
         anchor.addEventListener('click', function(e) {
             var href = this.getAttribute('href');
@@ -1583,19 +1690,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Menú móvil
     document.getElementById('menuToggle').addEventListener('click', function() {
         document.getElementById('navLinks').classList.toggle('active');
     });
     
-    // Formulario - fecha mínima
     var fechaInput = document.getElementById('fecha');
     if (fechaInput) {
         var today = new Date().toISOString().split('T')[0];
         fechaInput.setAttribute('min', today);
     }
     
-    // Selección de horario
     document.querySelectorAll('.horario-card').forEach(function(card) {
         card.addEventListener('click', function() {
             document.querySelectorAll('.horario-card').forEach(function(c) {
@@ -1606,7 +1710,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Envío del formulario
     document.getElementById('dataForm').addEventListener('submit', function(e) {
         e.preventDefault();
         var fecha = document.getElementById('fecha').value;
@@ -1634,24 +1737,20 @@ document.addEventListener('DOMContentLoaded', function() {
         window.open('https://wa.me/5547999679084?text=' + encodeURIComponent(msg), '_blank');
     });
     
-    // Calcular precio
     document.getElementById('adultos').addEventListener('input', calcularValorTotal);
     document.getElementById('menores').addEventListener('input', calcularValorTotal);
     calcularValorTotal();
     
-    // Inicializar componentes
     initSlideshow();
     initGallery();
     initChatbot();
     
-    // MODAL - Eventos
     document.getElementById('closeModalBtn').addEventListener('click', closeModal);
     document.getElementById('closeModalFooterBtn').addEventListener('click', closeModal);
     document.getElementById('infoModal').addEventListener('click', function(e) {
         if (e.target === this) closeModal();
     });
     
-    // Leer en voz alta
     document.getElementById('readAloudBtn').addEventListener('click', function() {
         if (isSpeaking) {
             stopReading();
@@ -1662,7 +1761,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Compartir por WhatsApp
     document.getElementById('shareWhatsappBtn').addEventListener('click', function() {
         var body = document.getElementById('modalBody');
         var formattedText = htmlToWhatsAppFormat(body.innerHTML);
@@ -1670,7 +1768,6 @@ document.addEventListener('DOMContentLoaded', function() {
         window.open('https://wa.me/?text=' + encodeURIComponent(message), '_blank');
     });
     
-    // Timeline - abrir modal con desplazamiento automático
     document.querySelectorAll('.timeline-step').forEach(function(step) {
         step.addEventListener('click', function() {
             var stepNumber = this.getAttribute('data-step');
@@ -1682,7 +1779,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Sticky bar
     var stickyBar = document.getElementById('stickyBookingBar');
     var hero = document.getElementById('inicio');
     
@@ -1712,10 +1808,8 @@ document.addEventListener('DOMContentLoaded', function() {
         scrollToSectionWithOffset('reserva');
     });
     
-    // WhatsApp flotante
     updateWhatsAppLink();
     
-    // Lightbox
     document.getElementById('closeLightboxBtn').addEventListener('click', cerrarLightbox);
     document.getElementById('lightboxModern').addEventListener('click', function(e) {
         if (e.target === this) cerrarLightbox();
