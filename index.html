@@ -537,6 +537,62 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 [data-ai-enhanced]:hover::after {
     display: block;
 }
+
+/* ===== NUEVOS ESTILOS PARA LINKS DE RESEÑAS CON SVG ===== */
+.review-links-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+.btn-review {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: white;
+    padding: 14px 28px;
+    border-radius: 60px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: #1A2C3E;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.04);
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+}
+.btn-review .logo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+.btn-review .logo-icon svg {
+    width: 100%;
+    height: 100%;
+}
+.btn-review:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 35px rgba(0,0,0,0.08);
+}
+.btn-review.google:hover { border-color: #EA4335; background: #FFF5F5; }
+.btn-review.tripadvisor:hover { border-color: #34E0A1; background: #F5FFFB; }
+
+@media (max-width: 600px) {
+    .btn-review {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+        gap: 10px;
+    }
+    .btn-review .logo-icon {
+        width: 26px;
+        height: 26px;
+    }
+}
 </style>
 </head>
 <body>
@@ -733,7 +789,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 </div>
 
-<!-- ===== TESTIMONIOS ===== -->
+<!-- ===== TESTIMONIOS & BOTONES DE RESEÑA ===== -->
 <div class="section section-bg-light" data-ai-enhanced>
 <div class="container">
 <h2 class="section-title" data-key="testimonials_title">Quem já navegou, recomenda</h2>
@@ -741,6 +797,34 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 <div class="testimonial-card"><div class="stars">★★★★★</div><p data-key="test1_text">"Passeio fantástico! A equipe é muito atenciosa."</p><strong>– Mariana S.</strong></div>
 <div class="testimonial-card"><div class="stars">★★★★★</div><p data-key="test2_text">"Segurança e diversão. Buffet de frutas delicioso."</p><strong>– Rafael C.</strong></div>
 <div class="testimonial-card"><div class="stars">★★★★★</div><p data-key="test3_text">"Melhor passeio de barco de Porto Belo!"</p><strong>– Patrícia K.</strong></div>
+</div>
+
+<!-- ===== BOTONES DE RESEÑA CON LOGOS SVG OFICIALES ===== -->
+<div class="review-links-section">
+    <a href="https://www.google.com/maps/place/Porto+Belo+Beach+Day/@-27.1575718,-48.5560658,715m/data=!3m1!1e3!4m18!1m9!3m8!1s0x94d8a5006a4f51a7:0x67eb2b28f43ef060!2sPorto+Belo+Beach+Day!8m2!3d-27.1575718!4d-48.5534855!9m1!1b1!16s%2Fg%2F11zgv2ff10!3m7!1s0x94d8a5006a4f51a7:0x67eb2b28f43ef060!8m2!3d-27.1575718!4d-48.5534855!9m1!1b1!16s%2Fg%2F11zgv2ff10?entry=ttu&g_ep=EgoyMDI2MDcxNC4wIKXMDSoASAFQAw%3D%3D" 
+       target="_blank" rel="noopener noreferrer" class="btn-review google" data-key="review_google">
+        <span class="logo-icon">
+            <svg viewBox="0 0 48 48">
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                <path fill="none" d="M0 0h48v48H0z"/>
+            </svg>
+        </span>
+        Avaliar no Google
+    </a>
+    <a href="https://www.tripadvisor.com.br/UserReviewEdit-g303589-d34530782-Porto_Belo_Beach_Day-Porto_Belo_State_of_Santa_Catarina.html?m=19905" 
+       target="_blank" rel="noopener noreferrer" class="btn-review tripadvisor" data-key="review_tripadvisor">
+        <span class="logo-icon">
+            <svg viewBox="0 0 48 48">
+                <path fill="#34E0A1" d="M24 4L18.3 16.5 4.8 18.5l9.6 9.4-2.3 13.6L24 34.8l11.9 6.7-2.3-13.6 9.6-9.4-13.5-2L24 4z"/>
+                <path fill="#FFFFFF" d="M24 11.5l-2.8 6.9-7.5 1.1 5.4 5.3-1.3 7.6 6.2-3.5 6.2 3.5-1.3-7.6 5.4-5.3-7.5-1.1L24 11.5z"/>
+                <circle cx="24" cy="24" r="4" fill="#34E0A1"/>
+            </svg>
+        </span>
+        Avaliar no TripAdvisor
+    </a>
 </div>
 </div>
 </div>
@@ -1459,7 +1543,9 @@ var translations = {
         weather_title: "Previsão para 3 dias", weather_today: "Hoje", weather_tomorrow: "Amanhã", weather_after: "+2 dias", weather_note: "Dados climáticos para planejar seu passeio",
         wa_message: "Olá! 👋 Tenho interesse no passeio de barco da Angel Tour Brasil. Poderiam me dar mais informações sobre disponibilidade e preços? ⛵",
         modal_title: "Roteiro Completo da Excursão",
-        modal_read: "Ler", modal_stop: "Parar", modal_share: "Compartilhar", modal_close: "Fechar"
+        modal_read: "Ler", modal_stop: "Parar", modal_share: "Compartilhar", modal_close: "Fechar",
+        review_google: "Avaliar no Google",
+        review_tripadvisor: "Avaliar no TripAdvisor"
     },
     es: {
         nav_home: "Início", nav_tour: "El Paseo", nav_gallery: "Galería", nav_parador: "Porto Belo Beach Day", nav_book: "Reservar",
@@ -1502,7 +1588,9 @@ var translations = {
         weather_title: "Previsión para 3 días", weather_today: "Hoy", weather_tomorrow: "Mañana", weather_after: "+2 días", weather_note: "Datos climáticos para planificar tu paseo",
         wa_message: "¡Hola! 👋 Me interesa el paseo en barco de Angel Tour Brasil. ¿Podrían darme más información sobre disponibilidad y precios? ⛵",
         modal_title: "Itinerario Completo de la Excursión",
-        modal_read: "Leer", modal_stop: "Parar", modal_share: "Compartir", modal_close: "Cerrar"
+        modal_read: "Leer", modal_stop: "Parar", modal_share: "Compartir", modal_close: "Cerrar",
+        review_google: "Evaluar en Google",
+        review_tripadvisor: "Evaluar en TripAdvisor"
     },
     en: {
         nav_home: "Home", nav_tour: "The Tour", nav_gallery: "Gallery", nav_parador: "Porto Belo Beach Day", nav_book: "Book Now",
@@ -1545,7 +1633,9 @@ var translations = {
         weather_title: "3-Day Forecast", weather_today: "Today", weather_tomorrow: "Tomorrow", weather_after: "+2 days", weather_note: "Weather data to plan your tour",
         wa_message: "Hello! 👋 I'm interested in the Angel Tour Brasil boat tour. Could you provide me with more information about availability and prices? ⛵",
         modal_title: "Complete Tour Itinerary",
-        modal_read: "Read", modal_stop: "Stop", modal_share: "Share", modal_close: "Close"
+        modal_read: "Read", modal_stop: "Stop", modal_share: "Share", modal_close: "Close",
+        review_google: "Review on Google",
+        review_tripadvisor: "Review on TripAdvisor"
     }
 };
 
