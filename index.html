@@ -387,19 +387,24 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
     border-color: var(--turquoise);
 }
 .parador-card .parador-logo {
-    width: 64px;
-    height: 64px;
+    width: 80px;
+    height: 80px;
     margin: 0 auto 1rem;
-    display: block;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--deep-blue), #005f8c);
-    padding: 8px;
-    box-shadow: 0 4px 12px rgba(10, 47, 108, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    overflow: visible;
 }
-.parador-card .parador-logo svg {
+.parador-card .parador-logo img {
     width: 100%;
     height: 100%;
+    object-fit: contain;
     display: block;
+    border-radius: 0;
 }
 .parador-card h3 {
     font-size: 1.3rem;
@@ -496,6 +501,7 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 @media (max-width: 880px) {
     .parador-grid { grid-template-columns: 1fr; gap: 1.5rem; }
     .parador-card { padding: 1.5rem; }
+    .parador-card .parador-logo { width: 70px; height: 70px; }
     .parador-imagen-container { aspect-ratio: 16 / 8; margin-bottom: 2rem; }
     .slide-arrow { width: 30px; height: 30px; font-size: 0.9rem; }
     .slide-arrow.prev { left: 8px; }
@@ -841,19 +847,25 @@ h1, h2, h3, .logo, .nav-links a, .btn, .section-title { font-family: 'Poppins', 
 </div>
 <div class="parador-grid">
 <div class="parador-card">
-<div class="parador-logo"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#0A2F6C"/><circle cx="50" cy="50" r="38" fill="none" stroke="#00B4D8" stroke-width="2"/><text x="50" y="58" font-family="Arial, sans-serif" font-size="38" font-weight="bold" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">⛵</text><text x="50" y="78" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#00B4D8" text-anchor="middle">ANGEL</text></svg></div>
-<h3 data-key="parador_col1_title">Lojas de Souvenirs</h3>
-<p data-key="parador_col1_text">Leve a magia da viagem com você. Das lembranças temáticas que contam histórias à moda praia que combina com o verão, temos o souvenir perfeito para guardar (ou presentear) o clima inesquecível desses dias.</p>
+    <div class="parador-logo">
+        <img src="https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/logoangel-iso.png" alt="Angel Tour Logo" loading="lazy">
+    </div>
+    <h3 data-key="parador_col1_title">Lojas de Souvenirs</h3>
+    <p data-key="parador_col1_text">Leve a magia da viagem com você. Das lembranças temáticas que contam histórias à moda praia que combina com o verão, temos o souvenir perfeito para guardar (ou presentear) o clima inesquecível desses dias.</p>
 </div>
 <div class="parador-card">
-<div class="parador-logo"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#0A2F6C"/><circle cx="50" cy="50" r="38" fill="none" stroke="#00B4D8" stroke-width="2"/><text x="50" y="58" font-family="Arial, sans-serif" font-size="38" font-weight="bold" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">⛵</text><text x="50" y="78" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#00B4D8" text-anchor="middle">ANGEL</text></svg></div>
-<h3 data-key="parador_col2_title">Infraestrutura e Conforto</h3>
-<p data-key="parador_col2_text">Nosso parador conta com chuveiros de água doce e sanitários impecáveis. Desfrute de um espaço pensado para seu máximo conforto, com acesso direto à praia e áreas de descanso rodeadas pela natureza.</p>
+    <div class="parador-logo">
+        <img src="https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/logoangel-iso.png" alt="Angel Tour Logo" loading="lazy">
+    </div>
+    <h3 data-key="parador_col2_title">Infraestrutura e Conforto</h3>
+    <p data-key="parador_col2_text">Nosso parador conta com chuveiros de água doce e sanitários impecáveis. Desfrute de um espaço pensado para seu máximo conforto, com acesso direto à praia e áreas de descanso rodeadas pela natureza.</p>
 </div>
 <div class="parador-card">
-<div class="parador-logo"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#0A2F6C"/><circle cx="50" cy="50" r="38" fill="none" stroke="#00B4D8" stroke-width="2"/><text x="50" y="58" font-family="Arial, sans-serif" font-size="38" font-weight="bold" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">⛵</text><text x="50" y="78" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#00B4D8" text-anchor="middle">ANGEL</text></svg></div>
-<h3 data-key="parador_col3_title">Gastronomia e Bar</h3>
-<p data-key="parador_col3_text">Delicie-se com nossa variada oferta gastronômica: Snacks, sanduíches, hambúrgueres com batatas fritas, variados pratos e bebidas refrescantes. Tudo preparado com ingredientes frescos e de qualidade.</p>
+    <div class="parador-logo">
+        <img src="https://raw.githubusercontent.com/sebagsc2020/angeltourbrasil/main/images/logoangel-iso.png" alt="Angel Tour Logo" loading="lazy">
+    </div>
+    <h3 data-key="parador_col3_title">Gastronomia e Bar</h3>
+    <p data-key="parador_col3_text">Delicie-se com nossa variada oferta gastronômica: Snacks, sanduíches, hambúrgueres com batatas fritas, variados pratos e bebidas refrescantes. Tudo preparado com ingredientes frescos e de qualidade.</p>
 </div>
 </div>
 </div>
