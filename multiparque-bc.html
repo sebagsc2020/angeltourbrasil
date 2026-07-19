@@ -42,6 +42,7 @@
             flex-direction: column;
             justify-content: center;
             overflow: hidden;
+            background: linear-gradient(135deg, #0B2545, #1A4B6B); /* Fondo seguro mientras carga */
         }
         
         .hero-bg-slider {
@@ -54,7 +55,7 @@
             top: 0; left: 0; width: 100%; height: 100%;
             object-fit: cover;
             opacity: 0;
-            transition: opacity 1.5s ease-in-out; /* Transición suave de 1.5 segundos */
+            transition: opacity 1.5s ease-in-out;
             transform: scale(1.05);
         }
         .hero-bg-slider img.active {
@@ -465,8 +466,8 @@
         document.getElementById('contactFormEn').addEventListener('submit', handleFormSubmit);
         document.getElementById('contactFormPt').addEventListener('submit', handleFormSubmit);
 
-        // SLIDER DE FONDO AUTOMÁTICO Y ALEATORIO
-        document.addEventListener("DOMContentLoaded", function() {
+        // SLIDER DE FONDO AUTOMÁTICO Y ALEATORIO CON CARGA PREVIA
+        document.addEventListener("DOMContentLoaded", async function() {
             const totalImages = 26;
             const baseUrl = "https://www.angeltourbasil.com.br/images/mp_";
             const extension = ".webp";
@@ -484,39 +485,64 @@
                 return numbers;
             }
 
+            // Función para verificar si una imagen existe (fetch optimizado)
+            async function imageExists(url) {
+                try {
+                    const response = await fetch(url, { method: 'HEAD' });
+                    return response.ok;
+                } catch (error) {
+                    return false;
+                }
+            }
+
             let sequence = generateRandomSequence();
             let currentIndex = 0;
 
             // Función para inicializar el slider en un contenedor dado
-            function initSlider(containerId) {
+            async function initSlider(containerId) {
                 const container = document.getElementById(containerId);
-                if(!container) return null;
+                if(!container) return;
 
-                // Crear las etiquetas img y añadirlas al contenedor
                 const images = [];
+                
+                // Cargar todas las imágenes y verificar su existencia
                 for(let i = 1; i <= totalImages; i++) {
-                    const img = document.createElement('img');
-                    img.src = baseUrl + i + extension;
-                    img.alt = "Background " + i;
-                    container.appendChild(img);
-                    images.push(img);
+                    const url = baseUrl + i + extension;
+                    // Si la imagen existe en el servidor, la añadimos al DOM
+                    if (await imageExists(url)) {
+                        const img = document.createElement('img');
+                        img.src = url;
+                        img.alt = "Background " + i;
+                        container.appendChild(img);
+                        images.push(img);
+                    }
                 }
+
+                // Si no se cargó ninguna imagen, salir
+                if (images.length === 0) return;
 
                 // Función para mostrar la siguiente imagen
                 function showNextImage() {
-                    // Obtener el número de imagen actual de la secuencia aleatoria
-                    const currentNum = sequence[currentIndex];
+                    // Filtrar la secuencia para que solo use números que realmente cargaron
+                    const validNumbers = sequence.filter(num => num <= images.length);
+                    if (validNumbers.length === 0) {
+                        sequence = generateRandomSequence();
+                        return;
+                    }
+                    
+                    // Tomar el siguiente número válido
+                    const currentNum = validNumbers[currentIndex % validNumbers.length];
                     
                     // Remover clase active de todas las imágenes
                     images.forEach(img => img.classList.remove('active'));
                     
-                    // Agregar clase active a la imagen correspondiente (restamos 1 porque el array empieza en 0)
+                    // Agregar clase active a la imagen correspondiente
                     images[currentNum - 1].classList.add('active');
 
                     // Avanzar al siguiente índice
                     currentIndex++;
-                    // Si llegamos al final de la secuencia, generar una nueva secuencia aleatoria y resetear índice
-                    if(currentIndex >= sequence.length) {
+                    // Si llegamos al final de la secuencia, generar una nueva secuencia aleatoria
+                    if(currentIndex >= validNumbers.length) {
                         sequence = generateRandomSequence();
                         currentIndex = 0;
                     }
@@ -529,10 +555,10 @@
                 setInterval(showNextImage, 5000);
             }
 
-            // Inicializar el slider para todos los idiomas (comparten el mismo fondo)
-            initSlider('bgSlider');
-            initSlider('bgSliderEn');
-            initSlider('bgSliderPt');
+            // Inicializar el slider para todos los idiomas
+            await initSlider('bgSlider');
+            await initSlider('bgSliderEn');
+            await initSlider('bgSliderPt');
         });
     </script>
 </body>
