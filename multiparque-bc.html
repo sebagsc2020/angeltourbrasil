@@ -248,6 +248,8 @@
             max-height: 450px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             border: 1px solid rgba(0, 229, 255, 0.1);
+            display: flex;
+            flex-direction: column;
         }
         .video-wrapper {
             position: absolute;
@@ -257,6 +259,7 @@
             height: 100%;
             overflow: hidden;
             border-radius: 20px;
+            flex-shrink: 0;
         }
         .video-wrapper iframe {
             position: absolute;
@@ -272,16 +275,27 @@
             min-height: 100%;
         }
         .video-overlay {
-            position: relative;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
             z-index: 2;
-            background: linear-gradient(to top, rgba(11, 37, 69, 0.95), transparent);
+            background: linear-gradient(to top, rgba(11, 37, 69, 0.95) 0%, rgba(11, 37, 69, 0.7) 50%, transparent 100%);
             width: 100%;
-            padding: 20px;
-            margin-top: auto;
+            padding: 20px 15px 15px 15px;
             pointer-events: none;
         }
-        .video-card h4 { font-size: 1.1rem; color: var(--primary-cyan); font-weight: 700; }
-        .video-card p { font-size: 0.8rem; color: #ccc; }
+        .video-overlay h4 { 
+            font-size: 1.1rem; 
+            color: var(--primary-cyan); 
+            font-weight: 700; 
+            margin-bottom: 2px;
+        }
+        .video-overlay p { 
+            font-size: 0.8rem; 
+            color: #e0e0e0; 
+            opacity: 0.9;
+        }
 
         /* --- SECCIÓN: CONOCE EL PARQUE --- */
         .info-section { padding: 80px 5%; background: #061624; }
@@ -438,7 +452,6 @@
             .hero-title { font-size: 2.4rem; }
             .hero { padding-top: 20px; }
             .hero-logo { max-width: 220px; margin-bottom: 15px; }
-            /* UNA SOLA COLUMNA EN MÓVILES */
             .videos-container { 
                 grid-template-columns: 1fr;
                 gap: 20px;
@@ -476,9 +489,9 @@
             .hero-title { font-size: 1.8rem; }
             .hero { padding-top: 15px; }
             .hero-logo { max-width: 180px; }
-            .video-overlay { padding: 15px; }
-            .video-card h4 { font-size: 1rem; }
-            .video-card p { font-size: 0.8rem; }
+            .video-overlay { padding: 15px 12px 12px 12px; }
+            .video-overlay h4 { font-size: 0.95rem; }
+            .video-overlay p { font-size: 0.75rem; }
         }
         @media (max-width: 380px) {
             .videos-container { 
@@ -534,37 +547,52 @@
             </div>
         </header>
 
-        <!-- Videos Grid (Proporción 9:16 - UNA COLUMNA EN MÓVIL) -->
+        <!-- Videos Grid - Reproducción automática en bucle sin controles -->
         <div id="video-grid" class="videos-container">
             <div class="video-card">
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
                 </div>
-                <div class="video-overlay"><h4>Piscinas</h4><p>Olas y relax</p></div>
+                <div class="video-overlay">
+                    <h4>Piscinas</h4>
+                    <p>Olas y relax</p>
+                </div>
             </div>
             <div class="video-card">
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
                 </div>
-                <div class="video-overlay"><h4>Toboganes</h4><p>Adrenalina pura</p></div>
+                <div class="video-overlay">
+                    <h4>Toboganes</h4>
+                    <p>Adrenalina pura</p>
+                </div>
             </div>
             <div class="video-card">
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
                 </div>
-                <div class="video-overlay"><h4>Seguridad</h4><p>Juegos homologados</p></div>
+                <div class="video-overlay">
+                    <h4>Seguridad</h4>
+                    <p>Juegos homologados</p>
+                </div>
             </div>
             <div class="video-card">
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
                 </div>
-                <div class="video-overlay"><h4>Área VIP</h4><p>Exclusividad</p></div>
+                <div class="video-overlay">
+                    <h4>Área VIP</h4>
+                    <p>Exclusividad</p>
+                </div>
             </div>
             <div class="video-card">
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
                 </div>
-                <div class="video-overlay"><h4>Infantil</h4><p>Seguridad total</p></div>
+                <div class="video-overlay">
+                    <h4>Infantil</h4>
+                    <p>Seguridad total</p>
+                </div>
             </div>
         </div>
 
@@ -703,11 +731,11 @@
             </div>
         </header>
         <div id="video-grid" class="videos-container">
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe></div><div class="video-overlay"><h4>Pools</h4><p>Waves & relax</p></div></div>
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe></div><div class="video-overlay"><h4>Water Slides</h4><p>Pure adrenaline</p></div></div>
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe></div><div class="video-overlay"><h4>Safety</h4><p>Certified games</p></div></div>
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe></div><div class="video-overlay"><h4>VIP Area</h4><p>Exclusivity</p></div></div>
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe></div><div class="video-overlay"><h4>Kids</h4><p>Total safety</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Pools</h4><p>Waves & relax</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Water Slides</h4><p>Pure adrenaline</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Safety</h4><p>Certified games</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>VIP Area</h4><p>Exclusivity</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Kids</h4><p>Total safety</p></div></div>
         </div>
         <section class="info-section">
             <h2 style="text-align: center; font-size: 2.8rem; color: var(--primary-cyan);">About Multiparque</h2>
@@ -818,11 +846,11 @@
             </div>
         </header>
         <div id="video-grid" class="videos-container">
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe></div><div class="video-overlay"><h4>Piscinas</h4><p>Ondas e relax</p></div></div>
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe></div><div class="video-overlay"><h4>Tobogãs</h4><p>Adrenalina pura</p></div></div>
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe></div><div class="video-overlay"><h4>Segurança</h4><p>Jogos homologados</p></div></div>
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe></div><div class="video-overlay"><h4>Área VIP</h4><p>Exclusividade</p></div></div>
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe></div><div class="video-overlay"><h4>Infantil</h4><p>Segurança total</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Piscinas</h4><p>Ondas e relax</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Tobogãs</h4><p>Adrenalina pura</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Segurança</h4><p>Jogos homologados</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Área VIP</h4><p>Exclusividade</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Infantil</h4><p>Segurança total</p></div></div>
         </div>
         <section class="info-section">
             <h2 style="text-align: center; font-size: 2.8rem; color: var(--primary-cyan);">Conheça o Multiparque</h2>
