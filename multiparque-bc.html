@@ -18,7 +18,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background-color: var(--deep-blue); color: var(--text-light); overflow-x: hidden; }
 
-        /* Language Switcher - PESTAÑA FLOTANTE LATERAL */
+        /* Language Switcher */
         .lang-switcher {
             position: fixed;
             top: 50%;
@@ -202,7 +202,6 @@
         }
         .hero-title span { color: var(--primary-cyan); text-shadow: 0 0 20px rgba(0, 229, 255, 0.4); }
         
-        /* Fondo semitransparente SOLO para el texto del héroe */
         .hero-text-highlight {
             display: inline-block;
             background: rgba(0, 0, 0, 0.55);
@@ -255,7 +254,7 @@
         .stat-box h3 { font-size: 2rem; font-weight: 800; color: var(--primary-cyan); }
         .stat-box p { font-size: 0.8rem; text-transform: uppercase; font-weight: 600; letter-spacing: 1px;}
 
-        /* VIDEOS CON PROPORCIÓN 9:16 - SIN BORDES NEGROS */
+        /* VIDEOS */
         .videos-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -322,7 +321,7 @@
             opacity: 0.9;
         }
 
-        /* --- SECCIÓN: CONOCE EL PARQUE --- */
+        /* INFO SECTION */
         .info-section { padding: 80px 5%; background: #061624; }
         .info-grid {
             display: grid;
@@ -347,48 +346,63 @@
             background: var(--primary-cyan); border-radius: 50%; margin-right: 10px;
         }
 
-        /* ESTILO ACORDEÓN PARA FAQ */
-        .faq-container { max-width: 900px; margin: 40px auto 0; }
+        /* FAQ - 2 COLUMNAS */
+        .faq-container { 
+            max-width: 1000px; 
+            margin: 40px auto 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .faq-container h3 {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--primary-cyan);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
         .faq-item {
             background: var(--dark-blue-card);
-            margin-bottom: 15px;
             border-radius: 15px;
             overflow: hidden;
             border: 1px solid rgba(0, 229, 255, 0.1);
         }
         .faq-question {
-            padding: 20px 25px;
+            padding: 18px 20px;
             cursor: pointer;
             font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
             transition: 0.3s;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
         .faq-question:hover { background: rgba(0, 229, 255, 0.05); }
         .faq-question::after {
             content: '+';
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--primary-cyan);
             transition: 0.3s;
+            flex-shrink: 0;
+            margin-left: 10px;
         }
         .faq-item input[type="checkbox"] { display: none; }
         .faq-answer {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease, padding 0.4s ease;
-            padding: 0 25px;
+            padding: 0 20px;
             line-height: 1.6;
             opacity: 0.9;
+            font-size: 0.9rem;
         }
         .faq-item input[type="checkbox"]:checked ~ .faq-answer {
             max-height: 500px;
-            padding: 0 25px 25px 25px;
+            padding: 0 20px 20px 20px;
         }
         .faq-item input[type="checkbox"]:checked + .faq-question::after { content: '-'; }
 
-        /* Form Section - 3 COLUMNAS EN ESCRITORIO */
+        /* Form Section */
         .form-section { padding: 80px 5%; background: #071B2E; }
         .form-container { max-width: 1000px; margin: 0 auto; background: var(--dark-blue-card); padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border: 1px solid rgba(0, 229, 255, 0.2); }
         .form-container h2 { text-align: center; margin-bottom: 5px; font-size: 2.2rem; color: var(--primary-cyan); }
@@ -441,19 +455,151 @@
         input[type="date"]::-webkit-calendar-picker-indicator {
             filter: invert(1);
         }
-        
-        .footer { padding: 50px 5%; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); background: #051424; }
-        .map-btn { 
-            display: inline-flex; align-items: center; gap: 10px; 
-            background: rgba(255,255,255,0.1); color: white; padding: 15px 30px; 
-            border-radius: 50px; text-decoration: none; margin-bottom: 20px; transition: 0.3s;
-            border: 1px solid rgba(255,255,255,0.2);
-            cursor: pointer;
-        }
-        .map-btn:hover { background: var(--primary-cyan); color: #0B2545; border-color: var(--primary-cyan); transform: translateY(-3px); }
-        .footer p { opacity: 0.7; font-size: 0.9rem; margin-top: 20px; }
 
-        /* Botón flotante de WhatsApp - Lado derecho */
+        /* FOOTER MEJORADO */
+        .footer {
+            padding: 50px 5% 30px;
+            background: #051424;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+        }
+        .footer-column h4 {
+            color: var(--primary-cyan);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        .footer-column p, .footer-column a {
+            color: #ccc;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            text-decoration: none;
+            display: block;
+        }
+        .footer-column a:hover {
+            color: var(--primary-cyan);
+        }
+        .footer-column .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .footer-column .contact-item .icon {
+            color: var(--primary-cyan);
+            font-size: 1.1rem;
+            min-width: 20px;
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 20px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-bottom p {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+        .footer-bottom .legal-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .footer-bottom .legal-links button {
+            background: none;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: 0.3s;
+            padding: 5px 10px;
+        }
+        .footer-bottom .legal-links button:hover {
+            color: var(--primary-cyan);
+        }
+
+        /* POPUP MODAL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: var(--dark-blue-card);
+            max-width: 700px;
+            width: 100%;
+            max-height: 85vh;
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            position: relative;
+            overflow-y: auto;
+        }
+        .modal-content h2 {
+            color: var(--primary-cyan);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-right: 40px;
+        }
+        .modal-content .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #aaa;
+            background: none;
+            border: none;
+            transition: 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .modal-content .close-modal:hover {
+            color: #fff;
+            transform: rotate(90deg);
+        }
+        .modal-content .modal-body {
+            color: #ddd;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+        .modal-content .modal-body h4 {
+            color: var(--primary-cyan);
+            margin-top: 20px;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+        .modal-content .modal-body ul {
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+        .modal-content .modal-body ul li {
+            margin-bottom: 5px;
+        }
+
+        /* Botón flotante WhatsApp */
         .float-wa {
             position: fixed; 
             bottom: 30px; 
@@ -474,7 +620,6 @@
         }
         .float-wa:hover { transform: scale(1.1); background: #128C7E; box-shadow: 0 5px 30px rgba(37, 211, 102, 0.4); }
         
-        /* Tooltip del botón WhatsApp */
         .float-wa .wa-tooltip {
             visibility: hidden;
             opacity: 0;
@@ -514,7 +659,7 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Ajustes para móvil */
+        /* RESPONSIVE */
         @media (max-width: 992px) {
             .hero-logo {
                 position: relative;
@@ -533,6 +678,10 @@
             }
             .form-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            .faq-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
             }
         }
         @media (max-width: 768px) {
@@ -570,6 +719,17 @@
                 margin-bottom: 0;
             }
             .lang-switcher { display: flex; }
+            .faq-container {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .faq-question {
+                font-size: 0.9rem;
+                padding: 15px 16px;
+            }
+            .faq-answer {
+                font-size: 0.85rem;
+            }
             .float-wa .wa-tooltip {
                 font-size: 0.65rem;
                 padding: 6px 12px;
@@ -577,6 +737,17 @@
                 white-space: normal;
                 bottom: 65px;
                 right: 0;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+            .modal-content {
+                padding: 25px;
+                max-height: 80vh;
+            }
+            .modal-content h2 {
+                font-size: 1.4rem;
             }
         }
         @media (max-width: 480px) {
@@ -613,8 +784,23 @@
                 bottom: 60px;
                 right: -10px;
             }
-            .faq-question { font-size: 0.9rem; padding: 15px 18px; }
-            .faq-answer { font-size: 0.85rem; }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .footer-bottom .legal-links {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .modal-content {
+                padding: 20px;
+            }
+            .modal-content h2 {
+                font-size: 1.2rem;
+            }
+            .modal-content .modal-body {
+                font-size: 0.85rem;
+            }
         }
         @media (max-width: 380px) {
             .videos-container { 
@@ -629,7 +815,7 @@
 </head>
 <body>
 
-    <!-- Language Switcher - Pestaña Flotante Derecha -->
+    <!-- Language Switcher -->
     <div class="lang-switcher" id="langSwitcher">
         <button class="lang-btn active" onclick="setLang('es')">
             <img src="https://www.angeltourbrasil.com.br/images/bt-es.png" alt="Español">
@@ -642,7 +828,6 @@
         </button>
     </div>
 
-    <!-- Tirador para mostrar/ocultar la pestaña -->
     <button class="lang-toggle" id="langToggle" onclick="toggleLangSwitcher()">🌐</button>
 
     <!-- ================= SPANISH CONTENT ================= -->
@@ -673,7 +858,7 @@
             </div>
         </header>
 
-        <!-- Videos Grid - ATTRACCIONES ACTUALIZADAS -->
+        <!-- Videos Grid -->
         <div id="video-grid" class="videos-container">
             <div class="video-card">
                 <div class="video-wrapper">
@@ -752,9 +937,9 @@
                 </div>
             </div>
 
-            <!-- FAQ Acordeón -->
+            <!-- FAQ - 2 COLUMNAS -->
             <div class="faq-container">
-                <h3 style="text-align: center; color: var(--primary-cyan); font-size: 2rem; margin-bottom: 20px;">Preguntas Frecuentes</h3>
+                <h3>Preguntas Frecuentes</h3>
                 
                 <div class="faq-item">
                     <input type="checkbox" id="faq1_es">
@@ -789,7 +974,7 @@
                 <div class="faq-item">
                     <input type="checkbox" id="faq6_es">
                     <label for="faq6_es" class="faq-question">¿Puedo llevar mi propia comida?</label>
-                    <div class="faq-answer">No. Sin embargo, el parque ofrece opciones de alimentación entre restaurante, lonchería y quioscos. Se permite la entrada con mamaderas y papillas infantiles, así como frutas en pequeña cantidad y agua.</div>
+                    <div class="faq-answer">No. Sin embargo, el parque ofrece opciones de alimentación. Se permite la entrada con mamaderas y papillas infantiles, así como frutas en pequeña cantidad y agua.</div>
                 </div>
                 
                 <div class="faq-item">
@@ -801,19 +986,19 @@
                 <div class="faq-item">
                     <input type="checkbox" id="faq8_es">
                     <label for="faq8_es" class="faq-question">¿El parque abre en días de lluvia?</label>
-                    <div class="faq-answer">Sí, el parque está abierto incluso en días de lluvia, salvo condiciones climáticas extremas. Además, contamos con piscinas climatizadas, garantizando confort para los visitantes, independientemente de la temperatura externa.</div>
+                    <div class="faq-answer">Sí, el parque está abierto incluso en días de lluvia, salvo condiciones climáticas extremas. Contamos con piscinas climatizadas.</div>
                 </div>
                 
                 <div class="faq-item">
                     <input type="checkbox" id="faq9_es">
                     <label for="faq9_es" class="faq-question">¿Cuál es el precio de los niños?</label>
-                    <div class="faq-answer">Hasta 5 años el ingreso es gratuito, de 6 a 11 años existe una tarifa especial infantil y a partir de los 12 años el niño paga el ingreso completo. Es obligatorio presentar documento que compruebe la edad del niño.</div>
+                    <div class="faq-answer">Hasta 5 años el ingreso es gratuito, de 6 a 11 años existe una tarifa especial infantil y a partir de los 12 años paga ingreso completo.</div>
                 </div>
                 
                 <div class="faq-item">
                     <input type="checkbox" id="faq10_es">
                     <label for="faq10_es" class="faq-question">¿Hay descuento para estudiantes?</label>
-                    <div class="faq-answer">La media entrada para estudiantes es válida solo en eventos culturales y deportivos ofrecidos por el parque, de acuerdo con la Ley Federal nº 12.933/2013. Por ahora no tenemos ningún evento programado, sigue nuestro sitio web y redes sociales para actualizaciones.</div>
+                    <div class="faq-answer">La media entrada para estudiantes es válida solo en eventos culturales y deportivos ofrecidos por el parque, de acuerdo con la ley.</div>
                 </div>
                 
                 <div class="faq-item">
@@ -825,36 +1010,36 @@
                 <div class="faq-item">
                     <input type="checkbox" id="faq12_es">
                     <label for="faq12_es" class="faq-question">¿Qué formas de pago aceptan?</label>
-                    <div class="faq-answer">En la taquilla aceptamos efectivo, tarjeta de crédito y débito, y Pix. Dentro del parque utilizarás una pulsera para hacer tus compras y al final del día realizas los pagos en las mismas formas de pago de la taquilla.</div>
+                    <div class="faq-answer">En taquilla aceptamos efectivo, tarjeta de crédito, débito y Pix. Dentro del parque usas una pulsera para compras.</div>
                 </div>
                 
                 <div class="faq-item">
                     <input type="checkbox" id="faq13_es">
                     <label for="faq13_es" class="faq-question">¿Se puede fumar dentro del parque?</label>
-                    <div class="faq-answer">Nuestra política no permite fumar ningún tipo de cigarro, incluyendo cigarrillos electrónicos dentro del parque. Se permite a los fumadores salir hasta el estacionamiento para fumar y luego regresar al parque.</div>
+                    <div class="faq-answer">No está permitido fumar ningún tipo de cigarro dentro del parque. Los fumadores pueden salir al estacionamiento.</div>
                 </div>
                 
                 <div class="faq-item">
                     <input type="checkbox" id="faq14_es">
-                    <label for="faq14_es" class="faq-question">¿Se permite música alta o parlantes?</label>
+                    <label for="faq14_es" class="faq-question">¿Se permite música alta?</label>
                     <div class="faq-answer">No está permitido ningún tipo de sonido alto ni parlantes.</div>
                 </div>
                 
                 <div class="faq-item">
                     <input type="checkbox" id="faq15_es">
                     <label for="faq15_es" class="faq-question">¿Qué vestimenta está permitida en los toboganes?</label>
-                    <div class="faq-answer">Solicitamos que observes el reglamento de cada atracción. En los toboganes, por ejemplo, no está permitido el uso de shorts de malla o jeans, ni que tengan botones metálicos, ya que esto puede dañar el juego y podría hacer que te detengas en medio del recorrido. No se permite el uso de camisetas de ningún tipo o tejido, incluso las propias para baño en los toboganes. En las piscinas no hay restricción en cuanto a esto, puedes usar camiseta y short sobre el traje de baño. En los toboganes recomendamos el uso de shorts de lycra o tactel.</div>
+                    <div class="faq-answer">No se permite shorts de malla o jeans, ni botones metálicos. Recomendamos shorts de lycra o tactel.</div>
                 </div>
                 
                 <div class="faq-item">
                     <input type="checkbox" id="faq16_es">
-                    <label for="faq16_es" class="faq-question">¿Se pueden usar drones dentro del parque?</label>
-                    <div class="faq-answer">No. Por motivos de seguridad y para proteger los derechos de imagen de nuestros visitantes, no está permitido el uso de drones dentro del parque, tanto en áreas externas como internas. Contamos con tu comprensión para mantener un ambiente seguro y respetuoso para todos.</div>
+                    <label for="faq16_es" class="faq-question">¿Se pueden usar drones?</label>
+                    <div class="faq-answer">No. Por motivos de seguridad y protección de imagen, no está permitido el uso de drones dentro del parque.</div>
                 </div>
             </div>
         </section>
 
-        <!-- Contact Form - 3 COLUMNAS -->
+        <!-- Contact Form -->
         <section id="contact" class="form-section">
             <div class="form-container">
                 <h2>¡Reserva tu día!</h2>
@@ -900,12 +1085,38 @@
             </div>
         </section>
 
+        <!-- FOOTER MEJORADO -->
         <footer class="footer">
-            <h3 style="color: var(--primary-cyan); margin-bottom: 15px;">Multiparque SC - Parque Acuático</h3>
-            <button onclick="openMapsNavigation()" class="map-btn">
-                📍 Av. Rodesindo Pavan, 11595 - Praia do Estaleirinho, Balneário Camboriú - SC (Ruta en auto)
-            </button>
-            <p>&copy; 2026 Multiparque SC. Todos los derechos reservados.</p>
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>📞 Contacto</h4>
+                    <div class="contact-item">
+                        <span class="icon">📱</span>
+                        <span>+55 (47) 999679084</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon">✉️</span>
+                        <a href="mailto:angelportobelo@gmail.com">angelportobelo@gmail.com</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>📍 Ubicación</h4>
+                    <p>Avenida Rodesindo Paván, 11595</p>
+                    <p>Playa Estaleirinho, Balneário Camboriú</p>
+                </div>
+                <div class="footer-column">
+                    <h4>🕐 Horario</h4>
+                    <p>De 9:00 a 18:00 horas.</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Copyright 2026 Multiparque SC</p>
+                <div class="legal-links">
+                    <button onclick="openModal('terms')">Condiciones de uso</button>
+                    <button onclick="openModal('privacy')">Política de privacidad</button>
+                </div>
+            </div>
         </footer>
     </div>
 
@@ -966,7 +1177,7 @@
                 </div>
             </div>
             <div class="faq-container">
-                <h3 style="text-align: center; color: var(--primary-cyan); font-size: 2rem; margin-bottom: 20px;">FAQ</h3>
+                <h3>FAQ</h3>
                 <div class="faq-item">
                     <input type="checkbox" id="faq1_en">
                     <label for="faq1_en" class="faq-question">What does the ticket include?</label>
@@ -990,22 +1201,22 @@
                 <div class="faq-item">
                     <input type="checkbox" id="faq5_en">
                     <label for="faq5_en" class="faq-question">What payment methods do you accept?</label>
-                    <div class="faq-answer">At the ticket office we accept cash, credit and debit cards, and Pix. Inside the park you will use a wristband to make your purchases and at the end of the day you make payments in the same payment methods as the ticket office.</div>
+                    <div class="faq-answer">At the ticket office we accept cash, credit and debit cards, and Pix. Inside the park you will use a wristband.</div>
                 </div>
                 <div class="faq-item">
                     <input type="checkbox" id="faq6_en">
                     <label for="faq6_en" class="faq-question">Is smoking allowed inside the park?</label>
-                    <div class="faq-answer">Our policy does not allow smoking any type of cigarette, including electronic cigarettes inside the park. Smokers are allowed to go out to the parking lot to smoke and then return to the park.</div>
+                    <div class="faq-answer">Our policy does not allow smoking any type of cigarette inside the park. Smokers can go out to the parking lot.</div>
                 </div>
                 <div class="faq-item">
                     <input type="checkbox" id="faq7_en">
                     <label for="faq7_en" class="faq-question">Is outside food allowed?</label>
-                    <div class="faq-answer">No. However, the park offers food options between restaurant, snack bar and kiosks. Entry with baby bottles and baby food is allowed, as well as small amounts of fruit and water.</div>
+                    <div class="faq-answer">No. However, the park offers food options. Entry with baby bottles and baby food is allowed, as well as small amounts of fruit and water.</div>
                 </div>
                 <div class="faq-item">
                     <input type="checkbox" id="faq8_en">
                     <label for="faq8_en" class="faq-question">Is the park open on rainy days?</label>
-                    <div class="faq-answer">Yes, the park is open even on rainy days, except in extreme weather conditions. In addition, we have heated pools, ensuring comfort for visitors regardless of the outside temperature.</div>
+                    <div class="faq-answer">Yes, the park is open even on rainy days, except in extreme weather conditions. We have heated pools.</div>
                 </div>
             </div>
         </section>
@@ -1031,11 +1242,35 @@
             </div>
         </section>
         <footer class="footer">
-            <h3 style="color: var(--primary-cyan); margin-bottom: 15px;">Multiparque SC - Water Park</h3>
-            <button onclick="openMapsNavigation()" class="map-btn">
-                📍 Av. Rodesindo Pavan, 11595 - Praia do Estaleirinho, Balneário Camboriú - SC (Driving route)
-            </button>
-            <p>&copy; 2026 Multiparque SC. All rights reserved.</p>
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>📞 Contact</h4>
+                    <div class="contact-item">
+                        <span class="icon">📱</span>
+                        <span>+55 (47) 999679084</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon">✉️</span>
+                        <a href="mailto:angelportobelo@gmail.com">angelportobelo@gmail.com</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>📍 Location</h4>
+                    <p>Avenida Rodesindo Paván, 11595</p>
+                    <p>Playa Estaleirinho, Balneário Camboriú</p>
+                </div>
+                <div class="footer-column">
+                    <h4>🕐 Hours</h4>
+                    <p>From 9:00 AM to 6:00 PM</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Copyright 2026 Multiparque SC</p>
+                <div class="legal-links">
+                    <button onclick="openModal('terms')">Terms of Use</button>
+                    <button onclick="openModal('privacy')">Privacy Policy</button>
+                </div>
+            </div>
         </footer>
     </div>
 
@@ -1096,7 +1331,7 @@
                 </div>
             </div>
             <div class="faq-container">
-                <h3 style="text-align: center; color: var(--primary-cyan); font-size: 2rem; margin-bottom: 20px;">Perguntas Frequentes</h3>
+                <h3>Perguntas Frequentes</h3>
                 <div class="faq-item">
                     <input type="checkbox" id="faq1_pt">
                     <label for="faq1_pt" class="faq-question">O que o ingresso inclui?</label>
@@ -1120,22 +1355,22 @@
                 <div class="faq-item">
                     <input type="checkbox" id="faq5_pt">
                     <label for="faq5_pt" class="faq-question">Quais formas de pagamento vocês aceitam?</label>
-                    <div class="faq-answer">Na bilheteria aceitamos dinheiro, cartão de crédito e débito e Pix. Dentro do parque você irá utilizar uma pulseira para fazer as suas compras e no final do dia você faz o pagamentos nas mesmas formas de pagamentos da bilheteria.</div>
+                    <div class="faq-answer">Na bilheteria aceitamos dinheiro, cartão de crédito e débito e Pix. Dentro do parque você usa uma pulseira.</div>
                 </div>
                 <div class="faq-item">
                     <input type="checkbox" id="faq6_pt">
                     <label for="faq6_pt" class="faq-question">É permitido fumar dentro do parque?</label>
-                    <div class="faq-answer">Nossa política não permite fumar nenhum tipo de cigarro, inclusive cigarros eletrônicos dentro do parque. É permitido aos fumantes saídas até o estacionamento para fumar, retornando depois ao parque.</div>
+                    <div class="faq-answer">Não é permitido fumar nenhum tipo de cigarro dentro do parque. Os fumantes podem sair ao estacionamento.</div>
                 </div>
                 <div class="faq-item">
                     <input type="checkbox" id="faq7_pt">
                     <label for="faq7_pt" class="faq-question">Posso levar minha própria comida?</label>
-                    <div class="faq-answer">Não. Entretanto o parque oferece opções de alimentação entre restaurante, lanchonete e quiosques. A entrada com mamadeiras e papinhas infantis são permitidas, assim como frutas em pequena quantidade e água também são permitidas.</div>
+                    <div class="faq-answer">Não. O parque oferece opções de alimentação. É permitida a entrada com mamadeiras e papinhas infantis, frutas em pequena quantidade e água.</div>
                 </div>
                 <div class="faq-item">
                     <input type="checkbox" id="faq8_pt">
                     <label for="faq8_pt" class="faq-question">O parque funciona em dias de chuva?</label>
-                    <div class="faq-answer">Sim, o parque está aberto mesmo em dias de chuva, salvo condições climáticas extremas. Além disso, contamos com piscinas aquecidas, garantindo conforto para os visitantes, independentemente da temperatura externa.</div>
+                    <div class="faq-answer">Sim, o parque está aberto mesmo em dias de chuva, salvo condições climáticas extremas. Temos piscinas aquecidas.</div>
                 </div>
             </div>
         </section>
@@ -1161,15 +1396,120 @@
             </div>
         </section>
         <footer class="footer">
-            <h3 style="color: var(--primary-cyan); margin-bottom: 15px;">Multiparque SC - Parque Aquático</h3>
-            <button onclick="openMapsNavigation()" class="map-btn">
-                📍 Av. Rodesindo Pavan, 11595 - Praia do Estaleirinho, Balneário Camboriú - SC (Rota de carro)
-            </button>
-            <p>&copy; 2026 Multiparque SC. Todos os direitos reservados.</p>
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>📞 Contato</h4>
+                    <div class="contact-item">
+                        <span class="icon">📱</span>
+                        <span>+55 (47) 999679084</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon">✉️</span>
+                        <a href="mailto:angelportobelo@gmail.com">angelportobelo@gmail.com</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>📍 Localização</h4>
+                    <p>Avenida Rodesindo Paván, 11595</p>
+                    <p>Praia Estaleirinho, Balneário Camboriú</p>
+                </div>
+                <div class="footer-column">
+                    <h4>🕐 Horário</h4>
+                    <p>Das 9:00 às 18:00 horas</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Copyright 2026 Multiparque SC</p>
+                <div class="legal-links">
+                    <button onclick="openModal('terms')">Termos de Uso</button>
+                    <button onclick="openModal('privacy')">Política de Privacidade</button>
+                </div>
+            </div>
         </footer>
     </div>
 
-    <!-- Floating WhatsApp Button - Lado derecho -->
+    <!-- MODAL - Condiciones de Uso -->
+    <div class="modal-overlay" id="modalTerms">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('terms')">✕</button>
+            <h2>Condiciones de Uso</h2>
+            <div class="modal-body">
+                <h4>1. Uso de las instalaciones</h4>
+                <p>Al visitar nuestro parque acuático, los visitantes aceptan cumplir con todas las normas de seguridad y conducta establecidas por el parque. El uso indebido de las atracciones o el incumplimiento de las normas pueden resultar en la expulsión del visitante sin derecho a reembolso.</p>
+
+                <h4>2. Boletos y pagos</h4>
+                <ul>
+                    <li>Todas las entradas deben adquirirse a través de los canales oficiales del parque.</li>
+                    <li>El precio de las entradas no es reembolsable, salvo en situaciones previamente establecidas, como la cancelación del evento por parte del parque.</li>
+                    <li>Las entradas son válidas únicamente para la fecha o el período especificado en el momento de la compra.</li>
+                </ul>
+
+                <h4>3. Normas de conducta</h4>
+                <p>Los visitantes deben:</p>
+                <ul>
+                    <li>Respetar las normas de seguridad de las atracciones y las instrucciones del personal.</li>
+                    <li>Evitar correr, empujar o realizar cualquier otra actividad que pueda poner en peligro la seguridad de los demás visitantes.</li>
+                    <li>No portar ni utilizar objetos peligrosos, como botellas de vidrio, armas o fuegos artificiales.</li>
+                </ul>
+
+                <h4>4. Limitación de responsabilidad</h4>
+                <p>El parque acuático no se hace responsable de los accidentes o lesiones que resulten de un comportamiento imprudente o del incumplimiento de las normas de seguridad por parte de los visitantes.</p>
+
+                <h4>5. Derechos de imagen</h4>
+                <p>Al visitar el parque, los visitantes autorizan el uso de sus imágenes en fotos y videos tomados durante la visita, los cuales podrán ser utilizados por el parque con fines promocionales. Si un visitante no desea que se utilice su imagen, deberá informar a nuestro personal al momento de su visita.</p>
+
+                <h4>6. Cambios en los Términos</h4>
+                <p>El parque se reserva el derecho de modificar estos términos en cualquier momento. Los cambios se publicarán en nuestro sitio web y entrarán en vigor inmediatamente después de su publicación.</p>
+
+                <h4>7. Contacto</h4>
+                <p>Para preguntas o aclaraciones sobre los términos de uso, comuníquese con nuestro equipo de atención al cliente por correo electrónico a <strong>angelportobelo@gmail.com</strong> o por teléfono al <strong>+55 (47) 999679084</strong>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL - Política de Privacidad -->
+    <div class="modal-overlay" id="modalPrivacy">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('privacy')">✕</button>
+            <h2>Política de Privacidad</h2>
+            <div class="modal-body">
+                <h4>1. Recopilación de información</h4>
+                <p>Nuestro parque acuático recopila información personal, como nombre, correo electrónico, número de teléfono y otros datos proporcionados por los visitantes al realizar compras en línea o en nuestros puntos de venta físicos. Esta información se utiliza para brindar servicios, procesar pagos y mejorar la experiencia del usuario.</p>
+
+                <h4>2. Uso de la información</h4>
+                <p>La información personal recopilada podrá utilizarse para:</p>
+                <ul>
+                    <li>Procesar pagos y reservas.</li>
+                    <li>Mejorar el servicio al cliente y la experiencia en el parque.</li>
+                    <li>Enviar información sobre promociones, eventos y novedades del parque.</li>
+                </ul>
+
+                <h4>3. Intercambio de información</h4>
+                <p>No compartimos información personal con terceros, excepto cuando sea necesario para la prestación de servicios, tales como:</p>
+                <ul>
+                    <li>Empresas de procesamiento de pagos.</li>
+                    <li>Proveedores de servicios contratados por el parque.</li>
+                </ul>
+
+                <h4>4. Seguridad de los datos</h4>
+                <p>Empleamos medidas de seguridad adecuadas para proteger la información personal de los visitantes contra el acceso no autorizado, la pérdida o la destrucción. Sin embargo, ningún sistema de seguridad es completamente infalible.</p>
+
+                <h4>5. Cookies</h4>
+                <p>Utilizamos cookies en nuestro sitio web para mejorar la navegación y personalizar el contenido. Los usuarios pueden desactivar las cookies en sus navegadores, lo que podría afectar su experiencia en el sitio.</p>
+
+                <h4>6. Derechos del usuario</h4>
+                <p>Los visitantes tienen derecho a acceder, corregir o solicitar la eliminación de su información personal. Para ejercer estos derechos, póngase en contacto con nuestro equipo de atención al cliente por correo electrónico: <strong>angelportobelo@gmail.com</strong>.</p>
+
+                <h4>7. Cambios en las políticas</h4>
+                <p>Esta política de privacidad puede modificarse periódicamente. Los usuarios serán notificados de los cambios importantes mediante un aviso en nuestro sitio web.</p>
+
+                <h4>8. Contacto</h4>
+                <p>Si tiene alguna pregunta sobre esta política de privacidad, póngase en contacto con nosotros por correo electrónico a <strong>angelportobelo@gmail.com</strong> o por teléfono al <strong>+55 (47) 999679084</strong>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/554799679084?text=👋%20%C2%A1Hola!%20Me%20interesa%20conocer%20m%C3%A1s%20sobre%20Multiparque%20SC%20para%20mi%20empresa.%20%C2%BFPodr%C3%ADan%20darme%20informaci%C3%B3n%3F" target="_blank" class="float-wa" id="whatsappBtn">
         <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.472 14.382C17.336 14.318 16.046 13.694 15.922 13.643C15.798 13.592 15.703 13.57 15.567 13.635C15.431 13.7 14.79 14.092 14.669 14.188C14.548 14.284 14.458 14.305 14.322 14.24C14.186 14.175 13.317 13.826 12.306 12.912C11.522 12.201 11.05 11.369 10.965 11.269C10.88 11.168 10.95 11.024 11.07 10.935C11.177 10.855 11.307 10.736 11.386 10.63C11.465 10.525 11.48 10.47 11.53 10.357C11.58 10.244 11.525 10.055 11.441 9.861C11.357 9.667 10.785 8.51 10.648 8.215C10.512 7.92 10.372 7.968 10.26 7.968C10.156 7.968 10.04 7.968 9.924 7.968C9.808 7.968 9.663 7.992 9.553 8.098C9.443 8.204 9.1 8.543 8.947 8.754C8.794 8.965 8.684 9.114 8.604 9.233C8.522 9.352 8.458 9.373 8.358 9.439C8.258 9.505 7.581 9.817 6.949 10.176C6.317 10.535 5.885 10.811 5.637 11.005C5.389 11.199 5.39 11.235 5.399 11.361C5.408 11.487 5.5 11.703 5.583 11.83C5.666 11.957 6.165 12.694 6.857 13.462C7.549 14.23 8.378 14.914 8.829 15.179C9.28 15.444 9.586 15.421 9.77 15.421C9.954 15.421 10.213 15.421 10.355 15.327C10.497 15.233 11.205 14.735 11.407 14.505C11.609 14.275 11.76 14.225 11.891 14.225C12.022 14.225 13.222 14.642 13.459 14.782C13.696 14.922 13.8 14.972 13.922 15.045C14.044 15.118 14.454 15.368 14.612 15.47C14.77 15.572 14.824 15.618 14.922 15.672C15.02 15.726 15.13 15.726 15.252 15.672C15.374 15.618 16.468 14.955 16.618 14.885C16.768 14.815 16.9 14.855 16.999 14.875C17.098 14.895 17.608 15.125 17.723 15.175C17.838 15.225 17.9 15.25 17.98 15.295C18.06 15.34 18.055 15.445 17.98 15.66C17.905 15.875 17.607 16.475 17.398 16.794C17.189 17.113 17.008 17.119 16.698 17.177C16.388 17.235 15.487 17.378 14.784 17.37C14.081 17.362 13.481 17.203 12.891 16.905C12.301 16.607 10.86 15.794 10.26 15.365C9.66 14.936 9.542 14.928 9.242 14.74C8.942 14.552 8.28 14.14 8.048 13.956C7.816 13.772 7.714 13.803 7.56 13.836L7.152 13.925C7.029 13.945 6.905 13.911 6.806 13.836C6.707 13.761 6.003 13.162 5.622 12.812C5.241 12.462 5.049 12.213 4.953 11.925C4.857 11.637 4.857 11.37 4.857 11.124C4.857 10.878 5.047 9.822 5.14 9.376C5.233 8.93 5.366 8.809 5.514 8.732C5.662 8.655 5.684 8.724 5.826 8.828C5.968 8.932 6.256 9.067 6.477 9.182C6.698 9.297 6.751 9.313 6.891 9.352C7.031 9.391 7.08 9.406 7.2 9.36C7.32 9.314 7.717 9.103 7.859 9.016C8.001 8.929 8.188 8.838 8.198 8.811C8.208 8.784 8.198 8.627 8.128 8.437C8.058 8.247 7.825 7.729 7.745 7.522C7.665 7.315 7.705 7.253 7.675 7.193C7.645 7.133 7.435 7.119 7.325 7.099C7.215 7.079 6.818 7.117 6.604 7.117C6.39 7.117 5.841 7.117 5.534 7.283C5.227 7.449 4.573 7.932 4.181 8.245C3.789 8.558 3.368 8.854 3.28 8.978C3.192 9.102 3.192 9.231 3.204 9.362C3.216 9.493 3.318 10.15 3.388 10.675C3.458 11.2 3.55 11.738 3.602 12.004C3.654 12.27 3.694 12.465 3.704 12.515C3.714 12.565 3.786 12.675 3.804 12.754C3.822 12.833 3.85 12.895 3.88 12.961C3.91 13.027 4.245 13.825 4.695 14.398C5.145 14.971 5.64 15.343 6.015 15.62C6.39 15.897 6.73 16.098 6.977 16.234C7.224 16.37 7.321 16.423 7.449 16.475C7.577 16.527 7.648 16.559 7.832 16.616C8.016 16.673 8.305 16.708 8.451 16.726C8.597 16.744 8.718 16.737 8.799 16.688C8.88 16.639 9.357 16.065 9.512 15.855C9.667 15.645 9.781 15.645 9.904 15.725C10.027 15.805 11.095 16.36 11.639 16.665C12.183 16.97 12.614 17.156 12.831 17.221C13.048 17.286 13.311 17.286 13.477 17.286C13.643 17.286 14.327 17.286 14.593 17.235C14.859 17.184 15.265 16.955 15.662 16.66C16.059 16.365 16.414 15.945 16.558 15.715C16.702 15.485 16.68 15.385 16.678 15.363C16.676 15.341 16.678 15.263 16.623 15.2C16.568 15.137 16.524 15.123 16.481 15.102C16.438 15.081 16.271 14.999 16.201 14.965C16.131 14.931 15.998 14.885 15.96 14.865C15.922 14.845 15.922 14.82 15.922 14.8C15.922 14.78 15.93 14.768 15.922 14.749C15.914 14.73 15.608 14.446 17.472 14.382Z" fill="white"/>
@@ -1208,6 +1548,41 @@
             const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
             window.open(url, '_blank');
         }
+
+        // Funciones para los modales
+        function openModal(type) {
+            const modal = document.getElementById(type === 'terms' ? 'modalTerms' : 'modalPrivacy');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(type) {
+            const modal = document.getElementById(type === 'terms' ? 'modalTerms' : 'modalPrivacy');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Cerrar modal al hacer clic fuera del contenido
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                e.target.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Cerrar modal con tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = '';
+            }
+        });
 
         function setLang(lang) {
             document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active-lang'));
