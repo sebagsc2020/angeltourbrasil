@@ -549,7 +549,7 @@
             color: var(--primary-cyan);
         }
 
-        /* POPUP MODAL */
+        /* POPUP MODAL - MULTIIDIOMA */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -578,12 +578,6 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.8);
             position: relative;
             overflow-y: auto;
-        }
-        .modal-content h2 {
-            color: var(--primary-cyan);
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            padding-right: 40px;
         }
         .modal-content .close-modal {
             position: absolute;
@@ -619,6 +613,9 @@
         .modal-content .modal-body ul li {
             margin-bottom: 5px;
         }
+        /* Ocultar todos los idiomas de los modales por defecto */
+        .modal-lang-content { display: none; }
+        .modal-lang-content.active-lang { display: block; }
 
         /* Botón flotante WhatsApp */
         .float-wa {
@@ -680,7 +677,7 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* RESPONSIVE - VIDEOS OCUPAN TODO EL ANCHO */
+        /* RESPONSIVE */
         @media (max-width: 992px) {
             .hero-logo {
                 position: relative;
@@ -716,7 +713,6 @@
             .hero-text-highlight .hero-subtitle {
                 font-size: 1rem;
             }
-            /* VIDEOS - UNA COLUMNA Y OCUPAN TODO EL ANCHO */
             .videos-container { 
                 grid-template-columns: 1fr;
                 gap: 20px;
@@ -897,7 +893,7 @@
             </div>
         </header>
 
-        <!-- Videos Grid - ADAPTABLES AL ANCHO -->
+        <!-- Videos Grid -->
         <div id="video-grid" class="videos-container">
             <div class="video-card">
                 <div class="video-wrapper">
@@ -975,7 +971,7 @@
                 </div>
             </div>
 
-            <!-- FAQ - ACORDEÓN HÍBRIDO -->
+            <!-- FAQ -->
             <div class="faq-container" id="faqContainer">
                 <h3>Preguntas Frecuentes</h3>
                 
@@ -1186,8 +1182,8 @@
             <div class="footer-bottom">
                 <p>Copyright 2026 Multiparque SC</p>
                 <div class="legal-links">
-                    <button onclick="openModal('terms')">Condiciones de uso</button>
-                    <button onclick="openModal('privacy')">Política de privacidad</button>
+                    <button onclick="openModal('terms', 'es')">Condiciones de uso</button>
+                    <button onclick="openModal('privacy', 'es')">Política de privacidad</button>
                 </div>
             </div>
         </footer>
@@ -1358,8 +1354,8 @@
             <div class="footer-bottom">
                 <p>Copyright 2026 Multiparque SC</p>
                 <div class="legal-links">
-                    <button onclick="openModal('terms')">Terms of Use</button>
-                    <button onclick="openModal('privacy')">Privacy Policy</button>
+                    <button onclick="openModal('terms', 'en')">Terms of Use</button>
+                    <button onclick="openModal('privacy', 'en')">Privacy Policy</button>
                 </div>
             </div>
         </footer>
@@ -1530,90 +1526,204 @@
             <div class="footer-bottom">
                 <p>Copyright 2026 Multiparque SC</p>
                 <div class="legal-links">
-                    <button onclick="openModal('terms')">Termos de Uso</button>
-                    <button onclick="openModal('privacy')">Política de Privacidade</button>
+                    <button onclick="openModal('terms', 'pt')">Termos de Uso</button>
+                    <button onclick="openModal('privacy', 'pt')">Política de Privacidade</button>
                 </div>
             </div>
         </footer>
     </div>
 
-    <!-- MODAL - Condiciones de Uso -->
+    <!-- ================= MODALES MULTIIDIOMA ================= -->
+    <!-- MODAL - Términos de Uso / Terms of Use / Termos de Uso -->
     <div class="modal-overlay" id="modalTerms">
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal('terms')">✕</button>
-            <h2>Condiciones de Uso</h2>
-            <div class="modal-body">
-                <h4>1. Uso de las instalaciones</h4>
-                <p>Al visitar nuestro parque acuático, los visitantes aceptan cumplir con todas las normas de seguridad y conducta establecidas por el parque. El uso indebido de las atracciones o el incumplimiento de las normas pueden resultar en la expulsión del visitante sin derecho a reembolso.</p>
-
-                <h4>2. Boletos y pagos</h4>
-                <ul>
-                    <li>Todas las entradas deben adquirirse a través de los canales oficiales del parque.</li>
-                    <li>El precio de las entradas no es reembolsable, salvo en situaciones previamente establecidas, como la cancelación del evento por parte del parque.</li>
-                    <li>Las entradas son válidas únicamente para la fecha o el período especificado en el momento de la compra.</li>
-                </ul>
-
-                <h4>3. Normas de conducta</h4>
-                <p>Los visitantes deben:</p>
-                <ul>
-                    <li>Respetar las normas de seguridad de las atracciones y las instrucciones del personal.</li>
-                    <li>Evitar correr, empujar o realizar cualquier otra actividad que pueda poner en peligro la seguridad de los demás visitantes.</li>
-                    <li>No portar ni utilizar objetos peligrosos, como botellas de vidrio, armas o fuegos artificiales.</li>
-                </ul>
-
-                <h4>4. Limitación de responsabilidad</h4>
-                <p>El parque acuático no se hace responsable de los accidentes o lesiones que resulten de un comportamiento imprudente o del incumplimiento de las normas de seguridad por parte de los visitantes.</p>
-
-                <h4>5. Derechos de imagen</h4>
-                <p>Al visitar el parque, los visitantes autorizan el uso de sus imágenes en fotos y videos tomados durante la visita, los cuales podrán ser utilizados por el parque con fines promocionales. Si un visitante no desea que se utilice su imagen, deberá informar a nuestro personal al momento de su visita.</p>
-
-                <h4>6. Cambios en los Términos</h4>
-                <p>El parque se reserva el derecho de modificar estos términos en cualquier momento. Los cambios se publicarán en nuestro sitio web y entrarán en vigor inmediatamente después de su publicación.</p>
-
-                <h4>7. Contacto</h4>
-                <p>Para preguntas o aclaraciones sobre los términos de uso, comuníquese con nuestro equipo de atención al cliente por correo electrónico a <strong>angelportobelo@gmail.com</strong> o por teléfono al <strong>+55 (47) 999679084</strong>.</p>
+            <!-- Español -->
+            <div id="modal-terms-es" class="modal-lang-content active-lang">
+                <h2>Condiciones de Uso</h2>
+                <div class="modal-body">
+                    <h4>1. Uso de las instalaciones</h4>
+                    <p>Al visitar nuestro parque acuático, los visitantes aceptan cumplir con todas las normas de seguridad y conducta establecidas por el parque. El uso indebido de las atracciones o el incumplimiento de las normas pueden resultar en la expulsión del visitante sin derecho a reembolso.</p>
+                    <h4>2. Boletos y pagos</h4>
+                    <ul>
+                        <li>Todas las entradas deben adquirirse a través de los canales oficiales del parque.</li>
+                        <li>El precio de las entradas no es reembolsable, salvo en situaciones previamente establecidas, como la cancelación del evento por parte del parque.</li>
+                        <li>Las entradas son válidas únicamente para la fecha o el período especificado en el momento de la compra.</li>
+                    </ul>
+                    <h4>3. Normas de conducta</h4>
+                    <p>Los visitantes deben:</p>
+                    <ul>
+                        <li>Respetar las normas de seguridad de las atracciones y las instrucciones del personal.</li>
+                        <li>Evitar correr, empujar o realizar cualquier otra actividad que pueda poner en peligro la seguridad de los demás visitantes.</li>
+                        <li>No portar ni utilizar objetos peligrosos, como botellas de vidrio, armas o fuegos artificiales.</li>
+                    </ul>
+                    <h4>4. Limitación de responsabilidad</h4>
+                    <p>El parque acuático no se hace responsable de los accidentes o lesiones que resulten de un comportamiento imprudente o del incumplimiento de las normas de seguridad por parte de los visitantes.</p>
+                    <h4>5. Derechos de imagen</h4>
+                    <p>Al visitar el parque, los visitantes autorizan el uso de sus imágenes en fotos y videos tomados durante la visita, los cuales podrán ser utilizados por el parque con fines promocionales. Si un visitante no desea que se utilice su imagen, deberá informar a nuestro personal al momento de su visita.</p>
+                    <h4>6. Cambios en los Términos</h4>
+                    <p>El parque se reserva el derecho de modificar estos términos en cualquier momento. Los cambios se publicarán en nuestro sitio web y entrarán en vigor inmediatamente después de su publicación.</p>
+                    <h4>7. Contacto</h4>
+                    <p>Para preguntas o aclaraciones sobre los términos de uso, comuníquese con nuestro equipo de atención al cliente por correo electrónico a <strong>angelportobelo@gmail.com</strong> o por teléfono al <strong>+55 (47) 999679084</strong>.</p>
+                </div>
+            </div>
+            <!-- Inglés -->
+            <div id="modal-terms-en" class="modal-lang-content">
+                <h2>Terms of Use</h2>
+                <div class="modal-body">
+                    <h4>1. Use of Facilities</h4>
+                    <p>By visiting our water park, visitors agree to comply with all safety and conduct rules established by the park. Misuse of attractions or failure to comply with the rules may result in the visitor's expulsion without refund.</p>
+                    <h4>2. Tickets and Payments</h4>
+                    <ul>
+                        <li>All tickets must be purchased through the park's official channels.</li>
+                        <li>Ticket prices are non-refundable, except in previously established situations, such as event cancellation by the park.</li>
+                        <li>Tickets are valid only for the date or period specified at the time of purchase.</li>
+                    </ul>
+                    <h4>3. Code of Conduct</h4>
+                    <p>Visitors must:</p>
+                    <ul>
+                        <li>Respect the safety rules of the attractions and the instructions of the staff.</li>
+                        <li>Avoid running, pushing, or any other activity that may endanger the safety of other visitors.</li>
+                        <li>Not carry or use dangerous objects, such as glass bottles, weapons, or fireworks.</li>
+                    </ul>
+                    <h4>4. Limitation of Liability</h4>
+                    <p>The water park is not responsible for accidents or injuries resulting from reckless behavior or non-compliance with safety rules by visitors.</p>
+                    <h4>5. Image Rights</h4>
+                    <p>By visiting the park, visitors authorize the use of their images in photos and videos taken during the visit, which may be used by the park for promotional purposes. If a visitor does not wish their image to be used, they must inform our staff at the time of their visit.</p>
+                    <h4>6. Changes to Terms</h4>
+                    <p>The park reserves the right to modify these terms at any time. Changes will be published on our website and will take effect immediately after publication.</p>
+                    <h4>7. Contact</h4>
+                    <p>For questions or clarifications about the terms of use, please contact our customer service team by email at <strong>angelportobelo@gmail.com</strong> or by phone at <strong>+55 (47) 999679084</strong>.</p>
+                </div>
+            </div>
+            <!-- Portugués -->
+            <div id="modal-terms-pt" class="modal-lang-content">
+                <h2>Termos de Uso</h2>
+                <div class="modal-body">
+                    <h4>1. Uso das instalações</h4>
+                    <p>Ao visitar nosso parque aquático, os visitantes concordam em cumprir todas as normas de segurança e conduta estabelecidas pelo parque. O uso indevido das atrações ou o descumprimento das normas podem resultar na expulsão do visitante sem direito a reembolso.</p>
+                    <h4>2. Ingressos e pagamentos</h4>
+                    <ul>
+                        <li>Todos os ingressos devem ser adquiridos através dos canais oficiais do parque.</li>
+                        <li>O preço dos ingressos não é reembolsável, exceto em situações previamente estabelecidas, como o cancelamento do evento pelo parque.</li>
+                        <li>Os ingressos são válidos apenas para a data ou período especificado no momento da compra.</li>
+                    </ul>
+                    <h4>3. Normas de conduta</h4>
+                    <p>Os visitantes devem:</p>
+                    <ul>
+                        <li>Respeitar as normas de segurança das atrações e as instruções da equipe.</li>
+                        <li>Evitar correr, empurrar ou realizar qualquer outra atividade que possa colocar em perigo a segurança dos demais visitantes.</li>
+                        <li>Não portar ou utilizar objetos perigosos, como garrafas de vidro, armas ou fogos de artifício.</li>
+                    </ul>
+                    <h4>4. Limitação de responsabilidade</h4>
+                    <p>O parque aquático não se responsabiliza por acidentes ou lesões resultantes de comportamento imprudente ou descumprimento das normas de segurança por parte dos visitantes.</p>
+                    <h4>5. Direitos de imagem</h4>
+                    <p>Ao visitar o parque, os visitantes autorizam o uso de suas imagens em fotos e vídeos feitos durante a visita, que poderão ser utilizados pelo parque para fins promocionais. Se um visitante não desejar que sua imagem seja utilizada, deverá informar nossa equipe no momento de sua visita.</p>
+                    <h4>6. Alterações nos Termos</h4>
+                    <p>O parque se reserva o direito de modificar estes termos a qualquer momento. As alterações serão publicadas em nosso site e entrarão em vigor imediatamente após a publicação.</p>
+                    <h4>7. Contato</h4>
+                    <p>Para perguntas ou esclarecimentos sobre os termos de uso, entre em contato com nossa equipe de atendimento ao cliente por e-mail <strong>angelportobelo@gmail.com</strong> ou por telefone <strong>+55 (47) 999679084</strong>.</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL - Política de Privacidad -->
+    <!-- MODAL - Política de Privacidad / Privacy Policy / Política de Privacidade -->
     <div class="modal-overlay" id="modalPrivacy">
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal('privacy')">✕</button>
-            <h2>Política de Privacidad</h2>
-            <div class="modal-body">
-                <h4>1. Recopilación de información</h4>
-                <p>Nuestro parque acuático recopila información personal, como nombre, correo electrónico, número de teléfono y otros datos proporcionados por los visitantes al realizar compras en línea o en nuestros puntos de venta físicos. Esta información se utiliza para brindar servicios, procesar pagos y mejorar la experiencia del usuario.</p>
-
-                <h4>2. Uso de la información</h4>
-                <p>La información personal recopilada podrá utilizarse para:</p>
-                <ul>
-                    <li>Procesar pagos y reservas.</li>
-                    <li>Mejorar el servicio al cliente y la experiencia en el parque.</li>
-                    <li>Enviar información sobre promociones, eventos y novedades del parque.</li>
-                </ul>
-
-                <h4>3. Intercambio de información</h4>
-                <p>No compartimos información personal con terceros, excepto cuando sea necesario para la prestación de servicios, tales como:</p>
-                <ul>
-                    <li>Empresas de procesamiento de pagos.</li>
-                    <li>Proveedores de servicios contratados por el parque.</li>
-                </ul>
-
-                <h4>4. Seguridad de los datos</h4>
-                <p>Empleamos medidas de seguridad adecuadas para proteger la información personal de los visitantes contra el acceso no autorizado, la pérdida o la destrucción. Sin embargo, ningún sistema de seguridad es completamente infalible.</p>
-
-                <h4>5. Cookies</h4>
-                <p>Utilizamos cookies en nuestro sitio web para mejorar la navegación y personalizar el contenido. Los usuarios pueden desactivar las cookies en sus navegadores, lo que podría afectar su experiencia en el sitio.</p>
-
-                <h4>6. Derechos del usuario</h4>
-                <p>Los visitantes tienen derecho a acceder, corregir o solicitar la eliminación de su información personal. Para ejercer estos derechos, póngase en contacto con nuestro equipo de atención al cliente por correo electrónico: <strong>angelportobelo@gmail.com</strong>.</p>
-
-                <h4>7. Cambios en las políticas</h4>
-                <p>Esta política de privacidad puede modificarse periódicamente. Los usuarios serán notificados de los cambios importantes mediante un aviso en nuestro sitio web.</p>
-
-                <h4>8. Contacto</h4>
-                <p>Si tiene alguna pregunta sobre esta política de privacidad, póngase en contacto con nosotros por correo electrónico a <strong>angelportobelo@gmail.com</strong> o por teléfono al <strong>+55 (47) 999679084</strong>.</p>
+            <!-- Español -->
+            <div id="modal-privacy-es" class="modal-lang-content active-lang">
+                <h2>Política de Privacidad</h2>
+                <div class="modal-body">
+                    <h4>1. Recopilación de información</h4>
+                    <p>Nuestro parque acuático recopila información personal, como nombre, correo electrónico, número de teléfono y otros datos proporcionados por los visitantes al realizar compras en línea o en nuestros puntos de venta físicos. Esta información se utiliza para brindar servicios, procesar pagos y mejorar la experiencia del usuario.</p>
+                    <h4>2. Uso de la información</h4>
+                    <p>La información personal recopilada podrá utilizarse para:</p>
+                    <ul>
+                        <li>Procesar pagos y reservas.</li>
+                        <li>Mejorar el servicio al cliente y la experiencia en el parque.</li>
+                        <li>Enviar información sobre promociones, eventos y novedades del parque.</li>
+                    </ul>
+                    <h4>3. Intercambio de información</h4>
+                    <p>No compartimos información personal con terceros, excepto cuando sea necesario para la prestación de servicios, tales como:</p>
+                    <ul>
+                        <li>Empresas de procesamiento de pagos.</li>
+                        <li>Proveedores de servicios contratados por el parque.</li>
+                    </ul>
+                    <h4>4. Seguridad de los datos</h4>
+                    <p>Empleamos medidas de seguridad adecuadas para proteger la información personal de los visitantes contra el acceso no autorizado, la pérdida o la destrucción. Sin embargo, ningún sistema de seguridad es completamente infalible.</p>
+                    <h4>5. Cookies</h4>
+                    <p>Utilizamos cookies en nuestro sitio web para mejorar la navegación y personalizar el contenido. Los usuarios pueden desactivar las cookies en sus navegadores, lo que podría afectar su experiencia en el sitio.</p>
+                    <h4>6. Derechos del usuario</h4>
+                    <p>Los visitantes tienen derecho a acceder, corregir o solicitar la eliminación de su información personal. Para ejercer estos derechos, póngase en contacto con nuestro equipo de atención al cliente por correo electrónico: <strong>angelportobelo@gmail.com</strong>.</p>
+                    <h4>7. Cambios en las políticas</h4>
+                    <p>Esta política de privacidad puede modificarse periódicamente. Los usuarios serán notificados de los cambios importantes mediante un aviso en nuestro sitio web.</p>
+                    <h4>8. Contacto</h4>
+                    <p>Si tiene alguna pregunta sobre esta política de privacidad, póngase en contacto con nosotros por correo electrónico a <strong>angelportobelo@gmail.com</strong> o por teléfono al <strong>+55 (47) 999679084</strong>.</p>
+                </div>
+            </div>
+            <!-- Inglés -->
+            <div id="modal-privacy-en" class="modal-lang-content">
+                <h2>Privacy Policy</h2>
+                <div class="modal-body">
+                    <h4>1. Information Collection</h4>
+                    <p>Our water park collects personal information, such as name, email, phone number, and other data provided by visitors when making purchases online or at our physical points of sale. This information is used to provide services, process payments, and improve the user experience.</p>
+                    <h4>2. Use of Information</h4>
+                    <p>Personal information collected may be used to:</p>
+                    <ul>
+                        <li>Process payments and reservations.</li>
+                        <li>Improve customer service and the park experience.</li>
+                        <li>Send information about promotions, events, and park news.</li>
+                    </ul>
+                    <h4>3. Information Sharing</h4>
+                    <p>We do not share personal information with third parties, except when necessary for the provision of services, such as:</p>
+                    <ul>
+                        <li>Payment processing companies.</li>
+                        <li>Service providers contracted by the park.</li>
+                    </ul>
+                    <h4>4. Data Security</h4>
+                    <p>We employ appropriate security measures to protect visitors' personal information against unauthorized access, loss, or destruction. However, no security system is completely infallible.</p>
+                    <h4>5. Cookies</h4>
+                    <p>We use cookies on our website to improve navigation and personalize content. Users can disable cookies in their browsers, which could affect their experience on the site.</p>
+                    <h4>6. User Rights</h4>
+                    <p>Visitors have the right to access, correct, or request the deletion of their personal information. To exercise these rights, please contact our customer service team by email: <strong>angelportobelo@gmail.com</strong>.</p>
+                    <h4>7. Policy Changes</h4>
+                    <p>This privacy policy may be modified periodically. Users will be notified of important changes through a notice on our website.</p>
+                    <h4>8. Contact</h4>
+                    <p>If you have any questions about this privacy policy, please contact us by email at <strong>angelportobelo@gmail.com</strong> or by phone at <strong>+55 (47) 999679084</strong>.</p>
+                </div>
+            </div>
+            <!-- Portugués -->
+            <div id="modal-privacy-pt" class="modal-lang-content">
+                <h2>Política de Privacidade</h2>
+                <div class="modal-body">
+                    <h4>1. Coleta de informações</h4>
+                    <p>Nosso parque aquático coleta informações pessoais, como nome, e-mail, número de telefone e outros dados fornecidos pelos visitantes ao fazer compras online ou em nossos pontos de venda físicos. Essas informações são usadas para fornecer serviços, processar pagamentos e melhorar a experiência do usuário.</p>
+                    <h4>2. Uso das informações</h4>
+                    <p>As informações pessoais coletadas podem ser usadas para:</p>
+                    <ul>
+                        <li>Processar pagamentos e reservas.</li>
+                        <li>Melhorar o atendimento ao cliente e a experiência no parque.</li>
+                        <li>Enviar informações sobre promoções, eventos e novidades do parque.</li>
+                    </ul>
+                    <h4>3. Compartilhamento de informações</h4>
+                    <p>Não compartilhamos informações pessoais com terceiros, exceto quando necessário para a prestação de serviços, tais como:</p>
+                    <ul>
+                        <li>Empresas de processamento de pagamentos.</li>
+                        <li>Fornecedores de serviços contratados pelo parque.</li>
+                    </ul>
+                    <h4>4. Segurança dos dados</h4>
+                    <p>Empregamos medidas de segurança adequadas para proteger as informações pessoais dos visitantes contra acesso não autorizado, perda ou destruição. No entanto, nenhum sistema de segurança é completamente infalível.</p>
+                    <h4>5. Cookies</h4>
+                    <p>Utilizamos cookies em nosso site para melhorar a navegação e personalizar o conteúdo. Os usuários podem desativar os cookies em seus navegadores, o que pode afetar sua experiência no site.</p>
+                    <h4>6. Direitos do usuário</h4>
+                    <p>Os visitantes têm o direito de acessar, corrigir ou solicitar a exclusão de suas informações pessoais. Para exercer esses direitos, entre em contato com nossa equipe de atendimento ao cliente por e-mail: <strong>angelportobelo@gmail.com</strong>.</p>
+                    <h4>7. Alterações nas políticas</h4>
+                    <p>Esta política de privacidade pode ser modificada periodicamente. Os usuários serão notificados sobre alterações importantes por meio de um aviso em nosso site.</p>
+                    <h4>8. Contato</h4>
+                    <p>Se você tiver alguma dúvida sobre esta política de privacidade, entre em contato conosco por e-mail <strong>angelportobelo@gmail.com</strong> ou por telefone <strong>+55 (47) 999679084</strong>.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -1658,10 +1768,18 @@
             window.open(url, '_blank');
         }
 
-        // Funciones para los modales
-        function openModal(type) {
+        // Funciones para los modales con idioma
+        function openModal(type, lang) {
             const modal = document.getElementById(type === 'terms' ? 'modalTerms' : 'modalPrivacy');
             if (modal) {
+                // Ocultar todos los idiomas del modal
+                const langContents = modal.querySelectorAll('.modal-lang-content');
+                langContents.forEach(el => el.classList.remove('active-lang'));
+                // Mostrar el idioma seleccionado
+                const target = document.getElementById('modal-' + type + '-' + lang);
+                if (target) {
+                    target.classList.add('active-lang');
+                }
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
@@ -1713,8 +1831,20 @@
         }
 
         function setLang(lang) {
+            // Cambiar idioma del contenido principal
             document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active-lang'));
             document.getElementById('lang-' + lang).classList.add('active-lang');
+            
+            // Cambiar idioma de los modales (si están abiertos)
+            document.querySelectorAll('.modal-overlay').forEach(modal => {
+                const langContents = modal.querySelectorAll('.modal-lang-content');
+                langContents.forEach(el => el.classList.remove('active-lang'));
+                const target = modal.querySelector('.modal-lang-content[data-lang="' + lang + '"]');
+                if (target) {
+                    target.classList.add('active-lang');
+                }
+            });
+            
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 if(btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${lang}'`)) {
