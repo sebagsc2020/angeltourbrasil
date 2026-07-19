@@ -18,17 +18,45 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background-color: var(--deep-blue); color: var(--text-light); overflow-x: hidden; }
 
-        /* Language Switcher */
+        /* Language Switcher - BOTONES CON IMAGEN */
         .lang-switcher {
-            position: absolute; top: 20px; right: 20px; z-index: 100;
-            display: flex; gap: 10px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 8px;
+            align-items: center;
         }
         .lang-btn {
-            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
-            color: #fff; padding: 5px 12px; border-radius: 20px; cursor: pointer;
-            font-size: 0.8rem; transition: 0.3s; backdrop-filter: blur(5px); font-weight: 600;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            overflow: hidden;
+            opacity: 0.5; /* Opaco cuando no está seleccionado */
         }
-        .lang-btn:hover, .lang-btn.active { background: var(--primary-cyan); color: #0B2545; border-color: var(--primary-cyan); }
+        .lang-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .lang-btn.active {
+            opacity: 1;
+            box-shadow: 0 0 0 2px var(--primary-cyan); /* Borde brillante cuando está activo */
+        }
+        .lang-btn:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
 
         .lang-content { display: none; animation: fadeIn 0.6s ease-in-out; }
         .lang-content.active-lang { display: block; }
@@ -274,9 +302,7 @@
             .stat-box { flex: 1; padding: 15px; }
             .stat-box h3 { font-size: 1.5rem; }
             .lang-switcher { top: 10px; right: 10px; }
-            .lang-btn { padding: 4px 10px; font-size: 0.7rem; }
-            
-            /* En móviles, el formulario vuelve a ser de 1 sola columna */
+            .lang-btn { width: 26px; height: 26px; } /* Botones más pequeños en móviles */
             .form-row { flex-direction: column; gap: 0; }
             .form-row .form-group { min-width: 100%; }
         }
@@ -288,11 +314,17 @@
 </head>
 <body>
 
-    <!-- Language Switcher -->
+    <!-- Language Switcher (Orden: ES, PT, EN) -->
     <div class="lang-switcher">
-        <button class="lang-btn active" onclick="setLang('es')">ES</button>
-        <button class="lang-btn" onclick="setLang('en')">EN</button>
-        <button class="lang-btn" onclick="setLang('pt')">PT</button>
+        <button class="lang-btn active" onclick="setLang('es')">
+            <img src="https://www.angeltourbrasil.com.br/images/bt-es.png" alt="Español">
+        </button>
+        <button class="lang-btn" onclick="setLang('pt')">
+            <img src="https://www.angeltourbrasil.com.br/images/bt-pt.png" alt="Português">
+        </button>
+        <button class="lang-btn" onclick="setLang('en')">
+            <img src="https://www.angeltourbrasil.com.br/images/bt-us.png" alt="English">
+        </button>
     </div>
 
     <!-- ================= SPANISH CONTENT ================= -->
@@ -446,7 +478,7 @@
         <footer class="footer">
             <h3 style="color: var(--primary-cyan); margin-bottom: 15px;">Multiparque - Parque Acuático</h3>
             <a href="https://maps.app.goo.gl/cRsYKB8CyAV3XjYg8" target="_blank" class="map-btn">📍 Cómo llegar (Abrir ruta en Maps)</a>
-            <p>&copy; 2026 Angel Tour Brasil. Todos los derechos reservados.</p>
+            <p>&copy; 2026 Multiparque. Todos los derechos reservados.</p>
         </footer>
     </div>
 
@@ -664,7 +696,7 @@
         </footer>
     </div>
 
-    <!-- Floating WhatsApp Button (Botón flotante con mensaje personalizado) -->
+    <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/554999679084?text=👋%20%C2%A1Hola!%20Me%20interesa%20conocer%20m%C3%A1s%20sobre%20Multiparque%20para%20mi%20empresa.%20%C2%BFPodr%C3%ADan%20darme%20informaci%C3%B3n%3F" target="_blank" class="float-wa" title="Fale conosco pelo WhatsApp">
         <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.472 14.382C17.336 14.318 16.046 13.694 15.922 13.643C15.798 13.592 15.703 13.57 15.567 13.635C15.431 13.7 14.79 14.092 14.669 14.188C14.548 14.284 14.458 14.305 14.322 14.24C14.186 14.175 13.317 13.826 12.306 12.912C11.522 12.201 11.05 11.369 10.965 11.269C10.88 11.168 10.95 11.024 11.07 10.935C11.177 10.855 11.307 10.736 11.386 10.63C11.465 10.525 11.48 10.47 11.53 10.357C11.58 10.244 11.525 10.055 11.441 9.861C11.357 9.667 10.785 8.51 10.648 8.215C10.512 7.92 10.372 7.968 10.26 7.968C10.156 7.968 10.04 7.968 9.924 7.968C9.808 7.968 9.663 7.992 9.553 8.098C9.443 8.204 9.1 8.543 8.947 8.754C8.794 8.965 8.684 9.114 8.604 9.233C8.522 9.352 8.458 9.373 8.358 9.439C8.258 9.505 7.581 9.817 6.949 10.176C6.317 10.535 5.885 10.811 5.637 11.005C5.389 11.199 5.39 11.235 5.399 11.361C5.408 11.487 5.5 11.703 5.583 11.83C5.666 11.957 6.165 12.694 6.857 13.462C7.549 14.23 8.378 14.914 8.829 15.179C9.28 15.444 9.586 15.421 9.77 15.421C9.954 15.421 10.213 15.421 10.355 15.327C10.497 15.233 11.205 14.735 11.407 14.505C11.609 14.275 11.76 14.225 11.891 14.225C12.022 14.225 13.222 14.642 13.459 14.782C13.696 14.922 13.8 14.972 13.922 15.045C14.044 15.118 14.454 15.368 14.612 15.47C14.77 15.572 14.824 15.618 14.922 15.672C15.02 15.726 15.13 15.726 15.252 15.672C15.374 15.618 16.468 14.955 16.618 14.885C16.768 14.815 16.9 14.855 16.999 14.875C17.098 14.895 17.608 15.125 17.723 15.175C17.838 15.225 17.9 15.25 17.98 15.295C18.06 15.34 18.055 15.445 17.98 15.66C17.905 15.875 17.607 16.475 17.398 16.794C17.189 17.113 17.008 17.119 16.698 17.177C16.388 17.235 15.487 17.378 14.784 17.37C14.081 17.362 13.481 17.203 12.891 16.905C12.301 16.607 10.86 15.794 10.26 15.365C9.66 14.936 9.542 14.928 9.242 14.74C8.942 14.552 8.28 14.14 8.048 13.956C7.816 13.772 7.714 13.803 7.56 13.836L7.152 13.925C7.029 13.945 6.905 13.911 6.806 13.836C6.707 13.761 6.003 13.162 5.622 12.812C5.241 12.462 5.049 12.213 4.953 11.925C4.857 11.637 4.857 11.37 4.857 11.124C4.857 10.878 5.047 9.822 5.14 9.376C5.233 8.93 5.366 8.809 5.514 8.732C5.662 8.655 5.684 8.724 5.826 8.828C5.968 8.932 6.256 9.067 6.477 9.182C6.698 9.297 6.751 9.313 6.891 9.352C7.031 9.391 7.08 9.406 7.2 9.36C7.32 9.314 7.717 9.103 7.859 9.016C8.001 8.929 8.188 8.838 8.198 8.811C8.208 8.784 8.198 8.627 8.128 8.437C8.058 8.247 7.825 7.729 7.745 7.522C7.665 7.315 7.705 7.253 7.675 7.193C7.645 7.133 7.435 7.119 7.325 7.099C7.215 7.079 6.818 7.117 6.604 7.117C6.39 7.117 5.841 7.117 5.534 7.283C5.227 7.449 4.573 7.932 4.181 8.245C3.789 8.558 3.368 8.854 3.28 8.978C3.192 9.102 3.192 9.231 3.204 9.362C3.216 9.493 3.318 10.15 3.388 10.675C3.458 11.2 3.55 11.738 3.602 12.004C3.654 12.27 3.694 12.465 3.704 12.515C3.714 12.565 3.786 12.675 3.804 12.754C3.822 12.833 3.85 12.895 3.88 12.961C3.91 13.027 4.245 13.825 4.695 14.398C5.145 14.971 5.64 15.343 6.015 15.62C6.39 15.897 6.73 16.098 6.977 16.234C7.224 16.37 7.321 16.423 7.449 16.475C7.577 16.527 7.648 16.559 7.832 16.616C8.016 16.673 8.305 16.708 8.451 16.726C8.597 16.744 8.718 16.737 8.799 16.688C8.88 16.639 9.357 16.065 9.512 15.855C9.667 15.645 9.781 15.645 9.904 15.725C10.027 15.805 11.095 16.36 11.639 16.665C12.183 16.97 12.614 17.156 12.831 17.221C13.048 17.286 13.311 17.286 13.477 17.286C13.643 17.286 14.327 17.286 14.593 17.235C14.859 17.184 15.265 16.955 15.662 16.66C16.059 16.365 16.414 15.945 16.558 15.715C16.702 15.485 16.68 15.385 16.678 15.363C16.676 15.341 16.678 15.263 16.623 15.2C16.568 15.137 16.524 15.123 16.481 15.102C16.438 15.081 16.271 14.999 16.201 14.965C16.131 14.931 15.998 14.885 15.96 14.865C15.922 14.845 15.922 14.82 15.922 14.8C15.922 14.78 15.93 14.768 15.922 14.749C15.914 14.73 15.608 14.446 17.472 14.382Z" fill="white"/>
@@ -678,7 +710,7 @@
             document.getElementById('lang-' + lang).classList.add('active-lang');
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.lang-btn').forEach(btn => {
-                if(btn.innerText.toLowerCase() === lang) btn.classList.add('active');
+                if(btn.id === 'btn-lang-' + lang) btn.classList.add('active');
             });
         }
 
