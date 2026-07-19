@@ -192,10 +192,35 @@
             border-radius: 10px;
         }
         
-        .hero-title { font-size: 3.8rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px; max-width: 700px; text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .hero-title { 
+            font-size: 3.8rem; 
+            font-weight: 800; 
+            line-height: 1.1; 
+            margin-bottom: 20px; 
+            max-width: 700px; 
+            text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
         .hero-title span { color: var(--primary-cyan); text-shadow: 0 0 20px rgba(0, 229, 255, 0.4); }
-        .hero-subtitle { font-size: 1.2rem; max-width: 600px; margin-bottom: 30px; line-height: 1.6; opacity: 0.95; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
-        .hero-subtitle .representante {
+        
+        /* Fondo semitransparente SOLO para el texto del héroe */
+        .hero-text-highlight {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.55);
+            padding: 20px 25px;
+            border-radius: 16px;
+            backdrop-filter: blur(4px);
+            border-left: 4px solid var(--primary-cyan);
+            max-width: 750px;
+        }
+        .hero-text-highlight .hero-subtitle {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 0;
+            line-height: 1.6;
+            opacity: 0.95;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .hero-text-highlight .representante {
             display: block;
             margin-top: 10px;
             font-size: 0.9rem;
@@ -204,7 +229,7 @@
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         
-        .cta-group { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 40px; }
+        .cta-group { display: flex; gap: 15px; flex-wrap: wrap; margin: 30px 0 40px; }
         .btn-primary { 
             background: linear-gradient(135deg, var(--primary-cyan), var(--primary-blue)); 
             color: #0B2545; padding: 15px 35px; border: none; border-radius: 50px; 
@@ -323,7 +348,7 @@
         }
 
         /* ESTILO ACORDEÓN PARA FAQ */
-        .faq-container { max-width: 800px; margin: 40px auto 0; }
+        .faq-container { max-width: 900px; margin: 40px auto 0; }
         .faq-item {
             background: var(--dark-blue-card);
             margin-bottom: 15px;
@@ -339,6 +364,7 @@
             justify-content: space-between;
             align-items: center;
             transition: 0.3s;
+            font-size: 1rem;
         }
         .faq-question:hover { background: rgba(0, 229, 255, 0.05); }
         .faq-question::after {
@@ -357,14 +383,14 @@
             opacity: 0.9;
         }
         .faq-item input[type="checkbox"]:checked ~ .faq-answer {
-            max-height: 300px;
+            max-height: 500px;
             padding: 0 25px 25px 25px;
         }
         .faq-item input[type="checkbox"]:checked + .faq-question::after { content: '-'; }
 
-        /* Form Section - 2 COLUMNAS EN ESCRITORIO */
+        /* Form Section - 3 COLUMNAS EN ESCRITORIO */
         .form-section { padding: 80px 5%; background: #071B2E; }
-        .form-container { max-width: 800px; margin: 0 auto; background: var(--dark-blue-card); padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border: 1px solid rgba(0, 229, 255, 0.2); }
+        .form-container { max-width: 1000px; margin: 0 auto; background: var(--dark-blue-card); padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border: 1px solid rgba(0, 229, 255, 0.2); }
         .form-container h2 { text-align: center; margin-bottom: 5px; font-size: 2.2rem; color: var(--primary-cyan); }
         
         .form-subtitle {
@@ -378,14 +404,17 @@
             padding-bottom: 15px;
         }
 
-        .form-row {
-            display: flex;
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
-            flex-wrap: wrap;
         }
-        .form-row .form-group {
-            flex: 1;
-            min-width: 200px;
+        .form-grid .form-group {
+            margin-bottom: 0;
+            width: 100%;
+        }
+        .form-grid .form-group.full-width {
+            grid-column: 1 / -1;
         }
 
         .form-group { margin-bottom: 20px; width: 100%; }
@@ -424,13 +453,65 @@
         .map-btn:hover { background: var(--primary-cyan); color: #0B2545; border-color: var(--primary-cyan); transform: translateY(-3px); }
         .footer p { opacity: 0.7; font-size: 0.9rem; margin-top: 20px; }
 
+        /* Botón flotante de WhatsApp - Lado derecho */
         .float-wa {
-            position: fixed; bottom: 30px; right: 30px; z-index: 9999;
-            background: var(--whatsapp-green); color: white; width: 60px; height: 60px;
-            border-radius: 50px; display: flex; align-items: center; justify-content: center;
-            font-size: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); text-decoration: none; transition: 0.3s;
+            position: fixed; 
+            bottom: 30px; 
+            right: 30px; 
+            z-index: 9999;
+            background: var(--whatsapp-green); 
+            color: white; 
+            width: 60px; 
+            height: 60px;
+            border-radius: 50px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 30px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); 
+            text-decoration: none; 
+            transition: 0.3s;
+            position: fixed;
         }
         .float-wa:hover { transform: scale(1.1); background: #128C7E; box-shadow: 0 5px 30px rgba(37, 211, 102, 0.4); }
+        
+        /* Tooltip del botón WhatsApp */
+        .float-wa .wa-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            width: auto;
+            max-width: 220px;
+            background: rgba(0, 0, 0, 0.85);
+            color: #fff;
+            text-align: center;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            position: absolute;
+            z-index: 10000;
+            bottom: 70px;
+            right: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            white-space: nowrap;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .float-wa .wa-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 20px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: rgba(0, 0, 0, 0.85) transparent transparent transparent;
+        }
+        .float-wa:hover .wa-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -447,11 +528,25 @@
             .hero {
                 padding-top: 30px;
             }
+            .hero-text-highlight {
+                padding: 15px 20px;
+                max-width: 100%;
+            }
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         @media (max-width: 768px) {
             .hero-title { font-size: 2.4rem; }
             .hero { padding-top: 20px; }
             .hero-logo { max-width: 220px; margin-bottom: 15px; }
+            .hero-text-highlight {
+                padding: 12px 16px;
+                border-left-width: 3px;
+            }
+            .hero-text-highlight .hero-subtitle {
+                font-size: 1rem;
+            }
             .videos-container { 
                 grid-template-columns: 1fr;
                 gap: 20px;
@@ -468,9 +563,22 @@
             .stats { flex-direction: row; width: 100%; }
             .stat-box { flex: 1; padding: 15px; }
             .stat-box h3 { font-size: 1.5rem; }
-            .form-row { flex-direction: column; gap: 0; }
-            .form-row .form-group { min-width: 100%; }
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .form-grid .form-group {
+                margin-bottom: 0;
+            }
             .lang-switcher { display: flex; }
+            .float-wa .wa-tooltip {
+                font-size: 0.65rem;
+                padding: 6px 12px;
+                max-width: 180px;
+                white-space: normal;
+                bottom: 65px;
+                right: 0;
+            }
         }
         @media (max-width: 480px) {
             .videos-container { 
@@ -489,9 +597,25 @@
             .hero-title { font-size: 1.8rem; }
             .hero { padding-top: 15px; }
             .hero-logo { max-width: 180px; }
+            .hero-text-highlight {
+                padding: 10px 14px;
+                border-left-width: 3px;
+            }
+            .hero-text-highlight .hero-subtitle {
+                font-size: 0.9rem;
+            }
             .video-overlay { padding: 15px 12px 12px 12px; }
             .video-overlay h4 { font-size: 0.95rem; }
             .video-overlay p { font-size: 0.75rem; }
+            .float-wa .wa-tooltip {
+                font-size: 0.6rem;
+                padding: 5px 10px;
+                max-width: 150px;
+                bottom: 60px;
+                right: -10px;
+            }
+            .faq-question { font-size: 0.9rem; padding: 15px 18px; }
+            .faq-answer { font-size: 0.85rem; }
         }
         @media (max-width: 380px) {
             .videos-container { 
@@ -527,13 +651,16 @@
         <header class="hero">
             <div class="hero-bg-slider" id="bgSlider"></div>
             <div class="hero-overlay"></div>
-            <img src="https://www.angeltourbrasil.com.br/images/mp-logo.webp" alt="Multiparque Logo" class="hero-logo">
+            <img src="https://www.angeltourbrasil.com.br/images/mp-logo.webp" alt="Multiparque SC Logo" class="hero-logo">
             <div class="hero-content">
                 <h1 class="hero-title">La experiencia <span>acuática</span> que mereces</h1>
-                <p class="hero-subtitle">
-                    Diversión, adrenalina y relax en el corazón de Santa Catarina. Ven a vivir el verano en Multiparque SC.
-                    <span class="representante">Angel Tour Brasil es representante de ventas autorizado.</span>
-                </p>
+                
+                <div class="hero-text-highlight">
+                    <p class="hero-subtitle">
+                        Diversión, adrenalina y relax en el corazón de Santa Catarina. Ven a vivir el verano en Multiparque SC.
+                        <span class="representante">Angel Tour Brasil es representante de ventas autorizado.</span>
+                    </p>
+                </div>
                 
                 <div class="cta-group">
                     <a href="#contact" class="btn-primary">Solicitar presupuesto &rarr;</a>
@@ -547,7 +674,7 @@
             </div>
         </header>
 
-        <!-- Videos Grid - Reproducción automática en bucle sin controles -->
+        <!-- Videos Grid -->
         <div id="video-grid" class="videos-container">
             <div class="video-card">
                 <div class="video-wrapper">
@@ -623,46 +750,116 @@
                 </div>
             </div>
 
-            <!-- FAQ Acordeón -->
+            <!-- FAQ Acordeón - PREGUNTAS ACTUALIZADAS -->
             <div class="faq-container">
                 <h3 style="text-align: center; color: var(--primary-cyan); font-size: 2rem; margin-bottom: 20px;">Preguntas Frecuentes</h3>
                 
                 <div class="faq-item">
                     <input type="checkbox" id="faq1_es">
-                    <label for="faq1_es" class="faq-question">¿Cómo comprar las entradas?</label>
-                    <div class="faq-answer">Las entradas se adquieren con nuestro representante de ventas Angel Tour Brasil.</div>
+                    <label for="faq1_es" class="faq-question">¿Qué incluye el ingreso?</label>
+                    <div class="faq-answer">El ingreso da acceso a todas las atracciones del parque, excepto para servicios adicionales como guarda-volumes, estacionamiento, alimentación y gazebos.</div>
                 </div>
+                
                 <div class="faq-item">
                     <input type="checkbox" id="faq2_es">
-                    <label for="faq2_es" class="faq-question">¿El estacionamiento es gratuito?</label>
-                    <div class="faq-answer">Sí, el estacionamiento es completamente gratuito y vigilado para todos nuestros visitantes.</div>
+                    <label for="faq2_es" class="faq-question">¿Cuántos toboganes tienen?</label>
+                    <div class="faq-answer">Tenemos más de 16 toboganes, para adultos e infantiles.</div>
                 </div>
+                
                 <div class="faq-item">
                     <input type="checkbox" id="faq3_es">
-                    <label for="faq3_es" class="faq-question">¿Hay seguridad en el agua?</label>
-                    <div class="faq-answer">Contamos con un equipo de salvavidas certificados y monitoreo 24h en todas las áreas acuáticas para tu tranquilidad.</div>
+                    <label for="faq3_es" class="faq-question">¿Las piscinas son climatizadas?</label>
+                    <div class="faq-answer">¡Sí! Todas nuestras piscinas de inmersión son climatizadas.</div>
                 </div>
+                
                 <div class="faq-item">
                     <input type="checkbox" id="faq4_es">
-                    <label for="faq4_es" class="faq-question">¿Qué puedo llevar al parque?</label>
-                    <div class="faq-answer">Puedes traer traje de baño, toallas y protector solar. No está permitido el ingreso de objetos cortantes o de vidrio.</div>
+                    <label for="faq4_es" class="faq-question">¿Hay atracciones para todas las edades?</label>
+                    <div class="faq-answer">Sí, tenemos atracciones para todas las edades, desde las más radicales hasta las más tranquilas.</div>
                 </div>
+                
                 <div class="faq-item">
                     <input type="checkbox" id="faq5_es">
-                    <label for="faq5_es" class="faq-question">¿Aceptan tarjetas?</label>
-                    <div class="faq-answer">Sí, aceptamos efectivo, tarjetas de crédito y débito en todas nuestras instalaciones.</div>
+                    <label for="faq5_es" class="faq-question">¿Se puede surfear en la piscina de olas?</label>
+                    <div class="faq-answer">No, tenemos una piscina con playa artificial y con olas, pero no es para surf.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <input type="checkbox" id="faq6_es">
+                    <label for="faq6_es" class="faq-question">¿Puedo llevar mi propia comida?</label>
+                    <div class="faq-answer">No. Sin embargo, el parque ofrece opciones de alimentación entre restaurante, lonchería y quioscos. Se permite la entrada con mamaderas y papillas infantiles, así como frutas en pequeña cantidad y agua.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <input type="checkbox" id="faq7_es">
+                    <label for="faq7_es" class="faq-question">¿Cuánto cuesta el estacionamiento?</label>
+                    <div class="faq-answer">Nuestro estacionamiento está anexo al parque y tiene un valor de R$50,00 para auto y R$25,00 para moto.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <input type="checkbox" id="faq8_es">
+                    <label for="faq8_es" class="faq-question">¿El parque abre en días de lluvia?</label>
+                    <div class="faq-answer">Sí, el parque está abierto incluso en días de lluvia, salvo condiciones climáticas extremas. Además, contamos con piscinas climatizadas, garantizando confort para los visitantes, independientemente de la temperatura externa.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <input type="checkbox" id="faq9_es">
+                    <label for="faq9_es" class="faq-question">¿Cuál es el precio de los niños?</label>
+                    <div class="faq-answer">Hasta 5 años el ingreso es gratuito, de 6 a 11 años existe una tarifa especial infantil y a partir de los 12 años el niño paga el ingreso completo. Es obligatorio presentar documento que compruebe la edad del niño.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <input type="checkbox" id="faq10_es">
+                    <label for="faq10_es" class="faq-question">¿Hay descuento para estudiantes?</label>
+                    <div class="faq-answer">La media entrada para estudiantes es válida solo en eventos culturales y deportivos ofrecidos por el parque, de acuerdo con la Ley Federal nº 12.933/2013. Por ahora no tenemos ningún evento programado, sigue nuestro sitio web y redes sociales para actualizaciones.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <input type="checkbox" id="faq11_es">
+                    <label for="faq11_es" class="faq-question">¿Personas con discapacidad pagan media entrada?</label>
+                    <div class="faq-answer">Sí, personas con discapacidad pagan media entrada, siempre que presenten comprobante.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <input type="checkbox" id="faq12_es">
+                    <label for="faq12_es" class="faq-question">¿Qué formas de pago aceptan?</label>
+                    <div class="faq-answer">En la taquilla aceptamos efectivo, tarjeta de crédito y débito, y Pix. Dentro del parque utilizarás una pulsera para hacer tus compras y al final del día realizas los pagos en las mismas formas de pago de la taquilla.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <input type="checkbox" id="faq13_es">
+                    <label for="faq13_es" class="faq-question">¿Se puede fumar dentro del parque?</label>
+                    <div class="faq-answer">Nuestra política no permite fumar ningún tipo de cigarro, incluyendo cigarrillos electrónicos dentro del parque. Se permite a los fumadores salir hasta el estacionamiento para fumar y luego regresar al parque.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <input type="checkbox" id="faq14_es">
+                    <label for="faq14_es" class="faq-question">¿Se permite música alta o parlantes?</label>
+                    <div class="faq-answer">No está permitido ningún tipo de sonido alto ni parlantes.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <input type="checkbox" id="faq15_es">
+                    <label for="faq15_es" class="faq-question">¿Qué vestimenta está permitida en los toboganes?</label>
+                    <div class="faq-answer">Solicitamos que observes el reglamento de cada atracción. En los toboganes, por ejemplo, no está permitido el uso de shorts de malla o jeans, ni que tengan botones metálicos, ya que esto puede dañar el juego y podría hacer que te detengas en medio del recorrido. No se permite el uso de camisetas de ningún tipo o tejido, incluso las propias para baño en los toboganes. En las piscinas no hay restricción en cuanto a esto, puedes usar camiseta y short sobre el traje de baño. En los toboganes recomendamos el uso de shorts de lycra o tactel.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <input type="checkbox" id="faq16_es">
+                    <label for="faq16_es" class="faq-question">¿Se pueden usar drones dentro del parque?</label>
+                    <div class="faq-answer">No. Por motivos de seguridad y para proteger los derechos de imagen de nuestros visitantes, no está permitido el uso de drones dentro del parque, tanto en áreas externas como internas. Contamos con tu comprensión para mantener un ambiente seguro y respetuoso para todos.</div>
                 </div>
             </div>
         </section>
 
-        <!-- Contact Form -->
+        <!-- Contact Form - 3 COLUMNAS -->
         <section id="contact" class="form-section">
             <div class="form-container">
                 <h2>¡Reserva tu día!</h2>
                 <p class="form-subtitle">*Sr/a. Guia, Por cuestiones operativas pedimos que solicite su reserva a través del formulario, muchas gracias.</p>
                 
                 <form id="contactForm">
-                    <div class="form-row">
+                    <div class="form-grid">
                         <div class="form-group">
                             <label>Nombre completo</label>
                             <input type="text" id="nombre" required placeholder="Ej. Juan Pérez">
@@ -671,8 +868,6 @@
                             <label>Correo electrónico</label>
                             <input type="email" id="email" required placeholder="ejemplo@mail.com">
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group">
                             <label>Teléfono / WhatsApp</label>
                             <input type="tel" id="telefono" required placeholder="+55 48 99999-9999">
@@ -681,17 +876,21 @@
                             <label>Empresa</label>
                             <input type="text" id="empresa" required placeholder="Nombre de tu empresa">
                         </div>
+                        <div class="form-group">
+                            <label>Fecha de reserva (Estimativa)</label>
+                            <input type="date" id="fecha_reserva">
+                            <span class="date-warning">📅 Fecha estimativa</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Cantidad de personas</label>
+                            <input type="number" id="cantidad" placeholder="Ej. 10" min="1">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Mensaje o detalles adicionales</label>
+                            <textarea id="mensaje" placeholder="¿Qué día les gustaría visitarnos?"></textarea>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Fecha de reserva (Estimativa)</label>
-                        <input type="date" id="fecha_reserva">
-                        <span class="date-warning">📅 Fecha estimativa, sujeta a condiciones operacionales, consultar.</span>
-                    </div>
-                    <div class="form-group">
-                        <label>Mensaje o detalles adicionales</label>
-                        <textarea id="mensaje" placeholder="¿Qué día les gustaría visitarnos?"></textarea>
-                    </div>
-                    <button type="submit" class="btn-primary" style="width: 100%; text-align: center; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                    <button type="submit" class="btn-primary" style="width: 100%; text-align: center; display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 20px;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.132-1.758-.717-2.03-.78-.273-.063-.47-.078-.67.1-.202.18-1.108 1.076-1.36 1.286-.25.21-.5.23-.84.08-.34-.15-1.208-.5-2.23-1.36-.78-.7-1.3-1.5-1.4-1.64-.1-.14-.04-.28.12-.37.14-.08.26-.2.34-.32.08-.12.09-.18.13-.3.05-.12-.05-.32-.14-.52-.09-.2-.65-1.35-.78-1.65-.14-.3-.28-.24-.4-.24h-.64c-.12 0-.27.02-.38.13-.11.11-.46.45-.62.66-.16.22-.27.38-.36.5-.08.12-.12.14-.2.2-.1.06-.78.32-1.42.68-.64.36-1.08.64-1.33.84-.25.2-.25.24-.24.36.01.13.1.35.18.48.09.13.6.85 1.3 1.63.7.78 1.54 1.47 2 1.74.46.27.77.24.95.24h.6c.15 0 .26-.1.34-.2.15-.2 1-1.16 1.2-1.4.2-.23.36-.28.5-.28s1.2.42 1.45.56c.25.14.36.19.48.27.12.08.52.33.68.43.16.1.22.16.32.22.1.06.2.06.32 0 .12-.06 1.1-.68 1.26-.76.16-.07.28-.07.38 0 .1.02.6.24.72.28.12.04.18.07.26.12.08.05.08.16 0 .3-.08.14-.3.72-.52 1.05-.21.33-.4.34-.7.4-.3.06-1.2.15-1.9.12-.7-.03-1.3-.16-1.9-.46-.6-.3-2.04-1.12-2.65-1.55-.6-.43-.72-.43-1.02-.62-.3-.2-.97-.62-1.2-.8-.23-.18-.33-.18-.48-.13l-.42.1c-.13.02-.26-.03-.36-.13-.1-.1-.72-.7-1.1-1.04-.4-.34-.6-.6-.7-.9-.1-.3-.1-.57-.1-.8 0-.24.2-1.06.3-1.5.1-.44.23-.56.38-.62.15-.06.17-.06.27.1.1.16.4.36.62.5.22.14.28.15.42.2.14.05.15.07.28 0 .12-.07.52-.32.64-.4.12-.08.2-.17.2-.2 0-.03 0-.15-.08-.34-.07-.19-.3-.72-.38-.92-.08-.2-.05-.26-.07-.32-.03-.06-.23-.08-.33-.1-.1-.02-.4.02-.6.02-.2 0-.7 0-1 .17-.3.17-.95.65-1.35.98-.4.33-.8.63-.88.75-.08.13-.08.26 0 .4.01.13.1.82.18 1.34.08.52.16 1.06.2 1.32.04.26.1.46.12.52.02.06.08.16.1.24.02.08.04.16.07.22.03.07.38.85.84 1.45.46.6.96.97 1.34 1.25.38.28.72.48.97.6.25.12.33.17.45.22.12.05.2.08.4.14.2.06.5.1.65.12.15.02.25 0 .3-.05.06-.05.5-.64.64-.85.14-.21.28-.21.4-.13.12.08 1.18.65 1.74.97.56.32.99.5 1.2.57.21.07.4.07.52.07.14 0 .65 0 .85-.05.2-.05.6-.24.97-.54.37-.3.72-.7.86-.93.14-.23.12-.32.12-.35 0-.03 0-.1-.04-.15-.04-.05-.08-.08-.12-.1-.04-.02-.15-.1-.2-.13-.05-.03-.15-.07-.19-.09-.04-.02-.04-.04-.04-.06s0-.02-.04-.04c-.04-.02-.28-.28.12-.34z"/></svg>
                         Enviar solicitud por WhatsApp
                     </button>
@@ -713,13 +912,15 @@
         <header class="hero">
             <div class="hero-bg-slider" id="bgSliderEn"></div>
             <div class="hero-overlay"></div>
-            <img src="https://www.angeltourbrasil.com.br/images/mp-logo.webp" alt="Multiparque Logo" class="hero-logo">
+            <img src="https://www.angeltourbrasil.com.br/images/mp-logo.webp" alt="Multiparque SC Logo" class="hero-logo">
             <div class="hero-content">
                 <h1 class="hero-title">The <span>aquatic</span> experience you deserve</h1>
-                <p class="hero-subtitle">
-                    Fun, adrenaline and relaxation in the heart of Santa Catarina. Come live the summer at Multiparque SC.
-                    <span class="representante">Angel Tour Brasil is an authorized sales representative.</span>
-                </p>
+                <div class="hero-text-highlight">
+                    <p class="hero-subtitle">
+                        Fun, adrenaline and relaxation in the heart of Santa Catarina. Come live the summer at Multiparque SC.
+                        <span class="representante">Angel Tour Brasil is an authorized sales representative.</span>
+                    </p>
+                </div>
                 <div class="cta-group">
                     <a href="#contact" class="btn-primary">Request quote &rarr;</a>
                     <a href="#video-grid" class="btn-outline">View attractions</a>
@@ -763,28 +964,43 @@
                 <h3 style="text-align: center; color: var(--primary-cyan); font-size: 2rem; margin-bottom: 20px;">FAQ</h3>
                 <div class="faq-item">
                     <input type="checkbox" id="faq1_en">
-                    <label for="faq1_en" class="faq-question">How to buy tickets?</label>
-                    <div class="faq-answer">Tickets are purchased through our sales representative Angel Tour Brasil.</div>
+                    <label for="faq1_en" class="faq-question">What does the ticket include?</label>
+                    <div class="faq-answer">The ticket gives access to all park attractions, except for additional services such as lockers, parking, food, and gazebos.</div>
                 </div>
                 <div class="faq-item">
                     <input type="checkbox" id="faq2_en">
-                    <label for="faq2_en" class="faq-question">Is parking free?</label>
-                    <div class="faq-answer">Yes, parking is completely free and monitored for all our visitors.</div>
+                    <label for="faq2_en" class="faq-question">How many slides do you have?</label>
+                    <div class="faq-answer">We have over 16 water slides, for adults and children.</div>
                 </div>
                 <div class="faq-item">
                     <input type="checkbox" id="faq3_en">
-                    <label for="faq3_en" class="faq-question">Is there safety in the water?</label>
-                    <div class="faq-answer">We have a team of certified lifeguards and 24-hour monitoring in all water areas for your peace of mind.</div>
+                    <label for="faq3_en" class="faq-question">Are the pools heated?</label>
+                    <div class="faq-answer">Yes! All our immersion pools are heated.</div>
                 </div>
                 <div class="faq-item">
                     <input type="checkbox" id="faq4_en">
-                    <label for="faq4_en" class="faq-question">What can I bring to the park?</label>
-                    <div class="faq-answer">You can bring swimsuits, towels, and sunscreen. Sharp objects or glass are not allowed.</div>
+                    <label for="faq4_en" class="faq-question">Are there attractions for all ages?</label>
+                    <div class="faq-answer">Yes, we have attractions for all ages, from the most radical to the most relaxing.</div>
                 </div>
                 <div class="faq-item">
                     <input type="checkbox" id="faq5_en">
-                    <label for="faq5_en" class="faq-question">Do you accept credit cards?</label>
-                    <div class="faq-answer">Yes, we accept cash, credit, and debit cards at all our facilities.</div>
+                    <label for="faq5_en" class="faq-question">What payment methods do you accept?</label>
+                    <div class="faq-answer">At the ticket office we accept cash, credit and debit cards, and Pix. Inside the park you will use a wristband to make your purchases and at the end of the day you make payments in the same payment methods as the ticket office.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq6_en">
+                    <label for="faq6_en" class="faq-question">Is smoking allowed inside the park?</label>
+                    <div class="faq-answer">Our policy does not allow smoking any type of cigarette, including electronic cigarettes inside the park. Smokers are allowed to go out to the parking lot to smoke and then return to the park.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq7_en">
+                    <label for="faq7_en" class="faq-question">Is outside food allowed?</label>
+                    <div class="faq-answer">No. However, the park offers food options between restaurant, snack bar and kiosks. Entry with baby bottles and baby food is allowed, as well as small amounts of fruit and water.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq8_en">
+                    <label for="faq8_en" class="faq-question">Is the park open on rainy days?</label>
+                    <div class="faq-answer">Yes, the park is open even on rainy days, except in extreme weather conditions. In addition, we have heated pools, ensuring comfort for visitors regardless of the outside temperature.</div>
                 </div>
             </div>
         </section>
@@ -793,21 +1009,16 @@
                 <h2>Book your day!</h2>
                 <p class="form-subtitle">*Mr./Ms. Guide, for operational reasons, we ask that you request your reservation through the form, thank you.</p>
                 <form id="contactFormEn">
-                    <div class="form-row">
+                    <div class="form-grid">
                         <div class="form-group"><label>Full Name</label><input type="text" id="nombre_en" required placeholder="John Doe"></div>
                         <div class="form-group"><label>Email</label><input type="email" id="email_en" required placeholder="mail@example.com"></div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" id="telefono_en" required placeholder="+55 48 99999-9999"></div>
                         <div class="form-group"><label>Company</label><input type="text" id="empresa_en" required placeholder="Your company name"></div>
+                        <div class="form-group"><label>Reservation Date (Estimated)</label><input type="date" id="fecha_reserva_en"><span class="date-warning">📅 Estimated date</span></div>
+                        <div class="form-group"><label>Number of people</label><input type="number" id="cantidad_en" placeholder="e.g. 10" min="1"></div>
+                        <div class="form-group full-width"><label>Message or details</label><textarea id="mensaje_en" placeholder="What day would you like to visit us?"></textarea></div>
                     </div>
-                    <div class="form-group">
-                        <label>Reservation Date (Estimated)</label>
-                        <input type="date" id="fecha_reserva_en">
-                        <span class="date-warning">📅 Estimated date, subject to operational conditions, please check.</span>
-                    </div>
-                    <div class="form-group"><label>Message or details</label><textarea id="mensaje_en" placeholder="What day would you like to visit us?"></textarea></div>
-                    <button type="submit" class="btn-primary" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                    <button type="submit" class="btn-primary" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 20px;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.132-1.758-.717-2.03-.78-.273-.063-.47-.078-.67.1-.202.18-1.108 1.076-1.36 1.286-.25.21-.5.23-.84.08-.34-.15-1.208-.5-2.23-1.36-.78-.7-1.3-1.5-1.4-1.64-.1-.14-.04-.28.12-.37.14-.08.26-.2.34-.32.08-.12.09-.18.13-.3.05-.12-.05-.32-.14-.52-.09-.2-.65-1.35-.78-1.65-.14-.3-.28-.24-.4-.24h-.64c-.12 0-.27.02-.38.13-.11.11-.46.45-.62.66-.16.22-.27.38-.36.5-.08.12-.12.14-.2.2-.1.06-.78.32-1.42.68-.64.36-1.08.64-1.33.84-.25.2-.25.24-.24.36.01.13.1.35.18.48.09.13.6.85 1.3 1.63.7.78 1.54 1.47 2 1.74.46.27.77.24.95.24h.6c.15 0 .26-.1.34-.2.15-.2 1-1.16 1.2-1.4.2-.23.36-.28.5-.28s1.2.42 1.45.56c.25.14.36.19.48.27.12.08.52.33.68.43.16.1.22.16.32.22.1.06.2.06.32 0 .12-.06 1.1-.68 1.26-.76.16-.07.28-.07.38 0 .1.02.6.24.72.28.12.04.18.07.26.12.08.05.08.16 0 .3-.08.14-.3.72-.52 1.05-.21.33-.4.34-.7.4-.3.06-1.2.15-1.9.12-.7-.03-1.3-.16-1.9-.46-.6-.3-2.04-1.12-2.65-1.55-.6-.43-.72-.43-1.02-.62-.3-.2-.97-.62-1.2-.8-.23-.18-.33-.18-.48-.13l-.42.1c-.13.02-.26-.03-.36-.13-.1-.1-.72-.7-1.1-1.04-.4-.34-.6-.6-.7-.9-.1-.3-.1-.57-.1-.8 0-.24.2-1.06.3-1.5.1-.44.23-.56.38-.62.15-.06.17-.06.27.1.1.16.4.36.62.5.22.14.28.15.42.2.14.05.15.07.28 0 .12-.07.52-.32.64-.4.12-.08.2-.17.2-.2 0-.03 0-.15-.08-.34-.07-.19-.3-.72-.38-.92-.08-.2-.05-.26-.07-.32-.03-.06-.23-.08-.33-.1-.1-.02-.4.02-.6.02-.2 0-.7 0-1 .17-.3.17-.95.65-1.35.98-.4.33-.8.63-.88.75-.08.13-.08.26 0 .4.01.13.1.82.18 1.34.08.52.16 1.06.2 1.32.04.26.1.46.12.52.02.06.08.16.1.24.02.08.04.16.07.22.03.07.38.85.84 1.45.46.6.96.97 1.34 1.25.38.28.72.48.97.6.25.12.33.17.45.22.12.05.2.08.4.14.2.06.5.1.65.12.15.02.25 0 .3-.05.06-.05.5-.64.64-.85.14-.21.28-.21.4-.13.12.08 1.18.65 1.74.97.56.32.99.5 1.2.57.21.07.4.07.52.07.14 0 .65 0 .85-.05.2-.05.6-.24.97-.54.37-.3.72-.7.86-.93.14-.23.12-.32.12-.35 0-.03 0-.1-.04-.15-.04-.05-.08-.08-.12-.1-.04-.02-.15-.1-.2-.13-.05-.03-.15-.07-.19-.09-.04-.02-.04-.04-.04-.06s0-.02-.04-.04c-.04-.02-.28-.28.12-.34z"/></svg>
                         Send request via WhatsApp
                     </button>
@@ -828,13 +1039,15 @@
         <header class="hero">
             <div class="hero-bg-slider" id="bgSliderPt"></div>
             <div class="hero-overlay"></div>
-            <img src="https://www.angeltourbrasil.com.br/images/mp-logo.webp" alt="Multiparque Logo" class="hero-logo">
+            <img src="https://www.angeltourbrasil.com.br/images/mp-logo.webp" alt="Multiparque SC Logo" class="hero-logo">
             <div class="hero-content">
                 <h1 class="hero-title">A experiência <span>aquática</span> que você merece</h1>
-                <p class="hero-subtitle">
-                    Diversão, adrenalina e relaxamento no coração de Santa Catarina. Venha viver o verão no Multiparque SC.
-                    <span class="representante">Angel Tour Brasil é representante de vendas autorizado.</span>
-                </p>
+                <div class="hero-text-highlight">
+                    <p class="hero-subtitle">
+                        Diversão, adrenalina e relaxamento no coração de Santa Catarina. Venha viver o verão no Multiparque SC.
+                        <span class="representante">Angel Tour Brasil é representante de vendas autorizado.</span>
+                    </p>
+                </div>
                 <div class="cta-group">
                     <a href="#contact" class="btn-primary">Solicitar orçamento &rarr;</a>
                     <a href="#video-grid" class="btn-outline">Ver atrações</a>
@@ -878,28 +1091,43 @@
                 <h3 style="text-align: center; color: var(--primary-cyan); font-size: 2rem; margin-bottom: 20px;">Perguntas Frequentes</h3>
                 <div class="faq-item">
                     <input type="checkbox" id="faq1_pt">
-                    <label for="faq1_pt" class="faq-question">Como comprar os ingressos?</label>
-                    <div class="faq-answer">Os ingressos são adquiridos através do nosso representante de vendas Angel Tour Brasil.</div>
+                    <label for="faq1_pt" class="faq-question">O que o ingresso inclui?</label>
+                    <div class="faq-answer">O ingresso dá acesso a todas as atrações do parque, exceto para serviços adicionais como guarda-volumes, estacionamento, alimentação e gazebos.</div>
                 </div>
                 <div class="faq-item">
                     <input type="checkbox" id="faq2_pt">
-                    <label for="faq2_pt" class="faq-question">O estacionamento é gratuito?</label>
-                    <div class="faq-answer">Sim, o estacionamento é completamente gratuito e vigiado para todos os nossos visitantes.</div>
+                    <label for="faq2_pt" class="faq-question">Quantos tobogãs vocês têm?</label>
+                    <div class="faq-answer">São mais de 16 toboáguas, adulto e infantil.</div>
                 </div>
                 <div class="faq-item">
                     <input type="checkbox" id="faq3_pt">
-                    <label for="faq3_pt" class="faq-question">Há segurança na água?</label>
-                    <div class="faq-answer">Contamos com uma equipe de salva-vidas certificados e monitoramento 24h em todas as áreas aquáticas para sua tranquilidade.</div>
+                    <label for="faq3_pt" class="faq-question">As piscinas são aquecidas?</label>
+                    <div class="faq-answer">Sim! Todas as nossas piscinas de imersão são aquecidas.</div>
                 </div>
                 <div class="faq-item">
                     <input type="checkbox" id="faq4_pt">
-                    <label for="faq4_pt" class="faq-question">O que posso levar ao parque?</label>
-                    <div class="faq-answer">Você pode trazer maiô, toalhas e protetor solar. Não é permitida a entrada de objetos cortantes ou de vidro.</div>
+                    <label for="faq4_pt" class="faq-question">Há atrações para todas as idades?</label>
+                    <div class="faq-answer">Sim, temos atrações para todas as idades, desde as mais radicais, até as mais tranquilas!</div>
                 </div>
                 <div class="faq-item">
                     <input type="checkbox" id="faq5_pt">
-                    <label for="faq5_pt" class="faq-question">Aceitam cartões?</label>
-                    <div class="faq-answer">Sim, aceitamos dinheiro, cartões de crédito e débito em todas as nossas instalações.</div>
+                    <label for="faq5_pt" class="faq-question">Quais formas de pagamento vocês aceitam?</label>
+                    <div class="faq-answer">Na bilheteria aceitamos dinheiro, cartão de crédito e débito e Pix. Dentro do parque você irá utilizar uma pulseira para fazer as suas compras e no final do dia você faz o pagamentos nas mesmas formas de pagamentos da bilheteria.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq6_pt">
+                    <label for="faq6_pt" class="faq-question">É permitido fumar dentro do parque?</label>
+                    <div class="faq-answer">Nossa política não permite fumar nenhum tipo de cigarro, inclusive cigarros eletrônicos dentro do parque. É permitido aos fumantes saídas até o estacionamento para fumar, retornando depois ao parque.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq7_pt">
+                    <label for="faq7_pt" class="faq-question">Posso levar minha própria comida?</label>
+                    <div class="faq-answer">Não. Entretanto o parque oferece opções de alimentação entre restaurante, lanchonete e quiosques. A entrada com mamadeiras e papinhas infantis são permitidas, assim como frutas em pequena quantidade e água também são permitidas.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq8_pt">
+                    <label for="faq8_pt" class="faq-question">O parque funciona em dias de chuva?</label>
+                    <div class="faq-answer">Sim, o parque está aberto mesmo em dias de chuva, salvo condições climáticas extremas. Além disso, contamos com piscinas aquecidas, garantindo conforto para os visitantes, independentemente da temperatura externa.</div>
                 </div>
             </div>
         </section>
@@ -908,21 +1136,16 @@
                 <h2>Reserve seu dia!</h2>
                 <p class="form-subtitle">*Sr./Sra. Guia, por questões operacionais, pedimos que solicite sua reserva através do formulário, muito obrigado.</p>
                 <form id="contactFormPt">
-                    <div class="form-row">
+                    <div class="form-grid">
                         <div class="form-group"><label>Nome completo</label><input type="text" id="nome_pt" required placeholder="Ex. João Silva"></div>
                         <div class="form-group"><label>E-mail</label><input type="email" id="email_pt" required placeholder="exemplo@email.com"></div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group"><label>Telefone / WhatsApp</label><input type="tel" id="telefono_pt" required placeholder="+55 48 99999-9999"></div>
                         <div class="form-group"><label>Empresa</label><input type="text" id="empresa_pt" required placeholder="Nome da sua empresa"></div>
+                        <div class="form-group"><label>Data de reserva (Estimativa)</label><input type="date" id="fecha_reserva_pt"><span class="date-warning">📅 Data estimativa</span></div>
+                        <div class="form-group"><label>Quantidade de pessoas</label><input type="number" id="cantidad_pt" placeholder="Ex. 10" min="1"></div>
+                        <div class="form-group full-width"><label>Mensagem ou detalhes</label><textarea id="mensaje_pt" placeholder="Que dia gostaria de nos visitar?"></textarea></div>
                     </div>
-                    <div class="form-group">
-                        <label>Data de reserva (Estimativa)</label>
-                        <input type="date" id="fecha_reserva_pt">
-                        <span class="date-warning">📅 Data estimativa, sujeita a condições operacionais, consultar.</span>
-                    </div>
-                    <div class="form-group"><label>Mensagem ou detalhes</label><textarea id="mensaje_pt" placeholder="Que dia gostaria de nos visitar?"></textarea></div>
-                    <button type="submit" class="btn-primary" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                    <button type="submit" class="btn-primary" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 20px;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.132-1.758-.717-2.03-.78-.273-.063-.47-.078-.67.1-.202.18-1.108 1.076-1.36 1.286-.25.21-.5.23-.84.08-.34-.15-1.208-.5-2.23-1.36-.78-.7-1.3-1.5-1.4-1.64-.1-.14-.04-.28.12-.37.14-.08.26-.2.34-.32.08-.12.09-.18.13-.3.05-.12-.05-.32-.14-.52-.09-.2-.65-1.35-.78-1.65-.14-.3-.28-.24-.4-.24h-.64c-.12 0-.27.02-.38.13-.11.11-.46.45-.62.66-.16.22-.27.38-.36.5-.08.12-.12.14-.2.2-.1.06-.78.32-1.42.68-.64.36-1.08.64-1.33.84-.25.2-.25.24-.24.36.01.13.1.35.18.48.09.13.6.85 1.3 1.63.7.78 1.54 1.47 2 1.74.46.27.77.24.95.24h.6c.15 0 .26-.1.34-.2.15-.2 1-1.16 1.2-1.4.2-.23.36-.28.5-.28s1.2.42 1.45.56c.25.14.36.19.48.27.12.08.52.33.68.43.16.1.22.16.32.22.1.06.2.06.32 0 .12-.06 1.1-.68 1.26-.76.16-.07.28-.07.38 0 .1.02.6.24.72.28.12.04.18.07.26.12.08.05.08.16 0 .3-.08.14-.3.72-.52 1.05-.21.33-.4.34-.7.4-.3.06-1.2.15-1.9.12-.7-.03-1.3-.16-1.9-.46-.6-.3-2.04-1.12-2.65-1.55-.6-.43-.72-.43-1.02-.62-.3-.2-.97-.62-1.2-.8-.23-.18-.33-.18-.48-.13l-.42.1c-.13.02-.26-.03-.36-.13-.1-.1-.72-.7-1.1-1.04-.4-.34-.6-.6-.7-.9-.1-.3-.1-.57-.1-.8 0-.24.2-1.06.3-1.5.1-.44.23-.56.38-.62.15-.06.17-.06.27.1.1.16.4.36.62.5.22.14.28.15.42.2.14.05.15.07.28 0 .12-.07.52-.32.64-.4.12-.08.2-.17.2-.2 0-.03 0-.15-.08-.34-.07-.19-.3-.72-.38-.92-.08-.2-.05-.26-.07-.32-.03-.06-.23-.08-.33-.1-.1-.02-.4.02-.6.02-.2 0-.7 0-1 .17-.3.17-.95.65-1.35.98-.4.33-.8.63-.88.75-.08.13-.08.26 0 .4.01.13.1.82.18 1.34.08.52.16 1.06.2 1.32.04.26.1.46.12.52.02.06.08.16.1.24.02.08.04.16.07.22.03.07.38.85.84 1.45.46.6.96.97 1.34 1.25.38.28.72.48.97.6.25.12.33.17.45.22.12.05.2.08.4.14.2.06.5.1.65.12.15.02.25 0 .3-.05.06-.05.5-.64.64-.85.14-.21.28-.21.4-.13.12.08 1.18.65 1.74.97.56.32.99.5 1.2.57.21.07.4.07.52.07.14 0 .65 0 .85-.05.2-.05.6-.24.97-.54.37-.3.72-.7.86-.93.14-.23.12-.32.12-.35 0-.03 0-.1-.04-.15-.04-.05-.08-.08-.12-.1-.04-.02-.15-.1-.2-.13-.05-.03-.15-.07-.19-.09-.04-.02-.04-.04-.04-.06s0-.02-.04-.04c-.04-.02-.28-.28.12-.34z"/></svg>
                         Enviar pedido pelo WhatsApp
                     </button>
@@ -938,12 +1161,13 @@
         </footer>
     </div>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/554799679084?text=👋%20%C2%A1Hola!%20Me%20interesa%20conocer%20m%C3%A1s%20sobre%20Multiparque%20para%20mi%20empresa.%20%C2%BFPodr%C3%ADan%20darme%20informaci%C3%B3n%3F" target="_blank" class="float-wa" title="Fale conosco pelo WhatsApp">
+    <!-- Floating WhatsApp Button - Lado derecho -->
+    <a href="https://wa.me/554799679084?text=👋%20%C2%A1Hola!%20Me%20interesa%20conocer%20m%C3%A1s%20sobre%20Multiparque%20SC%20para%20mi%20empresa.%20%C2%BFPodr%C3%ADan%20darme%20informaci%C3%B3n%3F" target="_blank" class="float-wa" id="whatsappBtn">
         <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.472 14.382C17.336 14.318 16.046 13.694 15.922 13.643C15.798 13.592 15.703 13.57 15.567 13.635C15.431 13.7 14.79 14.092 14.669 14.188C14.548 14.284 14.458 14.305 14.322 14.24C14.186 14.175 13.317 13.826 12.306 12.912C11.522 12.201 11.05 11.369 10.965 11.269C10.88 11.168 10.95 11.024 11.07 10.935C11.177 10.855 11.307 10.736 11.386 10.63C11.465 10.525 11.48 10.47 11.53 10.357C11.58 10.244 11.525 10.055 11.441 9.861C11.357 9.667 10.785 8.51 10.648 8.215C10.512 7.92 10.372 7.968 10.26 7.968C10.156 7.968 10.04 7.968 9.924 7.968C9.808 7.968 9.663 7.992 9.553 8.098C9.443 8.204 9.1 8.543 8.947 8.754C8.794 8.965 8.684 9.114 8.604 9.233C8.522 9.352 8.458 9.373 8.358 9.439C8.258 9.505 7.581 9.817 6.949 10.176C6.317 10.535 5.885 10.811 5.637 11.005C5.389 11.199 5.39 11.235 5.399 11.361C5.408 11.487 5.5 11.703 5.583 11.83C5.666 11.957 6.165 12.694 6.857 13.462C7.549 14.23 8.378 14.914 8.829 15.179C9.28 15.444 9.586 15.421 9.77 15.421C9.954 15.421 10.213 15.421 10.355 15.327C10.497 15.233 11.205 14.735 11.407 14.505C11.609 14.275 11.76 14.225 11.891 14.225C12.022 14.225 13.222 14.642 13.459 14.782C13.696 14.922 13.8 14.972 13.922 15.045C14.044 15.118 14.454 15.368 14.612 15.47C14.77 15.572 14.824 15.618 14.922 15.672C15.02 15.726 15.13 15.726 15.252 15.672C15.374 15.618 16.468 14.955 16.618 14.885C16.768 14.815 16.9 14.855 16.999 14.875C17.098 14.895 17.608 15.125 17.723 15.175C17.838 15.225 17.9 15.25 17.98 15.295C18.06 15.34 18.055 15.445 17.98 15.66C17.905 15.875 17.607 16.475 17.398 16.794C17.189 17.113 17.008 17.119 16.698 17.177C16.388 17.235 15.487 17.378 14.784 17.37C14.081 17.362 13.481 17.203 12.891 16.905C12.301 16.607 10.86 15.794 10.26 15.365C9.66 14.936 9.542 14.928 9.242 14.74C8.942 14.552 8.28 14.14 8.048 13.956C7.816 13.772 7.714 13.803 7.56 13.836L7.152 13.925C7.029 13.945 6.905 13.911 6.806 13.836C6.707 13.761 6.003 13.162 5.622 12.812C5.241 12.462 5.049 12.213 4.953 11.925C4.857 11.637 4.857 11.37 4.857 11.124C4.857 10.878 5.047 9.822 5.14 9.376C5.233 8.93 5.366 8.809 5.514 8.732C5.662 8.655 5.684 8.724 5.826 8.828C5.968 8.932 6.256 9.067 6.477 9.182C6.698 9.297 6.751 9.313 6.891 9.352C7.031 9.391 7.08 9.406 7.2 9.36C7.32 9.314 7.717 9.103 7.859 9.016C8.001 8.929 8.188 8.838 8.198 8.811C8.208 8.784 8.198 8.627 8.128 8.437C8.058 8.247 7.825 7.729 7.745 7.522C7.665 7.315 7.705 7.253 7.675 7.193C7.645 7.133 7.435 7.119 7.325 7.099C7.215 7.079 6.818 7.117 6.604 7.117C6.39 7.117 5.841 7.117 5.534 7.283C5.227 7.449 4.573 7.932 4.181 8.245C3.789 8.558 3.368 8.854 3.28 8.978C3.192 9.102 3.192 9.231 3.204 9.362C3.216 9.493 3.318 10.15 3.388 10.675C3.458 11.2 3.55 11.738 3.602 12.004C3.654 12.27 3.694 12.465 3.704 12.515C3.714 12.565 3.786 12.675 3.804 12.754C3.822 12.833 3.85 12.895 3.88 12.961C3.91 13.027 4.245 13.825 4.695 14.398C5.145 14.971 5.64 15.343 6.015 15.62C6.39 15.897 6.73 16.098 6.977 16.234C7.224 16.37 7.321 16.423 7.449 16.475C7.577 16.527 7.648 16.559 7.832 16.616C8.016 16.673 8.305 16.708 8.451 16.726C8.597 16.744 8.718 16.737 8.799 16.688C8.88 16.639 9.357 16.065 9.512 15.855C9.667 15.645 9.781 15.645 9.904 15.725C10.027 15.805 11.095 16.36 11.639 16.665C12.183 16.97 12.614 17.156 12.831 17.221C13.048 17.286 13.311 17.286 13.477 17.286C13.643 17.286 14.327 17.286 14.593 17.235C14.859 17.184 15.265 16.955 15.662 16.66C16.059 16.365 16.414 15.945 16.558 15.715C16.702 15.485 16.68 15.385 16.678 15.363C16.676 15.341 16.678 15.263 16.623 15.2C16.568 15.137 16.524 15.123 16.481 15.102C16.438 15.081 16.271 14.999 16.201 14.965C16.131 14.931 15.998 14.885 15.96 14.865C15.922 14.845 15.922 14.82 15.922 14.8C15.922 14.78 15.93 14.768 15.922 14.749C15.914 14.73 15.608 14.446 17.472 14.382Z" fill="white"/>
             <path d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2ZM12 20C7.589 20 4 16.411 4 12C4 7.589 7.589 4 12 4C16.411 4 20 7.589 20 12C20 16.411 16.411 20 12 20Z" fill="white"/>
         </svg>
+        <span class="wa-tooltip" id="waTooltip">💬 Contáctanos por WhatsApp</span>
     </a>
 
     <!-- GOOGLE ANALYTICS -->
@@ -956,7 +1180,20 @@
     </script>
 
     <script>
-        // Función para abrir Google Maps con navegación directa a Multiparque SC
+        // Tooltips para el botón de WhatsApp según idioma
+        const waTooltips = {
+            es: '💬 Contáctanos por WhatsApp',
+            en: '💬 Contact us on WhatsApp',
+            pt: '💬 Fale conosco pelo WhatsApp'
+        };
+
+        function updateWATooltip(lang) {
+            const tooltip = document.getElementById('waTooltip');
+            if (tooltip && waTooltips[lang]) {
+                tooltip.textContent = waTooltips[lang];
+            }
+        }
+
         function openMapsNavigation() {
             const lat = -27.055213048331684;
             const lng = -48.596279232125426;
@@ -964,7 +1201,6 @@
             window.open(url, '_blank');
         }
 
-        // Función para cambiar de idioma
         function setLang(lang) {
             document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active-lang'));
             document.getElementById('lang-' + lang).classList.add('active-lang');
@@ -974,6 +1210,7 @@
                     btn.classList.add('active');
                 }
             });
+            updateWATooltip(lang);
             toggleLangSwitcher(true);
         }
 
@@ -999,9 +1236,9 @@
                     document.getElementById('langToggle').classList.add('visible');
                 }, 100);
             }
+            updateWATooltip('es');
         });
 
-        // Manejar el envío del formulario
         function handleFormSubmit(event) {
             event.preventDefault();
             let formId = event.target.id;
@@ -1015,6 +1252,7 @@
             const telefono = document.getElementById('telefono' + prefix).value;
             const empresa = document.getElementById('empresa' + prefix).value;
             const fecha_reserva = document.getElementById('fecha_reserva' + prefix).value;
+            const cantidad = document.getElementById('cantidad' + prefix).value;
             const mensaje = document.getElementById('mensaje' + prefix).value;
 
             let message = `📢 *NUEVA RESERVA - MULTIPARQUE SC* 📢%0A%0A` +
@@ -1025,6 +1263,9 @@
             
             if (fecha_reserva) {
                 message += `📅 *Fecha Estimativa:* ${fecha_reserva}%0A`;
+            }
+            if (cantidad) {
+                message += `👥 *Cantidad de personas:* ${cantidad}%0A`;
             }
             
             message += `📝 *Mensaje:*%0A${mensaje}`;
@@ -1037,7 +1278,7 @@
         document.getElementById('contactFormEn').addEventListener('submit', handleFormSubmit);
         document.getElementById('contactFormPt').addEventListener('submit', handleFormSubmit);
 
-        // SLIDER DE FONDO - Carga aleatoria y slideshow automático
+        // SLIDER DE FONDO
         document.addEventListener("DOMContentLoaded", function() {
             const totalImages = 26;
             const baseUrl = "https://www.angeltourbrasil.com.br/images/mp_";
