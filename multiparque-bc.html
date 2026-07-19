@@ -254,7 +254,7 @@
         .stat-box h3 { font-size: 2rem; font-weight: 800; color: var(--primary-cyan); }
         .stat-box p { font-size: 0.8rem; text-transform: uppercase; font-weight: 600; letter-spacing: 1px;}
 
-        /* VIDEOS - SIN CONTROLES */
+        /* VIDEOS - SIN CONTROLES Y ADAPTABLES */
         .videos-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -346,7 +346,7 @@
             background: var(--primary-cyan); border-radius: 50%; margin-right: 10px;
         }
 
-        /* FAQ - ACORDEÓN CON RADIO BUTTON */
+        /* FAQ - ACORDEÓN HÍBRIDO */
         .faq-container { 
             max-width: 1000px; 
             margin: 40px auto 0;
@@ -376,18 +376,15 @@
             align-items: center;
             transition: 0.3s;
             font-size: 0.95rem;
+            user-select: none;
         }
         .faq-question:hover { background: rgba(0, 229, 255, 0.05); }
-        .faq-question::after {
-            content: '+';
+        .faq-question .faq-icon {
             font-size: 1.4rem;
             color: var(--primary-cyan);
             transition: 0.3s;
             flex-shrink: 0;
             margin-left: 10px;
-        }
-        .faq-item input[type="radio"] { 
-            display: none; 
         }
         .faq-answer {
             max-height: 0;
@@ -398,12 +395,12 @@
             opacity: 0.9;
             font-size: 0.9rem;
         }
-        .faq-item input[type="radio"]:checked ~ .faq-answer {
+        .faq-item.active .faq-answer {
             max-height: 500px;
             padding: 0 20px 20px 20px;
         }
-        .faq-item input[type="radio"]:checked + .faq-question::after { 
-            content: '-'; 
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
         }
 
         /* Form Section */
@@ -683,7 +680,7 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* RESPONSIVE */
+        /* RESPONSIVE - VIDEOS OCUPAN TODO EL ANCHO */
         @media (max-width: 992px) {
             .hero-logo {
                 position: relative;
@@ -719,18 +716,31 @@
             .hero-text-highlight .hero-subtitle {
                 font-size: 1rem;
             }
+            /* VIDEOS - UNA COLUMNA Y OCUPAN TODO EL ANCHO */
             .videos-container { 
                 grid-template-columns: 1fr;
                 gap: 20px;
-                padding: 0 3% 30px;
+                padding: 0 0 30px 0;
+                width: 100%;
             }
             .video-card {
                 aspect-ratio: 9 / 16;
-                max-height: 500px;
-                border-radius: 16px;
+                max-height: none;
+                border-radius: 0;
+                width: 100%;
+                max-width: 100%;
             }
             .video-wrapper {
-                border-radius: 16px;
+                border-radius: 0;
+            }
+            .video-overlay {
+                padding: 20px 20px 20px 20px;
+            }
+            .video-overlay h4 {
+                font-size: 1.1rem;
+            }
+            .video-overlay p {
+                font-size: 0.85rem;
             }
             .stats { flex-direction: row; width: 100%; }
             .stat-box { flex: 1; padding: 15px; }
@@ -778,15 +788,18 @@
             .videos-container { 
                 grid-template-columns: 1fr;
                 gap: 15px;
-                padding: 0 2% 20px;
+                padding: 0 0 20px 0;
+                width: 100%;
             }
             .video-card {
                 aspect-ratio: 9 / 16;
-                max-height: 420px;
-                border-radius: 12px;
+                max-height: none;
+                border-radius: 0;
+                width: 100%;
+                max-width: 100%;
             }
             .video-wrapper {
-                border-radius: 12px;
+                border-radius: 0;
             }
             .hero-title { font-size: 1.8rem; }
             .hero { padding-top: 15px; }
@@ -798,9 +811,9 @@
             .hero-text-highlight .hero-subtitle {
                 font-size: 0.9rem;
             }
-            .video-overlay { padding: 15px 12px 12px 12px; }
-            .video-overlay h4 { font-size: 0.95rem; }
-            .video-overlay p { font-size: 0.75rem; }
+            .video-overlay { padding: 15px 15px 15px 15px; }
+            .video-overlay h4 { font-size: 1rem; }
+            .video-overlay p { font-size: 0.8rem; }
             .float-wa .wa-tooltip {
                 font-size: 0.6rem;
                 padding: 5px 10px;
@@ -830,9 +843,11 @@
             .videos-container { 
                 grid-template-columns: 1fr;
                 gap: 12px;
+                padding: 0 0 15px 0;
             }
             .video-card {
-                max-height: 350px;
+                aspect-ratio: 9 / 16;
+                max-height: none;
             }
         }
     </style>
@@ -882,7 +897,7 @@
             </div>
         </header>
 
-        <!-- Videos Grid -->
+        <!-- Videos Grid - ADAPTABLES AL ANCHO -->
         <div id="video-grid" class="videos-container">
             <div class="video-card">
                 <div class="video-wrapper">
@@ -960,103 +975,135 @@
                 </div>
             </div>
 
-            <!-- FAQ -->
-            <div class="faq-container">
+            <!-- FAQ - ACORDEÓN HÍBRIDO -->
+            <div class="faq-container" id="faqContainer">
                 <h3>Preguntas Frecuentes</h3>
                 
-                <div class="faq-item">
-                    <input type="radio" name="faq_es" id="faq1_es">
-                    <label for="faq1_es" class="faq-question">¿Qué incluye el ingreso?</label>
+                <div class="faq-item" data-faq="es">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        ¿Qué incluye el ingreso?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">El ingreso da acceso a todas las atracciones del parque, excepto para servicios adicionales como guarda-volumes, estacionamiento, alimentación y gazebos.</div>
                 </div>
                 
-                <div class="faq-item">
-                    <input type="radio" name="faq_es" id="faq2_es">
-                    <label for="faq2_es" class="faq-question">¿Cuántos toboganes tienen?</label>
+                <div class="faq-item" data-faq="es">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        ¿Cuántos toboganes tienen?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">Tenemos más de 16 toboganes, para adultos e infantiles.</div>
                 </div>
                 
-                <div class="faq-item">
-                    <input type="radio" name="faq_es" id="faq3_es">
-                    <label for="faq3_es" class="faq-question">¿Las piscinas son climatizadas?</label>
+                <div class="faq-item" data-faq="es">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        ¿Las piscinas son climatizadas?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">¡Sí! Todas nuestras piscinas de inmersión son climatizadas.</div>
                 </div>
                 
-                <div class="faq-item">
-                    <input type="radio" name="faq_es" id="faq4_es">
-                    <label for="faq4_es" class="faq-question">¿Hay atracciones para todas las edades?</label>
+                <div class="faq-item" data-faq="es">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        ¿Hay atracciones para todas las edades?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">Sí, tenemos atracciones para todas las edades, desde las más radicales hasta las más tranquilas.</div>
                 </div>
                 
-                <div class="faq-item">
-                    <input type="radio" name="faq_es" id="faq5_es">
-                    <label for="faq5_es" class="faq-question">¿Se puede surfear en la piscina de olas?</label>
+                <div class="faq-item" data-faq="es">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        ¿Se puede surfear en la piscina de olas?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">No, tenemos una piscina con playa artificial y con olas, pero no es para surf.</div>
                 </div>
                 
-                <div class="faq-item">
-                    <input type="radio" name="faq_es" id="faq6_es">
-                    <label for="faq6_es" class="faq-question">¿Puedo llevar mi propia comida?</label>
+                <div class="faq-item" data-faq="es">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        ¿Puedo llevar mi propia comida?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">No. Sin embargo, el parque ofrece opciones de alimentación. Se permite la entrada con mamaderas y papillas infantiles, así como frutas en pequeña cantidad y agua.</div>
                 </div>
                 
-                <div class="faq-item">
-                    <input type="radio" name="faq_es" id="faq7_es">
-                    <label for="faq7_es" class="faq-question">¿Cuánto cuesta el estacionamiento?</label>
+                <div class="faq-item" data-faq="es">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        ¿Cuánto cuesta el estacionamiento?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">Nuestro estacionamiento está anexo al parque y tiene un valor de R$50,00 para auto y R$25,00 para moto.</div>
                 </div>
                 
-                <div class="faq-item">
-                    <input type="radio" name="faq_es" id="faq8_es">
-                    <label for="faq8_es" class="faq-question">¿El parque abre en días de lluvia?</label>
+                <div class="faq-item" data-faq="es">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        ¿El parque abre en días de lluvia?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">Sí, el parque está abierto incluso en días de lluvia, salvo condiciones climáticas extremas. Contamos con piscinas climatizadas.</div>
                 </div>
                 
-                <div class="faq-item">
-                    <input type="radio" name="faq_es" id="faq9_es">
-                    <label for="faq9_es" class="faq-question">¿Cuál es el precio de los niños?</label>
+                <div class="faq-item" data-faq="es">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        ¿Cuál es el precio de los niños?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">Hasta 5 años el ingreso es gratuito, de 6 a 11 años existe una tarifa especial infantil y a partir de los 12 años paga ingreso completo.</div>
                 </div>
                 
-                <div class="faq-item">
-                    <input type="radio" name="faq_es" id="faq10_es">
-                    <label for="faq10_es" class="faq-question">¿Hay descuento para estudiantes?</label>
+                <div class="faq-item" data-faq="es">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        ¿Hay descuento para estudiantes?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">La media entrada para estudiantes es válida solo en eventos culturales y deportivos ofrecidos por el parque, de acuerdo con la ley.</div>
                 </div>
                 
-                <div class="faq-item">
-                    <input type="radio" name="faq_es" id="faq11_es">
-                    <label for="faq11_es" class="faq-question">¿Personas con discapacidad pagan media entrada?</label>
+                <div class="faq-item" data-faq="es">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        ¿Personas con discapacidad pagan media entrada?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">Sí, personas con discapacidad pagan media entrada, siempre que presenten comprobante.</div>
                 </div>
                 
-                <div class="faq-item">
-                    <input type="radio" name="faq_es" id="faq12_es">
-                    <label for="faq12_es" class="faq-question">¿Qué formas de pago aceptan?</label>
+                <div class="faq-item" data-faq="es">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        ¿Qué formas de pago aceptan?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">En taquilla aceptamos efectivo, tarjeta de crédito, débito y Pix. Dentro del parque usas una pulsera para compras.</div>
                 </div>
                 
-                <div class="faq-item">
-                    <input type="radio" name="faq_es" id="faq13_es">
-                    <label for="faq13_es" class="faq-question">¿Se puede fumar dentro del parque?</label>
+                <div class="faq-item" data-faq="es">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        ¿Se puede fumar dentro del parque?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">No está permitido fumar ningún tipo de cigarro dentro del parque. Los fumadores pueden salir al estacionamiento.</div>
                 </div>
                 
-                <div class="faq-item">
-                    <input type="radio" name="faq_es" id="faq14_es">
-                    <label for="faq14_es" class="faq-question">¿Se permite música alta?</label>
+                <div class="faq-item" data-faq="es">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        ¿Se permite música alta?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">No está permitido ningún tipo de sonido alto ni parlantes.</div>
                 </div>
                 
-                <div class="faq-item">
-                    <input type="radio" name="faq_es" id="faq15_es">
-                    <label for="faq15_es" class="faq-question">¿Qué vestimenta está permitida en los toboganes?</label>
+                <div class="faq-item" data-faq="es">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        ¿Qué vestimenta está permitida en los toboganes?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">No se permite shorts de malla o jeans, ni botones metálicos. Recomendamos shorts de lycra o tactel.</div>
                 </div>
                 
-                <div class="faq-item">
-                    <input type="radio" name="faq_es" id="faq16_es">
-                    <label for="faq16_es" class="faq-question">¿Se pueden usar drones?</label>
+                <div class="faq-item" data-faq="es">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        ¿Se pueden usar drones?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">No. Por motivos de seguridad y protección de imagen, no está permitido el uso de drones dentro del parque.</div>
                 </div>
             </div>
@@ -1087,7 +1134,7 @@
                             <input type="text" id="empresa" required placeholder="Nombre de tu empresa">
                         </div>
                         <div class="form-group">
-                            <label>Fecha de reserva</label>
+                            <label>Fecha de reserva (Estimativa)</label>
                             <input type="date" id="fecha_reserva">
                             <span class="date-warning">📅 Sujeta a confirmación.</span>
                         </div>
@@ -1201,46 +1248,62 @@
                     <p>Restaurant with self-service buffet, meats, pasta, and salads. Plus kiosks throughout the park offering ice cream, açaí, portions, and drinks.</p>
                 </div>
             </div>
-            <div class="faq-container">
+            <div class="faq-container" id="faqContainerEn">
                 <h3>FAQ</h3>
-                <div class="faq-item">
-                    <input type="radio" name="faq_en" id="faq1_en">
-                    <label for="faq1_en" class="faq-question">What does the ticket include?</label>
+                <div class="faq-item" data-faq="en">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        What does the ticket include?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">The ticket gives access to all park attractions, except for additional services such as lockers, parking, food, and gazebos.</div>
                 </div>
-                <div class="faq-item">
-                    <input type="radio" name="faq_en" id="faq2_en">
-                    <label for="faq2_en" class="faq-question">How many slides do you have?</label>
+                <div class="faq-item" data-faq="en">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        How many slides do you have?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">We have over 16 water slides, for adults and children.</div>
                 </div>
-                <div class="faq-item">
-                    <input type="radio" name="faq_en" id="faq3_en">
-                    <label for="faq3_en" class="faq-question">Are the pools heated?</label>
+                <div class="faq-item" data-faq="en">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Are the pools heated?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">Yes! All our immersion pools are heated.</div>
                 </div>
-                <div class="faq-item">
-                    <input type="radio" name="faq_en" id="faq4_en">
-                    <label for="faq4_en" class="faq-question">Are there attractions for all ages?</label>
+                <div class="faq-item" data-faq="en">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Are there attractions for all ages?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">Yes, we have attractions for all ages, from the most radical to the most relaxing.</div>
                 </div>
-                <div class="faq-item">
-                    <input type="radio" name="faq_en" id="faq5_en">
-                    <label for="faq5_en" class="faq-question">What payment methods do you accept?</label>
+                <div class="faq-item" data-faq="en">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        What payment methods do you accept?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">At the ticket office we accept cash, credit and debit cards, and Pix. Inside the park you will use a wristband.</div>
                 </div>
-                <div class="faq-item">
-                    <input type="radio" name="faq_en" id="faq6_en">
-                    <label for="faq6_en" class="faq-question">Is smoking allowed inside the park?</label>
+                <div class="faq-item" data-faq="en">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Is smoking allowed inside the park?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">Our policy does not allow smoking any type of cigarette inside the park. Smokers can go out to the parking lot.</div>
                 </div>
-                <div class="faq-item">
-                    <input type="radio" name="faq_en" id="faq7_en">
-                    <label for="faq7_en" class="faq-question">Is outside food allowed?</label>
+                <div class="faq-item" data-faq="en">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Is outside food allowed?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">No. However, the park offers food options. Entry with baby bottles and baby food is allowed, as well as small amounts of fruit and water.</div>
                 </div>
-                <div class="faq-item">
-                    <input type="radio" name="faq_en" id="faq8_en">
-                    <label for="faq8_en" class="faq-question">Is the park open on rainy days?</label>
+                <div class="faq-item" data-faq="en">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Is the park open on rainy days?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">Yes, the park is open even on rainy days, except in extreme weather conditions. We have heated pools.</div>
                 </div>
             </div>
@@ -1357,46 +1420,62 @@
                     <p>Restaurante com buffet self-service, carnes, massas e saladas. Além de quiosques espalhados pelo parque com sorvetes, açaí, porções e bebidas.</p>
                 </div>
             </div>
-            <div class="faq-container">
+            <div class="faq-container" id="faqContainerPt">
                 <h3>Perguntas Frequentes</h3>
-                <div class="faq-item">
-                    <input type="radio" name="faq_pt" id="faq1_pt">
-                    <label for="faq1_pt" class="faq-question">O que o ingresso inclui?</label>
+                <div class="faq-item" data-faq="pt">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        O que o ingresso inclui?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">O ingresso dá acesso a todas as atrações do parque, exceto para serviços adicionais como guarda-volumes, estacionamento, alimentação e gazebos.</div>
                 </div>
-                <div class="faq-item">
-                    <input type="radio" name="faq_pt" id="faq2_pt">
-                    <label for="faq2_pt" class="faq-question">Quantos tobogãs vocês têm?</label>
+                <div class="faq-item" data-faq="pt">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Quantos tobogãs vocês têm?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">São mais de 16 toboáguas, adulto e infantil.</div>
                 </div>
-                <div class="faq-item">
-                    <input type="radio" name="faq_pt" id="faq3_pt">
-                    <label for="faq3_pt" class="faq-question">As piscinas são aquecidas?</label>
+                <div class="faq-item" data-faq="pt">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        As piscinas são aquecidas?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">Sim! Todas as nossas piscinas de imersão são aquecidas.</div>
                 </div>
-                <div class="faq-item">
-                    <input type="radio" name="faq_pt" id="faq4_pt">
-                    <label for="faq4_pt" class="faq-question">Há atrações para todas as idades?</label>
+                <div class="faq-item" data-faq="pt">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Há atrações para todas as idades?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">Sim, temos atrações para todas as idades, desde as mais radicais, até as mais tranquilas!</div>
                 </div>
-                <div class="faq-item">
-                    <input type="radio" name="faq_pt" id="faq5_pt">
-                    <label for="faq5_pt" class="faq-question">Quais formas de pagamento vocês aceitam?</label>
+                <div class="faq-item" data-faq="pt">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Quais formas de pagamento vocês aceitam?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">Na bilheteria aceitamos dinheiro, cartão de crédito e débito e Pix. Dentro do parque você usa uma pulseira.</div>
                 </div>
-                <div class="faq-item">
-                    <input type="radio" name="faq_pt" id="faq6_pt">
-                    <label for="faq6_pt" class="faq-question">É permitido fumar dentro do parque?</label>
+                <div class="faq-item" data-faq="pt">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        É permitido fumar dentro do parque?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">Não é permitido fumar nenhum tipo de cigarro dentro do parque. Os fumantes podem sair ao estacionamento.</div>
                 </div>
-                <div class="faq-item">
-                    <input type="radio" name="faq_pt" id="faq7_pt">
-                    <label for="faq7_pt" class="faq-question">Posso levar minha própria comida?</label>
+                <div class="faq-item" data-faq="pt">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Posso levar minha própria comida?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">Não. O parque oferece opções de alimentação. É permitida a entrada com mamadeiras e papinhas infantis, frutas em pequena quantidade e água.</div>
                 </div>
-                <div class="faq-item">
-                    <input type="radio" name="faq_pt" id="faq8_pt">
-                    <label for="faq8_pt" class="faq-question">O parque funciona em dias de chuva?</label>
+                <div class="faq-item" data-faq="pt">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        O parque funciona em dias de chuva?
+                        <span class="faq-icon">+</span>
+                    </div>
                     <div class="faq-answer">Sim, o parque está aberto mesmo em dias de chuva, salvo condições climáticas extremas. Temos piscinas aquecidas.</div>
                 </div>
             </div>
@@ -1614,6 +1693,25 @@
             }
         });
 
+        let activeFAQ = null;
+
+        function toggleFAQ(element) {
+            const faqItem = element.closest('.faq-item');
+            const isActive = faqItem.classList.contains('active');
+            
+            if (activeFAQ && activeFAQ !== faqItem) {
+                activeFAQ.classList.remove('active');
+            }
+            
+            if (isActive) {
+                faqItem.classList.remove('active');
+                activeFAQ = null;
+            } else {
+                faqItem.classList.add('active');
+                activeFAQ = faqItem;
+            }
+        }
+
         function setLang(lang) {
             document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active-lang'));
             document.getElementById('lang-' + lang).classList.add('active-lang');
@@ -1624,6 +1722,10 @@
                 }
             });
             updateWATooltip(lang);
+            if (activeFAQ) {
+                activeFAQ.classList.remove('active');
+                activeFAQ = null;
+            }
             toggleLangSwitcher(true);
         }
 
