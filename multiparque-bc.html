@@ -70,6 +70,20 @@
             z-index: 1;
         }
         .hero-content { position: relative; z-index: 2; }
+        
+        /* LOGOTIPO AUMENTADO */
+        .hero-logo {
+            position: absolute;
+            top: 80px;
+            right: 5%;
+            z-index: 3;
+            max-width: 270px;
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 4px 15px rgba(0,0,0,0.3));
+            border-radius: 10px;
+        }
+        
         .hero-title { font-size: 3.8rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px; max-width: 700px; text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .hero-title span { color: var(--primary-cyan); text-shadow: 0 0 20px rgba(0, 229, 255, 0.4); }
         .hero-subtitle { font-size: 1.2rem; max-width: 600px; margin-bottom: 30px; line-height: 1.6; opacity: 0.95; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
@@ -223,6 +237,16 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
+        @media (max-width: 992px) {
+            .hero-logo {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 0 auto 30px auto;
+                display: block;
+                max-width: 200px;
+            }
+        }
         @media (max-width: 768px) {
             .hero-title { font-size: 2.8rem; }
             .videos-container { grid-template-columns: repeat(2, 1fr); }
@@ -253,6 +277,9 @@
             <div class="hero-bg-slider" id="bgSlider"></div>
             <div class="hero-overlay"></div>
 
+            <!-- LOGOTIPO A LA DERECHA -->
+            <img src="https://www.angeltourbrasil.com.br/images/mp-logo.webp" alt="Multiparque Logo" class="hero-logo">
+
             <div class="hero-content">
                 <h1 class="hero-title">La experiencia <span>acuática</span> que mereces</h1>
                 <p class="hero-subtitle">Diversión, adrenalina y relax en el corazón de Santa Catarina. Ven a vivir el verano en Multiparque.</p>
@@ -269,7 +296,7 @@
             </div>
         </header>
 
-        <!-- Videos Grid (Video 3 Eliminado. El que era Eventos ahora es Seguridad) -->
+        <!-- Videos Grid -->
         <div id="video-grid" class="videos-container" style="padding: 0 5% 50px;">
             <div class="video-card">
                 <iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
@@ -327,7 +354,7 @@
                 <div class="faq-item">
                     <input type="checkbox" id="faq1_es">
                     <label for="faq1_es" class="faq-question">¿Cómo comprar las entradas?</label>
-                    <div class="faq-answer">Las entradas se adquieren exclusivamente en la taquilla del parque el día de la visita. No tenemos venta online.</div>
+                    <div class="faq-answer">Las entradas se adquieren con nuestro representante de ventas Angel Tour Brasil.</div>
                 </div>
                 <div class="faq-item">
                     <input type="checkbox" id="faq2_es">
@@ -377,7 +404,10 @@
                         <label>Mensaje o detalles adicionales</label>
                         <textarea id="mensaje" placeholder="¿Qué día les gustaría visitarnos?"></textarea>
                     </div>
-                    <button type="submit" class="btn-primary" style="width: 100%; text-align: center;">Enviar solicitud por WhatsApp</button>
+                    <button type="submit" class="btn-primary" style="width: 100%; text-align: center; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.132-1.758-.717-2.03-.78-.273-.063-.47-.078-.67.1-.202.18-1.108 1.076-1.36 1.286-.25.21-.5.23-.84.08-.34-.15-1.208-.5-2.23-1.36-.78-.7-1.3-1.5-1.4-1.64-.1-.14-.04-.28.12-.37.14-.08.26-.2.34-.32.08-.12.09-.18.13-.3.05-.12-.05-.32-.14-.52-.09-.2-.65-1.35-.78-1.65-.14-.3-.28-.24-.4-.24h-.64c-.12 0-.27.02-.38.13-.11.11-.46.45-.62.66-.16.22-.27.38-.36.5-.08.12-.12.14-.2.2-.1.06-.78.32-1.42.68-.64.36-1.08.64-1.33.84-.25.2-.25.24-.24.36.01.13.1.35.18.48.09.13.6.85 1.3 1.63.7.78 1.54 1.47 2 1.74.46.27.77.24.95.24h.6c.15 0 .26-.1.34-.2.15-.2 1-1.16 1.2-1.4.2-.23.36-.28.5-.28s1.2.42 1.45.56c.25.14.36.19.48.27.12.08.52.33.68.43.16.1.22.16.32.22.1.06.2.06.32 0 .12-.06 1.1-.68 1.26-.76.16-.07.28-.07.38 0 .1.02.6.24.72.28.12.04.18.07.26.12.08.05.08.16 0 .3-.08.14-.3.72-.52 1.05-.21.33-.4.34-.7.4-.3.06-1.2.15-1.9.12-.7-.03-1.3-.16-1.9-.46-.6-.3-2.04-1.12-2.65-1.55-.6-.43-.72-.43-1.02-.62-.3-.2-.97-.62-1.2-.8-.23-.18-.33-.18-.48-.13l-.42.1c-.13.02-.26-.03-.36-.13-.1-.1-.72-.7-1.1-1.04-.4-.34-.6-.6-.7-.9-.1-.3-.1-.57-.1-.8 0-.24.2-1.06.3-1.5.1-.44.23-.56.38-.62.15-.06.17-.06.27.1.1.16.4.36.62.5.22.14.28.15.42.2.14.05.15.07.28 0 .12-.07.52-.32.64-.4.12-.08.2-.17.2-.2 0-.03 0-.15-.08-.34-.07-.19-.3-.72-.38-.92-.08-.2-.05-.26-.07-.32-.03-.06-.23-.08-.33-.1-.1-.02-.4.02-.6.02-.2 0-.7 0-1 .17-.3.17-.95.65-1.35.98-.4.33-.8.63-.88.75-.08.13-.08.26 0 .4.01.13.1.82.18 1.34.08.52.16 1.06.2 1.32.04.26.1.46.12.52.02.06.08.16.1.24.02.08.04.16.07.22.03.07.38.85.84 1.45.46.6.96.97 1.34 1.25.38.28.72.48.97.6.25.12.33.17.45.22.12.05.2.08.4.14.2.06.5.1.65.12.15.02.25 0 .3-.05.06-.05.5-.64.64-.85.14-.21.28-.21.4-.13.12.08 1.18.65 1.74.97.56.32.99.5 1.2.57.21.07.4.07.52.07.14 0 .65 0 .85-.05.2-.05.6-.24.97-.54.37-.3.72-.7.86-.93.14-.23.12-.32.12-.35 0-.03 0-.1-.04-.15-.04-.05-.08-.08-.12-.1-.04-.02-.15-.1-.2-.13-.05-.03-.15-.07-.19-.09-.04-.02-.04-.04-.04-.06s0-.02-.04-.04c-.04-.02-.28-.28.12-.34z"/></svg>
+                        Enviar solicitud por WhatsApp
+                    </button>
                 </form>
             </div>
         </section>
@@ -394,6 +424,7 @@
         <header class="hero">
             <div class="hero-bg-slider" id="bgSliderEn"></div>
             <div class="hero-overlay"></div>
+            <img src="https://www.angeltourbrasil.com.br/images/mp-logo.webp" alt="Multiparque Logo" class="hero-logo">
             <div class="hero-content">
                 <h1 class="hero-title">The <span>aquatic</span> experience you deserve</h1>
                 <p class="hero-subtitle">Fun, adrenaline and relaxation in the heart of Santa Catarina. Come live the summer at Multiparque.</p>
@@ -414,7 +445,6 @@
             <div class="video-card"><iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>VIP Area</h4><p>Exclusivity</p></div></div>
             <div class="video-card"><iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Kids</h4><p>Total safety</p></div></div>
         </div>
-
         <section class="info-section">
             <h2 style="text-align: center; font-size: 2.8rem; color: var(--primary-cyan);">About Multiparque</h2>
             <div class="info-grid">
@@ -442,7 +472,7 @@
                 <div class="faq-item">
                     <input type="checkbox" id="faq1_en">
                     <label for="faq1_en" class="faq-question">How to buy tickets?</label>
-                    <div class="faq-answer">Tickets are purchased exclusively at the park's box office on the day of your visit. We do not have online sales.</div>
+                    <div class="faq-answer">Tickets are purchased through our sales representative Angel Tour Brasil.</div>
                 </div>
                 <div class="faq-item">
                     <input type="checkbox" id="faq2_en">
@@ -466,7 +496,6 @@
                 </div>
             </div>
         </section>
-
         <section id="contact" class="form-section">
             <div class="form-container">
                 <h2>Book your day!</h2>
@@ -476,7 +505,10 @@
                     <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" id="telefono_en" required placeholder="+55 48 99999-9999"></div>
                     <div class="form-group"><label>Company</label><input type="text" id="empresa_en" required placeholder="Your company name"></div>
                     <div class="form-group"><label>Message or details</label><textarea id="mensaje_en" placeholder="What day would you like to visit us?"></textarea></div>
-                    <button type="submit" class="btn-primary" style="width: 100%;">Send request via WhatsApp</button>
+                    <button type="submit" class="btn-primary" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.132-1.758-.717-2.03-.78-.273-.063-.47-.078-.67.1-.202.18-1.108 1.076-1.36 1.286-.25.21-.5.23-.84.08-.34-.15-1.208-.5-2.23-1.36-.78-.7-1.3-1.5-1.4-1.64-.1-.14-.04-.28.12-.37.14-.08.26-.2.34-.32.08-.12.09-.18.13-.3.05-.12-.05-.32-.14-.52-.09-.2-.65-1.35-.78-1.65-.14-.3-.28-.24-.4-.24h-.64c-.12 0-.27.02-.38.13-.11.11-.46.45-.62.66-.16.22-.27.38-.36.5-.08.12-.12.14-.2.2-.1.06-.78.32-1.42.68-.64.36-1.08.64-1.33.84-.25.2-.25.24-.24.36.01.13.1.35.18.48.09.13.6.85 1.3 1.63.7.78 1.54 1.47 2 1.74.46.27.77.24.95.24h.6c.15 0 .26-.1.34-.2.15-.2 1-1.16 1.2-1.4.2-.23.36-.28.5-.28s1.2.42 1.45.56c.25.14.36.19.48.27.12.08.52.33.68.43.16.1.22.16.32.22.1.06.2.06.32 0 .12-.06 1.1-.68 1.26-.76.16-.07.28-.07.38 0 .1.02.6.24.72.28.12.04.18.07.26.12.08.05.08.16 0 .3-.08.14-.3.72-.52 1.05-.21.33-.4.34-.7.4-.3.06-1.2.15-1.9.12-.7-.03-1.3-.16-1.9-.46-.6-.3-2.04-1.12-2.65-1.55-.6-.43-.72-.43-1.02-.62-.3-.2-.97-.62-1.2-.8-.23-.18-.33-.18-.48-.13l-.42.1c-.13.02-.26-.03-.36-.13-.1-.1-.72-.7-1.1-1.04-.4-.34-.6-.6-.7-.9-.1-.3-.1-.57-.1-.8 0-.24.2-1.06.3-1.5.1-.44.23-.56.38-.62.15-.06.17-.06.27.1.1.16.4.36.62.5.22.14.28.15.42.2.14.05.15.07.28 0 .12-.07.52-.32.64-.4.12-.08.2-.17.2-.2 0-.03 0-.15-.08-.34-.07-.19-.3-.72-.38-.92-.08-.2-.05-.26-.07-.32-.03-.06-.23-.08-.33-.1-.1-.02-.4.02-.6.02-.2 0-.7 0-1 .17-.3.17-.95.65-1.35.98-.4.33-.8.63-.88.75-.08.13-.08.26 0 .4.01.13.1.82.18 1.34.08.52.16 1.06.2 1.32.04.26.1.46.12.52.02.06.08.16.1.24.02.08.04.16.07.22.03.07.38.85.84 1.45.46.6.96.97 1.34 1.25.38.28.72.48.97.6.25.12.33.17.45.22.12.05.2.08.4.14.2.06.5.1.65.12.15.02.25 0 .3-.05.06-.05.5-.64.64-.85.14-.21.28-.21.4-.13.12.08 1.18.65 1.74.97.56.32.99.5 1.2.57.21.07.4.07.52.07.14 0 .65 0 .85-.05.2-.05.6-.24.97-.54.37-.3.72-.7.86-.93.14-.23.12-.32.12-.35 0-.03 0-.1-.04-.15-.04-.05-.08-.08-.12-.1-.04-.02-.15-.1-.2-.13-.05-.03-.15-.07-.19-.09-.04-.02-.04-.04-.04-.06s0-.02-.04-.04c-.04-.02-.28-.28.12-.34z"/></svg>
+                        Send request via WhatsApp
+                    </button>
                 </form>
             </div>
         </section>
@@ -492,6 +524,7 @@
         <header class="hero">
             <div class="hero-bg-slider" id="bgSliderPt"></div>
             <div class="hero-overlay"></div>
+            <img src="https://www.angeltourbrasil.com.br/images/mp-logo.webp" alt="Multiparque Logo" class="hero-logo">
             <div class="hero-content">
                 <h1 class="hero-title">A experiência <span>aquática</span> que você merece</h1>
                 <p class="hero-subtitle">Diversão, adrenalina e relaxamento no coração de Santa Catarina. Venha viver o verão no Multiparque.</p>
@@ -512,7 +545,6 @@
             <div class="video-card"><iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Área VIP</h4><p>Exclusividade</p></div></div>
             <div class="video-card"><iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Infantil</h4><p>Segurança total</p></div></div>
         </div>
-
         <section class="info-section">
             <h2 style="text-align: center; font-size: 2.8rem; color: var(--primary-cyan);">Conheça o Multiparque</h2>
             <div class="info-grid">
@@ -540,7 +572,7 @@
                 <div class="faq-item">
                     <input type="checkbox" id="faq1_pt">
                     <label for="faq1_pt" class="faq-question">Como comprar os ingressos?</label>
-                    <div class="faq-answer">Os ingressos são adquiridos exclusivamente na bilheteria do parque no dia da visita. Não temos venda online.</div>
+                    <div class="faq-answer">Os ingressos são adquiridos através do nosso representante de vendas Angel Tour Brasil.</div>
                 </div>
                 <div class="faq-item">
                     <input type="checkbox" id="faq2_pt">
@@ -564,7 +596,6 @@
                 </div>
             </div>
         </section>
-
         <section id="contact" class="form-section">
             <div class="form-container">
                 <h2>Reserve seu dia!</h2>
@@ -574,7 +605,10 @@
                     <div class="form-group"><label>Telefone / WhatsApp</label><input type="tel" id="telefono_pt" required placeholder="+55 48 99999-9999"></div>
                     <div class="form-group"><label>Empresa</label><input type="text" id="empresa_pt" required placeholder="Nome da sua empresa"></div>
                     <div class="form-group"><label>Mensagem ou detalhes</label><textarea id="mensaje_pt" placeholder="Que dia gostaria de nos visitar?"></textarea></div>
-                    <button type="submit" class="btn-primary" style="width: 100%;">Enviar pedido pelo WhatsApp</button>
+                    <button type="submit" class="btn-primary" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.132-1.758-.717-2.03-.78-.273-.063-.47-.078-.67.1-.202.18-1.108 1.076-1.36 1.286-.25.21-.5.23-.84.08-.34-.15-1.208-.5-2.23-1.36-.78-.7-1.3-1.5-1.4-1.64-.1-.14-.04-.28.12-.37.14-.08.26-.2.34-.32.08-.12.09-.18.13-.3.05-.12-.05-.32-.14-.52-.09-.2-.65-1.35-.78-1.65-.14-.3-.28-.24-.4-.24h-.64c-.12 0-.27.02-.38.13-.11.11-.46.45-.62.66-.16.22-.27.38-.36.5-.08.12-.12.14-.2.2-.1.06-.78.32-1.42.68-.64.36-1.08.64-1.33.84-.25.2-.25.24-.24.36.01.13.1.35.18.48.09.13.6.85 1.3 1.63.7.78 1.54 1.47 2 1.74.46.27.77.24.95.24h.6c.15 0 .26-.1.34-.2.15-.2 1-1.16 1.2-1.4.2-.23.36-.28.5-.28s1.2.42 1.45.56c.25.14.36.19.48.27.12.08.52.33.68.43.16.1.22.16.32.22.1.06.2.06.32 0 .12-.06 1.1-.68 1.26-.76.16-.07.28-.07.38 0 .1.02.6.24.72.28.12.04.18.07.26.12.08.05.08.16 0 .3-.08.14-.3.72-.52 1.05-.21.33-.4.34-.7.4-.3.06-1.2.15-1.9.12-.7-.03-1.3-.16-1.9-.46-.6-.3-2.04-1.12-2.65-1.55-.6-.43-.72-.43-1.02-.62-.3-.2-.97-.62-1.2-.8-.23-.18-.33-.18-.48-.13l-.42.1c-.13.02-.26-.03-.36-.13-.1-.1-.72-.7-1.1-1.04-.4-.34-.6-.6-.7-.9-.1-.3-.1-.57-.1-.8 0-.24.2-1.06.3-1.5.1-.44.23-.56.38-.62.15-.06.17-.06.27.1.1.16.4.36.62.5.22.14.28.15.42.2.14.05.15.07.28 0 .12-.07.52-.32.64-.4.12-.08.2-.17.2-.2 0-.03 0-.15-.08-.34-.07-.19-.3-.72-.38-.92-.08-.2-.05-.26-.07-.32-.03-.06-.23-.08-.33-.1-.1-.02-.4.02-.6.02-.2 0-.7 0-1 .17-.3.17-.95.65-1.35.98-.4.33-.8.63-.88.75-.08.13-.08.26 0 .4.01.13.1.82.18 1.34.08.52.16 1.06.2 1.32.04.26.1.46.12.52.02.06.08.16.1.24.02.08.04.16.07.22.03.07.38.85.84 1.45.46.6.96.97 1.34 1.25.38.28.72.48.97.6.25.12.33.17.45.22.12.05.2.08.4.14.2.06.5.1.65.12.15.02.25 0 .3-.05.06-.05.5-.64.64-.85.14-.21.28-.21.4-.13.12.08 1.18.65 1.74.97.56.32.99.5 1.2.57.21.07.4.07.52.07.14 0 .65 0 .85-.05.2-.05.6-.24.97-.54.37-.3.72-.7.86-.93.14-.23.12-.32.12-.35 0-.03 0-.1-.04-.15-.04-.05-.08-.08-.12-.1-.04-.02-.15-.1-.2-.13-.05-.03-.15-.07-.19-.09-.04-.02-.04-.04-.04-.06s0-.02-.04-.04c-.04-.02-.28-.28.12-.34z"/></svg>
+                        Enviar pedido pelo WhatsApp
+                    </button>
                 </form>
             </div>
         </section>
@@ -617,12 +651,14 @@
             const empresa = document.getElementById('empresa' + prefix).value;
             const mensaje = document.getElementById('mensaje' + prefix).value;
 
-            const message = `*¡Nueva reserva en Multiparque!*%0A%0A` +
-                            `*Nombre:* ${nombre}%0A` +
-                            `*Email:* ${email}%0A` +
-                            `*Teléfono:* ${telefono}%0A` +
-                            `*Empresa:* ${empresa}%0A` +
-                            `*Mensaje:* ${mensaje}`;
+            // Mensaje con iconos y formato profesional
+            const message = `📢 *NUEVA RESERVA - MULTIPARQUE* 📢%0A%0A` +
+                            `👤 *Nombre:* ${nombre}%0A` +
+                            `📧 *E-mail:* ${email}%0A` +
+                            `📞 *Teléfono:* ${telefono}%0A` +
+                            `🏢 *Empresa:* ${empresa}%0A` +
+                            `📝 *Mensaje:*%0A${mensaje}`;
+                            
             const phone = "554999679084";
             window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
         }
@@ -631,12 +667,23 @@
         document.getElementById('contactFormEn').addEventListener('submit', handleFormSubmit);
         document.getElementById('contactFormPt').addEventListener('submit', handleFormSubmit);
 
-        // SLIDER DE FONDO AUTOMÁTICO Y ALEATORIO
-        document.addEventListener("DOMContentLoaded", function() {
+        // SLIDER DE FONDO CON VERIFICACIÓN DE EXISTENCIA DE IMÁGENES
+        document.addEventListener("DOMContentLoaded", async function() {
             const totalImages = 26;
             const baseUrl = "https://www.angeltourbrasil.com.br/images/mp_";
             const extension = ".webp";
             
+            // Función para verificar si una imagen existe (petición HEAD)
+            async function imageExists(url) {
+                try {
+                    const response = await fetch(url, { method: 'HEAD' });
+                    return response.ok; // Si el servidor responde 200 OK, la imagen existe
+                } catch (error) {
+                    return false; // Si hay error o bloqueo, la consideramos no disponible
+                }
+            }
+            
+            // Función para generar un array de números en orden aleatorio
             function generateRandomSequence() {
                 let numbers = [];
                 for(let i = 1; i <= totalImages; i++) {
@@ -649,43 +696,79 @@
                 return numbers;
             }
 
-            let sequence = generateRandomSequence();
+            let validImages = [];
+            let sequence = [];
             let currentIndex = 0;
 
-            function initSlider(containerId) {
+            // Función para inicializar el slider
+            async function initSlider(containerId) {
                 const container = document.getElementById(containerId);
                 if(!container) return;
 
-                const images = [];
-                
+                // 1. Verificar y cargar solo las imágenes que existen
                 for(let i = 1; i <= totalImages; i++) {
-                    const img = document.createElement('img');
-                    img.src = baseUrl + i + extension;
-                    img.alt = "Background " + i;
-                    container.appendChild(img);
-                    images.push(img);
+                    const url = baseUrl + i + extension;
+                    if (await imageExists(url)) {
+                        const img = document.createElement('img');
+                        img.src = url;
+                        img.alt = "Background " + i;
+                        container.appendChild(img);
+                        validImages.push(img);
+                    }
                 }
 
-                function showNextImage() {
-                    const currentNum = sequence[currentIndex];
-                    images.forEach(img => img.classList.remove('active'));
-                    if(currentNum - 1 < images.length) {
-                        images[currentNum - 1].classList.add('active');
+                // Si no se cargó ninguna imagen, salir para evitar errores
+                if (validImages.length === 0) {
+                    console.warn("No se pudieron cargar imágenes de fondo.");
+                    return;
+                }
+
+                // 2. Crear la secuencia aleatoria basada en las imágenes que sí cargaron
+                // Mapeamos los índices reales de las imágenes cargadas
+                let availableIndices = validImages.map((_, index) => index);
+                
+                function shuffleArray(array) {
+                    for (let i = array.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [array[i], array[j]] = [array[j], array[i]];
                     }
+                    return array;
+                }
+                sequence = shuffleArray([...availableIndices]);
+                currentIndex = 0;
+
+                // 3. Función para mostrar la siguiente imagen
+                function showNextImage() {
+                    // Obtener el índice del array de imágenes válidas
+                    const imgIndex = sequence[currentIndex];
+                    
+                    // Remover clase active de todas las imágenes
+                    validImages.forEach(img => img.classList.remove('active'));
+                    
+                    // Agregar clase active a la imagen correspondiente
+                    if(imgIndex < validImages.length) {
+                        validImages[imgIndex].classList.add('active');
+                    }
+
+                    // Avanzar al siguiente índice
                     currentIndex++;
                     if(currentIndex >= sequence.length) {
-                        sequence = generateRandomSequence();
+                        sequence = shuffleArray([...availableIndices]);
                         currentIndex = 0;
                     }
                 }
 
+                // Mostrar la primera imagen inmediatamente
                 showNextImage();
+
+                // Configurar el intervalo para cambiar cada 5 segundos (5000ms)
                 setInterval(showNextImage, 5000);
             }
 
-            initSlider('bgSlider');
-            initSlider('bgSliderEn');
-            initSlider('bgSliderPt');
+            // Inicializar el slider para todos los idiomas (comparten el mismo fondo)
+            await initSlider('bgSlider');
+            await initSlider('bgSliderEn');
+            await initSlider('bgSliderPt');
         });
     </script>
 </body>
