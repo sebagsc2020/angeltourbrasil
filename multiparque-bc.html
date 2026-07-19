@@ -321,6 +321,190 @@
             opacity: 0.9;
         }
 
+        /* ============================================
+           GALERÍA DE FOTOS - ESTILO WORDPRESS
+           ============================================ */
+        .gallery-section {
+            padding: 40px 5% 60px;
+            background: #061624;
+        }
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: var(--dark-blue-card);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 229, 255, 0.15);
+        }
+        .gallery-header h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary-cyan);
+            margin-bottom: 10px;
+        }
+        .gallery-header p {
+            color: #ccc;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+            background: var(--dark-blue-card);
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            min-height: 180px;
+        }
+
+        .gallery-item.hidden {
+            display: none;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 229, 255, 0.2);
+            border-color: var(--primary-cyan);
+            z-index: 2;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item.item-tall {
+            grid-row: span 2;
+        }
+
+        .gallery-item.item-wide {
+            grid-column: span 2;
+        }
+
+        .gallery-item.item-large {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        /* LIGHTBOX */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            font-size: 2.8rem;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.3s;
+            background: none;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            opacity: 0.7;
+        }
+
+        .lightbox-close:hover {
+            opacity: 1;
+            transform: rotate(90deg);
+        }
+
+        .lightbox-caption {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(11, 37, 69, 0.85);
+            padding: 12px 28px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            font-size: 0.9rem;
+            color: #fff;
+            text-align: center;
+            max-width: 80%;
+            backdrop-filter: blur(4px);
+        }
+
+        .lightbox-caption strong {
+            color: var(--primary-cyan);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.8rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .lightbox-nav:hover {
+            background: var(--primary-cyan);
+            color: #0B2545;
+            border-color: var(--primary-cyan);
+        }
+
+        .lightbox-nav.prev {
+            left: 20px;
+        }
+
+        .lightbox-nav.next {
+            right: 20px;
+        }
+
         /* INFO SECTION */
         .info-section { padding: 80px 5%; background: #061624; }
         .info-grid {
@@ -677,6 +861,12 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
         @media (max-width: 992px) {
             .hero-logo {
                 position: relative;
@@ -701,6 +891,23 @@
                 gap: 12px;
             }
         }
+
+        @media (max-width: 900px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .gallery-item.item-wide,
+            .gallery-item.item-large {
+                grid-column: span 1;
+            }
+            .gallery-item.item-tall {
+                grid-row: span 1;
+            }
+            .gallery-header h2 {
+                font-size: 2rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero-title { font-size: 2.4rem; }
             .hero { padding-top: 5px; }
@@ -781,7 +988,35 @@
             .modal-content h2 {
                 font-size: 1.4rem;
             }
+            .gallery-grid {
+                gap: 12px;
+            }
+            .gallery-item {
+                min-height: 120px;
+                border-radius: 12px;
+            }
+            .gallery-header {
+                padding: 20px 15px;
+            }
+            .gallery-header h2 {
+                font-size: 1.8rem;
+            }
+            .gallery-header p {
+                font-size: 0.95rem;
+            }
         }
+
+        @media (max-width: 600px) {
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .gallery-item {
+                border-radius: 10px;
+                min-height: 100px;
+            }
+        }
+
         @media (max-width: 480px) {
             .videos-container { 
                 grid-template-columns: 1fr;
@@ -839,7 +1074,62 @@
             .modal-content .modal-body {
                 font-size: 0.85rem;
             }
+            .gallery-grid {
+                gap: 8px;
+            }
+            .gallery-item {
+                min-height: 80px;
+                border-radius: 8px;
+            }
+            .gallery-header h2 {
+                font-size: 1.4rem;
+            }
+            .gallery-header p {
+                font-size: 0.85rem;
+            }
+            .lightbox-content {
+                max-width: 95%;
+                max-height: 70vh;
+            }
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            .lightbox-nav.prev {
+                left: 10px;
+            }
+            .lightbox-nav.next {
+                right: 10px;
+            }
+            .lightbox-caption {
+                font-size: 0.75rem;
+                padding: 8px 16px;
+                bottom: 15px;
+                max-width: 90%;
+            }
+            .lightbox-close {
+                top: 15px;
+                right: 20px;
+                font-size: 2rem;
+            }
         }
+
+        @media (max-width: 400px) {
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+            .gallery-item {
+                min-height: 60px;
+                border-radius: 6px;
+            }
+            body { padding: 0; }
+            .gallery-section { padding: 20px 3% 30px; }
+            .gallery-header { padding: 15px 12px; }
+            .gallery-header h2 { font-size: 1.2rem; }
+        }
+
         @media (max-width: 380px) {
             .videos-container { 
                 grid-template-columns: 1fr;
@@ -902,6 +1192,29 @@
                 </div>
             </div>
         </header>
+
+        <!-- ==========================================
+        GALERÍA DE FOTOS - NUEVA SECCIÓN
+        ========================================== -->
+        <section class="gallery-section">
+            <div class="gallery-header">
+                <h2>📸 Nuestro Parque</h2>
+                <p>Explora las atracciones y momentos únicos de Multiparque SC</p>
+            </div>
+
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Las imágenes se generarán desde JavaScript -->
+            </div>
+
+            <!-- LIGHTBOX -->
+            <div class="lightbox" id="lightbox">
+                <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+                <button class="lightbox-nav prev" onclick="navigateLightbox(-1)">‹</button>
+                <button class="lightbox-nav next" onclick="navigateLightbox(1)">›</button>
+                <img class="lightbox-content" id="lightboxImage" src="" alt="Imagen ampliada">
+                <div class="lightbox-caption" id="lightboxCaption">Multiparque SC</div>
+            </div>
+        </section>
 
         <!-- Videos Grid -->
         <div id="video-grid" class="videos-container">
@@ -1223,6 +1536,25 @@
                 </div>
             </div>
         </header>
+
+        <!-- GALERÍA EN INGLÉS -->
+        <section class="gallery-section">
+            <div class="gallery-header">
+                <h2>📸 Our Park</h2>
+                <p>Explore the attractions and unique moments of Multiparque SC</p>
+            </div>
+            <div class="gallery-grid" id="galleryGridEn">
+                <!-- Las imágenes se generarán desde JavaScript -->
+            </div>
+            <div class="lightbox" id="lightboxEn">
+                <button class="lightbox-close" onclick="closeLightboxEn()">✕</button>
+                <button class="lightbox-nav prev" onclick="navigateLightboxEn(-1)">‹</button>
+                <button class="lightbox-nav next" onclick="navigateLightboxEn(1)">›</button>
+                <img class="lightbox-content" id="lightboxImageEn" src="" alt="Imagen ampliada">
+                <div class="lightbox-caption" id="lightboxCaptionEn">Multiparque SC</div>
+            </div>
+        </section>
+
         <div id="video-grid" class="videos-container">
             <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Ilha Candy</h4><p>Children's water park</p></div></div>
             <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Torre Master</h4><p>5 radical slides</p></div></div>
@@ -1395,6 +1727,25 @@
                 </div>
             </div>
         </header>
+
+        <!-- GALERÍA EN PORTUGUÉS -->
+        <section class="gallery-section">
+            <div class="gallery-header">
+                <h2>📸 Nosso Parque</h2>
+                <p>Explore as atrações e momentos únicos do Multiparque SC</p>
+            </div>
+            <div class="gallery-grid" id="galleryGridPt">
+                <!-- Las imágenes se generarán desde JavaScript -->
+            </div>
+            <div class="lightbox" id="lightboxPt">
+                <button class="lightbox-close" onclick="closeLightboxPt()">✕</button>
+                <button class="lightbox-nav prev" onclick="navigateLightboxPt(-1)">‹</button>
+                <button class="lightbox-nav next" onclick="navigateLightboxPt(1)">›</button>
+                <img class="lightbox-content" id="lightboxImagePt" src="" alt="Imagem ampliada">
+                <div class="lightbox-caption" id="lightboxCaptionPt">Multiparque SC</div>
+            </div>
+        </section>
+
         <div id="video-grid" class="videos-container">
             <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Ilha Candy</h4><p>Parque infantil aquático</p></div></div>
             <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Torre Master</h4><p>5 tobogãs radicais</p></div></div>
@@ -1751,7 +2102,191 @@
     </script>
 
     <script>
-        // Tooltips para el botón de WhatsApp según idioma
+        // ==========================================
+        // FUNCIONES PARA GALERÍA DE FOTOS
+        // ==========================================
+        function createGallery(gridId, lightboxId, imgId, captionId, closeFn, navFn) {
+            const totalImages = 26;
+            const baseUrl = "https://www.angeltourbrasil.com.br/images/mp_";
+            const extension = ".webp";
+
+            const imageTitles = [
+                "Vista aérea del parque", "Piscina de olas", "Tobogán Kamikaze",
+                "Área infantil", "Piscina climatizada", "Tobogán familiar",
+                "Vista panorámica", "Piscina de relax", "Tobogán extremo",
+                "Área VIP", "Piscina infantil", "Tobogán en espiral",
+                "Vista nocturna", "Piscina principal", "Tobogán de velocidad",
+                "Zona de descanso", "Piscina de olas 2", "Tobogán familiar 2",
+                "Área de juegos", "Piscina con vista", "Tobogán acuático",
+                "Zona infantil", "Vista del atardecer", "Piscina de inmersión",
+                "Tobogán radical", "Vista aérea 2"
+            ];
+
+            const grid = document.getElementById(gridId);
+            if (!grid) return;
+
+            grid.innerHTML = '';
+
+            const images = [];
+            for (let i = 1; i <= totalImages; i++) {
+                images.push({
+                    id: i,
+                    src: baseUrl + i + extension,
+                    title: imageTitles[i - 1] || "Multiparque SC",
+                });
+            }
+
+            // Barajar
+            for (let i = images.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [images[i], images[j]] = [images[j], images[i]];
+            }
+
+            const sizeClasses = ['', 'item-tall', 'item-wide', 'item-large'];
+            let validImages = [];
+
+            images.forEach((img, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                
+                const sizeIndex = index % 4;
+                if (sizeIndex > 0) {
+                    item.classList.add(sizeClasses[sizeIndex]);
+                }
+
+                const imgElement = document.createElement('img');
+                imgElement.src = img.src;
+                imgElement.alt = img.title;
+                imgElement.loading = 'lazy';
+
+                imgElement.onerror = function() {
+                    item.classList.add('hidden');
+                    const imgIndex = validImages.findIndex(v => v.id === img.id);
+                    if (imgIndex !== -1) {
+                        validImages.splice(imgIndex, 1);
+                    }
+                };
+
+                imgElement.onload = function() {
+                    validImages.push(img);
+                    validImages.forEach((v, idx) => v.lightboxIndex = idx);
+                };
+
+                item.appendChild(imgElement);
+
+                item.addEventListener('click', function() {
+                    const idx = validImages.findIndex(v => v.id === img.id);
+                    if (idx !== -1) {
+                        openLightbox(idx, validImages, imgId, captionId, closeFn, navFn);
+                    }
+                });
+
+                grid.appendChild(item);
+            });
+
+            // Guardar referencias
+            window['galleryImages_' + gridId] = validImages;
+            window['galleryClose_' + gridId] = closeFn;
+            window['galleryNav_' + gridId] = navFn;
+            window['galleryImgId_' + gridId] = imgId;
+            window['galleryCaptionId_' + gridId] = captionId;
+            window['galleryLightboxId_' + gridId] = lightboxId;
+        }
+
+        function openLightbox(index, images, imgId, captionId, closeFn, navFn) {
+            if (!images || images.length === 0) return;
+            window['lightboxImages'] = images;
+            window['lightboxIndex'] = Math.min(index, images.length - 1);
+            window['lightboxImgId'] = imgId;
+            window['lightboxCaptionId'] = captionId;
+            window['lightboxCloseFn'] = closeFn;
+            window['lightboxNavFn'] = navFn;
+            updateLightboxContent();
+            const lightbox = document.getElementById('lightboxGlobal');
+            if (lightbox) {
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeLightboxGlobal() {
+            const lightbox = document.getElementById('lightboxGlobal');
+            if (lightbox) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function navigateLightboxGlobal(direction) {
+            const images = window['lightboxImages'];
+            if (!images || images.length === 0) return;
+            window['lightboxIndex'] = (window['lightboxIndex'] + direction + images.length) % images.length;
+            updateLightboxContent();
+        }
+
+        function updateLightboxContent() {
+            const images = window['lightboxImages'];
+            const index = window['lightboxIndex'];
+            const imgId = window['lightboxImgId'];
+            const captionId = window['lightboxCaptionId'];
+            
+            if (!images || !images[index]) return;
+            
+            const img = images[index];
+            const imgElement = document.getElementById(imgId);
+            const captionElement = document.getElementById(captionId);
+            
+            if (imgElement) {
+                imgElement.src = img.src;
+                imgElement.alt = img.title;
+            }
+            if (captionElement) {
+                captionElement.innerHTML = `<strong>${img.title}</strong>`;
+            }
+        }
+
+        // ==========================================
+        // INICIALIZAR GALERÍAS POR IDIOMA
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Español
+            createGallery('galleryGrid', 'lightboxGlobal', 'lightboxImageGlobal', 'lightboxCaptionGlobal', 
+                'closeLightboxGlobal', 'navigateLightboxGlobal');
+            
+            // Inglés
+            createGallery('galleryGridEn', 'lightboxGlobal', 'lightboxImageGlobal', 'lightboxCaptionGlobal',
+                'closeLightboxGlobal', 'navigateLightboxGlobal');
+            
+            // Portugués
+            createGallery('galleryGridPt', 'lightboxGlobal', 'lightboxImageGlobal', 'lightboxCaptionGlobal',
+                'closeLightboxGlobal', 'navigateLightboxGlobal');
+        });
+
+        // ==========================================
+        // FUNCIONES PARA FAQ
+        // ==========================================
+        let activeFAQ = null;
+
+        function toggleFAQ(element) {
+            const faqItem = element.closest('.faq-item');
+            const isActive = faqItem.classList.contains('active');
+            
+            if (activeFAQ && activeFAQ !== faqItem) {
+                activeFAQ.classList.remove('active');
+            }
+            
+            if (isActive) {
+                faqItem.classList.remove('active');
+                activeFAQ = null;
+            } else {
+                faqItem.classList.add('active');
+                activeFAQ = faqItem;
+            }
+        }
+
+        // ==========================================
+        // FUNCIONES DE IDIOMA Y MODALES
+        // ==========================================
         const waTooltips = {
             es: '💬 Contáctanos por WhatsApp',
             en: '💬 Contact us on WhatsApp',
@@ -1807,27 +2342,9 @@
                     modal.classList.remove('active');
                 });
                 document.body.style.overflow = '';
+                closeLightboxGlobal();
             }
         });
-
-        let activeFAQ = null;
-
-        function toggleFAQ(element) {
-            const faqItem = element.closest('.faq-item');
-            const isActive = faqItem.classList.contains('active');
-            
-            if (activeFAQ && activeFAQ !== faqItem) {
-                activeFAQ.classList.remove('active');
-            }
-            
-            if (isActive) {
-                faqItem.classList.remove('active');
-                activeFAQ = null;
-            } else {
-                faqItem.classList.add('active');
-                activeFAQ = faqItem;
-            }
-        }
 
         function setLang(lang) {
             document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active-lang'));
@@ -1881,6 +2398,9 @@
             updateWATooltip('es');
         });
 
+        // ==========================================
+        // MANEJO DEL FORMULARIO
+        // ==========================================
         function handleFormSubmit(event) {
             event.preventDefault();
             let formId = event.target.id;
@@ -1920,7 +2440,9 @@
         document.getElementById('contactFormEn').addEventListener('submit', handleFormSubmit);
         document.getElementById('contactFormPt').addEventListener('submit', handleFormSubmit);
 
+        // ==========================================
         // SLIDER DE FONDO
+        // ==========================================
         document.addEventListener("DOMContentLoaded", function() {
             const totalImages = 26;
             const baseUrl = "https://www.angeltourbrasil.com.br/images/mp_";
@@ -2018,5 +2540,6 @@
             initSlider('bgSliderPt');
         });
     </script>
+
 </body>
 </html>
