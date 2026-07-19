@@ -244,13 +244,11 @@
             overflow: hidden;
             position: relative;
             width: 100%;
-            /* Proporción 9:16 */
             aspect-ratio: 9 / 16;
             max-height: 450px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             border: 1px solid rgba(0, 229, 255, 0.1);
         }
-        /* Contenedor interno para el iframe que ocupa todo el espacio */
         .video-wrapper {
             position: absolute;
             top: 0;
@@ -270,7 +268,6 @@
             object-fit: cover;
             border: 0;
             pointer-events: auto;
-            /* Escalamos un poco más para cubrir completamente el contenedor */
             min-width: 100%;
             min-height: 100%;
         }
@@ -408,6 +405,7 @@
             background: rgba(255,255,255,0.1); color: white; padding: 15px 30px; 
             border-radius: 50px; text-decoration: none; margin-bottom: 20px; transition: 0.3s;
             border: 1px solid rgba(255,255,255,0.2);
+            cursor: pointer;
         }
         .map-btn:hover { background: var(--primary-cyan); color: #0B2545; border-color: var(--primary-cyan); transform: translateY(-3px); }
         .footer p { opacity: 0.7; font-size: 0.9rem; margin-top: 20px; }
@@ -674,9 +672,10 @@
 
         <footer class="footer">
             <h3 style="color: var(--primary-cyan); margin-bottom: 15px;">Multiparque - Parque Acuático</h3>
-            <a href="https://maps.app.goo.gl/s4ESg8Z1VYsz8Gre8" target="_blank" class="map-btn">
+            <!-- Botón de mapa mejorado con navegación directa -->
+            <button onclick="openMapsNavigation()" class="map-btn">
                 📍 Av. Rodesindo Pavan, 11595 - Praia do Estaleirinho, Balneário Camboriú - SC (Ruta en auto)
-            </a>
+            </button>
             <p>&copy; 2026 Multiparque. Todos los derechos reservados.</p>
         </footer>
     </div>
@@ -789,9 +788,9 @@
         </section>
         <footer class="footer">
             <h3 style="color: var(--primary-cyan); margin-bottom: 15px;">Multiparque - Water Park</h3>
-            <a href="https://maps.app.goo.gl/s4ESg8Z1VYsz8Gre8" target="_blank" class="map-btn">
+            <button onclick="openMapsNavigation()" class="map-btn">
                 📍 Av. Rodesindo Pavan, 11595 - Praia do Estaleirinho, Balneário Camboriú - SC (Driving route)
-            </a>
+            </button>
             <p>&copy; 2026 Multiparque. All rights reserved.</p>
         </footer>
     </div>
@@ -904,9 +903,9 @@
         </section>
         <footer class="footer">
             <h3 style="color: var(--primary-cyan); margin-bottom: 15px;">Multiparque - Parque Aquático</h3>
-            <a href="https://maps.app.goo.gl/s4ESg8Z1VYsz8Gre8" target="_blank" class="map-btn">
+            <button onclick="openMapsNavigation()" class="map-btn">
                 📍 Av. Rodesindo Pavan, 11595 - Praia do Estaleirinho, Balneário Camboriú - SC (Rota de carro)
-            </a>
+            </button>
             <p>&copy; 2026 Multiparque. Todos os direitos reservados.</p>
         </footer>
     </div>
@@ -929,6 +928,30 @@
     </script>
 
     <script>
+        // Función para abrir Google Maps con navegación directa
+        function openMapsNavigation() {
+            // Coordenadas exactas de Multiparque en Balneário Camboriú
+            const lat = -27.0045;
+            const lng = -48.6280;
+            
+            // Detectar si es dispositivo móvil
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            
+            // URL para navegación en Google Maps
+            let url;
+            
+            if (isMobile) {
+                // Para dispositivos móviles - abre la app de Google Maps
+                url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
+            } else {
+                // Para desktop - abre Google Maps en el navegador
+                url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
+            }
+            
+            // Abrir en nueva ventana/pestaña
+            window.open(url, '_blank');
+        }
+
         // Función para cambiar de idioma
         function setLang(lang) {
             document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active-lang'));
