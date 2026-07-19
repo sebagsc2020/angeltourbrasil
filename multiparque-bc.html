@@ -18,7 +18,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background-color: var(--deep-blue); color: var(--text-light); overflow-x: hidden; }
 
-        /* Language Switcher - PESTAÑA FLOTANTE LATERAL (Corregida para móviles) */
+        /* Language Switcher - PESTAÑA FLOTANTE LATERAL */
         .lang-switcher {
             position: fixed;
             top: 50%;
@@ -81,7 +81,7 @@
             transform: translateY(-50%) translateX(100%);
         }
 
-        /* Tirador para mostrar/ocultar la pestaña en móviles */
+        /* Tirador para mostrar/ocultar la pestaña */
         .lang-toggle {
             display: none;
             position: fixed;
@@ -89,24 +89,30 @@
             right: 0;
             transform: translateY(-50%);
             z-index: 9998;
-            width: 24px;
-            height: 48px;
-            background: rgba(11, 37, 69, 0.8);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(0, 229, 255, 0.2);
+            width: 38px;
+            height: 60px;
+            background: rgba(11, 37, 69, 0.9);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(0, 229, 255, 0.3);
             border-right: none;
-            border-radius: 8px 0 0 8px;
+            border-radius: 10px 0 0 10px;
             color: #fff;
-            font-size: 14px;
+            font-size: 20px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.3s ease;
-            opacity: 0.6;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+            opacity: 0.8;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+            line-height: 1;
         }
         .lang-toggle:hover {
             opacity: 1;
+            transform: translateY(-50%) scale(1.05);
+        }
+        .lang-toggle:active {
+            transform: translateY(-50%) scale(0.95);
         }
         .lang-toggle.visible {
             display: flex;
@@ -120,9 +126,6 @@
                 flex-direction: column;
                 padding: 8px 6px;
                 border-radius: 12px 0 0 12px;
-                border: 1px solid rgba(0, 229, 255, 0.2);
-                border-right: none;
-                box-shadow: -3px 0 15px rgba(0,0,0,0.4);
             }
             .lang-switcher.hidden {
                 transform: translateY(-50%) translateX(100%);
@@ -181,7 +184,7 @@
         }
         .hero-content { position: relative; z-index: 2; }
         
-        /* LOGOTIPO AUMENTADO 60% (de 270px a 432px) */
+        /* LOGOTIPO AUMENTADO 60% */
         .hero-logo {
             position: absolute;
             top: 80px;
@@ -232,6 +235,7 @@
         .stat-box h3 { font-size: 2rem; font-weight: 800; color: var(--primary-cyan); }
         .stat-box p { font-size: 0.8rem; text-transform: uppercase; font-weight: 600; letter-spacing: 1px;}
 
+        /* VIDEOS CON PROPORCIÓN 9:16 (Sin bordes negros) */
         .videos-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -240,13 +244,20 @@
         .video-card {
             background: var(--dark-blue-card);
             border-radius: 20px; overflow: hidden; position: relative;
-            height: 400px; display: flex; align-items: flex-end;
+            /* Proporción 9:16 exacta: ancho es base, altura es 16/9 del ancho */
+            aspect-ratio: 9 / 16; 
+            max-height: 450px; /* Límite máximo para no ser infinitamente altos */
+            width: 100%;
+            display: flex; 
+            align-items: flex-end;
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             border: 1px solid rgba(0, 229, 255, 0.1);
         }
         .video-card iframe {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             z-index: 1; pointer-events: auto; border: 0;
+            /* CORRECCIÓN: Obliga al iframe a llenar todo el espacio sin bordes negros */
+            object-fit: cover;
         }
         .video-overlay {
             position: relative; z-index: 2;
@@ -324,8 +335,20 @@
         /* Form Section - 2 COLUMNAS EN ESCRITORIO */
         .form-section { padding: 80px 5%; background: #071B2E; }
         .form-container { max-width: 800px; margin: 0 auto; background: var(--dark-blue-card); padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border: 1px solid rgba(0, 229, 255, 0.2); }
-        .form-container h2 { text-align: center; margin-bottom: 30px; font-size: 2.2rem; color: var(--primary-cyan); }
+        .form-container h2 { text-align: center; margin-bottom: 5px; font-size: 2.2rem; color: var(--primary-cyan); }
         
+        /* Texto pequeño debajo del título */
+        .form-subtitle {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #ccc;
+            margin-bottom: 25px;
+            line-height: 1.4;
+            font-style: italic;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 15px;
+        }
+
         .form-row {
             display: flex;
             gap: 20px;
@@ -345,6 +368,22 @@
         .form-group input:focus, .form-group textarea:focus { box-shadow: 0 0 0 2px var(--primary-cyan); background: #1F4270; }
         .form-group textarea { height: 100px; resize: vertical; }
         .form-group input::placeholder { color: #84A9C9; }
+
+        /* Estilo para el selector de fecha y su advertencia */
+        .date-warning {
+            display: block;
+            font-size: 0.8rem;
+            color: #ffcc00;
+            margin-top: 5px;
+            font-style: italic;
+            opacity: 0.9;
+        }
+        input[type="date"] {
+            color-scheme: dark;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+        }
         
         .footer { padding: 50px 5%; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); background: #051424; }
         .map-btn { 
@@ -379,12 +418,7 @@
         @media (max-width: 768px) {
             .hero-title { font-size: 2.8rem; }
             .videos-container { grid-template-columns: repeat(2, 1fr); }
-            /* --- CORRECCIÓN PARA EVITAR BORDES NEGROS EN CELULARES --- */
-            .video-card { 
-                height: 56.25vw; /* Proporción perfecta para videos verticales 9:16 */
-                min-height: 250px; /* Altura mínima para que no se aplaste en pantallas muy pequeñas */
-                max-height: 450px;
-            }
+            /* En móviles, las cajas se adaptan solas gracias al aspect-ratio */
             .stats { flex-direction: row; width: 100%; }
             .stat-box { flex: 1; padding: 15px; }
             .stat-box h3 { font-size: 1.5rem; }
@@ -393,14 +427,13 @@
         }
         @media (max-width: 480px) {
             .videos-container { grid-template-columns: 1fr; }
-            .video-card { height: 60vw; min-height: 200px; }
             .hero-title { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Language Switcher - Pestaña Flotante Derecha (Corregida para móviles) -->
+    <!-- Language Switcher - Pestaña Flotante Derecha -->
     <div class="lang-switcher" id="langSwitcher">
         <button class="lang-btn active" onclick="setLang('es')">
             <img src="https://www.angeltourbrasil.com.br/images/bt-es.png" alt="Español">
@@ -413,7 +446,7 @@
         </button>
     </div>
 
-    <!-- Tirador para mostrar/ocultar la pestaña en móviles -->
+    <!-- Tirador para mostrar/ocultar la pestaña -->
     <button class="lang-toggle" id="langToggle" onclick="toggleLangSwitcher()">🌐</button>
 
     <!-- ================= SPANISH CONTENT ================= -->
@@ -422,7 +455,7 @@
             <div class="hero-bg-slider" id="bgSlider"></div>
             <div class="hero-overlay"></div>
 
-            <!-- LOGOTIPO A LA DERECHA (+60% MÁS GRANDE) -->
+            <!-- LOGOTIPO A LA DERECHA -->
             <img src="https://www.angeltourbrasil.com.br/images/mp-logo.webp" alt="Multiparque Logo" class="hero-logo">
 
             <div class="hero-content">
@@ -444,7 +477,7 @@
             </div>
         </header>
 
-        <!-- Videos Grid -->
+        <!-- Videos Grid (Proporción 9:16, sin bordes negros) -->
         <div id="video-grid" class="videos-container" style="padding: 0 5% 50px;">
             <div class="video-card">
                 <iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
@@ -527,10 +560,12 @@
             </div>
         </section>
 
-        <!-- Contact Form (2 Columnas en escritorio) -->
+        <!-- Contact Form -->
         <section id="contact" class="form-section">
             <div class="form-container">
                 <h2>¡Reserva tu día!</h2>
+                <p class="form-subtitle">*Sr/a. Guia, Por cuestiones operativas pedimos que solicite su reserva a través del formulario, muchas gracias.</p>
+                
                 <form id="contactForm">
                     <div class="form-row">
                         <div class="form-group">
@@ -553,6 +588,11 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label>Fecha de reserva (Estimativa)</label>
+                        <input type="date" id="fecha_reserva">
+                        <span class="date-warning">📅 Fecha estimativa, sujeta a condiciones operacionales, consultar.</span>
+                    </div>
+                    <div class="form-group">
                         <label>Mensaje o detalles adicionales</label>
                         <textarea id="mensaje" placeholder="¿Qué día les gustaría visitarnos?"></textarea>
                     </div>
@@ -566,7 +606,9 @@
 
         <footer class="footer">
             <h3 style="color: var(--primary-cyan); margin-bottom: 15px;">Multiparque - Parque Acuático</h3>
-            <a href="https://maps.app.goo.gl/cRsYKB8CyAV3XjYg8" target="_blank" class="map-btn">📍 Cómo llegar (Abrir ruta en Maps)</a>
+            <a href="https://maps.app.goo.gl/s4ESg8Z1VYsz8Gre8" target="_blank" class="map-btn">
+                📍 Av. Rodesindo Pavan, 11595 - Praia do Estaleirinho, Balneário Camboriú - SC (Ruta en auto)
+            </a>
             <p>&copy; 2026 Multiparque. Todos los derechos reservados.</p>
         </footer>
     </div>
@@ -654,6 +696,7 @@
         <section id="contact" class="form-section">
             <div class="form-container">
                 <h2>Book your day!</h2>
+                <p class="form-subtitle">*Mr./Ms. Guide, for operational reasons, we ask that you request your reservation through the form, thank you.</p>
                 <form id="contactFormEn">
                     <div class="form-row">
                         <div class="form-group"><label>Full Name</label><input type="text" id="nombre_en" required placeholder="John Doe"></div>
@@ -662,6 +705,11 @@
                     <div class="form-row">
                         <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" id="telefono_en" required placeholder="+55 48 99999-9999"></div>
                         <div class="form-group"><label>Company</label><input type="text" id="empresa_en" required placeholder="Your company name"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Reservation Date (Estimated)</label>
+                        <input type="date" id="fecha_reserva_en">
+                        <span class="date-warning">📅 Estimated date, subject to operational conditions, please check.</span>
                     </div>
                     <div class="form-group"><label>Message or details</label><textarea id="mensaje_en" placeholder="What day would you like to visit us?"></textarea></div>
                     <button type="submit" class="btn-primary" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px;">
@@ -673,7 +721,9 @@
         </section>
         <footer class="footer">
             <h3 style="color: var(--primary-cyan); margin-bottom: 15px;">Multiparque - Water Park</h3>
-            <a href="https://maps.app.goo.gl/cRsYKB8CyAV3XjYg8" target="_blank" class="map-btn">📍 Get directions (Open in Maps)</a>
+            <a href="https://maps.app.goo.gl/s4ESg8Z1VYsz8Gre8" target="_blank" class="map-btn">
+                📍 Av. Rodesindo Pavan, 11595 - Praia do Estaleirinho, Balneário Camboriú - SC (Driving route)
+            </a>
             <p>&copy; 2026 Multiparque. All rights reserved.</p>
         </footer>
     </div>
@@ -761,6 +811,7 @@
         <section id="contact" class="form-section">
             <div class="form-container">
                 <h2>Reserve seu dia!</h2>
+                <p class="form-subtitle">*Sr./Sra. Guia, por questões operacionais, pedimos que solicite sua reserva através do formulário, muito obrigado.</p>
                 <form id="contactFormPt">
                     <div class="form-row">
                         <div class="form-group"><label>Nome completo</label><input type="text" id="nome_pt" required placeholder="Ex. João Silva"></div>
@@ -769,6 +820,11 @@
                     <div class="form-row">
                         <div class="form-group"><label>Telefone / WhatsApp</label><input type="tel" id="telefono_pt" required placeholder="+55 48 99999-9999"></div>
                         <div class="form-group"><label>Empresa</label><input type="text" id="empresa_pt" required placeholder="Nome da sua empresa"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Data de reserva (Estimativa)</label>
+                        <input type="date" id="fecha_reserva_pt">
+                        <span class="date-warning">📅 Data estimativa, sujeita a condições operacionais, consultar.</span>
                     </div>
                     <div class="form-group"><label>Mensagem ou detalhes</label><textarea id="mensaje_pt" placeholder="Que dia gostaria de nos visitar?"></textarea></div>
                     <button type="submit" class="btn-primary" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px;">
@@ -780,7 +836,9 @@
         </section>
         <footer class="footer">
             <h3 style="color: var(--primary-cyan); margin-bottom: 15px;">Multiparque - Parque Aquático</h3>
-            <a href="https://maps.app.goo.gl/cRsYKB8CyAV3XjYg8" target="_blank" class="map-btn">📍 Como chegar (Abrir rota no Maps)</a>
+            <a href="https://maps.app.goo.gl/s4ESg8Z1VYsz8Gre8" target="_blank" class="map-btn">
+                📍 Av. Rodesindo Pavan, 11595 - Praia do Estaleirinho, Balneário Camboriú - SC (Rota de carro)
+            </a>
             <p>&copy; 2026 Multiparque. Todos os direitos reservados.</p>
         </footer>
     </div>
@@ -794,7 +852,7 @@
     </a>
 
     <!-- GOOGLE ANALYTICS (Reemplaza GA_MEASUREMENT_ID por tu ID) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R5LT7ZSN19"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -858,15 +916,21 @@
             const email = document.getElementById('email' + prefix).value;
             const telefono = document.getElementById('telefono' + prefix).value;
             const empresa = document.getElementById('empresa' + prefix).value;
+            const fecha_reserva = document.getElementById('fecha_reserva' + prefix).value;
             const mensaje = document.getElementById('mensaje' + prefix).value;
 
             // Mensaje con iconos y formato profesional
-            const message = `📢 *NUEVA RESERVA - MULTIPARQUE* 📢%0A%0A` +
+            let message = `📢 *NUEVA RESERVA - MULTIPARQUE* 📢%0A%0A` +
                             `👤 *Nombre:* ${nombre}%0A` +
                             `📧 *E-mail:* ${email}%0A` +
                             `📞 *Teléfono:* ${telefono}%0A` +
-                            `🏢 *Empresa:* ${empresa}%0A` +
-                            `📝 *Mensaje:*%0A${mensaje}`;
+                            `🏢 *Empresa:* ${empresa}%0A`;
+            
+            if (fecha_reserva) {
+                message += `📅 *Fecha Estimativa:* ${fecha_reserva}%0A`;
+            }
+            
+            message += `📝 *Mensaje:*%0A${mensaje}`;
                             
             const phone = "554999679084";
             window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
