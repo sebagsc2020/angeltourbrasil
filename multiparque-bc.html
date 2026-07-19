@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiparque | Parque Aquático</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 🌊 PALETA DE COLORES ACUÁTICA 🌊 */
+            --primary-cyan: #00E5FF;      /* Cian brillante (Botones) */
+            --primary-blue: #007BFF;      /* Azul eléctrico (Detalles) */
+            --deep-blue: #0B2545;         /* Azul profundo (Fondo principal) */
+            --dark-blue-card: #112E4B;    /* Azul oscuro (Tarjetas de video) */
+            --text-light: #FFFFFF;
+            --whatsapp-green: #25D366;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background-color: var(--deep-blue); color: var(--text-light); overflow-x: hidden; }
+
+        /* Language Switcher */
+        .lang-switcher {
+            position: absolute; top: 20px; right: 20px; z-index: 100;
+            display: flex; gap: 10px;
+        }
+        .lang-btn {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            color: #fff; padding: 5px 12px; border-radius: 20px; cursor: pointer;
+            font-size: 0.8rem; transition: 0.3s; backdrop-filter: blur(5px); font-weight: 600;
+        }
+        .lang-btn:hover, .lang-btn.active { background: var(--primary-cyan); color: #0B2545; border-color: var(--primary-cyan); }
+
+        /* Sections visibility */
+        .lang-content { display: none; animation: fadeIn 0.6s ease-in-out; }
+        .lang-content.active-lang { display: block; }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            padding: 100px 5% 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* BACKGROUND VIDEO (MP4 DIRECTO - SIN ERROR 153) */
+        .hero-bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+            object-fit: cover;
+        }
+        /* Capa oscura para que el texto se lea bien sobre el video */
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(11, 37, 69, 0.7), rgba(0, 195, 255, 0.3));
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title { font-size: 3.8rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px; max-width: 700px; text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .hero-title span { color: var(--primary-cyan); text-shadow: 0 0 20px rgba(0, 229, 255, 0.4); }
+        .hero-subtitle { font-size: 1.2rem; max-width: 600px; margin-bottom: 30px; line-height: 1.6; opacity: 0.95; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        
+        /* Action Buttons */
+        .cta-group { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 40px; }
+        .btn-primary { 
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-blue)); 
+            color: #0B2545; padding: 15px 35px; border: none; border-radius: 50px; 
+            font-weight: 700; cursor: pointer; text-decoration: none; display: inline-block; 
+            transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
+        }
+        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0, 229, 255, 0.6); }
+        
+        .btn-outline { 
+            background: rgba(255,255,255,0.1); color: #fff; padding: 15px 35px; 
+            border: 2px solid rgba(255,255,255,0.8); border-radius: 50px; font-weight: 600; 
+            cursor: pointer; text-decoration: none; display: inline-block; transition: 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        .btn-outline:hover { background: rgba(255,255,255,0.2); border-color: var(--primary-cyan); }
+
+        /* Stats */
+        .stats { display: flex; gap: 20px; margin-bottom: 40px; }
+        .stat-box { 
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(0, 229, 255, 0.2)); 
+            padding: 20px 30px; border-radius: 15px; text-align: center; 
+            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);
+        }
+        .stat-box h3 { font-size: 2rem; font-weight: 800; color: var(--primary-cyan); }
+        .stat-box p { font-size: 0.8rem; text-transform: uppercase; font-weight: 600; letter-spacing: 1px;}
+
+        /* VIDEOS GRID (YouTube Shorts) */
+        .videos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .video-card {
+            background: var(--dark-blue-card);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            height: 400px;
+            display: flex;
+            align-items: flex-end;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            border: 1px solid rgba(0, 229, 255, 0.1);
+        }
+        .video-card iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: 1; pointer-events: auto;
+            border: 0;
+        }
+        .video-overlay {
+            position: relative; z-index: 2;
+            background: linear-gradient(to top, rgba(11, 37, 69, 0.95), transparent);
+            width: 100%; padding: 20px;
+        }
+        .video-card h4 { font-size: 1.1rem; color: var(--primary-cyan); font-weight: 700; }
+        .video-card p { font-size: 0.8rem; color: #ccc; }
+
+        /* About Section */
+        .about-section { padding: 80px 5%; display: flex; flex-wrap: wrap; gap: 50px; align-items: center; }
+        .about-text { flex: 1; min-width: 300px; }
+        .about-text h2 { font-size: 2.8rem; margin-bottom: 20px; color: var(--primary-cyan); }
+        .about-text p { line-height: 1.8; margin-bottom: 15px; opacity: 0.9; }
+        
+        /* Contact Form */
+        .form-section { padding: 80px 5%; background: #071B2E; }
+        .form-container { max-width: 600px; margin: 0 auto; background: var(--dark-blue-card); padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border: 1px solid rgba(0, 229, 255, 0.2); }
+        .form-container h2 { text-align: center; margin-bottom: 30px; font-size: 2.2rem; color: var(--primary-cyan); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 15px; border: none; border-radius: 10px; 
+            background: #1B3A5A; color: white; font-family: inherit; outline: none;
+            transition: 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus { box-shadow: 0 0 0 2px var(--primary-cyan); background: #1F4270; }
+        .form-group textarea { height: 100px; resize: vertical; }
+        .form-group input::placeholder { color: #84A9C9; }
+        
+        /* Footer & Map */
+        .footer { padding: 50px 5%; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); background: #051424; }
+        .map-btn { 
+            display: inline-flex; align-items: center; gap: 10px; 
+            background: rgba(255,255,255,0.1); color: white; padding: 15px 30px; 
+            border-radius: 50px; text-decoration: none; margin-bottom: 20px; transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .map-btn:hover { background: var(--primary-cyan); color: #0B2545; border-color: var(--primary-cyan); transform: translateY(-3px); }
+        .footer p { opacity: 0.7; font-size: 0.9rem; margin-top: 20px; }
+
+        /* Floating WhatsApp */
+        .float-wa {
+            position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+            background: var(--whatsapp-green); color: white; width: 60px; height: 60px;
+            border-radius: 50px; display: flex; align-items: center; justify-content: center;
+            font-size: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); text-decoration: none;
+            transition: 0.3s;
+        }
+        .float-wa:hover { transform: scale(1.1); background: #128C7E; box-shadow: 0 5px 30px rgba(37, 211, 102, 0.4); }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.8rem; }
+            .videos-container { grid-template-columns: repeat(2, 1fr); }
+            .video-card { height: 300px; }
+            .stats { flex-direction: row; width: 100%; }
+            .stat-box { flex: 1; padding: 15px; }
+            .stat-box h3 { font-size: 1.5rem; }
+            .lang-switcher { top: 10px; right: 10px; }
+            .lang-btn { padding: 4px 10px; font-size: 0.7rem; }
+        }
+        @media (max-width: 480px) {
+            .videos-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Language Switcher -->
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLang('es')">ES</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('pt')">PT</button>
+    </div>
+
+    <!-- ================= SPANISH CONTENT ================= -->
+    <div id="lang-es" class="lang-content active-lang">
+        <header class="hero">
+            <video class="hero-bg-video" autoplay loop muted playsinline>
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-beautiful-waterfall-in-forest-3255-large.mp4" type="video/mp4">
+                <div class="hero-overlay" style="background: var(--deep-blue);"></div>
+            </video>
+            <div class="hero-overlay"></div>
+
+            <div class="hero-content">
+                <h1 class="hero-title">La experiencia <span>acuática</span> que mereces</h1>
+                <p class="hero-subtitle">Diversión, adrenalina y relax en el corazón de Santa Catarina. Ven a vivir el verano en Multiparque.</p>
+                
+                <div class="cta-group">
+                    <a href="#contact" class="btn-primary">Solicitar presupuesto &rarr;</a>
+                    <a href="#video-grid" class="btn-outline">Ver atracciones</a>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-box"><h3>30+</h3><p>Años de historia</p></div>
+                    <div class="stat-box"><h3>20+</h3><p>Atracciones</p></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Videos Grid (TUS 6 SHORTS DE YOUTUBE) -->
+        <div id="video-grid" class="videos-container" style="padding: 0 5% 50px;">
+            
+            <!-- Video 1: Piscinas -->
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
+                <div class="video-overlay"><h4>Piscinas</h4><p>Olas y relax</p></div>
+            </div>
+
+            <!-- Video 2: Toboganes (ACTUALIZADO) -->
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
+                <div class="video-overlay"><h4>Toboganes</h4><p>Adrenalina pura</p></div>
+            </div>
+
+            <!-- Video 3: Familiar -->
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
+                <div class="video-overlay"><h4>Familiar</h4><p>Diversión garantizada</p></div>
+            </div>
+
+            <!-- Video 4: Eventos -->
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
+                <div class="video-overlay"><h4>Eventos</h4><p>Fiestas temáticas</p></div>
+            </div>
+
+            <!-- Video 5: Área VIP -->
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
+                <div class="video-overlay"><h4>Área VIP</h4><p>Exclusividad</p></div>
+            </div>
+
+            <!-- Video 6: Infantil -->
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
+                <div class="video-overlay"><h4>Infantil</h4><p>Seguridad total</p></div>
+            </div>
+            
+        </div>
+
+        <section class="about-section">
+            <div class="about-text">
+                <h2>Sobre Multiparque</h2>
+                <p>Ubicado en el corazón de Santa Catarina, Multiparque es el destino favorito de familias y jóvenes que buscan el equilibrio perfecto entre aventura y descanso.</p>
+                <p>Con más de 30 años de tradición, ofrecemos piscinas de olas, toboganes radicales, áreas de juegos infantiles y espacios VIP para que tu día sea inolvidable.</p>
+                <p><strong>Estructura completa:</strong> Restaurante, vestuarios, estacionamiento y seguridad 24h.</p>
+            </div>
+            <div class="about-text" style="background: var(--dark-blue-card); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 229, 255, 0.2);">
+                <h3 style="color: var(--primary-cyan);">¿Qué ofrecemos?</h3>
+                <ul style="list-style: none; line-height: 2.2;">
+                    <li>&#10004; Piscina de olas (la más grande de la región)</li>
+                    <li>&#10004; Tobogán Kamikaze</li>
+                    <li>&#10004; Río Lento y Piscina Infantil</li>
+                    <li>&#10004; Fiesta de espuma y shows</li>
+                    <li>&#10004; Alquiler de sombrillas y carpas</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="contact" class="form-section">
+            <div class="form-container">
+                <h2>¡Reserva tu día!</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label>Nombre completo</label>
+                        <input type="text" id="nombre" required placeholder="Ej. Juan Pérez">
+                    </div>
+                    <div class="form-group">
+                        <label>Correo electrónico</label>
+                        <input type="email" id="email" required placeholder="ejemplo@mail.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono / WhatsApp</label>
+                        <input type="tel" id="telefono" required placeholder="+55 48 99999-9999">
+                    </div>
+                    <!-- CAMBIO: Eliminado Cantidad de personas, agregado Empresa -->
+                    <div class="form-group">
+                        <label>Empresa</label>
+                        <input type="text" id="empresa" required placeholder="Nombre de tu empresa">
+                    </div>
+                    <div class="form-group">
+                        <label>Mensaje o detalles adicionales</label>
+                        <textarea id="mensaje" placeholder="¿Qué día les gustaría visitarnos?"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%; text-align: center;">Enviar solicitud por WhatsApp</button>
+                </form>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <h3 style="color: var(--primary-cyan); margin-bottom: 15px;">Multiparque - Parque Acuático</h3>
+            <a href="https://maps.app.goo.gl/cRsYKB8CyAV3XjYg8" target="_blank" class="map-btn">
+                📍 Cómo llegar (Abrir ruta en Maps)
+            </a>
+            <p>&copy; 2026 Multiparque. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <!-- ================= ENGLISH CONTENT ================= -->
+    <div id="lang-en" class="lang-content">
+        <header class="hero">
+            <video class="hero-bg-video" autoplay loop muted playsinline>
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-beautiful-waterfall-in-forest-3255-large.mp4" type="video/mp4">
+                <div class="hero-overlay" style="background: var(--deep-blue);"></div>
+            </video>
+            <div class="hero-overlay"></div>
+            
+            <div class="hero-content">
+                <h1 class="hero-title">The <span>aquatic</span> experience you deserve</h1>
+                <p class="hero-subtitle">Fun, adrenaline and relaxation in the heart of Santa Catarina. Come live the summer at Multiparque.</p>
+                <div class="cta-group">
+                    <a href="#contact" class="btn-primary">Request quote &rarr;</a>
+                    <a href="#video-grid" class="btn-outline">View attractions</a>
+                </div>
+                <div class="stats">
+                    <div class="stat-box"><h3>30+</h3><p>Years history</p></div>
+                    <div class="stat-box"><h3>20+</h3><p>Attractions</p></div>
+                </div>
+            </div>
+        </header>
+
+        <div id="video-grid" class="videos-container" style="padding: 0 5% 50px;">
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Pools</h4><p>Waves & relax</p></div></div>
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Water Slides</h4><p>Pure adrenaline</p></div></div>
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Family</h4><p>Guaranteed fun</p></div></div>
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Events</h4><p>Themed parties</p></div></div>
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>VIP Area</h4><p>Exclusivity</p></div></div>
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Kids</h4><p>Total safety</p></div></div>
+        </div>
+
+        <section class="about-section">
+            <div class="about-text">
+                <h2>About Multiparque</h2>
+                <p>Located in the heart of Santa Catarina, Multiparque is the favorite destination for families and young people seeking the perfect balance between adventure and rest.</p>
+                <p>With over 30 years of tradition, we offer wave pools, radical water slides, children's play areas, and VIP spaces to make your day unforgettable.</p>
+                <p><strong>Full structure:</strong> Restaurant, changing rooms, parking, and 24h security.</p>
+            </div>
+            <div class="about-text" style="background: var(--dark-blue-card); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 229, 255, 0.2);">
+                <h3 style="color: var(--primary-cyan);">What do we offer?</h3>
+                <ul style="list-style: none; line-height: 2.2;">
+                    <li>&#10004; Wave pool (largest in the region)</li>
+                    <li>&#10004; Kamikaze slide</li>
+                    <li>&#10004; Lazy river and kids pool</li>
+                    <li>&#10004; Foam parties and shows</li>
+                    <li>&#10004; Umbrella and tent rental</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="contact" class="form-section">
+            <div class="form-container">
+                <h2>Book your day!</h2>
+                <form id="contactFormEn">
+                    <div class="form-group"><label>Full Name</label><input type="text" id="nombre_en" required placeholder="John Doe"></div>
+                    <div class="form-group"><label>Email</label><input type="email" id="email_en" required placeholder="mail@example.com"></div>
+                    <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" id="telefono_en" required placeholder="+55 48 99999-9999"></div>
+                    <div class="form-group"><label>Company</label><input type="text" id="empresa_en" required placeholder="Your company name"></div>
+                    <div class="form-group"><label>Message or details</label><textarea id="mensaje_en" placeholder="What day would you like to visit us?"></textarea></div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Send request via WhatsApp</button>
+                </form>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <h3 style="color: var(--primary-cyan); margin-bottom: 15px;">Multiparque - Water Park</h3>
+            <a href="https://maps.app.goo.gl/cRsYKB8CyAV3XjYg8" target="_blank" class="map-btn">📍 Get directions (Open in Maps)</a>
+            <p>&copy; 2026 Multiparque. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- ================= PORTUGUESE CONTENT ================= -->
+    <div id="lang-pt" class="lang-content">
+        <header class="hero">
+            <video class="hero-bg-video" autoplay loop muted playsinline>
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-beautiful-waterfall-in-forest-3255-large.mp4" type="video/mp4">
+                <div class="hero-overlay" style="background: var(--deep-blue);"></div>
+            </video>
+            <div class="hero-overlay"></div>
+
+            <div class="hero-content">
+                <h1 class="hero-title">A experiência <span>aquática</span> que você merece</h1>
+                <p class="hero-subtitle">Diversão, adrenalina e relaxamento no coração de Santa Catarina. Venha viver o verão no Multiparque.</p>
+                <div class="cta-group">
+                    <a href="#contact" class="btn-primary">Solicitar orçamento &rarr;</a>
+                    <a href="#video-grid" class="btn-outline">Ver atrações</a>
+                </div>
+                <div class="stats">
+                    <div class="stat-box"><h3>30+</h3><p>Anos história</p></div>
+                    <div class="stat-box"><h3>20+</h3><p>Atrações</p></div>
+                </div>
+            </div>
+        </header>
+
+        <div id="video-grid" class="videos-container" style="padding: 0 5% 50px;">
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Piscinas</h4><p>Ondas e relax</p></div></div>
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Tobogãs</h4><p>Adrenalina pura</p></div></div>
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Família</h4><p>Diversão garantida</p></div></div>
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Eventos</h4><p>Festas temáticas</p></div></div>
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Área VIP</h4><p>Exclusividade</p></div></div>
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Infantil</h4><p>Segurança total</p></div></div>
+        </div>
+
+        <section class="about-section">
+            <div class="about-text">
+                <h2>Sobre o Multiparque</h2>
+                <p>Localizado no coração de Santa Catarina, o Multiparque é o destino favorito de famílias e jovens que buscam o equilíbrio perfeito entre aventura e descanso.</p>
+                <p>Com mais de 30 anos de tradição, oferecemos piscinas de ondas, toboáguas radicais, áreas de jogos infantis e espaços VIP para que seu dia seja inesquecível.</p>
+                <p><strong>Estrutura completa:</strong> Restaurante, vestiários, estacionamento e segurança 24h.</p>
+            </div>
+            <div class="about-text" style="background: var(--dark-blue-card); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 229, 255, 0.2);">
+                <h3 style="color: var(--primary-cyan);">O que oferecemos?</h3>
+                <ul style="list-style: none; line-height: 2.2;">
+                    <li>&#10004; Piscina de ondas (a maior da região)</li>
+                    <li>&#10004; Toboágua Kamikaze</li>
+                    <li>&#10004; Rio Lento e Piscina Infantil</li>
+                    <li>&#10004; Festa de espuma e shows</li>
+                    <li>&#10004; Aluguel de guarda-sóis e tendas</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="contact" class="form-section">
+            <div class="form-container">
+                <h2>Reserve seu dia!</h2>
+                <form id="contactFormPt">
+                    <div class="form-group"><label>Nome completo</label><input type="text" id="nome_pt" required placeholder="Ex. João Silva"></div>
+                    <div class="form-group"><label>E-mail</label><input type="email" id="email_pt" required placeholder="exemplo@email.com"></div>
+                    <div class="form-group"><label>Telefone / WhatsApp</label><input type="tel" id="telefono_pt" required placeholder="+55 48 99999-9999"></div>
+                    <div class="form-group"><label>Empresa</label><input type="text" id="empresa_pt" required placeholder="Nome da sua empresa"></div>
+                    <div class="form-group"><label>Mensagem ou detalhes</label><textarea id="mensaje_pt" placeholder="Que dia gostaria de nos visitar?"></textarea></div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Enviar pedido pelo WhatsApp</button>
+                </form>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <h3 style="color: var(--primary-cyan); margin-bottom: 15px;">Multiparque - Parque Aquático</h3>
+            <a href="https://maps.app.goo.gl/cRsYKB8CyAV3XjYg8" target="_blank" class="map-btn">📍 Como chegar (Abrir rota no Maps)</a>
+            <p>&copy; 2026 Multiparque. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/554999679084" target="_blank" class="float-wa" title="Fale conosco pelo WhatsApp">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382C17.336 14.318 16.046 13.694 15.922 13.643C15.798 13.592 15.703 13.57 15.567 13.635C15.431 13.7 14.79 14.092 14.669 14.188C14.548 14.284 14.458 14.305 14.322 14.24C14.186 14.175 13.317 13.826 12.306 12.912C11.522 12.201 11.05 11.369 10.965 11.269C10.88 11.168 10.95 11.024 11.07 10.935C11.177 10.855 11.307 10.736 11.386 10.63C11.465 10.525 11.48 10.47 11.53 10.357C11.58 10.244 11.525 10.055 11.441 9.861C11.357 9.667 10.785 8.51 10.648 8.215C10.512 7.92 10.372 7.968 10.26 7.968C10.156 7.968 10.04 7.968 9.924 7.968C9.808 7.968 9.663 7.992 9.553 8.098C9.443 8.204 9.1 8.543 8.947 8.754C8.794 8.965 8.684 9.114 8.604 9.233C8.522 9.352 8.458 9.373 8.358 9.439C8.258 9.505 7.581 9.817 6.949 10.176C6.317 10.535 5.885 10.811 5.637 11.005C5.389 11.199 5.39 11.235 5.399 11.361C5.408 11.487 5.5 11.703 5.583 11.83C5.666 11.957 6.165 12.694 6.857 13.462C7.549 14.23 8.378 14.914 8.829 15.179C9.28 15.444 9.586 15.421 9.77 15.421C9.954 15.421 10.213 15.421 10.355 15.327C10.497 15.233 11.205 14.735 11.407 14.505C11.609 14.275 11.76 14.225 11.891 14.225C12.022 14.225 13.222 14.642 13.459 14.782C13.696 14.922 13.8 14.972 13.922 15.045C14.044 15.118 14.454 15.368 14.612 15.47C14.77 15.572 14.824 15.618 14.922 15.672C15.02 15.726 15.13 15.726 15.252 15.672C15.374 15.618 16.468 14.955 16.618 14.885C16.768 14.815 16.9 14.855 16.999 14.875C17.098 14.895 17.608 15.125 17.723 15.175C17.838 15.225 17.9 15.25 17.98 15.295C18.06 15.34 18.055 15.445 17.98 15.66C17.905 15.875 17.607 16.475 17.398 16.794C17.189 17.113 17.008 17.119 16.698 17.177C16.388 17.235 15.487 17.378 14.784 17.37C14.081 17.362 13.481 17.203 12.891 16.905C12.301 16.607 10.86 15.794 10.26 15.365C9.66 14.936 9.542 14.928 9.242 14.74C8.942 14.552 8.28 14.14 8.048 13.956C7.816 13.772 7.714 13.803 7.56 13.836L7.152 13.925C7.029 13.945 6.905 13.911 6.806 13.836C6.707 13.761 6.003 13.162 5.622 12.812C5.241 12.462 5.049 12.213 4.953 11.925C4.857 11.637 4.857 11.37 4.857 11.124C4.857 10.878 5.047 9.822 5.14 9.376C5.233 8.93 5.366 8.809 5.514 8.732C5.662 8.655 5.684 8.724 5.826 8.828C5.968 8.932 6.256 9.067 6.477 9.182C6.698 9.297 6.751 9.313 6.891 9.352C7.031 9.391 7.08 9.406 7.2 9.36C7.32 9.314 7.717 9.103 7.859 9.016C8.001 8.929 8.188 8.838 8.198 8.811C8.208 8.784 8.198 8.627 8.128 8.437C8.058 8.247 7.825 7.729 7.745 7.522C7.665 7.315 7.705 7.253 7.675 7.193C7.645 7.133 7.435 7.119 7.325 7.099C7.215 7.079 6.818 7.117 6.604 7.117C6.39 7.117 5.841 7.117 5.534 7.283C5.227 7.449 4.573 7.932 4.181 8.245C3.789 8.558 3.368 8.854 3.28 8.978C3.192 9.102 3.192 9.231 3.204 9.362C3.216 9.493 3.318 10.15 3.388 10.675C3.458 11.2 3.55 11.738 3.602 12.004C3.654 12.27 3.694 12.465 3.704 12.515C3.714 12.565 3.786 12.675 3.804 12.754C3.822 12.833 3.85 12.895 3.88 12.961C3.91 13.027 4.245 13.825 4.695 14.398C5.145 14.971 5.64 15.343 6.015 15.62C6.39 15.897 6.73 16.098 6.977 16.234C7.224 16.37 7.321 16.423 7.449 16.475C7.577 16.527 7.648 16.559 7.832 16.616C8.016 16.673 8.305 16.708 8.451 16.726C8.597 16.744 8.718 16.737 8.799 16.688C8.88 16.639 9.357 16.065 9.512 15.855C9.667 15.645 9.781 15.645 9.904 15.725C10.027 15.805 11.095 16.36 11.639 16.665C12.183 16.97 12.614 17.156 12.831 17.221C13.048 17.286 13.311 17.286 13.477 17.286C13.643 17.286 14.327 17.286 14.593 17.235C14.859 17.184 15.265 16.955 15.662 16.66C16.059 16.365 16.414 15.945 16.558 15.715C16.702 15.485 16.68 15.385 16.678 15.363C16.676 15.341 16.678 15.263 16.623 15.2C16.568 15.137 16.524 15.123 16.481 15.102C16.438 15.081 16.271 14.999 16.201 14.965C16.131 14.931 15.998 14.885 15.96 14.865C15.922 14.845 15.922 14.82 15.922 14.8C15.922 14.78 15.93 14.768 15.922 14.749C15.914 14.73 15.608 14.446 17.472 14.382Z" fill="white"/>
+            <path d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2ZM12 20C7.589 20 4 16.411 4 12C4 7.589 7.589 4 12 4C16.411 4 20 7.589 20 12C20 16.411 16.411 20 12 20Z" fill="white"/>
+        </svg>
+    </a>
+
+    <script>
+        // Language Switcher Logic
+        function setLang(lang) {
+            // Hide all contents
+            document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active-lang'));
+            // Show selected
+            document.getElementById('lang-' + lang).classList.add('active-lang');
+            
+            // Update buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            // Fallback for contains in older browsers if needed, use simple loop:
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if(btn.innerText.toLowerCase() === lang) btn.classList.add('active');
+            });
+        }
+
+        // Form submission logic (WhatsApp redirection with data)
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            // Identify which language form was submitted
+            let formId = event.target.id;
+            let prefix = '';
+            if(formId === 'contactForm') prefix = '';
+            else if(formId === 'contactFormEn') prefix = '_en';
+            else if(formId === 'contactFormPt') prefix = '_pt';
+
+            // Get values
+            const nombre = document.getElementById('nombre' + prefix).value;
+            const email = document.getElementById('email' + prefix).value;
+            const telefono = document.getElementById('telefono' + prefix).value;
+            const empresa = document.getElementById('empresa' + prefix).value;
+            const mensaje = document.getElementById('mensaje' + prefix).value;
+
+            // Construct WhatsApp Message
+            const message = `*¡Nueva reserva en Multiparque!*%0A%0A` +
+                            `*Nombre:* ${nombre}%0A` +
+                            `*Email:* ${email}%0A` +
+                            `*Teléfono:* ${telefono}%0A` +
+                            `*Empresa:* ${empresa}%0A` +
+                            `*Mensaje:* ${mensaje}`;
+
+            // WhatsApp URL
+            const phone = "554999679084";
+            const url = `https://wa.me/${phone}?text=${message}`;
+            
+            // Open in new tab
+            window.open(url, '_blank');
+        }
+
+        // Attach submit events to all forms
+        document.getElementById('contactForm').addEventListener('submit', handleFormSubmit);
+        document.getElementById('contactFormEn').addEventListener('submit', handleFormSubmit);
+        document.getElementById('contactFormPt').addEventListener('submit', handleFormSubmit);
+    </script>
+
+</body>
+</html>
