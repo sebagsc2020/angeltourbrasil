@@ -71,7 +71,7 @@
         }
         .hero-content { position: relative; z-index: 2; }
         
-        /* LOGOTIPO AUMENTADO */
+        /* LOGOTIPO */
         .hero-logo {
             position: absolute;
             top: 80px;
@@ -87,6 +87,14 @@
         .hero-title { font-size: 3.8rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px; max-width: 700px; text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .hero-title span { color: var(--primary-cyan); text-shadow: 0 0 20px rgba(0, 229, 255, 0.4); }
         .hero-subtitle { font-size: 1.2rem; max-width: 600px; margin-bottom: 30px; line-height: 1.6; opacity: 0.95; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .hero-subtitle .representante {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--primary-cyan);
+            opacity: 0.9;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
         
         .cta-group { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 40px; }
         .btn-primary { 
@@ -203,11 +211,22 @@
         }
         .faq-item input[type="checkbox"]:checked + .faq-question::after { content: '-'; }
 
-        /* Form Section */
+        /* Form Section - 2 COLUMNAS EN ESCRITORIO */
         .form-section { padding: 80px 5%; background: #071B2E; }
-        .form-container { max-width: 600px; margin: 0 auto; background: var(--dark-blue-card); padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border: 1px solid rgba(0, 229, 255, 0.2); }
+        .form-container { max-width: 800px; margin: 0 auto; background: var(--dark-blue-card); padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border: 1px solid rgba(0, 229, 255, 0.2); }
         .form-container h2 { text-align: center; margin-bottom: 30px; font-size: 2.2rem; color: var(--primary-cyan); }
-        .form-group { margin-bottom: 20px; }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .form-row .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .form-group { margin-bottom: 20px; width: 100%; }
         .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
         .form-group input, .form-group select, .form-group textarea {
             width: 100%; padding: 15px; border: none; border-radius: 10px; 
@@ -256,9 +275,14 @@
             .stat-box h3 { font-size: 1.5rem; }
             .lang-switcher { top: 10px; right: 10px; }
             .lang-btn { padding: 4px 10px; font-size: 0.7rem; }
+            
+            /* En móviles, el formulario vuelve a ser de 1 sola columna */
+            .form-row { flex-direction: column; gap: 0; }
+            .form-row .form-group { min-width: 100%; }
         }
         @media (max-width: 480px) {
             .videos-container { grid-template-columns: 1fr; }
+            .hero-title { font-size: 2.2rem; }
         }
     </style>
 </head>
@@ -282,7 +306,10 @@
 
             <div class="hero-content">
                 <h1 class="hero-title">La experiencia <span>acuática</span> que mereces</h1>
-                <p class="hero-subtitle">Diversión, adrenalina y relax en el corazón de Santa Catarina. Ven a vivir el verano en Multiparque.</p>
+                <p class="hero-subtitle">
+                    Diversión, adrenalina y relax en el corazón de Santa Catarina. Ven a vivir el verano en Multiparque.
+                    <span class="representante">Angel Tour Brasil es representante de ventas autorizado.</span>
+                </p>
                 
                 <div class="cta-group">
                     <a href="#contact" class="btn-primary">Solicitar presupuesto &rarr;</a>
@@ -379,26 +406,30 @@
             </div>
         </section>
 
-        <!-- Contact Form -->
+        <!-- Contact Form (2 Columnas en escritorio) -->
         <section id="contact" class="form-section">
             <div class="form-container">
                 <h2>¡Reserva tu día!</h2>
                 <form id="contactForm">
-                    <div class="form-group">
-                        <label>Nombre completo</label>
-                        <input type="text" id="nombre" required placeholder="Ej. Juan Pérez">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nombre completo</label>
+                            <input type="text" id="nombre" required placeholder="Ej. Juan Pérez">
+                        </div>
+                        <div class="form-group">
+                            <label>Correo electrónico</label>
+                            <input type="email" id="email" required placeholder="ejemplo@mail.com">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Correo electrónico</label>
-                        <input type="email" id="email" required placeholder="ejemplo@mail.com">
-                    </div>
-                    <div class="form-group">
-                        <label>Teléfono / WhatsApp</label>
-                        <input type="tel" id="telefono" required placeholder="+55 48 99999-9999">
-                    </div>
-                    <div class="form-group">
-                        <label>Empresa</label>
-                        <input type="text" id="empresa" required placeholder="Nombre de tu empresa">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Teléfono / WhatsApp</label>
+                            <input type="tel" id="telefono" required placeholder="+55 48 99999-9999">
+                        </div>
+                        <div class="form-group">
+                            <label>Empresa</label>
+                            <input type="text" id="empresa" required placeholder="Nombre de tu empresa">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Mensaje o detalles adicionales</label>
@@ -427,7 +458,10 @@
             <img src="https://www.angeltourbrasil.com.br/images/mp-logo.webp" alt="Multiparque Logo" class="hero-logo">
             <div class="hero-content">
                 <h1 class="hero-title">The <span>aquatic</span> experience you deserve</h1>
-                <p class="hero-subtitle">Fun, adrenaline and relaxation in the heart of Santa Catarina. Come live the summer at Multiparque.</p>
+                <p class="hero-subtitle">
+                    Fun, adrenaline and relaxation in the heart of Santa Catarina. Come live the summer at Multiparque.
+                    <span class="representante">Angel Tour Brasil is an authorized sales representative.</span>
+                </p>
                 <div class="cta-group">
                     <a href="#contact" class="btn-primary">Request quote &rarr;</a>
                     <a href="#video-grid" class="btn-outline">View attractions</a>
@@ -500,10 +534,14 @@
             <div class="form-container">
                 <h2>Book your day!</h2>
                 <form id="contactFormEn">
-                    <div class="form-group"><label>Full Name</label><input type="text" id="nombre_en" required placeholder="John Doe"></div>
-                    <div class="form-group"><label>Email</label><input type="email" id="email_en" required placeholder="mail@example.com"></div>
-                    <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" id="telefono_en" required placeholder="+55 48 99999-9999"></div>
-                    <div class="form-group"><label>Company</label><input type="text" id="empresa_en" required placeholder="Your company name"></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Full Name</label><input type="text" id="nombre_en" required placeholder="John Doe"></div>
+                        <div class="form-group"><label>Email</label><input type="email" id="email_en" required placeholder="mail@example.com"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" id="telefono_en" required placeholder="+55 48 99999-9999"></div>
+                        <div class="form-group"><label>Company</label><input type="text" id="empresa_en" required placeholder="Your company name"></div>
+                    </div>
                     <div class="form-group"><label>Message or details</label><textarea id="mensaje_en" placeholder="What day would you like to visit us?"></textarea></div>
                     <button type="submit" class="btn-primary" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.132-1.758-.717-2.03-.78-.273-.063-.47-.078-.67.1-.202.18-1.108 1.076-1.36 1.286-.25.21-.5.23-.84.08-.34-.15-1.208-.5-2.23-1.36-.78-.7-1.3-1.5-1.4-1.64-.1-.14-.04-.28.12-.37.14-.08.26-.2.34-.32.08-.12.09-.18.13-.3.05-.12-.05-.32-.14-.52-.09-.2-.65-1.35-.78-1.65-.14-.3-.28-.24-.4-.24h-.64c-.12 0-.27.02-.38.13-.11.11-.46.45-.62.66-.16.22-.27.38-.36.5-.08.12-.12.14-.2.2-.1.06-.78.32-1.42.68-.64.36-1.08.64-1.33.84-.25.2-.25.24-.24.36.01.13.1.35.18.48.09.13.6.85 1.3 1.63.7.78 1.54 1.47 2 1.74.46.27.77.24.95.24h.6c.15 0 .26-.1.34-.2.15-.2 1-1.16 1.2-1.4.2-.23.36-.28.5-.28s1.2.42 1.45.56c.25.14.36.19.48.27.12.08.52.33.68.43.16.1.22.16.32.22.1.06.2.06.32 0 .12-.06 1.1-.68 1.26-.76.16-.07.28-.07.38 0 .1.02.6.24.72.28.12.04.18.07.26.12.08.05.08.16 0 .3-.08.14-.3.72-.52 1.05-.21.33-.4.34-.7.4-.3.06-1.2.15-1.9.12-.7-.03-1.3-.16-1.9-.46-.6-.3-2.04-1.12-2.65-1.55-.6-.43-.72-.43-1.02-.62-.3-.2-.97-.62-1.2-.8-.23-.18-.33-.18-.48-.13l-.42.1c-.13.02-.26-.03-.36-.13-.1-.1-.72-.7-1.1-1.04-.4-.34-.6-.6-.7-.9-.1-.3-.1-.57-.1-.8 0-.24.2-1.06.3-1.5.1-.44.23-.56.38-.62.15-.06.17-.06.27.1.1.16.4.36.62.5.22.14.28.15.42.2.14.05.15.07.28 0 .12-.07.52-.32.64-.4.12-.08.2-.17.2-.2 0-.03 0-.15-.08-.34-.07-.19-.3-.72-.38-.92-.08-.2-.05-.26-.07-.32-.03-.06-.23-.08-.33-.1-.1-.02-.4.02-.6.02-.2 0-.7 0-1 .17-.3.17-.95.65-1.35.98-.4.33-.8.63-.88.75-.08.13-.08.26 0 .4.01.13.1.82.18 1.34.08.52.16 1.06.2 1.32.04.26.1.46.12.52.02.06.08.16.1.24.02.08.04.16.07.22.03.07.38.85.84 1.45.46.6.96.97 1.34 1.25.38.28.72.48.97.6.25.12.33.17.45.22.12.05.2.08.4.14.2.06.5.1.65.12.15.02.25 0 .3-.05.06-.05.5-.64.64-.85.14-.21.28-.21.4-.13.12.08 1.18.65 1.74.97.56.32.99.5 1.2.57.21.07.4.07.52.07.14 0 .65 0 .85-.05.2-.05.6-.24.97-.54.37-.3.72-.7.86-.93.14-.23.12-.32.12-.35 0-.03 0-.1-.04-.15-.04-.05-.08-.08-.12-.1-.04-.02-.15-.1-.2-.13-.05-.03-.15-.07-.19-.09-.04-.02-.04-.04-.04-.06s0-.02-.04-.04c-.04-.02-.28-.28.12-.34z"/></svg>
@@ -527,7 +565,10 @@
             <img src="https://www.angeltourbrasil.com.br/images/mp-logo.webp" alt="Multiparque Logo" class="hero-logo">
             <div class="hero-content">
                 <h1 class="hero-title">A experiência <span>aquática</span> que você merece</h1>
-                <p class="hero-subtitle">Diversão, adrenalina e relaxamento no coração de Santa Catarina. Venha viver o verão no Multiparque.</p>
+                <p class="hero-subtitle">
+                    Diversão, adrenalina e relaxamento no coração de Santa Catarina. Venha viver o verão no Multiparque.
+                    <span class="representante">Angel Tour Brasil é representante de vendas autorizado.</span>
+                </p>
                 <div class="cta-group">
                     <a href="#contact" class="btn-primary">Solicitar orçamento &rarr;</a>
                     <a href="#video-grid" class="btn-outline">Ver atrações</a>
@@ -600,10 +641,14 @@
             <div class="form-container">
                 <h2>Reserve seu dia!</h2>
                 <form id="contactFormPt">
-                    <div class="form-group"><label>Nome completo</label><input type="text" id="nome_pt" required placeholder="Ex. João Silva"></div>
-                    <div class="form-group"><label>E-mail</label><input type="email" id="email_pt" required placeholder="exemplo@email.com"></div>
-                    <div class="form-group"><label>Telefone / WhatsApp</label><input type="tel" id="telefono_pt" required placeholder="+55 48 99999-9999"></div>
-                    <div class="form-group"><label>Empresa</label><input type="text" id="empresa_pt" required placeholder="Nome da sua empresa"></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Nome completo</label><input type="text" id="nome_pt" required placeholder="Ex. João Silva"></div>
+                        <div class="form-group"><label>E-mail</label><input type="email" id="email_pt" required placeholder="exemplo@email.com"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Telefone / WhatsApp</label><input type="tel" id="telefono_pt" required placeholder="+55 48 99999-9999"></div>
+                        <div class="form-group"><label>Empresa</label><input type="text" id="empresa_pt" required placeholder="Nome da sua empresa"></div>
+                    </div>
                     <div class="form-group"><label>Mensagem ou detalhes</label><textarea id="mensaje_pt" placeholder="Que dia gostaria de nos visitar?"></textarea></div>
                     <button type="submit" class="btn-primary" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.132-1.758-.717-2.03-.78-.273-.063-.47-.078-.67.1-.202.18-1.108 1.076-1.36 1.286-.25.21-.5.23-.84.08-.34-.15-1.208-.5-2.23-1.36-.78-.7-1.3-1.5-1.4-1.64-.1-.14-.04-.28.12-.37.14-.08.26-.2.34-.32.08-.12.09-.18.13-.3.05-.12-.05-.32-.14-.52-.09-.2-.65-1.35-.78-1.65-.14-.3-.28-.24-.4-.24h-.64c-.12 0-.27.02-.38.13-.11.11-.46.45-.62.66-.16.22-.27.38-.36.5-.08.12-.12.14-.2.2-.1.06-.78.32-1.42.68-.64.36-1.08.64-1.33.84-.25.2-.25.24-.24.36.01.13.1.35.18.48.09.13.6.85 1.3 1.63.7.78 1.54 1.47 2 1.74.46.27.77.24.95.24h.6c.15 0 .26-.1.34-.2.15-.2 1-1.16 1.2-1.4.2-.23.36-.28.5-.28s1.2.42 1.45.56c.25.14.36.19.48.27.12.08.52.33.68.43.16.1.22.16.32.22.1.06.2.06.32 0 .12-.06 1.1-.68 1.26-.76.16-.07.28-.07.38 0 .1.02.6.24.72.28.12.04.18.07.26.12.08.05.08.16 0 .3-.08.14-.3.72-.52 1.05-.21.33-.4.34-.7.4-.3.06-1.2.15-1.9.12-.7-.03-1.3-.16-1.9-.46-.6-.3-2.04-1.12-2.65-1.55-.6-.43-.72-.43-1.02-.62-.3-.2-.97-.62-1.2-.8-.23-.18-.33-.18-.48-.13l-.42.1c-.13.02-.26-.03-.36-.13-.1-.1-.72-.7-1.1-1.04-.4-.34-.6-.6-.7-.9-.1-.3-.1-.57-.1-.8 0-.24.2-1.06.3-1.5.1-.44.23-.56.38-.62.15-.06.17-.06.27.1.1.16.4.36.62.5.22.14.28.15.42.2.14.05.15.07.28 0 .12-.07.52-.32.64-.4.12-.08.2-.17.2-.2 0-.03 0-.15-.08-.34-.07-.19-.3-.72-.38-.92-.08-.2-.05-.26-.07-.32-.03-.06-.23-.08-.33-.1-.1-.02-.4.02-.6.02-.2 0-.7 0-1 .17-.3.17-.95.65-1.35.98-.4.33-.8.63-.88.75-.08.13-.08.26 0 .4.01.13.1.82.18 1.34.08.52.16 1.06.2 1.32.04.26.1.46.12.52.02.06.08.16.1.24.02.08.04.16.07.22.03.07.38.85.84 1.45.46.6.96.97 1.34 1.25.38.28.72.48.97.6.25.12.33.17.45.22.12.05.2.08.4.14.2.06.5.1.65.12.15.02.25 0 .3-.05.06-.05.5-.64.64-.85.14-.21.28-.21.4-.13.12.08 1.18.65 1.74.97.56.32.99.5 1.2.57.21.07.4.07.52.07.14 0 .65 0 .85-.05.2-.05.6-.24.97-.54.37-.3.72-.7.86-.93.14-.23.12-.32.12-.35 0-.03 0-.1-.04-.15-.04-.05-.08-.08-.12-.1-.04-.02-.15-.1-.2-.13-.05-.03-.15-.07-.19-.09-.04-.02-.04-.04-.04-.06s0-.02-.04-.04c-.04-.02-.28-.28.12-.34z"/></svg>
@@ -619,8 +664,8 @@
         </footer>
     </div>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/554999679084" target="_blank" class="float-wa" title="Fale conosco pelo WhatsApp">
+    <!-- Floating WhatsApp Button (Botón flotante con mensaje personalizado) -->
+    <a href="https://wa.me/554999679084?text=👋%20%C2%A1Hola!%20Me%20interesa%20conocer%20m%C3%A1s%20sobre%20Multiparque%20para%20mi%20empresa.%20%C2%BFPodr%C3%ADan%20darme%20informaci%C3%B3n%3F" target="_blank" class="float-wa" title="Fale conosco pelo WhatsApp">
         <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.472 14.382C17.336 14.318 16.046 13.694 15.922 13.643C15.798 13.592 15.703 13.57 15.567 13.635C15.431 13.7 14.79 14.092 14.669 14.188C14.548 14.284 14.458 14.305 14.322 14.24C14.186 14.175 13.317 13.826 12.306 12.912C11.522 12.201 11.05 11.369 10.965 11.269C10.88 11.168 10.95 11.024 11.07 10.935C11.177 10.855 11.307 10.736 11.386 10.63C11.465 10.525 11.48 10.47 11.53 10.357C11.58 10.244 11.525 10.055 11.441 9.861C11.357 9.667 10.785 8.51 10.648 8.215C10.512 7.92 10.372 7.968 10.26 7.968C10.156 7.968 10.04 7.968 9.924 7.968C9.808 7.968 9.663 7.992 9.553 8.098C9.443 8.204 9.1 8.543 8.947 8.754C8.794 8.965 8.684 9.114 8.604 9.233C8.522 9.352 8.458 9.373 8.358 9.439C8.258 9.505 7.581 9.817 6.949 10.176C6.317 10.535 5.885 10.811 5.637 11.005C5.389 11.199 5.39 11.235 5.399 11.361C5.408 11.487 5.5 11.703 5.583 11.83C5.666 11.957 6.165 12.694 6.857 13.462C7.549 14.23 8.378 14.914 8.829 15.179C9.28 15.444 9.586 15.421 9.77 15.421C9.954 15.421 10.213 15.421 10.355 15.327C10.497 15.233 11.205 14.735 11.407 14.505C11.609 14.275 11.76 14.225 11.891 14.225C12.022 14.225 13.222 14.642 13.459 14.782C13.696 14.922 13.8 14.972 13.922 15.045C14.044 15.118 14.454 15.368 14.612 15.47C14.77 15.572 14.824 15.618 14.922 15.672C15.02 15.726 15.13 15.726 15.252 15.672C15.374 15.618 16.468 14.955 16.618 14.885C16.768 14.815 16.9 14.855 16.999 14.875C17.098 14.895 17.608 15.125 17.723 15.175C17.838 15.225 17.9 15.25 17.98 15.295C18.06 15.34 18.055 15.445 17.98 15.66C17.905 15.875 17.607 16.475 17.398 16.794C17.189 17.113 17.008 17.119 16.698 17.177C16.388 17.235 15.487 17.378 14.784 17.37C14.081 17.362 13.481 17.203 12.891 16.905C12.301 16.607 10.86 15.794 10.26 15.365C9.66 14.936 9.542 14.928 9.242 14.74C8.942 14.552 8.28 14.14 8.048 13.956C7.816 13.772 7.714 13.803 7.56 13.836L7.152 13.925C7.029 13.945 6.905 13.911 6.806 13.836C6.707 13.761 6.003 13.162 5.622 12.812C5.241 12.462 5.049 12.213 4.953 11.925C4.857 11.637 4.857 11.37 4.857 11.124C4.857 10.878 5.047 9.822 5.14 9.376C5.233 8.93 5.366 8.809 5.514 8.732C5.662 8.655 5.684 8.724 5.826 8.828C5.968 8.932 6.256 9.067 6.477 9.182C6.698 9.297 6.751 9.313 6.891 9.352C7.031 9.391 7.08 9.406 7.2 9.36C7.32 9.314 7.717 9.103 7.859 9.016C8.001 8.929 8.188 8.838 8.198 8.811C8.208 8.784 8.198 8.627 8.128 8.437C8.058 8.247 7.825 7.729 7.745 7.522C7.665 7.315 7.705 7.253 7.675 7.193C7.645 7.133 7.435 7.119 7.325 7.099C7.215 7.079 6.818 7.117 6.604 7.117C6.39 7.117 5.841 7.117 5.534 7.283C5.227 7.449 4.573 7.932 4.181 8.245C3.789 8.558 3.368 8.854 3.28 8.978C3.192 9.102 3.192 9.231 3.204 9.362C3.216 9.493 3.318 10.15 3.388 10.675C3.458 11.2 3.55 11.738 3.602 12.004C3.654 12.27 3.694 12.465 3.704 12.515C3.714 12.565 3.786 12.675 3.804 12.754C3.822 12.833 3.85 12.895 3.88 12.961C3.91 13.027 4.245 13.825 4.695 14.398C5.145 14.971 5.64 15.343 6.015 15.62C6.39 15.897 6.73 16.098 6.977 16.234C7.224 16.37 7.321 16.423 7.449 16.475C7.577 16.527 7.648 16.559 7.832 16.616C8.016 16.673 8.305 16.708 8.451 16.726C8.597 16.744 8.718 16.737 8.799 16.688C8.88 16.639 9.357 16.065 9.512 15.855C9.667 15.645 9.781 15.645 9.904 15.725C10.027 15.805 11.095 16.36 11.639 16.665C12.183 16.97 12.614 17.156 12.831 17.221C13.048 17.286 13.311 17.286 13.477 17.286C13.643 17.286 14.327 17.286 14.593 17.235C14.859 17.184 15.265 16.955 15.662 16.66C16.059 16.365 16.414 15.945 16.558 15.715C16.702 15.485 16.68 15.385 16.678 15.363C16.676 15.341 16.678 15.263 16.623 15.2C16.568 15.137 16.524 15.123 16.481 15.102C16.438 15.081 16.271 14.999 16.201 14.965C16.131 14.931 15.998 14.885 15.96 14.865C15.922 14.845 15.922 14.82 15.922 14.8C15.922 14.78 15.93 14.768 15.922 14.749C15.914 14.73 15.608 14.446 17.472 14.382Z" fill="white"/>
             <path d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2ZM12 20C7.589 20 4 16.411 4 12C4 7.589 7.589 4 12 4C16.411 4 20 7.589 20 12C20 16.411 16.411 20 12 20Z" fill="white"/>
