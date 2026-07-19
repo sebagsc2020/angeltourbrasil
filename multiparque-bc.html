@@ -613,7 +613,6 @@
         .modal-content .modal-body ul li {
             margin-bottom: 5px;
         }
-        /* Ocultar todos los idiomas de los modales por defecto */
         .modal-lang-content { display: none; }
         .modal-lang-content.active-lang { display: block; }
 
@@ -685,10 +684,10 @@
                 right: auto;
                 margin: 0 auto 20px auto;
                 display: block;
-                max-width: 280px;
+                max-width: 320px;
             }
             .hero {
-                padding-top: 30px;
+                padding-top: 20px;
             }
             .hero-text-highlight {
                 padding: 15px 20px;
@@ -704,8 +703,11 @@
         }
         @media (max-width: 768px) {
             .hero-title { font-size: 2.4rem; }
-            .hero { padding-top: 20px; }
-            .hero-logo { max-width: 220px; margin-bottom: 15px; }
+            .hero { padding-top: 10px; }
+            .hero-logo { 
+                max-width: 280px; 
+                margin: 0 auto 10px auto;
+            }
             .hero-text-highlight {
                 padding: 12px 16px;
                 border-left-width: 3px;
@@ -798,8 +800,11 @@
                 border-radius: 0;
             }
             .hero-title { font-size: 1.8rem; }
-            .hero { padding-top: 15px; }
-            .hero-logo { max-width: 180px; }
+            .hero { padding-top: 8px; }
+            .hero-logo { 
+                max-width: 240px; 
+                margin: 0 auto 8px auto;
+            }
             .hero-text-highlight {
                 padding: 10px 14px;
                 border-left-width: 3px;
@@ -844,6 +849,9 @@
             .video-card {
                 aspect-ratio: 9 / 16;
                 max-height: none;
+            }
+            .hero-logo { 
+                max-width: 200px; 
             }
         }
     </style>
@@ -1534,11 +1542,10 @@
     </div>
 
     <!-- ================= MODALES MULTIIDIOMA ================= -->
-    <!-- MODAL - Términos de Uso / Terms of Use / Termos de Uso -->
+    <!-- MODAL - Términos de Uso -->
     <div class="modal-overlay" id="modalTerms">
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal('terms')">✕</button>
-            <!-- Español -->
             <div id="modal-terms-es" class="modal-lang-content active-lang">
                 <h2>Condiciones de Uso</h2>
                 <div class="modal-body">
@@ -1567,7 +1574,6 @@
                     <p>Para preguntas o aclaraciones sobre los términos de uso, comuníquese con nuestro equipo de atención al cliente por correo electrónico a <strong>angelportobelo@gmail.com</strong> o por teléfono al <strong>+55 (47) 999679084</strong>.</p>
                 </div>
             </div>
-            <!-- Inglés -->
             <div id="modal-terms-en" class="modal-lang-content">
                 <h2>Terms of Use</h2>
                 <div class="modal-body">
@@ -1596,7 +1602,6 @@
                     <p>For questions or clarifications about the terms of use, please contact our customer service team by email at <strong>angelportobelo@gmail.com</strong> or by phone at <strong>+55 (47) 999679084</strong>.</p>
                 </div>
             </div>
-            <!-- Portugués -->
             <div id="modal-terms-pt" class="modal-lang-content">
                 <h2>Termos de Uso</h2>
                 <div class="modal-body">
@@ -1628,11 +1633,10 @@
         </div>
     </div>
 
-    <!-- MODAL - Política de Privacidad / Privacy Policy / Política de Privacidade -->
+    <!-- MODAL - Política de Privacidad -->
     <div class="modal-overlay" id="modalPrivacy">
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal('privacy')">✕</button>
-            <!-- Español -->
             <div id="modal-privacy-es" class="modal-lang-content active-lang">
                 <h2>Política de Privacidad</h2>
                 <div class="modal-body">
@@ -1663,7 +1667,6 @@
                     <p>Si tiene alguna pregunta sobre esta política de privacidad, póngase en contacto con nosotros por correo electrónico a <strong>angelportobelo@gmail.com</strong> o por teléfono al <strong>+55 (47) 999679084</strong>.</p>
                 </div>
             </div>
-            <!-- Inglés -->
             <div id="modal-privacy-en" class="modal-lang-content">
                 <h2>Privacy Policy</h2>
                 <div class="modal-body">
@@ -1694,7 +1697,6 @@
                     <p>If you have any questions about this privacy policy, please contact us by email at <strong>angelportobelo@gmail.com</strong> or by phone at <strong>+55 (47) 999679084</strong>.</p>
                 </div>
             </div>
-            <!-- Portugués -->
             <div id="modal-privacy-pt" class="modal-lang-content">
                 <h2>Política de Privacidade</h2>
                 <div class="modal-body">
@@ -1768,14 +1770,11 @@
             window.open(url, '_blank');
         }
 
-        // Funciones para los modales con idioma
         function openModal(type, lang) {
             const modal = document.getElementById(type === 'terms' ? 'modalTerms' : 'modalPrivacy');
             if (modal) {
-                // Ocultar todos los idiomas del modal
                 const langContents = modal.querySelectorAll('.modal-lang-content');
                 langContents.forEach(el => el.classList.remove('active-lang'));
-                // Mostrar el idioma seleccionado
                 const target = document.getElementById('modal-' + type + '-' + lang);
                 if (target) {
                     target.classList.add('active-lang');
@@ -1793,7 +1792,6 @@
             }
         }
 
-        // Cerrar modal al hacer clic fuera del contenido
         document.addEventListener('click', function(e) {
             if (e.target.classList.contains('modal-overlay')) {
                 e.target.classList.remove('active');
@@ -1801,7 +1799,6 @@
             }
         });
 
-        // Cerrar modal con tecla ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 document.querySelectorAll('.modal-overlay.active').forEach(modal => {
@@ -1831,11 +1828,9 @@
         }
 
         function setLang(lang) {
-            // Cambiar idioma del contenido principal
             document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active-lang'));
             document.getElementById('lang-' + lang).classList.add('active-lang');
             
-            // Cambiar idioma de los modales (si están abiertos)
             document.querySelectorAll('.modal-overlay').forEach(modal => {
                 const langContents = modal.querySelectorAll('.modal-lang-content');
                 langContents.forEach(el => el.classList.remove('active-lang'));
