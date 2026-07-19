@@ -18,7 +18,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background-color: var(--deep-blue); color: var(--text-light); overflow-x: hidden; }
 
-        /* Language Switcher - PESTAÑA FLOTANTE LATERAL */
+        /* Language Switcher - PESTAÑA FLOTANTE LATERAL (Corregida para móviles) */
         .lang-switcher {
             position: fixed;
             top: 50%;
@@ -35,7 +35,7 @@
             border: 1px solid rgba(0, 229, 255, 0.2);
             border-right: none;
             box-shadow: -3px 0 15px rgba(0,0,0,0.4);
-            transition: 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding-right 0.3s ease;
         }
         /* Efecto hover: la pestaña se expande ligeramente hacia la izquierda */
         .lang-switcher:hover {
@@ -76,26 +76,67 @@
             transform: scale(1.1);
         }
 
-        /* Responsive: En móviles la pestaña se vuelve horizontal abajo */
+        /* Clase para ocultar la pestaña (se desliza hacia la derecha) */
+        .lang-switcher.hidden {
+            transform: translateY(-50%) translateX(100%);
+        }
+
+        /* Tirador para mostrar/ocultar la pestaña en móviles */
+        .lang-toggle {
+            display: none;
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            z-index: 9998;
+            width: 24px;
+            height: 48px;
+            background: rgba(11, 37, 69, 0.8);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease;
+            opacity: 0.6;
+        }
+        .lang-toggle:hover {
+            opacity: 1;
+        }
+        .lang-toggle.visible {
+            display: flex;
+        }
+
+        /* Responsive: En móviles la pestaña se oculta y se muestra con el tirador */
         @media (max-width: 768px) {
             .lang-switcher {
-                top: auto;
-                bottom: 100px; /* Subido un poco para no tapar el botón de WhatsApp */
-                right: 15px;
-                transform: translateY(0);
-                flex-direction: row;
-                padding: 8px 12px;
-                border-radius: 12px;
+                top: 50%;
+                transform: translateY(-50%) translateX(0);
+                flex-direction: column;
+                padding: 8px 6px;
+                border-radius: 12px 0 0 12px;
                 border: 1px solid rgba(0, 229, 255, 0.2);
-                box-shadow: 0 3px 15px rgba(0,0,0,0.4);
+                border-right: none;
+                box-shadow: -3px 0 15px rgba(0,0,0,0.4);
+            }
+            .lang-switcher.hidden {
+                transform: translateY(-50%) translateX(100%);
             }
             .lang-switcher:hover {
-                padding: 8px 12px;
-                border-radius: 12px;
+                padding: 8px 6px;
+                border-radius: 12px 0 0 12px;
             }
             .lang-btn {
                 width: 30px;
                 height: 30px;
+            }
+            .lang-toggle.visible {
+                display: flex;
             }
         }
 
@@ -140,13 +181,13 @@
         }
         .hero-content { position: relative; z-index: 2; }
         
-        /* LOGOTIPO */
+        /* LOGOTIPO AUMENTADO 60% (de 270px a 432px) */
         .hero-logo {
             position: absolute;
             top: 80px;
             right: 5%;
             z-index: 3;
-            max-width: 270px;
+            max-width: 432px;
             width: 100%;
             height: auto;
             filter: drop-shadow(0 4px 15px rgba(0,0,0,0.3));
@@ -332,7 +373,7 @@
                 right: auto;
                 margin: 0 auto 30px auto;
                 display: block;
-                max-width: 200px;
+                max-width: 320px; /* Tamaño proporcional en tablets */
             }
         }
         @media (max-width: 768px) {
@@ -359,8 +400,8 @@
 </head>
 <body>
 
-    <!-- Language Switcher - Pestaña Flotante Derecha (Orden: ES, PT, EN) -->
-    <div class="lang-switcher">
+    <!-- Language Switcher - Pestaña Flotante Derecha (Corregida para móviles) -->
+    <div class="lang-switcher" id="langSwitcher">
         <button class="lang-btn active" onclick="setLang('es')">
             <img src="https://www.angeltourbrasil.com.br/images/bt-es.png" alt="Español">
         </button>
@@ -372,13 +413,16 @@
         </button>
     </div>
 
+    <!-- Tirador para mostrar/ocultar la pestaña en móviles -->
+    <button class="lang-toggle" id="langToggle" onclick="toggleLangSwitcher()">🌐</button>
+
     <!-- ================= SPANISH CONTENT ================= -->
     <div id="lang-es" class="lang-content active-lang">
         <header class="hero">
             <div class="hero-bg-slider" id="bgSlider"></div>
             <div class="hero-overlay"></div>
 
-            <!-- LOGOTIPO A LA DERECHA -->
+            <!-- LOGOTIPO A LA DERECHA (+60% MÁS GRANDE) -->
             <img src="https://www.angeltourbrasil.com.br/images/mp-logo.webp" alt="Multiparque Logo" class="hero-logo">
 
             <div class="hero-content">
@@ -749,19 +793,59 @@
         </svg>
     </a>
 
+    <!-- GOOGLE ANALYTICS (Reemplaza GA_MEASUREMENT_ID por tu ID) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
     <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+
+    <script>
+        // Función para cambiar de idioma
         function setLang(lang) {
             document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active-lang'));
             document.getElementById('lang-' + lang).classList.add('active-lang');
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.lang-btn').forEach(btn => {
-                // Para que el botón activo tenga el borde brillante
                 if(btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${lang}'`)) {
                     btn.classList.add('active');
                 }
             });
+            // Ocultar la pestaña después de seleccionar idioma (en móviles)
+            toggleLangSwitcher(true);
         }
 
+        // Función para ocultar/mostrar el selector de idiomas (para móviles)
+        function toggleLangSwitcher(forceHide = false) {
+            const switcher = document.getElementById('langSwitcher');
+            const toggle = document.getElementById('langToggle');
+            
+            // Si se fuerza la ocultación o la pestaña está visible, la ocultamos
+            if (forceHide || !switcher.classList.contains('hidden')) {
+                switcher.classList.add('hidden');
+                setTimeout(() => {
+                    toggle.classList.add('visible');
+                }, 400); // Espera a que termine la animación de salida
+            } else {
+                switcher.classList.remove('hidden');
+                toggle.classList.remove('visible');
+            }
+        }
+
+        // Detectar si es un dispositivo móvil y mostrar el tirador al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.innerWidth <= 768) {
+                // En móviles, la pestaña inicia oculta
+                document.getElementById('langSwitcher').classList.add('hidden');
+                setTimeout(() => {
+                    document.getElementById('langToggle').classList.add('visible');
+                }, 100);
+            }
+        });
+
+        // Manejar el envío del formulario
         function handleFormSubmit(event) {
             event.preventDefault();
             let formId = event.target.id;
@@ -792,21 +876,11 @@
         document.getElementById('contactFormEn').addEventListener('submit', handleFormSubmit);
         document.getElementById('contactFormPt').addEventListener('submit', handleFormSubmit);
 
-        // SLIDER DE FONDO CON VERIFICACIÓN DE EXISTENCIA DE IMÁGENES
-        document.addEventListener("DOMContentLoaded", async function() {
+        // SLIDER DE FONDO - NUEVO MÉTODO (Carga con verificación de errores)
+        document.addEventListener("DOMContentLoaded", function() {
             const totalImages = 26;
             const baseUrl = "https://www.angeltourbrasil.com.br/images/mp_";
             const extension = ".webp";
-            
-            // Función para verificar si una imagen existe (petición HEAD)
-            async function imageExists(url) {
-                try {
-                    const response = await fetch(url, { method: 'HEAD' });
-                    return response.ok; // Si el servidor responde 200 OK, la imagen existe
-                } catch (error) {
-                    return false; // Si hay error o bloqueo, la consideramos no disponible
-                }
-            }
             
             // Función para generar un array de números en orden aleatorio
             function generateRandomSequence() {
@@ -821,79 +895,85 @@
                 return numbers;
             }
 
-            let validImages = [];
-            let sequence = [];
+            let sequence = generateRandomSequence();
             let currentIndex = 0;
+            let loadedImagesCount = 0;
 
             // Función para inicializar el slider
-            async function initSlider(containerId) {
+            function initSlider(containerId) {
                 const container = document.getElementById(containerId);
                 if(!container) return;
 
-                // 1. Verificar y cargar solo las imágenes que existen
-                for(let i = 1; i <= totalImages; i++) {
-                    const url = baseUrl + i + extension;
-                    if (await imageExists(url)) {
-                        const img = document.createElement('img');
-                        img.src = url;
-                        img.alt = "Background " + i;
-                        container.appendChild(img);
-                        validImages.push(img);
+                let validImages = [];
+                let imagesLoaded = 0;
+
+                // Función que se ejecuta cuando una imagen carga correctamente
+                function onImageLoad(img) {
+                    imagesLoaded++;
+                    validImages.push(img);
+                    
+                    // Si es la primera imagen que carga, la mostramos inmediatamente
+                    if(imagesLoaded === 1) {
+                        img.classList.add('active');
                     }
                 }
 
-                // Si no se cargó ninguna imagen, salir para evitar errores
+                // Función que se ejecuta si la imagen falla (no está disponible o bloqueada)
+                function onImageError(img) {
+                    img.remove(); // Eliminamos el elemento del DOM para no dejar huecos
+                }
+
+                // Crear los elementos img y asignar eventos
+                for(let i = 1; i <= totalImages; i++) {
+                    const img = document.createElement('img');
+                    img.src = baseUrl + i + extension;
+                    img.alt = "Background " + i;
+                    
+                    // Asignar eventos
+                    img.addEventListener('load', function() { onImageLoad(this); });
+                    img.addEventListener('error', function() { onImageError(this); });
+                    
+                    container.appendChild(img);
+                }
+
+                // Si no se cargó ninguna imagen, no hacemos nada
                 if (validImages.length === 0) {
                     console.warn("No se pudieron cargar imágenes de fondo.");
                     return;
                 }
 
-                // 2. Crear la secuencia aleatoria basada en las imágenes que sí cargaron
-                // Mapeamos los índices reales de las imágenes cargadas
-                let availableIndices = validImages.map((_, index) => index);
-                
-                function shuffleArray(array) {
-                    for (let i = array.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [array[i], array[j]] = [array[j], array[i]];
-                    }
-                    return array;
-                }
-                sequence = shuffleArray([...availableIndices]);
-                currentIndex = 0;
-
-                // 3. Función para mostrar la siguiente imagen
+                // Función para mostrar la siguiente imagen
                 function showNextImage() {
-                    // Obtener el índice del array de imágenes válidas
-                    const imgIndex = sequence[currentIndex];
+                    // Tomamos el siguiente número de la secuencia, pero lo mapeamos al array de imágenes válidas
+                    const nextIndex = sequence[currentIndex % sequence.length];
                     
-                    // Remover clase active de todas las imágenes
-                    validImages.forEach(img => img.classList.remove('active'));
+                    // Buscamos si esa imagen existe en nuestro array de válidas
+                    // (Esto evita intentar mostrar imágenes que fallaron al cargar)
+                    const existingImg = Array.from(container.children).find(img => img.src.includes(`mp_${nextIndex}`));
                     
-                    // Agregar clase active a la imagen correspondiente
-                    if(imgIndex < validImages.length) {
-                        validImages[imgIndex].classList.add('active');
+                    if(existingImg && existingImg.classList) {
+                        // Remover clase active de todas las imágenes
+                        validImages.forEach(img => img.classList.remove('active'));
+                        // Agregar clase active a la imagen correspondiente
+                        existingImg.classList.add('active');
                     }
 
                     // Avanzar al siguiente índice
                     currentIndex++;
                     if(currentIndex >= sequence.length) {
-                        sequence = shuffleArray([...availableIndices]);
+                        sequence = generateRandomSequence();
                         currentIndex = 0;
                     }
                 }
-
-                // Mostrar la primera imagen inmediatamente
-                showNextImage();
 
                 // Configurar el intervalo para cambiar cada 5 segundos (5000ms)
                 setInterval(showNextImage, 5000);
             }
 
             // Inicializar el slider para todos los idiomas (comparten el mismo fondo)
-            await initSlider('bgSlider');
-            await initSlider('bgSliderEn');
-            await initSlider('bgSliderPt');
+            initSlider('bgSlider');
+            initSlider('bgSliderEn');
+            initSlider('bgSliderPt');
         });
     </script>
 </body>
