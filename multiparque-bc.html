@@ -254,7 +254,7 @@
         .stat-box h3 { font-size: 2rem; font-weight: 800; color: var(--primary-cyan); }
         .stat-box p { font-size: 0.8rem; text-transform: uppercase; font-weight: 600; letter-spacing: 1px;}
 
-        /* VIDEOS */
+        /* VIDEOS - SIN CONTROLES */
         .videos-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -294,7 +294,7 @@
             transform: translate(-50%, -50%);
             object-fit: cover;
             border: 0;
-            pointer-events: auto;
+            pointer-events: none;
             min-width: 100%;
             min-height: 100%;
         }
@@ -346,7 +346,7 @@
             background: var(--primary-cyan); border-radius: 50%; margin-right: 10px;
         }
 
-        /* FAQ - 2 COLUMNAS */
+        /* FAQ - ACORDEÓN CON RADIO BUTTON */
         .faq-container { 
             max-width: 1000px; 
             margin: 40px auto 0;
@@ -386,7 +386,9 @@
             flex-shrink: 0;
             margin-left: 10px;
         }
-        .faq-item input[type="checkbox"] { display: none; }
+        .faq-item input[type="radio"] { 
+            display: none; 
+        }
         .faq-answer {
             max-height: 0;
             overflow: hidden;
@@ -396,11 +398,13 @@
             opacity: 0.9;
             font-size: 0.9rem;
         }
-        .faq-item input[type="checkbox"]:checked ~ .faq-answer {
+        .faq-item input[type="radio"]:checked ~ .faq-answer {
             max-height: 500px;
             padding: 0 20px 20px 20px;
         }
-        .faq-item input[type="checkbox"]:checked + .faq-question::after { content: '-'; }
+        .faq-item input[type="radio"]:checked + .faq-question::after { 
+            content: '-'; 
+        }
 
         /* Form Section */
         .form-section { padding: 80px 5%; background: #071B2E; }
@@ -456,7 +460,7 @@
             filter: invert(1);
         }
 
-        /* FOOTER MEJORADO */
+        /* FOOTER */
         .footer {
             padding: 50px 5% 30px;
             background: #051424;
@@ -495,6 +499,26 @@
             color: var(--primary-cyan);
             font-size: 1.1rem;
             min-width: 20px;
+        }
+        .footer-column .map-link {
+            color: var(--primary-cyan);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            transition: 0.3s;
+            background: rgba(0, 229, 255, 0.1);
+            padding: 6px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            margin-top: 8px;
+        }
+        .footer-column .map-link:hover {
+            background: var(--primary-cyan);
+            color: #0B2545;
+            border-color: var(--primary-cyan);
+            transform: translateX(5px);
         }
         .footer-bottom {
             border-top: 1px solid rgba(255,255,255,0.08);
@@ -862,7 +886,7 @@
         <div id="video-grid" class="videos-container">
             <div class="video-card">
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                    <iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe>
                 </div>
                 <div class="video-overlay">
                     <h4>Ilha Candy</h4>
@@ -871,7 +895,7 @@
             </div>
             <div class="video-card">
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                    <iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe>
                 </div>
                 <div class="video-overlay">
                     <h4>Torre Master</h4>
@@ -880,7 +904,7 @@
             </div>
             <div class="video-card">
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                    <iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe>
                 </div>
                 <div class="video-overlay">
                     <h4>Piscina de Ondas</h4>
@@ -889,7 +913,7 @@
             </div>
             <div class="video-card">
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                    <iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe>
                 </div>
                 <div class="video-overlay">
                     <h4>Rio Lento</h4>
@@ -898,7 +922,7 @@
             </div>
             <div class="video-card">
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                    <iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe>
                 </div>
                 <div class="video-overlay">
                     <h4>Maverick</h4>
@@ -937,102 +961,102 @@
                 </div>
             </div>
 
-            <!-- FAQ - 2 COLUMNAS -->
+            <!-- FAQ -->
             <div class="faq-container">
                 <h3>Preguntas Frecuentes</h3>
                 
                 <div class="faq-item">
-                    <input type="checkbox" id="faq1_es">
+                    <input type="radio" name="faq_es" id="faq1_es">
                     <label for="faq1_es" class="faq-question">¿Qué incluye el ingreso?</label>
                     <div class="faq-answer">El ingreso da acceso a todas las atracciones del parque, excepto para servicios adicionales como guarda-volumes, estacionamiento, alimentación y gazebos.</div>
                 </div>
                 
                 <div class="faq-item">
-                    <input type="checkbox" id="faq2_es">
+                    <input type="radio" name="faq_es" id="faq2_es">
                     <label for="faq2_es" class="faq-question">¿Cuántos toboganes tienen?</label>
                     <div class="faq-answer">Tenemos más de 16 toboganes, para adultos e infantiles.</div>
                 </div>
                 
                 <div class="faq-item">
-                    <input type="checkbox" id="faq3_es">
+                    <input type="radio" name="faq_es" id="faq3_es">
                     <label for="faq3_es" class="faq-question">¿Las piscinas son climatizadas?</label>
                     <div class="faq-answer">¡Sí! Todas nuestras piscinas de inmersión son climatizadas.</div>
                 </div>
                 
                 <div class="faq-item">
-                    <input type="checkbox" id="faq4_es">
+                    <input type="radio" name="faq_es" id="faq4_es">
                     <label for="faq4_es" class="faq-question">¿Hay atracciones para todas las edades?</label>
                     <div class="faq-answer">Sí, tenemos atracciones para todas las edades, desde las más radicales hasta las más tranquilas.</div>
                 </div>
                 
                 <div class="faq-item">
-                    <input type="checkbox" id="faq5_es">
+                    <input type="radio" name="faq_es" id="faq5_es">
                     <label for="faq5_es" class="faq-question">¿Se puede surfear en la piscina de olas?</label>
                     <div class="faq-answer">No, tenemos una piscina con playa artificial y con olas, pero no es para surf.</div>
                 </div>
                 
                 <div class="faq-item">
-                    <input type="checkbox" id="faq6_es">
+                    <input type="radio" name="faq_es" id="faq6_es">
                     <label for="faq6_es" class="faq-question">¿Puedo llevar mi propia comida?</label>
                     <div class="faq-answer">No. Sin embargo, el parque ofrece opciones de alimentación. Se permite la entrada con mamaderas y papillas infantiles, así como frutas en pequeña cantidad y agua.</div>
                 </div>
                 
                 <div class="faq-item">
-                    <input type="checkbox" id="faq7_es">
+                    <input type="radio" name="faq_es" id="faq7_es">
                     <label for="faq7_es" class="faq-question">¿Cuánto cuesta el estacionamiento?</label>
                     <div class="faq-answer">Nuestro estacionamiento está anexo al parque y tiene un valor de R$50,00 para auto y R$25,00 para moto.</div>
                 </div>
                 
                 <div class="faq-item">
-                    <input type="checkbox" id="faq8_es">
+                    <input type="radio" name="faq_es" id="faq8_es">
                     <label for="faq8_es" class="faq-question">¿El parque abre en días de lluvia?</label>
                     <div class="faq-answer">Sí, el parque está abierto incluso en días de lluvia, salvo condiciones climáticas extremas. Contamos con piscinas climatizadas.</div>
                 </div>
                 
                 <div class="faq-item">
-                    <input type="checkbox" id="faq9_es">
+                    <input type="radio" name="faq_es" id="faq9_es">
                     <label for="faq9_es" class="faq-question">¿Cuál es el precio de los niños?</label>
                     <div class="faq-answer">Hasta 5 años el ingreso es gratuito, de 6 a 11 años existe una tarifa especial infantil y a partir de los 12 años paga ingreso completo.</div>
                 </div>
                 
                 <div class="faq-item">
-                    <input type="checkbox" id="faq10_es">
+                    <input type="radio" name="faq_es" id="faq10_es">
                     <label for="faq10_es" class="faq-question">¿Hay descuento para estudiantes?</label>
                     <div class="faq-answer">La media entrada para estudiantes es válida solo en eventos culturales y deportivos ofrecidos por el parque, de acuerdo con la ley.</div>
                 </div>
                 
                 <div class="faq-item">
-                    <input type="checkbox" id="faq11_es">
+                    <input type="radio" name="faq_es" id="faq11_es">
                     <label for="faq11_es" class="faq-question">¿Personas con discapacidad pagan media entrada?</label>
                     <div class="faq-answer">Sí, personas con discapacidad pagan media entrada, siempre que presenten comprobante.</div>
                 </div>
                 
                 <div class="faq-item">
-                    <input type="checkbox" id="faq12_es">
+                    <input type="radio" name="faq_es" id="faq12_es">
                     <label for="faq12_es" class="faq-question">¿Qué formas de pago aceptan?</label>
                     <div class="faq-answer">En taquilla aceptamos efectivo, tarjeta de crédito, débito y Pix. Dentro del parque usas una pulsera para compras.</div>
                 </div>
                 
                 <div class="faq-item">
-                    <input type="checkbox" id="faq13_es">
+                    <input type="radio" name="faq_es" id="faq13_es">
                     <label for="faq13_es" class="faq-question">¿Se puede fumar dentro del parque?</label>
                     <div class="faq-answer">No está permitido fumar ningún tipo de cigarro dentro del parque. Los fumadores pueden salir al estacionamiento.</div>
                 </div>
                 
                 <div class="faq-item">
-                    <input type="checkbox" id="faq14_es">
+                    <input type="radio" name="faq_es" id="faq14_es">
                     <label for="faq14_es" class="faq-question">¿Se permite música alta?</label>
                     <div class="faq-answer">No está permitido ningún tipo de sonido alto ni parlantes.</div>
                 </div>
                 
                 <div class="faq-item">
-                    <input type="checkbox" id="faq15_es">
+                    <input type="radio" name="faq_es" id="faq15_es">
                     <label for="faq15_es" class="faq-question">¿Qué vestimenta está permitida en los toboganes?</label>
                     <div class="faq-answer">No se permite shorts de malla o jeans, ni botones metálicos. Recomendamos shorts de lycra o tactel.</div>
                 </div>
                 
                 <div class="faq-item">
-                    <input type="checkbox" id="faq16_es">
+                    <input type="radio" name="faq_es" id="faq16_es">
                     <label for="faq16_es" class="faq-question">¿Se pueden usar drones?</label>
                     <div class="faq-answer">No. Por motivos de seguridad y protección de imagen, no está permitido el uso de drones dentro del parque.</div>
                 </div>
@@ -1066,7 +1090,7 @@
                         <div class="form-group">
                             <label>Fecha de reserva (Estimativa)</label>
                             <input type="date" id="fecha_reserva">
-                            <span class="date-warning">📅 Fecha estimativa</span>
+                            <span class="date-warning">📅 Sujeta a confirmación.</span>
                         </div>
                         <div class="form-group">
                             <label>Cantidad de personas</label>
@@ -1085,7 +1109,7 @@
             </div>
         </section>
 
-        <!-- FOOTER MEJORADO -->
+        <!-- FOOTER -->
         <footer class="footer">
             <div class="footer-grid">
                 <div class="footer-column">
@@ -1102,7 +1126,10 @@
                 <div class="footer-column">
                     <h4>📍 Ubicación</h4>
                     <p>Avenida Rodesindo Paván, 11595</p>
-                    <p>Playa Estaleirinho, Balneário Camboriú</p>
+                    <p>Playa Estaleirinho, Balneário Camboriú - SC</p>
+                    <button onclick="openMapsNavigation()" class="map-link">
+                        🚗 Como llegar con tu vehículo
+                    </button>
                 </div>
                 <div class="footer-column">
                     <h4>🕐 Horario</h4>
@@ -1145,11 +1172,11 @@
             </div>
         </header>
         <div id="video-grid" class="videos-container">
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Ilha Candy</h4><p>Children's water park</p></div></div>
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Torre Master</h4><p>5 radical slides</p></div></div>
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Wave Pool</h4><p>Waves and artificial beach</p></div></div>
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Lazy River</h4><p>Floating ride</p></div></div>
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Maverick</h4><p>High-speed tube</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Ilha Candy</h4><p>Children's water park</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Torre Master</h4><p>5 radical slides</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Wave Pool</h4><p>Waves and artificial beach</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Lazy River</h4><p>Floating ride</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Maverick</h4><p>High-speed tube</p></div></div>
         </div>
         <section class="info-section">
             <h2 style="text-align: center; font-size: 2.8rem; color: var(--primary-cyan);">About Multiparque SC</h2>
@@ -1179,42 +1206,42 @@
             <div class="faq-container">
                 <h3>FAQ</h3>
                 <div class="faq-item">
-                    <input type="checkbox" id="faq1_en">
+                    <input type="radio" name="faq_en" id="faq1_en">
                     <label for="faq1_en" class="faq-question">What does the ticket include?</label>
                     <div class="faq-answer">The ticket gives access to all park attractions, except for additional services such as lockers, parking, food, and gazebos.</div>
                 </div>
                 <div class="faq-item">
-                    <input type="checkbox" id="faq2_en">
+                    <input type="radio" name="faq_en" id="faq2_en">
                     <label for="faq2_en" class="faq-question">How many slides do you have?</label>
                     <div class="faq-answer">We have over 16 water slides, for adults and children.</div>
                 </div>
                 <div class="faq-item">
-                    <input type="checkbox" id="faq3_en">
+                    <input type="radio" name="faq_en" id="faq3_en">
                     <label for="faq3_en" class="faq-question">Are the pools heated?</label>
                     <div class="faq-answer">Yes! All our immersion pools are heated.</div>
                 </div>
                 <div class="faq-item">
-                    <input type="checkbox" id="faq4_en">
+                    <input type="radio" name="faq_en" id="faq4_en">
                     <label for="faq4_en" class="faq-question">Are there attractions for all ages?</label>
                     <div class="faq-answer">Yes, we have attractions for all ages, from the most radical to the most relaxing.</div>
                 </div>
                 <div class="faq-item">
-                    <input type="checkbox" id="faq5_en">
+                    <input type="radio" name="faq_en" id="faq5_en">
                     <label for="faq5_en" class="faq-question">What payment methods do you accept?</label>
                     <div class="faq-answer">At the ticket office we accept cash, credit and debit cards, and Pix. Inside the park you will use a wristband.</div>
                 </div>
                 <div class="faq-item">
-                    <input type="checkbox" id="faq6_en">
+                    <input type="radio" name="faq_en" id="faq6_en">
                     <label for="faq6_en" class="faq-question">Is smoking allowed inside the park?</label>
                     <div class="faq-answer">Our policy does not allow smoking any type of cigarette inside the park. Smokers can go out to the parking lot.</div>
                 </div>
                 <div class="faq-item">
-                    <input type="checkbox" id="faq7_en">
+                    <input type="radio" name="faq_en" id="faq7_en">
                     <label for="faq7_en" class="faq-question">Is outside food allowed?</label>
                     <div class="faq-answer">No. However, the park offers food options. Entry with baby bottles and baby food is allowed, as well as small amounts of fruit and water.</div>
                 </div>
                 <div class="faq-item">
-                    <input type="checkbox" id="faq8_en">
+                    <input type="radio" name="faq_en" id="faq8_en">
                     <label for="faq8_en" class="faq-question">Is the park open on rainy days?</label>
                     <div class="faq-answer">Yes, the park is open even on rainy days, except in extreme weather conditions. We have heated pools.</div>
                 </div>
@@ -1230,7 +1257,7 @@
                         <div class="form-group"><label>Email</label><input type="email" id="email_en" required placeholder="mail@example.com"></div>
                         <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" id="telefono_en" required placeholder="+55 48 99999-9999"></div>
                         <div class="form-group"><label>Company</label><input type="text" id="empresa_en" required placeholder="Your company name"></div>
-                        <div class="form-group"><label>Reservation Date (Estimated)</label><input type="date" id="fecha_reserva_en"><span class="date-warning">📅 Estimated date</span></div>
+                        <div class="form-group"><label>Reservation Date (Estimated)</label><input type="date" id="fecha_reserva_en"><span class="date-warning">📅 Subject to confirmation.</span></div>
                         <div class="form-group"><label>Number of people</label><input type="number" id="cantidad_en" placeholder="e.g. 10" min="1"></div>
                         <div class="form-group full-width"><label>Message or details</label><textarea id="mensaje_en" placeholder="What day would you like to visit us?"></textarea></div>
                     </div>
@@ -1257,7 +1284,10 @@
                 <div class="footer-column">
                     <h4>📍 Location</h4>
                     <p>Avenida Rodesindo Paván, 11595</p>
-                    <p>Playa Estaleirinho, Balneário Camboriú</p>
+                    <p>Playa Estaleirinho, Balneário Camboriú - SC</p>
+                    <button onclick="openMapsNavigation()" class="map-link">
+                        🚗 How to get there by car
+                    </button>
                 </div>
                 <div class="footer-column">
                     <h4>🕐 Hours</h4>
@@ -1299,11 +1329,11 @@
             </div>
         </header>
         <div id="video-grid" class="videos-container">
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Ilha Candy</h4><p>Parque infantil aquático</p></div></div>
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Torre Master</h4><p>5 tobogãs radicais</p></div></div>
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Piscina de Ondas</h4><p>Ondas e praia artificial</p></div></div>
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Rio Lento</h4><p>Passeio de boia</p></div></div>
-            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Maverick</h4><p>Boia de alta velocidade</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Ilha Candy</h4><p>Parque infantil aquático</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Torre Master</h4><p>5 tobogãs radicais</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Piscina de Ondas</h4><p>Ondas e praia artificial</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Rio Lento</h4><p>Passeio de boia</p></div></div>
+            <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&autohide=1" allowfullscreen allow="autoplay; encrypted-media"></iframe></div><div class="video-overlay"><h4>Maverick</h4><p>Boia de alta velocidade</p></div></div>
         </div>
         <section class="info-section">
             <h2 style="text-align: center; font-size: 2.8rem; color: var(--primary-cyan);">Conheça o Multiparque SC</h2>
@@ -1333,42 +1363,42 @@
             <div class="faq-container">
                 <h3>Perguntas Frequentes</h3>
                 <div class="faq-item">
-                    <input type="checkbox" id="faq1_pt">
+                    <input type="radio" name="faq_pt" id="faq1_pt">
                     <label for="faq1_pt" class="faq-question">O que o ingresso inclui?</label>
                     <div class="faq-answer">O ingresso dá acesso a todas as atrações do parque, exceto para serviços adicionais como guarda-volumes, estacionamento, alimentação e gazebos.</div>
                 </div>
                 <div class="faq-item">
-                    <input type="checkbox" id="faq2_pt">
+                    <input type="radio" name="faq_pt" id="faq2_pt">
                     <label for="faq2_pt" class="faq-question">Quantos tobogãs vocês têm?</label>
                     <div class="faq-answer">São mais de 16 toboáguas, adulto e infantil.</div>
                 </div>
                 <div class="faq-item">
-                    <input type="checkbox" id="faq3_pt">
+                    <input type="radio" name="faq_pt" id="faq3_pt">
                     <label for="faq3_pt" class="faq-question">As piscinas são aquecidas?</label>
                     <div class="faq-answer">Sim! Todas as nossas piscinas de imersão são aquecidas.</div>
                 </div>
                 <div class="faq-item">
-                    <input type="checkbox" id="faq4_pt">
+                    <input type="radio" name="faq_pt" id="faq4_pt">
                     <label for="faq4_pt" class="faq-question">Há atrações para todas as idades?</label>
                     <div class="faq-answer">Sim, temos atrações para todas as idades, desde as mais radicais, até as mais tranquilas!</div>
                 </div>
                 <div class="faq-item">
-                    <input type="checkbox" id="faq5_pt">
+                    <input type="radio" name="faq_pt" id="faq5_pt">
                     <label for="faq5_pt" class="faq-question">Quais formas de pagamento vocês aceitam?</label>
                     <div class="faq-answer">Na bilheteria aceitamos dinheiro, cartão de crédito e débito e Pix. Dentro do parque você usa uma pulseira.</div>
                 </div>
                 <div class="faq-item">
-                    <input type="checkbox" id="faq6_pt">
+                    <input type="radio" name="faq_pt" id="faq6_pt">
                     <label for="faq6_pt" class="faq-question">É permitido fumar dentro do parque?</label>
                     <div class="faq-answer">Não é permitido fumar nenhum tipo de cigarro dentro do parque. Os fumantes podem sair ao estacionamento.</div>
                 </div>
                 <div class="faq-item">
-                    <input type="checkbox" id="faq7_pt">
+                    <input type="radio" name="faq_pt" id="faq7_pt">
                     <label for="faq7_pt" class="faq-question">Posso levar minha própria comida?</label>
                     <div class="faq-answer">Não. O parque oferece opções de alimentação. É permitida a entrada com mamadeiras e papinhas infantis, frutas em pequena quantidade e água.</div>
                 </div>
                 <div class="faq-item">
-                    <input type="checkbox" id="faq8_pt">
+                    <input type="radio" name="faq_pt" id="faq8_pt">
                     <label for="faq8_pt" class="faq-question">O parque funciona em dias de chuva?</label>
                     <div class="faq-answer">Sim, o parque está aberto mesmo em dias de chuva, salvo condições climáticas extremas. Temos piscinas aquecidas.</div>
                 </div>
@@ -1384,7 +1414,7 @@
                         <div class="form-group"><label>E-mail</label><input type="email" id="email_pt" required placeholder="exemplo@email.com"></div>
                         <div class="form-group"><label>Telefone / WhatsApp</label><input type="tel" id="telefono_pt" required placeholder="+55 48 99999-9999"></div>
                         <div class="form-group"><label>Empresa</label><input type="text" id="empresa_pt" required placeholder="Nome da sua empresa"></div>
-                        <div class="form-group"><label>Data de reserva (Estimativa)</label><input type="date" id="fecha_reserva_pt"><span class="date-warning">📅 Data estimativa</span></div>
+                        <div class="form-group"><label>Data de reserva (Estimativa)</label><input type="date" id="fecha_reserva_pt"><span class="date-warning">📅 Sujeita a confirmação.</span></div>
                         <div class="form-group"><label>Quantidade de pessoas</label><input type="number" id="cantidad_pt" placeholder="Ex. 10" min="1"></div>
                         <div class="form-group full-width"><label>Mensagem ou detalhes</label><textarea id="mensaje_pt" placeholder="Que dia gostaria de nos visitar?"></textarea></div>
                     </div>
@@ -1411,7 +1441,10 @@
                 <div class="footer-column">
                     <h4>📍 Localização</h4>
                     <p>Avenida Rodesindo Paván, 11595</p>
-                    <p>Praia Estaleirinho, Balneário Camboriú</p>
+                    <p>Praia Estaleirinho, Balneário Camboriú - SC</p>
+                    <button onclick="openMapsNavigation()" class="map-link">
+                        🚗 Como chegar de carro
+                    </button>
                 </div>
                 <div class="footer-column">
                     <h4>🕐 Horário</h4>
@@ -1545,7 +1578,7 @@
         function openMapsNavigation() {
             const lat = -27.055213048331684;
             const lng = -48.596279232125426;
-            const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
+            const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving&dir_action=navigate`;
             window.open(url, '_blank');
         }
 
@@ -1701,6 +1734,8 @@
                     img.remove();
                 }
 
+                container.innerHTML = '';
+
                 for(let i = 1; i <= totalImages; i++) {
                     const img = document.createElement('img');
                     img.src = baseUrl + i + extension;
@@ -1713,28 +1748,43 @@
                 }
 
                 if (validImages.length === 0) {
-                    console.warn("No se pudieron cargar imágenes de fondo.");
-                    return;
+                    setTimeout(() => {
+                        if (validImages.length > 0) {
+                            startSlideshow(container);
+                        }
+                    }, 3000);
+                } else {
+                    startSlideshow(container);
                 }
 
-                function showNextImage() {
-                    const nextIndex = sequence[currentIndex % sequence.length];
-                    
-                    const existingImg = Array.from(container.children).find(img => img.src && img.src.includes(`mp_${nextIndex}`));
-                    
-                    if(existingImg && existingImg.classList) {
-                        validImages.forEach(img => img.classList.remove('active'));
-                        existingImg.classList.add('active');
+                function startSlideshow(container) {
+                    const activeExists = container.querySelector('img.active');
+                    if (!activeExists && validImages.length > 0) {
+                        validImages[0].classList.add('active');
                     }
 
-                    currentIndex++;
-                    if(currentIndex >= sequence.length) {
-                        sequence = generateRandomSequence();
-                        currentIndex = 0;
+                    if (window.sliderIntervals && window.sliderIntervals[containerId]) {
+                        clearInterval(window.sliderIntervals[containerId]);
                     }
+
+                    window.sliderIntervals = window.sliderIntervals || {};
+                    window.sliderIntervals[containerId] = setInterval(function() {
+                        const nextIndex = sequence[currentIndex % sequence.length];
+                        
+                        const existingImg = Array.from(container.children).find(img => img.src && img.src.includes(`mp_${nextIndex}`));
+                        
+                        if(existingImg && existingImg.classList && validImages.length > 0) {
+                            validImages.forEach(img => img.classList.remove('active'));
+                            existingImg.classList.add('active');
+                        }
+
+                        currentIndex++;
+                        if(currentIndex >= sequence.length) {
+                            sequence = generateRandomSequence();
+                            currentIndex = 0;
+                        }
+                    }, 5000);
                 }
-
-                setInterval(showNextImage, 5000);
             }
 
             initSlider('bgSlider');
