@@ -438,14 +438,15 @@
             .hero-title { font-size: 2.4rem; }
             .hero { padding-top: 20px; }
             .hero-logo { max-width: 220px; margin-bottom: 15px; }
+            /* UNA SOLA COLUMNA EN MÓVILES */
             .videos-container { 
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
+                grid-template-columns: 1fr;
+                gap: 20px;
                 padding: 0 3% 30px;
             }
             .video-card {
                 aspect-ratio: 9 / 16;
-                max-height: 350px;
+                max-height: 500px;
                 border-radius: 16px;
             }
             .video-wrapper {
@@ -460,13 +461,13 @@
         }
         @media (max-width: 480px) {
             .videos-container { 
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
+                grid-template-columns: 1fr;
+                gap: 15px;
                 padding: 0 2% 20px;
             }
             .video-card {
                 aspect-ratio: 9 / 16;
-                max-height: 280px;
+                max-height: 420px;
                 border-radius: 12px;
             }
             .video-wrapper {
@@ -475,17 +476,17 @@
             .hero-title { font-size: 1.8rem; }
             .hero { padding-top: 15px; }
             .hero-logo { max-width: 180px; }
-            .video-overlay { padding: 12px; }
-            .video-card h4 { font-size: 0.9rem; }
-            .video-card p { font-size: 0.7rem; }
+            .video-overlay { padding: 15px; }
+            .video-card h4 { font-size: 1rem; }
+            .video-card p { font-size: 0.8rem; }
         }
         @media (max-width: 380px) {
             .videos-container { 
-                grid-template-columns: 1fr 1fr;
-                gap: 8px;
+                grid-template-columns: 1fr;
+                gap: 12px;
             }
             .video-card {
-                max-height: 220px;
+                max-height: 350px;
             }
         }
     </style>
@@ -533,7 +534,7 @@
             </div>
         </header>
 
-        <!-- Videos Grid (Proporción 9:16 - SIN BORDES NEGROS) -->
+        <!-- Videos Grid (Proporción 9:16 - UNA COLUMNA EN MÓVIL) -->
         <div id="video-grid" class="videos-container">
             <div class="video-card">
                 <div class="video-wrapper">
@@ -672,7 +673,6 @@
 
         <footer class="footer">
             <h3 style="color: var(--primary-cyan); margin-bottom: 15px;">Multiparque - Parque Acuático</h3>
-            <!-- Botón de mapa mejorado con navegación directa -->
             <button onclick="openMapsNavigation()" class="map-btn">
                 📍 Av. Rodesindo Pavan, 11595 - Praia do Estaleirinho, Balneário Camboriú - SC (Ruta en auto)
             </button>
@@ -928,27 +928,11 @@
     </script>
 
     <script>
-        // Función para abrir Google Maps con navegación directa
+        // Función para abrir Google Maps con navegación directa a Multiparque SC
         function openMapsNavigation() {
-            // Coordenadas exactas de Multiparque en Balneário Camboriú
             const lat = -27.0045;
             const lng = -48.6280;
-            
-            // Detectar si es dispositivo móvil
-            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-            
-            // URL para navegación en Google Maps
-            let url;
-            
-            if (isMobile) {
-                // Para dispositivos móviles - abre la app de Google Maps
-                url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
-            } else {
-                // Para desktop - abre Google Maps en el navegador
-                url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
-            }
-            
-            // Abrir en nueva ventana/pestaña
+            const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
             window.open(url, '_blank');
         }
 
