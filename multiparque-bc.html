@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Multiparque | Parque Aquático</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -37,7 +37,6 @@
             box-shadow: -3px 0 15px rgba(0,0,0,0.4);
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding-right 0.3s ease;
         }
-        /* Efecto hover: la pestaña se expande ligeramente hacia la izquierda */
         .lang-switcher:hover {
             padding-right: 12px;
             border-radius: 12px 0 0 12px;
@@ -76,12 +75,10 @@
             transform: scale(1.1);
         }
 
-        /* Clase para ocultar la pestaña (se desliza hacia la derecha) */
         .lang-switcher.hidden {
             transform: translateY(-50%) translateX(100%);
         }
 
-        /* Tirador para mostrar/ocultar la pestaña */
         .lang-toggle {
             display: none;
             position: fixed;
@@ -118,7 +115,6 @@
             display: flex;
         }
 
-        /* Responsive: En móviles la pestaña se oculta y se muestra con el tirador */
         @media (max-width: 768px) {
             .lang-switcher {
                 top: 50%;
@@ -150,7 +146,7 @@
         .hero {
             min-height: 100vh;
             position: relative;
-            padding: 100px 5% 50px;
+            padding: 80px 5% 50px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -184,10 +180,9 @@
         }
         .hero-content { position: relative; z-index: 2; }
         
-        /* LOGOTIPO AUMENTADO 60% */
         .hero-logo {
             position: absolute;
-            top: 80px;
+            top: 60px;
             right: 5%;
             z-index: 3;
             max-width: 432px;
@@ -235,7 +230,7 @@
         .stat-box h3 { font-size: 2rem; font-weight: 800; color: var(--primary-cyan); }
         .stat-box p { font-size: 0.8rem; text-transform: uppercase; font-weight: 600; letter-spacing: 1px;}
 
-        /* VIDEOS CON PROPORCIÓN 9:16 (Sin bordes negros) */
+        /* VIDEOS CON PROPORCIÓN 9:16 */
         .videos-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -244,9 +239,8 @@
         .video-card {
             background: var(--dark-blue-card);
             border-radius: 20px; overflow: hidden; position: relative;
-            /* Proporción 9:16 exacta: ancho es base, altura es 16/9 del ancho */
             aspect-ratio: 9 / 16; 
-            max-height: 450px; /* Límite máximo para no ser infinitamente altos */
+            max-height: 450px;
             width: 100%;
             display: flex; 
             align-items: flex-end;
@@ -256,7 +250,6 @@
         .video-card iframe {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             z-index: 1; pointer-events: auto; border: 0;
-            /* CORRECCIÓN: Obliga al iframe a llenar todo el espacio sin bordes negros */
             object-fit: cover;
         }
         .video-overlay {
@@ -337,7 +330,6 @@
         .form-container { max-width: 800px; margin: 0 auto; background: var(--dark-blue-card); padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border: 1px solid rgba(0, 229, 255, 0.2); }
         .form-container h2 { text-align: center; margin-bottom: 5px; font-size: 2.2rem; color: var(--primary-cyan); }
         
-        /* Texto pequeño debajo del título */
         .form-subtitle {
             text-align: center;
             font-size: 0.85rem;
@@ -369,7 +361,6 @@
         .form-group textarea { height: 100px; resize: vertical; }
         .form-group input::placeholder { color: #84A9C9; }
 
-        /* Estilo para el selector de fecha y su advertencia */
         .date-warning {
             display: block;
             font-size: 0.8rem;
@@ -405,29 +396,37 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* Ajustes para móvil */
         @media (max-width: 992px) {
             .hero-logo {
                 position: relative;
                 top: auto;
                 right: auto;
-                margin: 0 auto 30px auto;
+                margin: 0 auto 20px auto;
                 display: block;
-                max-width: 320px; /* Tamaño proporcional en tablets */
+                max-width: 280px;
+            }
+            .hero {
+                padding-top: 30px;
             }
         }
         @media (max-width: 768px) {
-            .hero-title { font-size: 2.8rem; }
+            .hero-title { font-size: 2.4rem; }
+            .hero { padding-top: 20px; }
+            .hero-logo { max-width: 220px; margin-bottom: 15px; }
             .videos-container { grid-template-columns: repeat(2, 1fr); }
-            /* En móviles, las cajas se adaptan solas gracias al aspect-ratio */
             .stats { flex-direction: row; width: 100%; }
             .stat-box { flex: 1; padding: 15px; }
             .stat-box h3 { font-size: 1.5rem; }
             .form-row { flex-direction: column; gap: 0; }
             .form-row .form-group { min-width: 100%; }
+            .lang-switcher { display: flex; }
         }
         @media (max-width: 480px) {
             .videos-container { grid-template-columns: 1fr; }
-            .hero-title { font-size: 2.2rem; }
+            .hero-title { font-size: 1.8rem; }
+            .hero { padding-top: 15px; }
+            .hero-logo { max-width: 180px; }
         }
     </style>
 </head>
@@ -455,7 +454,7 @@
             <div class="hero-bg-slider" id="bgSlider"></div>
             <div class="hero-overlay"></div>
 
-            <!-- LOGOTIPO A LA DERECHA -->
+            <!-- LOGOTIPO A LA DERECHA (en móvil se centra) -->
             <img src="https://www.angeltourbrasil.com.br/images/mp-logo.webp" alt="Multiparque Logo" class="hero-logo">
 
             <div class="hero-content">
@@ -477,7 +476,7 @@
             </div>
         </header>
 
-        <!-- Videos Grid (Proporción 9:16, sin bordes negros) -->
+        <!-- Videos Grid (Proporción 9:16) -->
         <div id="video-grid" class="videos-container" style="padding: 0 5% 50px;">
             <div class="video-card">
                 <iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
@@ -843,21 +842,21 @@
         </footer>
     </div>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/554999679084?text=👋%20%C2%A1Hola!%20Me%20interesa%20conocer%20m%C3%A1s%20sobre%20Multiparque%20para%20mi%20empresa.%20%C2%BFPodr%C3%ADan%20darme%20informaci%C3%B3n%3F" target="_blank" class="float-wa" title="Fale conosco pelo WhatsApp">
+    <!-- Floating WhatsApp Button con número actualizado -->
+    <a href="https://wa.me/554799679084?text=👋%20%C2%A1Hola!%20Me%20interesa%20conocer%20m%C3%A1s%20sobre%20Multiparque%20para%20mi%20empresa.%20%C2%BFPodr%C3%ADan%20darme%20informaci%C3%B3n%3F" target="_blank" class="float-wa" title="Fale conosco pelo WhatsApp">
         <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.472 14.382C17.336 14.318 16.046 13.694 15.922 13.643C15.798 13.592 15.703 13.57 15.567 13.635C15.431 13.7 14.79 14.092 14.669 14.188C14.548 14.284 14.458 14.305 14.322 14.24C14.186 14.175 13.317 13.826 12.306 12.912C11.522 12.201 11.05 11.369 10.965 11.269C10.88 11.168 10.95 11.024 11.07 10.935C11.177 10.855 11.307 10.736 11.386 10.63C11.465 10.525 11.48 10.47 11.53 10.357C11.58 10.244 11.525 10.055 11.441 9.861C11.357 9.667 10.785 8.51 10.648 8.215C10.512 7.92 10.372 7.968 10.26 7.968C10.156 7.968 10.04 7.968 9.924 7.968C9.808 7.968 9.663 7.992 9.553 8.098C9.443 8.204 9.1 8.543 8.947 8.754C8.794 8.965 8.684 9.114 8.604 9.233C8.522 9.352 8.458 9.373 8.358 9.439C8.258 9.505 7.581 9.817 6.949 10.176C6.317 10.535 5.885 10.811 5.637 11.005C5.389 11.199 5.39 11.235 5.399 11.361C5.408 11.487 5.5 11.703 5.583 11.83C5.666 11.957 6.165 12.694 6.857 13.462C7.549 14.23 8.378 14.914 8.829 15.179C9.28 15.444 9.586 15.421 9.77 15.421C9.954 15.421 10.213 15.421 10.355 15.327C10.497 15.233 11.205 14.735 11.407 14.505C11.609 14.275 11.76 14.225 11.891 14.225C12.022 14.225 13.222 14.642 13.459 14.782C13.696 14.922 13.8 14.972 13.922 15.045C14.044 15.118 14.454 15.368 14.612 15.47C14.77 15.572 14.824 15.618 14.922 15.672C15.02 15.726 15.13 15.726 15.252 15.672C15.374 15.618 16.468 14.955 16.618 14.885C16.768 14.815 16.9 14.855 16.999 14.875C17.098 14.895 17.608 15.125 17.723 15.175C17.838 15.225 17.9 15.25 17.98 15.295C18.06 15.34 18.055 15.445 17.98 15.66C17.905 15.875 17.607 16.475 17.398 16.794C17.189 17.113 17.008 17.119 16.698 17.177C16.388 17.235 15.487 17.378 14.784 17.37C14.081 17.362 13.481 17.203 12.891 16.905C12.301 16.607 10.86 15.794 10.26 15.365C9.66 14.936 9.542 14.928 9.242 14.74C8.942 14.552 8.28 14.14 8.048 13.956C7.816 13.772 7.714 13.803 7.56 13.836L7.152 13.925C7.029 13.945 6.905 13.911 6.806 13.836C6.707 13.761 6.003 13.162 5.622 12.812C5.241 12.462 5.049 12.213 4.953 11.925C4.857 11.637 4.857 11.37 4.857 11.124C4.857 10.878 5.047 9.822 5.14 9.376C5.233 8.93 5.366 8.809 5.514 8.732C5.662 8.655 5.684 8.724 5.826 8.828C5.968 8.932 6.256 9.067 6.477 9.182C6.698 9.297 6.751 9.313 6.891 9.352C7.031 9.391 7.08 9.406 7.2 9.36C7.32 9.314 7.717 9.103 7.859 9.016C8.001 8.929 8.188 8.838 8.198 8.811C8.208 8.784 8.198 8.627 8.128 8.437C8.058 8.247 7.825 7.729 7.745 7.522C7.665 7.315 7.705 7.253 7.675 7.193C7.645 7.133 7.435 7.119 7.325 7.099C7.215 7.079 6.818 7.117 6.604 7.117C6.39 7.117 5.841 7.117 5.534 7.283C5.227 7.449 4.573 7.932 4.181 8.245C3.789 8.558 3.368 8.854 3.28 8.978C3.192 9.102 3.192 9.231 3.204 9.362C3.216 9.493 3.318 10.15 3.388 10.675C3.458 11.2 3.55 11.738 3.602 12.004C3.654 12.27 3.694 12.465 3.704 12.515C3.714 12.565 3.786 12.675 3.804 12.754C3.822 12.833 3.85 12.895 3.88 12.961C3.91 13.027 4.245 13.825 4.695 14.398C5.145 14.971 5.64 15.343 6.015 15.62C6.39 15.897 6.73 16.098 6.977 16.234C7.224 16.37 7.321 16.423 7.449 16.475C7.577 16.527 7.648 16.559 7.832 16.616C8.016 16.673 8.305 16.708 8.451 16.726C8.597 16.744 8.718 16.737 8.799 16.688C8.88 16.639 9.357 16.065 9.512 15.855C9.667 15.645 9.781 15.645 9.904 15.725C10.027 15.805 11.095 16.36 11.639 16.665C12.183 16.97 12.614 17.156 12.831 17.221C13.048 17.286 13.311 17.286 13.477 17.286C13.643 17.286 14.327 17.286 14.593 17.235C14.859 17.184 15.265 16.955 15.662 16.66C16.059 16.365 16.414 15.945 16.558 15.715C16.702 15.485 16.68 15.385 16.678 15.363C16.676 15.341 16.678 15.263 16.623 15.2C16.568 15.137 16.524 15.123 16.481 15.102C16.438 15.081 16.271 14.999 16.201 14.965C16.131 14.931 15.998 14.885 15.96 14.865C15.922 14.845 15.922 14.82 15.922 14.8C15.922 14.78 15.93 14.768 15.922 14.749C15.914 14.73 15.608 14.446 17.472 14.382Z" fill="white"/>
             <path d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2ZM12 20C7.589 20 4 16.411 4 12C4 7.589 7.589 4 12 4C16.411 4 20 7.589 20 12C20 16.411 16.411 20 12 20Z" fill="white"/>
         </svg>
     </a>
 
-    <!-- GOOGLE ANALYTICS (Reemplaza GA_MEASUREMENT_ID por tu ID) -->
+    <!-- GOOGLE ANALYTICS - Mismo código que www.angeltourbrasil.com.br -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-R5LT7ZSN19"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'GA_MEASUREMENT_ID');
+        gtag('config', 'G-R5LT7ZSN19');
     </script>
 
     <script>
@@ -871,31 +870,26 @@
                     btn.classList.add('active');
                 }
             });
-            // Ocultar la pestaña después de seleccionar idioma (en móviles)
             toggleLangSwitcher(true);
         }
 
-        // Función para ocultar/mostrar el selector de idiomas (para móviles)
         function toggleLangSwitcher(forceHide = false) {
             const switcher = document.getElementById('langSwitcher');
             const toggle = document.getElementById('langToggle');
             
-            // Si se fuerza la ocultación o la pestaña está visible, la ocultamos
             if (forceHide || !switcher.classList.contains('hidden')) {
                 switcher.classList.add('hidden');
                 setTimeout(() => {
                     toggle.classList.add('visible');
-                }, 400); // Espera a que termine la animación de salida
+                }, 400);
             } else {
                 switcher.classList.remove('hidden');
                 toggle.classList.remove('visible');
             }
         }
 
-        // Detectar si es un dispositivo móvil y mostrar el tirador al cargar
         document.addEventListener('DOMContentLoaded', function() {
             if (window.innerWidth <= 768) {
-                // En móviles, la pestaña inicia oculta
                 document.getElementById('langSwitcher').classList.add('hidden');
                 setTimeout(() => {
                     document.getElementById('langToggle').classList.add('visible');
@@ -903,7 +897,7 @@
             }
         });
 
-        // Manejar el envío del formulario
+        // Manejar el envío del formulario - Número actualizado: +55 47 9967-9084
         function handleFormSubmit(event) {
             event.preventDefault();
             let formId = event.target.id;
@@ -919,7 +913,6 @@
             const fecha_reserva = document.getElementById('fecha_reserva' + prefix).value;
             const mensaje = document.getElementById('mensaje' + prefix).value;
 
-            // Mensaje con iconos y formato profesional
             let message = `📢 *NUEVA RESERVA - MULTIPARQUE* 📢%0A%0A` +
                             `👤 *Nombre:* ${nombre}%0A` +
                             `📧 *E-mail:* ${email}%0A` +
@@ -932,7 +925,8 @@
             
             message += `📝 *Mensaje:*%0A${mensaje}`;
                             
-            const phone = "554999679084";
+            // Número actualizado: +55 47 9967-9084
+            const phone = "554799679084";
             window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
         }
 
@@ -940,13 +934,12 @@
         document.getElementById('contactFormEn').addEventListener('submit', handleFormSubmit);
         document.getElementById('contactFormPt').addEventListener('submit', handleFormSubmit);
 
-        // SLIDER DE FONDO - NUEVO MÉTODO (Carga con verificación de errores)
+        // SLIDER DE FONDO - Carga aleatoria y slideshow automático
         document.addEventListener("DOMContentLoaded", function() {
             const totalImages = 26;
             const baseUrl = "https://www.angeltourbrasil.com.br/images/mp_";
             const extension = ".webp";
             
-            // Función para generar un array de números en orden aleatorio
             function generateRandomSequence() {
                 let numbers = [];
                 for(let i = 1; i <= totalImages; i++) {
@@ -961,9 +954,7 @@
 
             let sequence = generateRandomSequence();
             let currentIndex = 0;
-            let loadedImagesCount = 0;
 
-            // Función para inicializar el slider
             function initSlider(containerId) {
                 const container = document.getElementById(containerId);
                 if(!container) return;
@@ -971,58 +962,44 @@
                 let validImages = [];
                 let imagesLoaded = 0;
 
-                // Función que se ejecuta cuando una imagen carga correctamente
                 function onImageLoad(img) {
                     imagesLoaded++;
                     validImages.push(img);
-                    
-                    // Si es la primera imagen que carga, la mostramos inmediatamente
                     if(imagesLoaded === 1) {
                         img.classList.add('active');
                     }
                 }
 
-                // Función que se ejecuta si la imagen falla (no está disponible o bloqueada)
                 function onImageError(img) {
-                    img.remove(); // Eliminamos el elemento del DOM para no dejar huecos
+                    img.remove();
                 }
 
-                // Crear los elementos img y asignar eventos
                 for(let i = 1; i <= totalImages; i++) {
                     const img = document.createElement('img');
                     img.src = baseUrl + i + extension;
                     img.alt = "Background " + i;
                     
-                    // Asignar eventos
                     img.addEventListener('load', function() { onImageLoad(this); });
                     img.addEventListener('error', function() { onImageError(this); });
                     
                     container.appendChild(img);
                 }
 
-                // Si no se cargó ninguna imagen, no hacemos nada
                 if (validImages.length === 0) {
                     console.warn("No se pudieron cargar imágenes de fondo.");
                     return;
                 }
 
-                // Función para mostrar la siguiente imagen
                 function showNextImage() {
-                    // Tomamos el siguiente número de la secuencia, pero lo mapeamos al array de imágenes válidas
                     const nextIndex = sequence[currentIndex % sequence.length];
                     
-                    // Buscamos si esa imagen existe en nuestro array de válidas
-                    // (Esto evita intentar mostrar imágenes que fallaron al cargar)
-                    const existingImg = Array.from(container.children).find(img => img.src.includes(`mp_${nextIndex}`));
+                    const existingImg = Array.from(container.children).find(img => img.src && img.src.includes(`mp_${nextIndex}`));
                     
                     if(existingImg && existingImg.classList) {
-                        // Remover clase active de todas las imágenes
                         validImages.forEach(img => img.classList.remove('active'));
-                        // Agregar clase active a la imagen correspondiente
                         existingImg.classList.add('active');
                     }
 
-                    // Avanzar al siguiente índice
                     currentIndex++;
                     if(currentIndex >= sequence.length) {
                         sequence = generateRandomSequence();
@@ -1030,11 +1007,9 @@
                     }
                 }
 
-                // Configurar el intervalo para cambiar cada 5 segundos (5000ms)
                 setInterval(showNextImage, 5000);
             }
 
-            // Inicializar el slider para todos los idiomas (comparten el mismo fondo)
             initSlider('bgSlider');
             initSlider('bgSliderEn');
             initSlider('bgSliderPt');
