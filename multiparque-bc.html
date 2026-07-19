@@ -33,7 +33,7 @@
         .lang-content { display: none; animation: fadeIn 0.6s ease-in-out; }
         .lang-content.active-lang { display: block; }
 
-        /* Hero Section - IMAGE SLIDER BACKGROUND */
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             position: relative;
@@ -42,7 +42,7 @@
             flex-direction: column;
             justify-content: center;
             overflow: hidden;
-            background: linear-gradient(135deg, #0B2545, #1A4B6B); /* Fondo seguro mientras carga */
+            background: linear-gradient(135deg, #0B2545, #1A4B6B);
         }
         
         .hero-bg-slider {
@@ -124,11 +124,73 @@
         .video-card h4 { font-size: 1.1rem; color: var(--primary-cyan); font-weight: 700; }
         .video-card p { font-size: 0.8rem; color: #ccc; }
 
-        .about-section { padding: 80px 5%; display: flex; flex-wrap: wrap; gap: 50px; align-items: center; }
-        .about-text { flex: 1; min-width: 300px; }
-        .about-text h2 { font-size: 2.8rem; margin-bottom: 20px; color: var(--primary-cyan); }
-        .about-text p { line-height: 1.8; margin-bottom: 15px; opacity: 0.9; }
-        
+        /* --- NUEVA SECCIÓN: CONOCE EL PARQUE --- */
+        .info-section { padding: 80px 5%; background: #061624; }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .info-card {
+            background: var(--dark-blue-card);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            transition: 0.3s;
+        }
+        .info-card:hover { transform: translateY(-5px); border-color: var(--primary-cyan); box-shadow: 0 10px 30px rgba(0, 229, 255, 0.1); }
+        .info-card h3 { color: var(--primary-cyan); margin-bottom: 15px; font-size: 1.5rem; }
+        .info-card p, .info-card li { line-height: 1.8; font-size: 0.95rem; opacity: 0.9; }
+        .info-card ul { list-style: none; padding: 0; }
+        .info-card ul li::before { content: "💧 "; }
+        .info-card h3::before {
+            content: ''; display: inline-block; width: 12px; height: 12px;
+            background: var(--primary-cyan); border-radius: 50%; margin-right: 10px;
+        }
+
+        /* ESTILO ACORDEÓN PARA FAQ */
+        .faq-container { max-width: 800px; margin: 40px auto 0; }
+        .faq-item {
+            background: var(--dark-blue-card);
+            margin-bottom: 15px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 229, 255, 0.1);
+        }
+        .faq-question {
+            padding: 20px 25px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.3s;
+        }
+        .faq-question:hover { background: rgba(0, 229, 255, 0.05); }
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--primary-cyan);
+            transition: 0.3s;
+        }
+        /* Truco CSS para el acordeón */
+        .faq-item input[type="checkbox"] { display: none; }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 25px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        .faq-item input[type="checkbox"]:checked ~ .faq-answer {
+            max-height: 300px; /* Altura máxima para abrir */
+            padding: 0 25px 25px 25px;
+        }
+        .faq-item input[type="checkbox"]:checked + .faq-question::after { content: '-'; }
+
+        /* Form Section */
         .form-section { padding: 80px 5%; background: #071B2E; }
         .form-container { max-width: 600px; margin: 0 auto; background: var(--dark-blue-card); padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border: 1px solid rgba(0, 229, 255, 0.2); }
         .form-container h2 { text-align: center; margin-bottom: 30px; font-size: 2.2rem; color: var(--primary-cyan); }
@@ -189,7 +251,6 @@
     <!-- ================= SPANISH CONTENT ================= -->
     <div id="lang-es" class="lang-content active-lang">
         <header class="hero">
-            <!-- SLIDER DE IMÁGENES DE FONDO DESDE HTTPS://WWW.ANGELTOURBRASIL.COM.BR/IMAGES/ -->
             <div class="hero-bg-slider" id="bgSlider"></div>
             <div class="hero-overlay"></div>
 
@@ -209,7 +270,7 @@
             </div>
         </header>
 
-        <!-- Videos Grid -->
+        <!-- Videos Grid (Video 3 Eliminado) -->
         <div id="video-grid" class="videos-container" style="padding: 0 5% 50px;">
             <div class="video-card">
                 <iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
@@ -218,10 +279,6 @@
             <div class="video-card">
                 <iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
                 <div class="video-overlay"><h4>Toboganes</h4><p>Adrenalina pura</p></div>
-            </div>
-            <div class="video-card">
-                <iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
-                <div class="video-overlay"><h4>Familiar</h4><p>Diversión garantizada</p></div>
             </div>
             <div class="video-card">
                 <iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
@@ -237,25 +294,66 @@
             </div>
         </div>
 
-        <section class="about-section">
-            <div class="about-text">
-                <h2>Sobre Multiparque</h2>
-                <p>Ubicado en el corazón de Santa Catarina, Multiparque es el destino favorito de familias y jóvenes que buscan el equilibrio perfecto entre aventura y descanso.</p>
-                <p>Con más de 30 años de tradición, ofrecemos piscinas de olas, toboganes radicales, áreas de juegos infantiles y espacios VIP para que tu día sea inolvidable.</p>
-                <p><strong>Estructura completa:</strong> Restaurante, vestuarios, estacionamiento y seguridad 24h.</p>
+        <!-- ================= NUEVA SECCIÓN: CONOCE MULTIPARQUE ================= -->
+        <section class="info-section">
+            <h2 style="text-align: center; font-size: 2.8rem; color: var(--primary-cyan);">Conoce Multiparque</h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Quiénes Somos</h3>
+                    <p>Fundado en 1988, Multiparque es un referente en turismo de ocio. Con 27 mil m², ofrecemos seguridad, confort y diversión para toda la familia en Florianópolis.</p>
+                    <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.7;">Rua Alfredo Vailant, 100 - Itacorubi, Florianópolis.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Atracciones</h3>
+                    <ul>
+                        <li>Piscina de Olas (la más grande de SC)</li>
+                        <li>Tobogán Kamikaze (18 metros)</li>
+                        <li>Río Lento y Piscina Infantil</li>
+                        <li>Lago con Pedalinho y Tirolesa</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>Gastronomía</h3>
+                    <p>Restaurante con buffet self-service, carnes, pastas y ensaladas. Además, quiosques distribuidos por el parque con helados, açaí, porciones y bebidas.</p>
+                </div>
             </div>
-            <div class="about-text" style="background: var(--dark-blue-card); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 229, 255, 0.2);">
-                <h3 style="color: var(--primary-cyan);">¿Qué ofrecemos?</h3>
-                <ul style="list-style: none; line-height: 2.2;">
-                    <li>&#10004; Piscina de olas (la más grande de la región)</li>
-                    <li>&#10004; Tobogán Kamikaze</li>
-                    <li>&#10004; Río Lento y Piscina Infantil</li>
-                    <li>&#10004; Fiesta de espuma y shows</li>
-                    <li>&#10004; Alquiler de sombrillas y carpas</li>
-                </ul>
+
+            <!-- FAQ Acordeón -->
+            <div class="faq-container">
+                <h3 style="text-align: center; color: var(--primary-cyan); font-size: 2rem; margin-bottom: 20px;">Preguntas Frecuentes</h3>
+                
+                <div class="faq-item">
+                    <input type="checkbox" id="faq1_es">
+                    <label for="faq1_es" class="faq-question">¿Cómo comprar las entradas?</label>
+                    <div class="faq-answer">Las entradas se adquieren exclusivamente en la taquilla del parque el día de la visita. No tenemos venta online.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq2_es">
+                    <label for="faq2_es" class="faq-question">¿El estacionamiento es gratuito?</label>
+                    <div class="faq-answer">Sí, el estacionamiento es completamente gratuito y vigilado para todos nuestros visitantes.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq3_es">
+                    <label for="faq3_es" class="faq-question">¿Hay seguridad en el agua?</label>
+                    <div class="faq-answer">Contamos con un equipo de salvavidas certificados y monitoreo 24h en todas las áreas acuáticas para tu tranquilidad.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq4_es">
+                    <label for="faq4_es" class="faq-question">¿Qué puedo llevar al parque?</label>
+                    <div class="faq-answer">Puedes traer traje de baño, toallas y protector solar. No está permitido el ingreso de objetos cortantes o de vidrio.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq5_es">
+                    <label for="faq5_es" class="faq-question">¿Aceptan tarjetas?</label>
+                    <div class="faq-answer">Sí, aceptamos efectivo, tarjetas de crédito y débito en todas nuestras instalaciones.</div>
+                </div>
             </div>
         </section>
 
+        <!-- Contact Form -->
         <section id="contact" class="form-section">
             <div class="form-container">
                 <h2>¡Reserva tu día!</h2>
@@ -313,29 +411,63 @@
         <div id="video-grid" class="videos-container" style="padding: 0 5% 50px;">
             <div class="video-card"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Pools</h4><p>Waves & relax</p></div></div>
             <div class="video-card"><iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Water Slides</h4><p>Pure adrenaline</p></div></div>
-            <div class="video-card"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Family</h4><p>Guaranteed fun</p></div></div>
             <div class="video-card"><iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Events</h4><p>Themed parties</p></div></div>
             <div class="video-card"><iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>VIP Area</h4><p>Exclusivity</p></div></div>
             <div class="video-card"><iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Kids</h4><p>Total safety</p></div></div>
         </div>
-        <section class="about-section">
-            <div class="about-text">
-                <h2>About Multiparque</h2>
-                <p>Located in the heart of Santa Catarina, Multiparque is the favorite destination for families and young people seeking the perfect balance between adventure and rest.</p>
-                <p>With over 30 years of tradition, we offer wave pools, radical water slides, children's play areas, and VIP spaces to make your day unforgettable.</p>
-                <p><strong>Full structure:</strong> Restaurant, changing rooms, parking, and 24h security.</p>
+
+        <section class="info-section">
+            <h2 style="text-align: center; font-size: 2.8rem; color: var(--primary-cyan);">About Multiparque</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Who We Are</h3>
+                    <p>Founded in 1988, Multiparque is a benchmark in leisure tourism. With 27 thousand m², we offer safety, comfort, and fun for the whole family in Florianópolis.</p>
+                    <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.7;">Rua Alfredo Vailant, 100 - Itacorubi, Florianópolis.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Attractions</h3>
+                    <ul>
+                        <li>Wave Pool (largest in Santa Catarina)</li>
+                        <li>Kamikaze Slide (18 meters)</li>
+                        <li>Lazy River and Kids Pool</li>
+                        <li>Lake with Pedal Boats and Zip Line</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3>Gastronomy</h3>
+                    <p>Restaurant with self-service buffet, meats, pasta, and salads. Plus kiosks throughout the park offering ice cream, açaí, portions, and drinks.</p>
+                </div>
             </div>
-            <div class="about-text" style="background: var(--dark-blue-card); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 229, 255, 0.2);">
-                <h3 style="color: var(--primary-cyan);">What do we offer?</h3>
-                <ul style="list-style: none; line-height: 2.2;">
-                    <li>&#10004; Wave pool (largest in the region)</li>
-                    <li>&#10004; Kamikaze slide</li>
-                    <li>&#10004; Lazy river and kids pool</li>
-                    <li>&#10004; Foam parties and shows</li>
-                    <li>&#10004; Umbrella and tent rental</li>
-                </ul>
+            <div class="faq-container">
+                <h3 style="text-align: center; color: var(--primary-cyan); font-size: 2rem; margin-bottom: 20px;">FAQ</h3>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq1_en">
+                    <label for="faq1_en" class="faq-question">How to buy tickets?</label>
+                    <div class="faq-answer">Tickets are purchased exclusively at the park's box office on the day of your visit. We do not have online sales.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq2_en">
+                    <label for="faq2_en" class="faq-question">Is parking free?</label>
+                    <div class="faq-answer">Yes, parking is completely free and monitored for all our visitors.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq3_en">
+                    <label for="faq3_en" class="faq-question">Is there safety in the water?</label>
+                    <div class="faq-answer">We have a team of certified lifeguards and 24-hour monitoring in all water areas for your peace of mind.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq4_en">
+                    <label for="faq4_en" class="faq-question">What can I bring to the park?</label>
+                    <div class="faq-answer">You can bring swimsuits, towels, and sunscreen. Sharp objects or glass are not allowed.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq5_en">
+                    <label for="faq5_en" class="faq-question">Do you accept credit cards?</label>
+                    <div class="faq-answer">Yes, we accept cash, credit, and debit cards at all our facilities.</div>
+                </div>
             </div>
         </section>
+
         <section id="contact" class="form-section">
             <div class="form-container">
                 <h2>Book your day!</h2>
@@ -377,29 +509,63 @@
         <div id="video-grid" class="videos-container" style="padding: 0 5% 50px;">
             <div class="video-card"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Piscinas</h4><p>Ondas e relax</p></div></div>
             <div class="video-card"><iframe src="https://www.youtube.com/embed/lUEF8jOoaA0?autoplay=1&mute=1&loop=1&playlist=lUEF8jOoaA0&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Tobogãs</h4><p>Adrenalina pura</p></div></div>
-            <div class="video-card"><iframe src="https://www.youtube.com/embed/ZHe8ZQ2X-Uo?autoplay=1&mute=1&loop=1&playlist=ZHe8ZQ2X-Uo&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Família</h4><p>Diversão garantida</p></div></div>
             <div class="video-card"><iframe src="https://www.youtube.com/embed/cOTwArGCGHs?autoplay=1&mute=1&loop=1&playlist=cOTwArGCGHs&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Eventos</h4><p>Festas temáticas</p></div></div>
             <div class="video-card"><iframe src="https://www.youtube.com/embed/HibJPuxw18Y?autoplay=1&mute=1&loop=1&playlist=HibJPuxw18Y&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Área VIP</h4><p>Exclusividade</p></div></div>
             <div class="video-card"><iframe src="https://www.youtube.com/embed/fTPuSnicUmw?autoplay=1&mute=1&loop=1&playlist=fTPuSnicUmw&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe><div class="video-overlay"><h4>Infantil</h4><p>Segurança total</p></div></div>
         </div>
-        <section class="about-section">
-            <div class="about-text">
-                <h2>Sobre o Multiparque</h2>
-                <p>Localizado no coração de Santa Catarina, o Multiparque é o destino favorito de famílias e jovens que buscam o equilíbrio perfeito entre aventura e descanso.</p>
-                <p>Com mais de 30 anos de tradição, oferecemos piscinas de ondas, toboáguas radicais, áreas de jogos infantis e espaços VIP para que seu dia seja inesquecível.</p>
-                <p><strong>Estrutura completa:</strong> Restaurante, vestiários, estacionamento e segurança 24h.</p>
+
+        <section class="info-section">
+            <h2 style="text-align: center; font-size: 2.8rem; color: var(--primary-cyan);">Conheça o Multiparque</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Quem Somos</h3>
+                    <p>Fundado em 1988, o Multiparque é referência em turismo de lazer. Com 27 mil m², oferecemos segurança, conforto e diversão para toda a família em Florianópolis.</p>
+                    <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.7;">Rua Alfredo Vailant, 100 - Itacorubi, Florianópolis.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Atrações</h3>
+                    <ul>
+                        <li>Piscina de Ondas (a maior de SC)</li>
+                        <li>Toboágua Kamikaze (18 metros)</li>
+                        <li>Rio Lento e Piscina Infantil</li>
+                        <li>Lago com Pedalinho e Tirolesa</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3>Gastronomia</h3>
+                    <p>Restaurante com buffet self-service, carnes, massas e saladas. Além de quiosques espalhados pelo parque com sorvetes, açaí, porções e bebidas.</p>
+                </div>
             </div>
-            <div class="about-text" style="background: var(--dark-blue-card); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 229, 255, 0.2);">
-                <h3 style="color: var(--primary-cyan);">O que oferecemos?</h3>
-                <ul style="list-style: none; line-height: 2.2;">
-                    <li>&#10004; Piscina de ondas (a maior da região)</li>
-                    <li>&#10004; Toboágua Kamikaze</li>
-                    <li>&#10004; Rio Lento e Piscina Infantil</li>
-                    <li>&#10004; Festa de espuma e shows</li>
-                    <li>&#10004; Aluguel de guarda-sóis e tendas</li>
-                </ul>
+            <div class="faq-container">
+                <h3 style="text-align: center; color: var(--primary-cyan); font-size: 2rem; margin-bottom: 20px;">Perguntas Frequentes</h3>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq1_pt">
+                    <label for="faq1_pt" class="faq-question">Como comprar os ingressos?</label>
+                    <div class="faq-answer">Os ingressos são adquiridos exclusivamente na bilheteria do parque no dia da visita. Não temos venda online.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq2_pt">
+                    <label for="faq2_pt" class="faq-question">O estacionamento é gratuito?</label>
+                    <div class="faq-answer">Sim, o estacionamento é completamente gratuito e vigiado para todos os nossos visitantes.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq3_pt">
+                    <label for="faq3_pt" class="faq-question">Há segurança na água?</label>
+                    <div class="faq-answer">Contamos com uma equipe de salva-vidas certificados e monitoramento 24h em todas as áreas aquáticas para sua tranquilidade.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq4_pt">
+                    <label for="faq4_pt" class="faq-question">O que posso levar ao parque?</label>
+                    <div class="faq-answer">Você pode trazer maiô, toalhas e protetor solar. Não é permitida a entrada de objetos cortantes ou de vidro.</div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="faq5_pt">
+                    <label for="faq5_pt" class="faq-question">Aceitam cartões?</label>
+                    <div class="faq-answer">Sim, aceitamos dinheiro, cartões de crédito e débito em todas as nossas instalações.</div>
+                </div>
             </div>
         </section>
+
         <section id="contact" class="form-section">
             <div class="form-container">
                 <h2>Reserve seu dia!</h2>
@@ -466,13 +632,12 @@
         document.getElementById('contactFormEn').addEventListener('submit', handleFormSubmit);
         document.getElementById('contactFormPt').addEventListener('submit', handleFormSubmit);
 
-        // SLIDER DE FONDO AUTOMÁTICO Y ALEATORIO (HOSPEDADO EN ANGELTOURBRASIL)
+        // SLIDER DE FONDO AUTOMÁTICO Y ALEATORIO
         document.addEventListener("DOMContentLoaded", function() {
             const totalImages = 26;
             const baseUrl = "https://www.angeltourbrasil.com.br/images/mp_";
             const extension = ".webp";
             
-            // Función para generar un array de números del 1 al 26 en orden aleatorio
             function generateRandomSequence() {
                 let numbers = [];
                 for(let i = 1; i <= totalImages; i++) {
@@ -488,14 +653,12 @@
             let sequence = generateRandomSequence();
             let currentIndex = 0;
 
-            // Función para inicializar el slider en un contenedor dado
             function initSlider(containerId) {
                 const container = document.getElementById(containerId);
                 if(!container) return;
 
                 const images = [];
                 
-                // Cargar todas las imágenes
                 for(let i = 1; i <= totalImages; i++) {
                     const img = document.createElement('img');
                     img.src = baseUrl + i + extension;
@@ -504,37 +667,23 @@
                     images.push(img);
                 }
 
-                // Función para mostrar la siguiente imagen
                 function showNextImage() {
-                    // Obtener el número de imagen actual de la secuencia aleatoria
                     const currentNum = sequence[currentIndex];
-                    
-                    // Remover clase active de todas las imágenes
                     images.forEach(img => img.classList.remove('active'));
-                    
-                    // Agregar clase active a la imagen correspondiente (restamos 1 porque el array empieza en 0)
-                    // Verificamos que el índice exista
                     if(currentNum - 1 < images.length) {
                         images[currentNum - 1].classList.add('active');
                     }
-
-                    // Avanzar al siguiente índice
                     currentIndex++;
-                    // Si llegamos al final de la secuencia, generar una nueva secuencia aleatoria y resetear índice
                     if(currentIndex >= sequence.length) {
                         sequence = generateRandomSequence();
                         currentIndex = 0;
                     }
                 }
 
-                // Mostrar la primera imagen inmediatamente
                 showNextImage();
-
-                // Configurar el intervalo para cambiar cada 5 segundos (5000ms)
                 setInterval(showNextImage, 5000);
             }
 
-            // Inicializar el slider para todos los idiomas (comparten el mismo fondo)
             initSlider('bgSlider');
             initSlider('bgSliderEn');
             initSlider('bgSliderPt');
