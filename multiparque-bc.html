@@ -1500,27 +1500,27 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Nombre completo</label>
-                            <input type="text" id="nombre" required placeholder="Ej. Juan Pérez">
+                            <input type="text" id="nombre" required placeholder="Ej. Juan Pérez" autocomplete="name">
                         </div>
                         <div class="form-group">
                             <label>Correo electrónico</label>
-                            <input type="email" id="email" required placeholder="ejemplo@mail.com">
+                            <input type="email" id="email" required placeholder="ejemplo@mail.com" autocomplete="email">
                         </div>
                         <div class="form-group">
                             <label>Teléfono / WhatsApp</label>
-                            <input type="tel" id="telefono" required placeholder="+55 48 99999-9999">
+                            <input type="tel" id="telefono" required placeholder="+55 48 99999-9999" autocomplete="tel">
                         </div>
                         <div class="form-group">
                             <label>Empresa</label>
-                            <input type="text" id="empresa" required placeholder="Nombre de tu empresa">
+                            <input type="text" id="empresa" required placeholder="Nombre de tu empresa" autocomplete="organization">
                         </div>
                         <div class="form-group">
-                            <label>Fecha de reserva (Estimativa)</label>
+                            <p style="display: block; font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 8px;">Fecha de reserva (Estimativa)</p>
                             <input type="date" id="fecha_reserva">
                             <span class="date-warning">📅 Sujeta a confirmación.</span>
                         </div>
                         <div class="form-group">
-                            <label>Cantidad de personas</label>
+                            <p style="display: block; font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 8px;">Cantidad de personas</p>
                             <input type="number" id="cantidad" placeholder="Ej. 10" min="1">
                         </div>
                         <div class="form-group full-width">
@@ -1707,12 +1707,12 @@
                 <p class="form-subtitle">*Mr./Ms. Guide, for operational reasons, we ask that you request your reservation through the form, thank you.</p>
                 <form id="contactFormEn">
                     <div class="form-grid">
-                        <div class="form-group"><label>Full Name</label><input type="text" id="nombre_en" required placeholder="John Doe"></div>
-                        <div class="form-group"><label>Email</label><input type="email" id="email_en" required placeholder="mail@example.com"></div>
-                        <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" id="telefono_en" required placeholder="+55 48 99999-9999"></div>
-                        <div class="form-group"><label>Company</label><input type="text" id="empresa_en" required placeholder="Your company name"></div>
-                        <div class="form-group"><label>Reservation Date (Estimated)</label><input type="date" id="fecha_reserva_en"><span class="date-warning">📅 Subject to confirmation.</span></div>
-                        <div class="form-group"><label>Number of people</label><input type="number" id="cantidad_en" placeholder="e.g. 10" min="1"></div>
+                        <div class="form-group"><label>Full Name</label><input type="text" id="nombre_en" required placeholder="John Doe" autocomplete="name"></div>
+                        <div class="form-group"><label>Email</label><input type="email" id="email_en" required placeholder="mail@example.com" autocomplete="email"></div>
+                        <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" id="telefono_en" required placeholder="+55 48 99999-9999" autocomplete="tel"></div>
+                        <div class="form-group"><label>Company</label><input type="text" id="empresa_en" required placeholder="Your company name" autocomplete="organization"></div>
+                        <div class="form-group"><p style="display: block; font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 8px;">Reservation Date (Estimated)</p><input type="date" id="fecha_reserva_en"><span class="date-warning">📅 Subject to confirmation.</span></div>
+                        <div class="form-group"><p style="display: block; font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 8px;">Number of people</p><input type="number" id="cantidad_en" placeholder="e.g. 10" min="1"></div>
                         <div class="form-group full-width"><label>Message or details</label><textarea id="mensaje_en" placeholder="What day would you like to visit us?"></textarea></div>
                     </div>
                     <button type="submit" class="btn-primary" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 20px;">
@@ -1891,12 +1891,12 @@
                 <p class="form-subtitle">*Sr./Sra. Guia, por questões operacionais, pedimos que solicite sua reserva através do formulário, muito obrigado.</p>
                 <form id="contactFormPt">
                     <div class="form-grid">
-                        <div class="form-group"><label>Nome completo</label><input type="text" id="nome_pt" required placeholder="Ex. João Silva"></div>
-                        <div class="form-group"><label>E-mail</label><input type="email" id="email_pt" required placeholder="exemplo@email.com"></div>
-                        <div class="form-group"><label>Telefone / WhatsApp</label><input type="tel" id="telefono_pt" required placeholder="+55 48 99999-9999"></div>
-                        <div class="form-group"><label>Empresa</label><input type="text" id="empresa_pt" required placeholder="Nome da sua empresa"></div>
-                        <div class="form-group"><label>Data de reserva (Estimativa)</label><input type="date" id="fecha_reserva_pt"><span class="date-warning">📅 Sujeita a confirmação.</span></div>
-                        <div class="form-group"><label>Quantidade de pessoas</label><input type="number" id="cantidad_pt" placeholder="Ex. 10" min="1"></div>
+                        <div class="form-group"><label>Nome completo</label><input type="text" id="nome_pt" required placeholder="Ex. João Silva" autocomplete="name"></div>
+                        <div class="form-group"><label>E-mail</label><input type="email" id="email_pt" required placeholder="exemplo@email.com" autocomplete="email"></div>
+                        <div class="form-group"><label>Telefone / WhatsApp</label><input type="tel" id="telefono_pt" required placeholder="+55 48 99999-9999" autocomplete="tel"></div>
+                        <div class="form-group"><label>Empresa</label><input type="text" id="empresa_pt" required placeholder="Nome da sua empresa" autocomplete="organization"></div>
+                        <div class="form-group"><p style="display: block; font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 8px;">Data de reserva (Estimativa)</p><input type="date" id="fecha_reserva_pt"><span class="date-warning">📅 Sujeita a confirmação.</span></div>
+                        <div class="form-group"><p style="display: block; font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 8px;">Quantidade de pessoas</p><input type="number" id="cantidad_pt" placeholder="Ex. 10" min="1"></div>
                         <div class="form-group full-width"><label>Mensagem ou detalhes</label><textarea id="mensaje_pt" placeholder="Que dia gostaria de nos visitar?"></textarea></div>
                     </div>
                     <button type="submit" class="btn-primary" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 20px;">
@@ -2668,6 +2668,7 @@
                     window.sliderIntervals[containerId] = setInterval(function() {
                         const nextIndex = sequence[currentIndex % sequence.length];
                         
+                        // CORRECCIÓN DEL ERROR CRÍTICO: Verificamos si existingImg es válido
                         const existingImg = Array.from(container.children).find(img => img.src && img.src.includes(`mp_${nextIndex}`));
                         
                         if(existingImg && existingImg.classList && validImages.length > 0) {
