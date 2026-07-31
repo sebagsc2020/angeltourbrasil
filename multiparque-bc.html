@@ -13,6 +13,8 @@
             --dark-blue-card: #112E4B;
             --text-light: #FFFFFF;
             --whatsapp-green: #25D366;
+            /* Cookie banner colors */
+            --cookie-bg: rgba(11, 37, 69, 0.92);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -944,6 +946,89 @@
         }
 
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+        /* ============================================
+           COOKIE BANNER
+           ============================================ */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 99999;
+            background: rgba(11, 37, 69, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 16px 20px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px solid rgba(0, 229, 255, 0.2);
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .cookie-banner.active {
+            display: flex;
+            transform: translateY(0);
+        }
+        .cookie-content {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px 24px;
+        }
+        .cookie-text {
+            flex: 1;
+            min-width: 260px;
+            font-size: 0.85rem;
+            color: #ccc;
+            line-height: 1.6;
+        }
+        .cookie-text a {
+            color: var(--primary-cyan);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .cookie-text a:hover { text-decoration: underline; }
+        .cookie-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .cookie-btn {
+            padding: 10px 24px;
+            border-radius: 50px;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .cookie-btn-accept {
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-blue));
+            color: #0B2545;
+            box-shadow: 0 4px 20px rgba(0, 229, 255, 0.3);
+        }
+        .cookie-btn-accept:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(0, 229, 255, 0.5); }
+        .cookie-btn-decline {
+            background: transparent;
+            color: #ccc;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .cookie-btn-decline:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.4); }
+
+        @media (max-width: 768px) {
+            .cookie-content { flex-direction: column; text-align: center; }
+            .cookie-actions { width: 100%; justify-content: center; }
+            .cookie-btn { flex: 1; min-width: 120px; padding: 10px 16px; }
+        }
 
         /* RESPONSIVE */
         @media (max-width: 1200px) {
@@ -2140,16 +2225,81 @@
         <span class="wa-tooltip" id="waTooltip">💬 Contáctanos por WhatsApp</span>
     </a>
 
-    <!-- GOOGLE ANALYTICS -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R5LT7ZSN19"></script>
+    <!-- ============================================
+    COOKIE BANNER - ULTRA LIGERO
+    ============================================ -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                <i class="fas fa-cookie-bite" style="color:var(--primary-cyan); margin-right:8px;"></i>
+                Utilizamos cookies propias para mejorar tu experiencia. Al continuar navegando, aceptas su uso. 
+                <a onclick="openModal('privacy', document.querySelector('.lang-content.active-lang').id.replace('lang-', ''))">Más información</a>.
+            </div>
+            <div class="cookie-actions">
+                <button class="cookie-btn cookie-btn-decline" onclick="declineCookies()">Rechazar</button>
+                <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GOOGLE ANALYTICS - Protegido por Cookies -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R5LT7ZSN19" id="ga-script"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-R5LT7ZSN19');
+        
+        // Función para activar GA solo si se aceptaron las cookies
+        function initGA() {
+            if(getCookie('cookie_consent') === 'accepted') {
+                gtag('js', new Date());
+                gtag('config', 'G-R5LT7ZSN19');
+            }
+        }
+        initGA();
     </script>
 
     <script>
+        // ==========================================
+        // FUNCIONES DE COOKIES (Ligeras y Nativas)
+        // ==========================================
+        function setCookie(name, value, days) {
+            const expires = new Date();
+            expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+            document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+
+        function acceptCookies() {
+            setCookie('cookie_consent', 'accepted', 365);
+            document.getElementById('cookieBanner').classList.remove('active');
+            // Recargar GA si se acepta
+            if(typeof gtag !== 'undefined') {
+                gtag('js', new Date());
+                gtag('config', 'G-R5LT7ZSN19');
+            }
+        }
+
+        function declineCookies() {
+            setCookie('cookie_consent', 'declined', 365);
+            document.getElementById('cookieBanner').classList.remove('active');
+        }
+
+        function checkCookieConsent() {
+            const consent = getCookie('cookie_consent');
+            if (!consent) {
+                // Mostrar banner después de 1.5 segundos para no afectar el renderizado
+                setTimeout(() => {
+                    document.getElementById('cookieBanner').classList.add('active');
+                }, 1500);
+            }
+        }
+
         // ==========================================
         // FUNCIONES PARA GALERÍA DE FOTOS CON LIGHTBOX MEJORADO
         // ==========================================
@@ -2545,6 +2695,9 @@
                 }, 100);
             }
             updateWATooltip('es');
+            
+            // Inicializar chequeo de cookies
+            checkCookieConsent();
         });
 
         // ==========================================
@@ -2668,7 +2821,6 @@
                     window.sliderIntervals[containerId] = setInterval(function() {
                         const nextIndex = sequence[currentIndex % sequence.length];
                         
-                        // CORRECCIÓN DEL ERROR CRÍTICO: Verificamos si existingImg es válido
                         const existingImg = Array.from(container.children).find(img => img.src && img.src.includes(`mp_${nextIndex}`));
                         
                         if(existingImg && existingImg.classList && validImages.length > 0) {
