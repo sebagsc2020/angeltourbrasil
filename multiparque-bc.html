@@ -2242,20 +2242,48 @@
         </div>
     </div>
 
-    <!-- GOOGLE ANALYTICS - Protegido por Cookies -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R5LT7ZSN19" id="ga-script"></script>
+    <!-- ============================================
+    GOOGLE ANALYTICS - CONFIGURACIÓN CORREGIDA (ERROR ILLEGAL INVOCATION RESUELTO)
+    ============================================ -->
     <script>
+        // 1. Definir la función dataLayer (Siempre primero)
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
-        
-        // Función para activar GA solo si se aceptaron las cookies
-        function initGA() {
+
+        // 2. Configurar el consentimiento por defecto como 'denied' (Bloquea la ejecución conflictiva)
+        gtag('consent', 'default', {
+            'analytics_storage': 'denied'
+        });
+
+        // 3. Cargar el script de Google Analytics de forma asíncrona
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-R5LT7ZSN19';
+        document.head.appendChild(gaScript);
+
+        // 4. Inicializar GA y comprobar si el usuario ya había aceptado
+        gaScript.onload = function() {
+            gtag('js', new Date());
+            gtag('config', 'G-R5LT7ZSN19');
+
+            // Si el usuario ya tenía la cookie 'accepted', activamos el analytics
             if(getCookie('cookie_consent') === 'accepted') {
-                gtag('js', new Date());
-                gtag('config', 'G-R5LT7ZSN19');
+                gtag('consent', 'update', {
+                    'analytics_storage': 'granted'
+                });
             }
-        }
-        initGA();
+        };
+
+        // 5. Sobrescribir la función acceptCookies para que actualice el consentimiento en tiempo real
+        const originalAccept = acceptCookies;
+        acceptCookies = function() {
+            originalAccept(); // Ejecuta la función original que guarda la cookie
+            if(typeof gtag !== 'undefined') {
+                gtag('consent', 'update', {
+                    'analytics_storage': 'granted'
+                });
+            }
+        };
     </script>
 
     <script>
@@ -2278,11 +2306,6 @@
         function acceptCookies() {
             setCookie('cookie_consent', 'accepted', 365);
             document.getElementById('cookieBanner').classList.remove('active');
-            // Recargar GA si se acepta
-            if(typeof gtag !== 'undefined') {
-                gtag('js', new Date());
-                gtag('config', 'G-R5LT7ZSN19');
-            }
         }
 
         function declineCookies() {
